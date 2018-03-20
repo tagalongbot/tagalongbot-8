@@ -1,39 +1,57 @@
-// server.js
-// where your node app starts
+let { API_AI_KEY } = process.env;
+let URL = require('url');
+let API_AI = require('apiai');
+let DEFAULT_APP = API_AI_KEY ? API_AI(API_AI_KEY) : null;
+let express = require('express');
+let app = express();
 
-// init project
-const express = require('express')
-const app = express()
+let randomize = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+let sendResponse = ({ response, message }) => {
+	response.writeHead(200, { 'Content-Type': 'application/json' });
+	response.end(
+	    JSON.stringify(message)
+	);
+}
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'))
+let createTextMsg = (text) => {
+    return { messages: [{ text }] };
+}
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + '/views/index.html')
-})
+let handleResponse = (response) => ({ result, sessionId }) => {
+	let message;
+    if (result.source === 'agent') {
+        let randomMsg = randomize(result.fulfillment.messages);
+        message = randomMsg.payload ? randomMsg.payload : createTextMsg(randomMsg.speech);
+    } else if (result.source === 'domains') {
+        message = createTextMsg(result.fulfillment.speech);
+    }
 
-// Simple in-memory store
-const dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-]
+    message.set_attributes = Object.assign(message.set_attributes || {}, { DF_SESSION_ID: sessionId });
+    sendResponse({ response, message });
+}
 
-app.get("/dreams", (request, response) => {
-  response.send(dreams)
-})
+let handleError = (response) => (error) => {
+	let message = { error };
+	sendResponse({ response, message });
+}
 
-// could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
-app.post("/dreams", (request, response) => {
-  dreams.push(request.query.dream)
-  response.sendStatus(200)
-})
+exports.endpoint = function(req, res) {
+	let query = URL.parse(req.url, true).query;
+	let app = (query.API_AI_KEY) ? API_AI(query.API_AI_KEY) : DEFAULT_APP;
+    let newSessionId = (!query.DF_SESSION_ID || query.DF_SESSION_ID === "0") ? Math.random().toString().slice(2) : 0;
+    let sessionId = (query.DF_SESSION_ID && query.DF_SESSION_ID != "0") ? query.DF_SESSION_ID : newSessionId;
+	  let contexts = [{
+        name: query.DF_CONTEXT || 'DEFAULT',
+        parameters: query,
+    }];
+    let request = app.textRequest(query.queryString, { sessionId, contexts });
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, () => {
-  console.log(`Your app is listening on port ${listener.address().port}`)
-})
+	request.on('response', handleResponse(res));
+	request.on('error', handleError(res));
+	request.end();
+}
+
+app.get('/', (req, res) => {
+  
+});
