@@ -1,14 +1,12 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
-  "name": "my-glitch-app",
+  "name": "the3dwin-bot",
   "version": "0.0.1",
-  "description": "What am I about?",
+  "description": "Bot representing @the3dwin",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
+    "airtable": "^0.5.2",
     "apiai": "^4.0.3",
     "express": "^4.16.3",
     "request": "^2.85.0"
