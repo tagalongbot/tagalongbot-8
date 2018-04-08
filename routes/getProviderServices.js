@@ -32,7 +32,9 @@ let getProviderListOfServices = async ({ query }, res) => {
     .filter(service => servicesFromProvider.includes(service.serviceid));
   
   if (!matchedServices[0]) {
-    
+    let redirect_to_blocks = ['No Provider Services Found'];
+    res.send({ redirect_to_blocks });
+    return;
   }
 
   let servicesGalleryData = matchedServices.map(toGalleryElement(provider_name));

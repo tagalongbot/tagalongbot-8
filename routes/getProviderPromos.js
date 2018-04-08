@@ -27,7 +27,9 @@ let getProviderPromos = async ({ query }, res) => {
     .filter((promo) => promo.providerid === Number(provider_id));
   
   if (!providerPromos[0]) {
-    
+    let redirect_to_blocks = ['No Promos Found'];
+    res.send({ redirect_to_blocks });
+    return;
   }
   
   let promosGalleryData = providerPromos.map(toGalleryElement(provider_name));
