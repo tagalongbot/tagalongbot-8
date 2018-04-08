@@ -1,3 +1,4 @@
+let { BASEURL } = process.env;
 let { createTextMessage, createGallery } = require('../libs/bots');
 let { getActiveProviders } = require('../libs/data');
 
@@ -36,7 +37,7 @@ let toGalleryElement = (provider) => {
   let btn1 = {
     title: 'View Services',
     type: 'json_plugin_url',
-    url: ''
+    url: `${BASEURL}/provider/services?provider_id=${provider.providerid}&provider_name=${provider.practice_name}`
   }
 
  let btn2 = {
@@ -45,9 +46,9 @@ let toGalleryElement = (provider) => {
     url: ''
   }
 
-  let buttons = [btn1, btn2];
+  let buttons = [btn1];
 
-  let element = {title, subtitle, image_url};
+  let element = { title, subtitle, image_url, buttons};
   return element;
 }
 
