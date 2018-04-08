@@ -12,8 +12,8 @@ let createTextMsg = (text) => {
 let handleResponse = (response) => ({ result, sessionId }) => {
 	let message;
   if (result.source === 'agent') {
-      let randomMsg = randomize(result.fulfillment.messages);
-      message = randomMsg.payload ? randomMsg.payload : createTextMsg(randomMsg.speech);
+    let { parameters, metadata } = result;
+    
   } else if (result.source === 'domains') {
       message = createTextMsg(result.fulfillment.speech);
   }
