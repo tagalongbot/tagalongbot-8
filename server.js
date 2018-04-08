@@ -2,7 +2,7 @@ let express = require('express');
 let app = express();
 
 let handleAI = require('./routes/ai');
-let getProviderServices = require('.routes/getProviderServices');
+let getProviderServices = require('./routes/getProviderServices');
 // let exportData = require('./routes/export-data');
 
 app.get('/ai', handleAI);
