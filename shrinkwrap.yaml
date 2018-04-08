@@ -2,6 +2,7 @@ dependencies:
   airtable: 0.5.2
   apiai: 4.0.3
   express: 4.16.3
+  node-fetch: 2.1.2
   request: 2.85.0
 packages:
   /accepts/1.3.5:
@@ -675,6 +676,12 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
+  /node-fetch/2.1.2:
+    dev: false
+    engines:
+      node: 4.x || >=6.0.0
+    resolution:
+      integrity: sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
   /oauth-sign/0.8.2:
     dev: false
     resolution:
@@ -1015,4 +1022,5 @@ specifiers:
   airtable: ^0.5.2
   apiai: ^4.0.3
   express: ^4.16.3
+  node-fetch: ^2.1.2
   request: ^2.85.0
