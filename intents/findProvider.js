@@ -30,7 +30,7 @@ let filterProviders = (parameters, providers) => {
 
 let toGalleryElement = (provider) => {
   let title = provider.practice_name.slice(0, 80);
-  let subtitle = provider.address;
+  let subtitle = `${provider.first_name} ${provider.last_name} | ${provider.address}`;
   let image_url = provider.practice_panel_photo_uri;
 
   let btn1 = {
