@@ -28,7 +28,31 @@ let filterProviders = (parameters, providers) => {
   return filteredProviders;
 }
 
+let toGalleryElement = (provider) => {
+  let title = provider.practice_name.slice(0, 80);
+  let subtitle = provider.address;
+  let image_url = provider.practice_panel_photo_uri;
+
+  let btn1 = {
+    title: 'View Services',
+    type: 'json_plugin_url',
+    url: ''
+  }
+
+ let btn2 = {
+    title: 'View Promos',
+    type: 'json_plugin_url',
+    url: ''
+  }
+
+  let buttons = [btn1, btn2];
+
+  let element = {title, subtitle, image_url};
+  return element;
+}
+
 let findProvider = async ({ res, parameters, user }) => {
+  let { first_name } = user;
   let activeProviders = await getActiveProviders();
   let foundProviders = filterProviders(parameters, activeProviders);
 
@@ -38,13 +62,13 @@ let findProvider = async ({ res, parameters, user }) => {
     return;
   }
   
-  let txtMsg = createTextMessage();
+  let txtMsg = createTextMessage(`${first_name} here's what I found`);
   
-  res.send(foundProviders);
-
-  // let textMsg = createTextMessage('Testing');
-  // let messages = [textMsg];
-  // res.send({ messages });
+  let galleryData = foundProviders.map(toGalleryElement);
+  let gallery = createGallery(galleryData);
+  
+  let messages = [txtMsg, gallery];
+  res.send({ messages });
 }
 
 module.exports = findProvider;
