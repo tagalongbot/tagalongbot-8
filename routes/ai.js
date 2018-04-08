@@ -18,13 +18,13 @@ let createTextMsg = (text) => {
   return { messages: [{ text }] };
 }
 
-let handleResponse = (res) => ({ result, sessionId }) => {
+let handleResponse = (res, user) => ({ result, sessionId }) => {
 	let message;
   let { parameters, metadata } = result;
   let intentFN = INTENTS[metadata.intentName];
   
   if (result.source === 'agent' && intentFN) {
-    intentFN({ res, parameters });
+    intentFN({ res, parameters, user });
     return;
   } else if (result.source === 'domains') {
     message = createTextMsg(result.fulfillment.speech);
@@ -41,6 +41,9 @@ let handleError = (res) => (error) => {
 
 let handleAI = ({ query }, res) => {
   let { DF_SESSION_ID, DF_CONTEXT, queryString } = query;
+  let first_name = query['first name'];
+  let last_name = query['last name'];
+  let user = { first_name, last_name }; 
 
   let newSessionId = (!DF_SESSION_ID || DF_SESSION_ID === "0") ? Math.random().toString().slice(2) : 0;
   let sessionId = (DF_SESSION_ID && DF_SESSION_ID != "0") ? DF_SESSION_ID : newSessionId;
@@ -51,7 +54,7 @@ let handleAI = ({ query }, res) => {
   
   let request = API_AI_APP.textRequest(queryString, { sessionId, contexts });
 
-	request.on('response', handleResponse(res));
+	request.on('response', handleResponse(res, user));
 	request.on('error', handleError(res));
 	request.end();
 }
