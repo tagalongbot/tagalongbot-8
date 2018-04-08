@@ -5,26 +5,38 @@ let request = require('request');
 
 let { randomize } = require('../libs/helpers');
 
+let intents = ['findProvider'];
+
+let INTENTS = intents.reduce(
+	(intents, intent) => {
+		intents[intent] = require(`../intents/${intent}`);
+		return intents;
+	}, {}
+);
+
 let createTextMsg = (text) => {
   return { messages: [{ text }] };
 }
 
-let handleResponse = (response) => ({ result, sessionId }) => {
+let handleResponse = (res) => ({ result, sessionId }) => {
 	let message;
-  if (result.source === 'agent') {
-    let { parameters, metadata } = result;
-    
+  let { parameters, metadata } = result;
+  let intentFN = INTENTS[metadata.intentName];
+  
+  if (result.source === 'agent' && intentFN) {
+    intentFN({ res, parameters });
+    return;
   } else if (result.source === 'domains') {
-      message = createTextMsg(result.fulfillment.speech);
+    message = createTextMsg(result.fulfillment.speech);
   }
 
   message.set_attributes = Object.assign(message.set_attributes || {}, { DF_SESSION_ID: sessionId });
-  response.send(message);
+  res.send(message);
 }
 
-let handleError = (response) => (error) => {
+let handleError = (res) => (error) => {
 	let message = { error };
-	response.send(message);
+	res.send(message);
 }
 
 let handleAI = ({ query }, res) => {
