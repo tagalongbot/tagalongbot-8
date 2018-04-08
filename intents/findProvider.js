@@ -8,12 +8,12 @@ let byZipCode = (zip_code) => (provider) => {
 
 let byState = (state) => (provider) => {
   if (!state) return true;
-  return provider['state'].includes(state.toLowerCase());
+  return provider['state'].toLowerCase().includes(state.toLowerCase());
 }
 
 let byCity = (city) => (provider) => {
   if (!city) return true;
-  return provider['city'].includes(city.toLowerCase());
+  return provider['city'].toLowerCase().includes(city.toLowerCase());
 }
 
 let filterProviders = (parameters, providers) => {

@@ -19,7 +19,6 @@ let createTextMsg = (text) => {
 }
 
 let handleResponse = (res, user) => ({ result, sessionId }) => {
-	let message;
   let { parameters, metadata } = result;
   let intentFN = INTENTS[metadata.intentName];
   
@@ -27,11 +26,11 @@ let handleResponse = (res, user) => ({ result, sessionId }) => {
     intentFN({ res, parameters, user });
     return;
   } else if (result.source === 'domains') {
+    let message;
     message = createTextMsg(result.fulfillment.speech);
+    message.set_attributes = Object.assign(message.set_attributes || {}, { DF_SESSION_ID: sessionId });
+    res.send(message);
   }
-
-  message.set_attributes = Object.assign(message.set_attributes || {}, { DF_SESSION_ID: sessionId });
-  res.send(message);
 }
 
 let handleError = (res) => (error) => {
