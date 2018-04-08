@@ -58,7 +58,7 @@ let findProvider = async ({ res, parameters, user}) => {
   let foundProviders = filterProviders(parameters, activeProviders);
 
   if (!foundProviders[0]) {
-    let redirect_to_blocks = ['NLP - No Providers Found'];
+    let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }

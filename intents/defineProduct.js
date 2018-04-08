@@ -14,6 +14,12 @@ let defineProduct = async({ res, parameters, user }) => {
       return serviceName.includes(brandName) || serviceName.includes(procedure);
     });
   
+  if (!service) {
+    let redirect_to_blocks = ['No Service Found'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+  
   let txtMsg = createTextMessage(service.long_description);
   let messages = [txtMsg];
   res.send({ messages });
