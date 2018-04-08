@@ -30,6 +30,10 @@ let getProviderListOfServices = async ({ query }, res) => {
   let services = await getServices();
   let matchedServices = services
     .filter(service => servicesFromProvider.includes(service.serviceid));
+  
+  if (!matchedServices[0]) {
+    
+  }
 
   let servicesGalleryData = matchedServices.map(toGalleryElement(provider_name));
   let servicesGallery = createGallery(servicesGalleryData);

@@ -26,7 +26,10 @@ let getProviderPromos = async ({ query }, res) => {
   let providerPromos = activePromos
     .filter((promo) => promo.providerid === Number(provider_id));
   
-
+  if (!providerPromos[0]) {
+    
+  }
+  
   let promosGalleryData = providerPromos.map(toGalleryElement(provider_name));
   let servicesGallery = createGallery(promosGalleryData);
   let messages = [servicesGallery];

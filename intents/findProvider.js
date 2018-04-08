@@ -43,10 +43,10 @@ let toGalleryElement = (provider) => {
  let btn2 = {
     title: 'View Promos',
     type: 'json_plugin_url',
-    url: ''
+    url: `${BASEURL}/provider/promos?provider_id=${provider.providerid}&provider_name=${provider.practice_name}`
   }
 
-  let buttons = [btn1];
+  let buttons = [btn1, btn2];
 
   let element = { title, subtitle, image_url, buttons};
   return element;
