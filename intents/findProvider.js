@@ -52,7 +52,7 @@ let toGalleryElement = (provider) => {
   return element;
 }
 
-let findProvider = async ({ res, parameters, user }) => {
+let findProvider = async ({ res, parameters, user}) => {
   let { first_name } = user;
   let activeProviders = await getActiveProviders();
   let foundProviders = filterProviders(parameters, activeProviders);
