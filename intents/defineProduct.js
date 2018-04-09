@@ -1,4 +1,5 @@
-let { createTextMessage } = require('../libs/bots');
+let { BASEURL } = process.env;
+let { createButtonMessage } = require('../libs/bots');
 let { getServices } = require('../libs/data');
 
 let defineProduct = async({ res, parameters, user }) => {
@@ -20,7 +21,11 @@ let defineProduct = async({ res, parameters, user }) => {
     return;
   }
   
-  let txtMsg = createTextMessage(service.long_description);
+  let txtMsg = createButtonMessage(
+    service.long_description,
+    `Find Providers|json_plugin_url|${BASEURL}/service/providers?service_id=${service.serviceid}`
+  );
+  
   let messages = [txtMsg];
   res.send({ messages });
 }
