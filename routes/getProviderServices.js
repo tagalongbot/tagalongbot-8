@@ -13,7 +13,13 @@ let toGalleryElement = (provider_name) => (service) => {
     url: `${BASEURL}/service/description?service_id=${service.serviceid}`
   }
 
-  let buttons = [btn1];
+  let btn2 = {
+    title: 'Find Providers',
+    type: 'json_plugin_url',
+    url: `${BASEURL}/service/providers?service_id=${service.serviceid}`
+  }
+
+  let buttons = [btn1, btn2];
   
   let element = { title, subtitle, image_url, buttons };
   return element;
