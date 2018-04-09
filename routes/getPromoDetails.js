@@ -1,4 +1,5 @@
-let { createTextMessage } = require('../libs/bots');
+let { BASEURL } = process.env;
+let { createButtonMessage } = require('../libs/bots');
 let { getActivePromos } = require('../libs/data');
 
 let getPromoDetails = async ({ query }, res) => {
@@ -8,7 +9,11 @@ let getPromoDetails = async ({ query }, res) => {
   let promo = activePromos
     .find((promo) => promo.promoid === Number(promo_id));
 
-  let txtMsg = createTextMessage(promo.promo_details);
+  let txtMsg = createButtonMessage(
+    promo.promo_details,
+    `Find Promo Provider|json_plugin_url|${BASEURL}/promo/providers?promo_id=${promo.promoid}`
+  );
+
   let messages = [txtMsg];
   res.send({ messages });
 }

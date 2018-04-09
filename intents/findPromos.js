@@ -34,15 +34,13 @@ let findPromos = async ({ res, parameters, user}) => {
   let servicesAskedFor = services.filter(({ service_name }) => {
     let serviceName = service_name.toLowerCase();
     let procedureName = procedure.toLowerCase();
-    let brandName = procedure.toLowerCase();
+    let brandName = brand_name.toLowerCase();
 
-    return serviceName.includes(procedureName) || serviceName.includes(brandName); 
+    return procedureName.includes(serviceName) || brandName.includes(serviceName); 
   });
 
   let servicesNumArr = servicesAskedFor.map((service) => service.serviceid);
-
-  console.log(servicesNumArr);
-  
+    
   let activePromos = await getActivePromos();
   let matchingPromos = activePromos.filter(({ serviceid }) => servicesNumArr.includes(serviceid));
 
