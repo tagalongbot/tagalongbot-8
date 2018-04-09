@@ -28,33 +28,35 @@ let toGalleryElement = (promo) => {
 let findPromos = async ({ res, parameters, user}) => {
   let { first_name } = user;
   let { brand_name, procedure } = parameters;
-  
+
   let services = await getServices();
-  
+
   let servicesAskedFor = services.filter(({ service_name }) => {
     let serviceName = service_name.toLowerCase();
     let procedureName = procedure.toLowerCase();
     let brandName = procedure.toLowerCase();
-    
+
     return serviceName.includes(procedureName) || serviceName.includes(brandName); 
   });
-  
+
   let servicesNumArr = servicesAskedFor.map((service) => service.serviceid);
+
+  console.log(servicesNumArr);
   
   let activePromos = await getActivePromos();
   let matchingPromos = activePromos.filter(({ serviceid }) => servicesNumArr.includes(serviceid));
-  
+
   if (!matchingPromos[0]) {
     let redirect_to_blocks = ['No Promos Found'];
     res.send({ redirect_to_blocks });
     return;
   }
-  
+
   let txtMsg = createTextMessage(`${first_name} here's what I found`);
-  
+
   let galleryData = matchingPromos.map(toGalleryElement).slice(0, 5);
   let gallery = createGallery(galleryData);
-  
+
   let messages = [txtMsg, gallery];
   res.send({ messages });
 }
