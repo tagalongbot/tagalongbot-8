@@ -14,9 +14,9 @@ let toGalleryElement = (promo) => {
   }
 
   let btn2 = {
-    title: 'View Promos',
+    title: 'Find Promo Provider',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/promos?provider_id=${provider.providerid}&provider_name=${encodeURIComponent(provider.practice_name)}`
+    url: `${BASEURL}/promo/providers?promo_id=${promo.promoid}`
   }
 
   let buttons = [btn1, btn2];
