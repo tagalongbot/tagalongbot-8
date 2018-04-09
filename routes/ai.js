@@ -5,7 +5,7 @@ let request = require('request');
 
 let { randomize } = require('../libs/helpers');
 
-let intents = ['findProvider', 'defineProduct'];
+let intents = ['findProvider', 'findPromos', 'defineProduct'];
 
 let INTENTS = intents.reduce(
 	(intents, intent) => {
