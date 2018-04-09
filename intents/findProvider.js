@@ -37,13 +37,13 @@ let toGalleryElement = (provider) => {
   let btn1 = {
     title: 'View Services',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/services?provider_id=${provider.providerid}&provider_name=${provider.practice_name}`
+    url: `${BASEURL}/provider/services?provider_id=${provider.providerid}&provider_name=${encodeURIComponent(provider.practice_name)}`
   }
 
  let btn2 = {
     title: 'View Promos',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/promos?provider_id=${provider.providerid}&provider_name=${provider.practice_name}`
+    url: `${BASEURL}/provider/promos?provider_id=${provider.providerid}&provider_name=${encodeURIComponent(provider.practice_name)}`
   }
 
   let buttons = [btn1, btn2];
@@ -65,7 +65,7 @@ let findProvider = async ({ res, parameters, user}) => {
   
   let txtMsg = createTextMessage(`${first_name} here's what I found`);
   
-  let galleryData = foundProviders.map(toGalleryElement);
+  let galleryData = foundProviders.map(toGalleryElement).slice(0, 10);
   let gallery = createGallery(galleryData);
   
   let messages = [txtMsg, gallery];

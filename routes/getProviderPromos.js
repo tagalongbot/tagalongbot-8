@@ -32,7 +32,7 @@ let getProviderPromos = async ({ query }, res) => {
     return;
   }
   
-  let promosGalleryData = providerPromos.map(toGalleryElement(provider_name));
+  let promosGalleryData = providerPromos.map(toGalleryElement(provider_name)).slice(0, 5);
   let servicesGallery = createGallery(promosGalleryData);
   let messages = [servicesGallery];
   res.send({ messages });
