@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
-let { getServices, getActiveProviders } = require('../libs/data');
+let { getProviderServices, getActiveProviders } = require('../libs/data');
 
 let toGalleryElement = (provider) => {
   let title = provider.practice_name.slice(0, 80);
@@ -28,23 +28,23 @@ let toGalleryElement = (provider) => {
 let getServiceProviders = async ({ query }, res) => {
   let { service_id } = query;
   
-  let services = await getServices();
+  let services = await getProviderServices();
   let service = services
-    .filter(service => service.serviceid === Number(service_id));
+    .find(service => service.serviceid === Number(service_id));
 
   let activeProviders = await getActiveProviders();
   
-  let matchingProviders = activeProviders.filter((provider) => service.providerid === provider.providerid);
+  let matchedProviders = activeProviders.filter((provider) => service.providerid === provider.providerid);
   
-  if (!matchingProviders[0]) {
+  if (!matchedProviders[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let providersGalleryData = matchedServices.map(toGalleryElement(provider_name));
-  let servicesGallery = createGallery(providersGalleryData);
-  let messages = [servicesGallery];
+  let providersGalleryData = matchedProviders.map(toGalleryElement);
+  let providersGallery = createGallery(providersGalleryData);
+  let messages = [providersGallery];
   res.send({ messages });
 }
 
