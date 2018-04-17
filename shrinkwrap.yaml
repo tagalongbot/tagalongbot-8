@@ -1,5 +1,5 @@
 dependencies:
-  airtable: 0.5.2
+  airtable: 0.5.3
   apiai: 4.0.3
   express: 4.16.3
   node-fetch: 2.1.2
@@ -14,7 +14,7 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-63d99gEXI6OxTopywIBcjoZ0a9I=
-  /airtable/0.5.2:
+  /airtable/0.5.3:
     dependencies:
       async: 1.5.2
       lodash: 2.4.1
@@ -24,7 +24,7 @@ packages:
     engines:
       node: '>= 0.10.0'
     resolution:
-      integrity: sha1-ma09osz92RFGjFPp/sFt4bbCEbg=
+      integrity: sha512-NrQAQu8h8Tey7dCVLo1HtbhCeBQEaMoJ7NPwnJO5R9AYJIPXfpisguAht5Cg8TnkR1TC/1iIV/fH8aw9POHAvA==
   /ajv/5.5.2:
     dependencies:
       co: 4.6.0
@@ -90,6 +90,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-g+9cqGCysy5KDe7e6MdxudtXRx4=
+  /aws4/1.7.0:
+    dev: false
+    resolution:
+      integrity: sha512-32NDda82rhwD9/JBCCkB+MRYDp0oSvlo2IL6rQWA10PQi7tDUM3eqMSltXmY+Oyl/7N3P3qNtAlv7X0d9bI28w==
   /bcrypt-pbkdf/1.0.1:
     dependencies:
       tweetnacl: 0.14.5
@@ -780,7 +784,7 @@ packages:
   /request/2.79.0:
     dependencies:
       aws-sign2: 0.6.0
-      aws4: 1.6.0
+      aws4: 1.7.0
       caseless: 0.11.0
       combined-stream: 1.0.6
       extend: 3.0.1
@@ -1019,7 +1023,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 4
 shrinkwrapVersion: 3
 specifiers:
-  airtable: ^0.5.2
+  airtable: ^0.5.3
   apiai: ^4.0.3
   express: ^4.16.3
   node-fetch: ^2.1.2
