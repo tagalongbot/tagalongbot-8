@@ -1,43 +1,99 @@
-let NAMED_QUICK_REPLIES = require('../named_quick_replies');
+let Airtable = require('airtable');
 
-let createButtons = (...btns) => {
-	let ctas = btns.map(function(btn) {
-		let [type, label, url] = btn.split('|');
-		let button = { type, label, url };
-		return button;
+// Lib Helper Methods
+let errorHandler = (resolve, reject) => (error, record) => {
+	if (error) {
+		console.trace();
+		reject({ error });
+		return;
+	}
+
+	resolve(record);
+}
+
+let getOnlyValuesFromData = (data) => {
+	let newData = {};
+
+	for (let key in data) {
+		if (data[key] !== undefined) newData[key] = data[key];
+	}
+
+	return newData;
+}
+
+// Lib Methods
+let getTable = (tableName) => (baseID) => {
+	let base = Airtable.base(baseID);
+	let table = base(tableName);
+	return table;
+}
+
+let getDataFromTable = (table) => (filterQuery = {}) => {
+	return new Promise((resolve, reject) => {
+		table.select(filterQuery)
+
+		.firstPage(
+			errorHandler(resolve, reject)
+		);
 	});
-
-	return ctas;
 }
 
-let createQuickReply = (label, metadata, description) => {
-	return { label, metadata, description };
+let getAllDataFromTable = (table) => (filterQuery = {}) => {
+	return new Promise((resolve, reject) => {
+		table.select(filterQuery)
+
+		.all(
+			errorHandler(resolve, reject)
+		);
+	});
 }
 
-let createQuickReplyByName = (key) => {
-	let quick_reply = NAMED_QUICK_REPLIES[key];
-	return quick_reply;
+let findTableData = (table) => (data_ID) => {
+	return new Promise(function(resolve, reject) {
+		table.find(
+			data_ID,
+			errorHandler(resolve, reject)
+		);
+	});
 }
 
-let createQuickReplyTextInput = (label, metadata, keyboard = 'default') => {
-	let type = 'text_input';
-	let text_input = { keyboard, label, metadata };
-	let quick_reply = { type, text_input };
-	return quick_reply;
+let createTableData = (table) => (data) => {
+	let newData = getOnlyValuesFromData(data);
+	return new Promise(function(resolve, reject) {
+		table.create(
+			newData,
+			errorHandler(resolve, reject)
+		);
+	});
 }
 
-let createMessageEvent = (recipient_id, message_data) => {
-	let type = 'message_create';
-	let target = { recipient_id };
-	let message_create = { target, message_data };
-	let event = { type, message_create };
-	return { event };
+let updateTableData = (table) => (updateData, dataRecord) => {
+	let newData = getOnlyValuesFromData(updateData);
+
+	return new Promise((resolve, reject) => {
+		table.update(
+			dataRecord.id,
+			newData,
+			errorHandler(resolve, reject)
+		);
+	});
+}
+
+let destroyTableData = (table) => (data_ID) => {
+	return new Promise(function(resolve, reject) {
+		table.destroy(
+			data_ID,
+			errorHandler(resolve, reject)
+		);
+	});
 }
 
 module.exports = {
-	createButtons,
-	createQuickReply,
-	createQuickReplyByName,
-	createQuickReplyTextInput,
-	createMessageEvent,
+	getTable,
+	getDataFromTable,
+	getAllDataFromTable,
+	findTableData,
+	createTableData,
+	updateTableData,
+	destroyTableData,
 }
