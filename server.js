@@ -10,6 +10,9 @@ let getServiceDescription = require('./routes/getServiceDescription');
 let getServiceProviders = require('./routes/getServiceProviders');
 
 app.get('/ai', handleAI);
+app.get('/providers', getProviders);
+app.get('/
+
 app.get('/provider/services', getProviderServices);
 app.get('/provider/promos', getProviderPromos);
 app.get('/promo/details', getPromoDetails);
