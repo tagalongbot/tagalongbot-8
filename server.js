@@ -13,10 +13,15 @@ app.get('/ai', handleAI);
 // app.get('/providers', getProviders);
 // app.get('/
 
+// Providers
 app.get('/provider/services', getProviderServices);
 app.get('/provider/promos', getProviderPromos);
+
+// Promotions
 app.get('/promo/details', getPromoDetails);
 app.get('/promo/providers', getPromoProviders);
+
+//Services
 app.get('/service/description', getServiceDescription);
 app.get('/service/providers', getServiceProviders);
 
