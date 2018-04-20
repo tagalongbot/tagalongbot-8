@@ -1,33 +1,40 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
 let { shuffleArray } = require('../libs/helpers');
+
+let { searchProviders } = require('../libs/providers');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 // Get Tables
 let getUsersTable = getTable('Users');
-let getPracticeTable = getTable('Practices');
-let getServicesTable = getTable('Services');
+let getPromosTable = getTable('Promos');
 
 // Tables
 let usersTable = getUsersTable(USERS_BASE_ID);
-let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
-// let servicesTable = getServicesTable(SERVICES_BASE_ID);
 
 // Get Data
 let getUsers = getAllDataFromTable(usersTable);
-let getPractices = getAllDataFromTable(practiceTable);
-// let getServices = getAllDataFromTable(servicesTable);
-
-// Create Data
-let createNewUser = createTableData(usersTable);
-
-// Update Data
-let updateUser = updateTableData(usersTable);
 
 // Search Methods
 let searchPromotions = async (data, search_type) => {
 	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
 
+  let providers = await searchProviders({
+    search_providers_state: search_providers_state, 
+    search_providers_city: search_providers_city, 
+    search_providers_zip_code: search_providers_zip_code,
+  });
+  
+  let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
+
+  for (let baseID of providersBaseIDs) {
+    
+    let getPromos = getAllDataFromTable(promosTable);
+
+  }
+  
+  
+  
 	let filterByFormula = '';
 	if (search_type === 'state') {
 		filterByFormula = `{Practice State} = '${search_providers_state.trim().toLowerCase()}'`;
