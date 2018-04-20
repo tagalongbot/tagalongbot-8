@@ -5,17 +5,13 @@ let { getTable, getAllDataFromTable, createTableData, updateTableData } = requir
 // Get Tables
 let getUsersTable = getTable('Users');
 let getPracticeTable = getTable('Practices');
-let getServicesTable = getTable('Services');
+let getPromosTable = getTable('Promos');
 
 // Tables
-let usersTable = getUsersTable(USERS_BASE_ID);
 let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
-// let servicesTable = getServicesTable(SERVICES_BASE_ID);
 
 // Get Data
-let getUsers = getAllDataFromTable(usersTable);
 let getPractices = getAllDataFromTable(practiceTable);
-// let getServices = getAllDataFromTable(servicesTable);
 
 // Create Data
 let createNewUser = createTableData(usersTable);
