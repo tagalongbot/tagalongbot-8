@@ -23,17 +23,17 @@ let getPractices = getAllDataFromTable(practiceTable);
 // Create Data
 let createNewUser = createTableData(usersTable);
 
-let searchProviders = async (data) => {
+let searchProviders = async (data, search_type) => {
 	let { search_state, search_city, search_zip_code, search_provider_code } = data;
 
 	let filterByFormula = '';
-	if (search_state) {
+	if (search_type === 'state') {
 		filterByFormula = `{Practice State} = '${search_state.trim().toLowerCase()}'`;
-	} else if (search_city) {
+	} else if (search_type === 'city') {
 		filterByFormula = `{Practice City} = '${search_city.trim().toLowerCase()}'`;
-	} else if (search_zip_code) {
+	} else if (search_type === 'zip_code') {
 		filterByFormula = `{Practice Zip Code} = '${search_zip_code.trim().toLowerCase()}'`;
-	} else if (search_provider_code) {
+	} else if (search_type === 'code') {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
 	}
 
@@ -73,6 +73,7 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
 
 let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;
+
 	let first_name = query['first name'];
 	let last_name = query['last name'];
 	let gender = query['gender'];
