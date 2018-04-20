@@ -1,4 +1,4 @@
-let { PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
 let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData, destroyTableData } = require('../libs/data');
 
@@ -38,6 +38,7 @@ let searchProviders = async (data) => {
 	}
 
 	let providers = await getPractices({ filterByFormula });
+  console.log(providers);
 	return providers;
 }
 
@@ -50,8 +51,7 @@ let searchUser = async ({ messenger_user_id }) => {
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
-  console.log('Provider Image', provider['Main Provider Image']);
-  let image_url = provider['Main Provider Image'];
+  let image_url = provider['Main Provider Image'][0].url;
 
   let btn1 = {
     title: 'View Services',
@@ -71,7 +71,7 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   return element;
 }
 
-let getProviders = ({ query }, res) => {
+let getProviders = async ({ query }, res) => {
 	let first_name = query['first name'];
 	let last_name = query['last name'];
 	let gender = query['gender'];
@@ -79,8 +79,8 @@ let getProviders = ({ query }, res) => {
 
 	let { search_state, search_city, search_zip_code, search_provider_code } = query;
 
-	let providers = searchProviders(query);
-	let user = searchUser({ messenger_user_id });
+	let providers = await searchProviders(query);
+	let user = await searchUser({ messenger_user_id });
 
 	if (!user) {
 		let newUserData = {
@@ -91,8 +91,8 @@ let getProviders = ({ query }, res) => {
 			'Gender': gender,
 			'State': search_state ? search_state.trim().toLowerCase() : null,
 			'City': search_city ? search_city.trim().toLowerCase() : null,
-			'Zip Code': search_zip_code ? search_zip_code.trim().toLowerCase() : null,
-			'Last Zip Code Searched': search_zip_code ? search_zip_code.trim().toLowerCase() : null,
+			'Zip Code': search_zip_code ? Number(search_zip_code.trim()) : null,
+			'Last Zip Code Searched': search_zip_code ? Number(search_zip_code.trim()) : null,
 		}
 
 		let newUser = await createNewUser(newUserData);
