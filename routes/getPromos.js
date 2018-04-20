@@ -17,37 +17,39 @@ let getUsers = getAllDataFromTable(usersTable);
 
 // Search Methods
 let searchPromotions = async (data, search_type) => {
-	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
+	let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
 
   let providers = await searchProviders({
-    search_providers_state: search_providers_state, 
-    search_providers_city: search_providers_city, 
-    search_providers_zip_code: search_providers_zip_code,
+    search_providers_state: search_promos_state, 
+    search_providers_city: search_promos_city, 
+    search_providers_zip_code: search_promos_zip_code,
   });
-  
+
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
 
-  for (let baseID of providersBaseIDs) {
-    
-    let getPromos = getAllDataFromTable(promosTable);
-
-  }
-  
-  
-  
-	let filterByFormula = '';
+  let filterByFormula = '';
 	if (search_type === 'state') {
-		filterByFormula = `{Practice State} = '${search_providers_state.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice State} = '${search_promos_state.trim().toLowerCase()}'`;
 	} else if (search_type === 'city') {
-		filterByFormula = `{Practice City} = '${search_providers_city.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice City} = '${search_promos_city.trim().toLowerCase()}'`;
 	} else if (search_type === 'zip_code') {
-		filterByFormula = `{Practice Zip Code} = '${search_providers_zip_code.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice Zip Code} = '${search_promos_zip_code.trim().toLowerCase()}'`;
 	} else if (search_type === 'code') {
-		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice Code} = '${search_promo_code.trim().toLowerCase()}'`;
 	}
 
-	let providers = await getPractices({ filterByFormula });
-	return providers;
+  console.log('Formula', filterByFormula);
+  let allPromos = [];
+  for (let baseID of providersBaseIDs) {
+    let promosTable = getPromosTable(baseID);
+    let getPromos = getAllDataFromTable(promosTable);
+    let promos = await getPromos({ filterByFormula });
+    
+    allPromos = allPromos.concat(promos);
+  }
+  
+  console.log(allPromos);
+  return allPromos;
 }
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {

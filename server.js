@@ -3,13 +3,13 @@ let app = express();
 
 let handleAI = require('./routes/ai');
 
-// Providers	
+// Providers
 let getProviders = require('./routes/getProviders');
 let getProviderServices = require('./routes/getProviderServices');
 let getProviderPromos = require('./routes/getProviderPromos');
 
 // Promos
-// let getPromos = require('./routes/getPromos');
+let getPromos = require('./routes/getPromos');
 let getPromoDetails = require('./routes/getPromoDetails');
 let getPromoProviders = require('./routes/getPromoProviders');
 
@@ -18,6 +18,7 @@ let getPromoProviders = require('./routes/getPromoProviders');
 let getServiceDescription = require('./routes/getServiceDescription');
 let getServiceProviders = require('./routes/getServiceProviders');
 
+// ROUTES CONFIGURATION
 app.get('/ai', handleAI);
 // app.get('/providers', getProviders);
 
@@ -27,11 +28,11 @@ app.get('/provider/services', getProviderServices);
 app.get('/provider/promos', getProviderPromos);
 
 // Promotions
-// app.get('/promos', getPromos);
+app.get('/promos/:search_type', getPromos);
 app.get('/promo/details', getPromoDetails);
 app.get('/promo/providers', getPromoProviders);
 
-//Services
+// Services
 // app.get('/services', getServices);
 app.get('/service/description', getServiceDescription);
 app.get('/service/providers', getServiceProviders);

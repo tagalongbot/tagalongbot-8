@@ -39,6 +39,8 @@ let searchProviders = async (data, search_type) => {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
 	}
 
+  // Concatenating Search Formula
+  filterByFormula = `AND({Active?}, ${filterByFormula})`;
 	let providers = await getPractices({ filterByFormula });
 	return providers;
 }
