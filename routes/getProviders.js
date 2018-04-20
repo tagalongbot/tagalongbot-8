@@ -1,57 +1,25 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
+let { BASEURL, USERS_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
 let { shuffleArray } = require('../libs/helpers');
+
+let { searchProviders } = require('../libs/providers');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 // Get Tables
 let getUsersTable = getTable('Users');
-let getPracticeTable = getTable('Practices');
-let getServicesTable = getTable('Services');
-
-// Tables
 let usersTable = getUsersTable(USERS_BASE_ID);
-let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
-// let servicesTable = getServicesTable(SERVICES_BASE_ID);
 
-// Get Data
 let getUsers = getAllDataFromTable(usersTable);
-let getPractices = getAllDataFromTable(practiceTable);
-// let getServices = getAllDataFromTable(servicesTable);
-
-// Create Data
 let createNewUser = createTableData(usersTable);
-
-// Update Data
 let updateUser = updateTableData(usersTable);
 
-// Search Methods
-let searchProviders = async (data, search_type) => {
-	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
-
-	let filterByFormula = '';
-	if (search_type === 'state') {
-		filterByFormula = `{Practice State} = '${search_providers_state.trim().toLowerCase()}'`;
-	} else if (search_type === 'city') {
-		filterByFormula = `{Practice City} = '${search_providers_city.trim().toLowerCase()}'`;
-	} else if (search_type === 'zip_code') {
-		filterByFormula = `{Practice Zip Code} = '${search_providers_zip_code.trim().toLowerCase()}'`;
-	} else if (search_type === 'code') {
-		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
-	}
-
-  // Concatenating Search Formula
-  filterByFormula = `AND({Active?}, ${filterByFormula})`;
-	let providers = await getPractices({ filterByFormula });
-	return providers;
-}
-
+// Helper Methods
 let searchUser = async ({ messenger_user_id }) => {
 	let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
 	let [user] = await getUsers({ filterByFormula });
 	return user;
 }
 
-// Create and Update User
 let createOrUpdateUser = async (user, query) => {
   let first_name = query['first name'];
 	let last_name = query['last name'];
@@ -122,6 +90,7 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   return element;
 }
 
+// Main
 let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;
 
