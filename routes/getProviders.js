@@ -25,15 +25,15 @@ let updateUser = updateTableData(usersTable);
 
 // Search Methods
 let searchProviders = async (data, search_type) => {
-	let { search_state, search_city, search_zip_code, search_provider_code } = data;
+	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
 
 	let filterByFormula = '';
 	if (search_type === 'state') {
-		filterByFormula = `{Practice State} = '${search_state.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice State} = '${search_providers_state.trim().toLowerCase()}'`;
 	} else if (search_type === 'city') {
-		filterByFormula = `{Practice City} = '${search_city.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice City} = '${search_providers_city.trim().toLowerCase()}'`;
 	} else if (search_type === 'zip_code') {
-		filterByFormula = `{Practice Zip Code} = '${search_zip_code.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice Zip Code} = '${search_providers_zip_code.trim().toLowerCase()}'`;
 	} else if (search_type === 'code') {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
 	}
@@ -124,8 +124,8 @@ let getProviders = async ({ query, params }, res) => {
 
   let first_name = query['first name'];
 	let messenger_user_id = query['messenger user id'];
-  
-	let providers = await searchProviders(query);
+
+	let providers = await searchProviders(query, search_type);
 	let user = await searchUser({ messenger_user_id });
 
 	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
