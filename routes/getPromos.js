@@ -1,4 +1,4 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
+let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
 let { shuffleArray } = require('../libs/helpers');
 
@@ -6,14 +6,7 @@ let { searchProviders } = require('../libs/providers');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 // Get Tables
-let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
-
-// Tables
-let usersTable = getUsersTable(USERS_BASE_ID);
-
-// Get Data
-let getUsers = getAllDataFromTable(usersTable);
 
 // Search Methods
 let searchPromotions = async (data, search_type) => {
@@ -34,30 +27,30 @@ let searchPromotions = async (data, search_type) => {
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
     let promos = await getPromos({ filterByFormula });
-    console.log(promos);
     
     allPromos = allPromos.concat(promos);
   }
   
-  console.log(allPromos);
+  // Need for searching with By Expiration Date
+  // console.log('All Promos', allPromos);
   return allPromos;
 }
 
-let toGalleryElement = ({ id: provider_id, fields: provider }) => {
-  let title = provider['Practice Name'].slice(0, 80);
-  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
-  let image_url = provider['Main Provider Image'][0].url;
+let toGalleryElement = ({ id: promo_id, fields: promo }) => {
+  let title = promo['Promotion Name'].slice(0, 80);
+  let subtitle = promo['Terms'];
+  let image_url = promo['Image'][0].url;
 
   let btn1 = {
-    title: 'View Services',
+    title: 'View Promo Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/services?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: `${BASEURL}/promo/details?promo_id=${promo_id}`
   }
 
   let btn2 = {
-    title: 'View Promos',
+    title: 'Find Promo Providers',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: `${BASEURL}/promo/providers?promo_id=${promo_id}`
   }
 
   let buttons = [btn1, btn2];
