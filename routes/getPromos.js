@@ -1,17 +1,22 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
+let { shuffleArray } = require('../libs/helpers');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 // Get Tables
 let getUsersTable = getTable('Users');
 let getPracticeTable = getTable('Practices');
-let getPromosTable = getTable('Promos');
+let getServicesTable = getTable('Services');
 
 // Tables
+let usersTable = getUsersTable(USERS_BASE_ID);
 let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
+// let servicesTable = getServicesTable(SERVICES_BASE_ID);
 
 // Get Data
+let getUsers = getAllDataFromTable(usersTable);
 let getPractices = getAllDataFromTable(practiceTable);
+// let getServices = getAllDataFromTable(servicesTable);
 
 // Create Data
 let createNewUser = createTableData(usersTable);
@@ -20,76 +25,22 @@ let createNewUser = createTableData(usersTable);
 let updateUser = updateTableData(usersTable);
 
 // Search Methods
-let searchProviders = async (data, search_type) => {
-	let { search_state, search_city, search_zip_code, search_provider_code } = data;
+let searchPromotions = async (data, search_type) => {
+	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
 
 	let filterByFormula = '';
 	if (search_type === 'state') {
-		filterByFormula = `{Practice State} = '${search_state.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice State} = '${search_providers_state.trim().toLowerCase()}'`;
 	} else if (search_type === 'city') {
-		filterByFormula = `{Practice City} = '${search_city.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice City} = '${search_providers_city.trim().toLowerCase()}'`;
 	} else if (search_type === 'zip_code') {
-		filterByFormula = `{Practice Zip Code} = '${search_zip_code.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice Zip Code} = '${search_providers_zip_code.trim().toLowerCase()}'`;
 	} else if (search_type === 'code') {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
 	}
 
 	let providers = await getPractices({ filterByFormula });
 	return providers;
-}
-
-let searchUser = async ({ messenger_user_id }) => {
-	let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
-	let [user] = await getUsers({ filterByFormula });
-	return user;
-}
-
-// Create and Update User
-let createOrUpdateUser = async (user, query) => {
-  let first_name = query['first name'];
-	let last_name = query['last name'];
-	let gender = query['gender'];
-	let messenger_user_id = query['messenger user id'];
-
-  let { search_providers_state, search_providers_city, search_providers_zip_code } = query;
-
-  let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;
-  let last_city_searched = search_providers_city ? search_providers_city.trim().toLowerCase() : null;
-  let last_zip_code_searched = search_providers_zip_code ? Number(search_providers_zip_code.trim()) : null;
-  
-  if (!user) {
-		let newUserData = {
-			'messenger user id': messenger_user_id,
-			'User Type': 'CONSUMER',
-			'First Name': first_name,
-			'Last Name': last_name,
-			'Gender': gender,
-			'Last State Searched': last_state_searched,
-			'Last City Searched': last_city_searched,
-			'Last Zip Code Searched': last_zip_code_searched,
-		}
-
-		let newUser = await createNewUser(newUserData);
-    return newUser;
-	}
-  
-  
-  let updateUserData = {};
-  
-  if (last_state_searched) {
-    updateUserData['Last State Searched'] = last_state_searched;
-  }
-  
-  if (last_city_searched) {
-    updateUserData['Last City Searched'] = last_city_searched;
-  }
-  
-  if (last_zip_code_searched) {
-    updateUserData['Last Zip Code Searched'] = last_zip_code_searched;
-  }
-  
-  let updatedUser = await updateUser(updateUserData, user);
-  return updatedUser;
 }
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
@@ -115,21 +66,25 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   return element;
 }
 
-let getProviders = async ({ query, params }, res) => {
+let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
 
   let first_name = query['first name'];
 	let messenger_user_id = query['messenger user id'];
-  
-	let providers = await searchProviders(query);
-	let user = await searchUser({ messenger_user_id });
 
-	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
+	let promotions = await searchPromotions(query, search_type);
 
-	let textMsg = { text: `Here's what I found ${first_name}` };
-	let providerGallery = createGallery(providers.map(toGalleryElement));
+  if (!promotions[0]) {
+    let redirect_to_blocks = ['No Promos Found'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
 
-	let messages = [textMsg, providerGallery];
+  let textMsg = { text: `Here's are some promotions I found ${first_name}` };
+  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement);
+	let promotionsGallery = createGallery(randomPromotions);
+
+	let messages = [textMsg, promotionsGallery];
 	res.send({ messages });
 }
 
@@ -140,7 +95,7 @@ let handleErrors = (req, res) => (error) => {
 }
 
 module.exports = (req, res) => {
-	getProviders(req, res)
+	getPromos(req, res)
 
 	.catch(
 		handleErrors(req, res)

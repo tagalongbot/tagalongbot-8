@@ -1,5 +1,6 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
+let { shuffleArray } = require('../libs/helpers');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 // Get Tables
@@ -60,7 +61,7 @@ let createOrUpdateUser = async (user, query) => {
   let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;
   let last_city_searched = search_providers_city ? search_providers_city.trim().toLowerCase() : null;
   let last_zip_code_searched = search_providers_zip_code ? Number(search_providers_zip_code.trim()) : null;
-  
+
   if (!user) {
 		let newUserData = {
 			'messenger user id': messenger_user_id,
@@ -125,15 +126,22 @@ let getProviders = async ({ query, params }, res) => {
   let first_name = query['first name'];
 	let messenger_user_id = query['messenger user id'];
 
-	let providers = await searchProviders(query, search_type);
 	let user = await searchUser({ messenger_user_id });
-
 	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
 
-	let textMsg = { text: `Here's what I found ${first_name}` };
-	let providerGallery = createGallery(providers.map(toGalleryElement));
+	let providers = await searchProviders(query, search_type);
 
-	let messages = [textMsg, providerGallery];
+  if (!providers[0]) {
+    let redirect_to_blocks = ['No Providers Found'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  let textMsg = { text: `Here's are some providers I found ${first_name}` };
+  let randomProviders = shuffleArray(providers).slice(0, 10).map(toGalleryElement);
+	let providersGallery = createGallery(randomProviders);
+
+	let messages = [textMsg, providersGallery];
 	res.send({ messages });
 }
 
