@@ -8,22 +8,27 @@ let router = express.Router();
 // Get Tables
 let getUsersTable = getTable('Users');
 let getPracticeTable = getTable('Practices');
-// let getUsersTable = getTable('Services');
+let getServicesTable = getTable('Services');
 
 // Tables
-let usersTable = getPracticeTable(USERS_BASE_ID);
-let usersTable = getPracticeTable(USERS_BASE_ID);
+let usersTable = getUsersTable(USERS_BASE_ID);
+let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
+// let servicesTable = getServicesTable(SERVICES_BASE_ID);
 
-let getUsers = getAllDataFromTable();
-let getServices = getAllDataFromTable(SERVICES_BASE_ID);
-let getPractices = getAllDataFromTable(PRACTICE_DATABASE_BASE_ID);
+// Get Data
+let getUsers = getAllDataFromTable(usersTable);
+let getPractices = getAllDataFromTable(practiceTable);
+// let getServices = getAllDataFromTable(servicesTable);
+
+// Create Data
+let createNewUser = createTableData(usersTable);
 
 let searchProviders = async (data) => {
 	let { search_state, search_city, search_zip_code, search_provider_code } = data;
 
 	let filterByFormula = '';
 	if (search_state) {
-		filterByFormula = `{Practice State} = '${search_state..trim().toLowerCase()}'`;
+		filterByFormula = `{Practice State} = '${search_state.trim().toLowerCase()}'`;
 	} else if (search_city) {
 		filterByFormula = `{Practice City} = '${search_city.trim().toLowerCase()}'`;
 	} else if (search_zip_code) {
@@ -34,6 +39,12 @@ let searchProviders = async (data) => {
 
 	let providers = await getPractices({ filterByFormula });
 	return providers;
+}
+
+let searchUser = async ({ messenger_user_id }) => {
+	let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
+	let [user] = await getUsers({ filterByFormula });
+	return user;
 }
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
@@ -62,13 +73,50 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
 
 let getProviders = ({ query }, res) => {
 	let first_name = query['first name'];
-	let providers = searchProviders(query);
-	let textMsg = `Here's what I found ${first_name}`;
+	let last_name = query['last name'];
+	let gender = query['gender'];
+	let messenger_user_id = query['messenger user id'];
 
+	let { search_state, search_city, search_zip_code, search_provider_code } = query;
+
+	let providers = searchProviders(query);
+	let user = searchUser({ messenger_user_id });
+
+	if (!user) {
+		let newUserData = {
+			'messenger user id': messenger_user_id,
+			'User Type': 'CONSUMER',
+			'First Name': first_name,
+			'Last Name': last_name,
+			'Gender': gender,
+			'State': search_state ? search_state.trim().toLowerCase() : null,
+			'City': search_city ? search_city.trim().toLowerCase() : null,
+			'Zip Code': search_zip_code ? search_zip_code.trim().toLowerCase() : null,
+			'Last Zip Code Searched': search_zip_code ? search_zip_code.trim().toLowerCase() : null,
+		}
+
+		let newUser = await createNewUser(newUserData);
+		if (!newUser) {
+			console.log('New User Failed:', newUser);
+		}
+	}
+
+	let textMsg = { text: `Here's what I found ${first_name}` };
 	let providerGallery = createGallery(providers.map(toGalleryElement));
 
-	let messages = [{ text: textMsg }, providerGallery];
+	let messages = [textMsg, providerGallery];
 	res.send({ messages });
 }
 
-module.exports = getProviders;
+let handleErrors = (req, res) => (error) => {
+	let source = 'airtable';
+	res.send({ source, error });
+}
+
+module.exports = (req, res) => {
+	getProviders(req, res)
+
+	.catch(
+		handleErrors(req, res)
+	);
+}
