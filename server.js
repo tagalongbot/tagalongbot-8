@@ -22,7 +22,7 @@ app.get('/ai', handleAI);
 // app.get('/providers', getProviders);
 
 // Providers
-app.get('/providers', getProviders);
+app.get('/providers/:search_type', getProviders);
 app.get('/provider/services', getProviderServices);
 app.get('/provider/promos', getProviderPromos);
 

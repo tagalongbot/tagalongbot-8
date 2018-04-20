@@ -71,7 +71,8 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   return element;
 }
 
-let getProviders = async ({ query }, res) => {
+let getProviders = async ({ query, params }, res) => {
+  let { search_type } = params;
 	let first_name = query['first name'];
 	let last_name = query['last name'];
 	let gender = query['gender'];
