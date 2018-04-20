@@ -1,9 +1,6 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
-let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData, destroyTableData } = require('../libs/data');
-
-let express = require('express');
-let router = express.Router();
+let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 // Get Tables
 let getUsersTable = getTable('Users');
@@ -23,6 +20,10 @@ let getPractices = getAllDataFromTable(practiceTable);
 // Create Data
 let createNewUser = createTableData(usersTable);
 
+// Update Data
+let updateUser = updateTableData(usersTable);
+
+// Search Methods
 let searchProviders = async (data, search_type) => {
 	let { search_state, search_city, search_zip_code, search_provider_code } = data;
 
@@ -47,6 +48,40 @@ let searchUser = async ({ messenger_user_id }) => {
 	let [user] = await getUsers({ filterByFormula });
 	return user;
 }
+
+// Create and Update User
+let createOrUpdateUser = async (user, query) => {
+  let first_name = query['first name'];
+	let last_name = query['last name'];
+	let gender = query['gender'];
+	let messenger_user_id = query['messenger user id'];
+
+  let { search_state, search_city, search_zip_code, search_provider_code } = query;
+
+  if (!user) {
+		let newUserData = {
+			'messenger user id': messenger_user_id,
+			'User Type': 'CONSUMER',
+			'First Name': first_name,
+			'Last Name': last_name,
+			'Gender': gender,
+			'Last State Searched': search_state ? search_state.trim().toLowerCase() : null,
+			'Last City Searched': search_city ? search_city.trim().toLowerCase() : null,
+			'Last Zip Code Searched': search_zip_code ? Number(search_zip_code.trim()) : null,
+		}
+
+		let newUser = await createNewUser(newUserData);
+	}
+  
+  let updateUserData = {
+    'Last State Searched': search_state ? search_state.trim().toLowerCase() : null,
+    'Last City Searched': search_city ? search_city.trim().toLowerCase() : null,
+    'Last Zip Code Searched': search_zip_code ? Number(search_zip_code.trim()) : null,
+  }
+
+  let updatedUser = await updateUser(updateUserData, user);
+}
+
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
@@ -74,34 +109,10 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
 let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;
 
-	let first_name = query['first name'];
-	let last_name = query['last name'];
-	let gender = query['gender'];
-	let messenger_user_id = query['messenger user id'];
-
-	let { search_state, search_city, search_zip_code, search_provider_code } = query;
-
 	let providers = await searchProviders(query);
 	let user = await searchUser({ messenger_user_id });
 
-	if (!user) {
-		let newUserData = {
-			'messenger user id': messenger_user_id,
-			'User Type': 'CONSUMER',
-			'First Name': first_name,
-			'Last Name': last_name,
-			'Gender': gender,
-			'State': search_state ? search_state.trim().toLowerCase() : null,
-			'City': search_city ? search_city.trim().toLowerCase() : null,
-			'Zip Code': search_zip_code ? Number(search_zip_code.trim()) : null,
-			'Last Zip Code Searched': search_zip_code ? Number(search_zip_code.trim()) : null,
-		}
-
-		let newUser = await createNewUser(newUserData);
-		if (!newUser) {
-			console.log('New User Failed:', newUser);
-		}
-	}
+	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
 
 	let textMsg = { text: `Here's what I found ${first_name}` };
 	let providerGallery = createGallery(providers.map(toGalleryElement));
