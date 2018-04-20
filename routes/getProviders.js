@@ -39,7 +39,6 @@ let searchProviders = async (data, search_type) => {
 	}
 
 	let providers = await getPractices({ filterByFormula });
-  console.log(providers);
 	return providers;
 }
 
@@ -56,8 +55,12 @@ let createOrUpdateUser = async (user, query) => {
 	let gender = query['gender'];
 	let messenger_user_id = query['messenger user id'];
 
-  let { search_state, search_city, search_zip_code, search_provider_code } = query;
+  let { search_providers_state, search_providers_city, search_providers_zip_code } = query;
 
+  let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;
+  let last_city_searched = search_providers_city ? search_providers_city.trim().toLowerCase() : null;
+  let last_zip_code_searched = search_providers_zip_code ? Number(search_providers_zip_code.trim()) : null;
+  
   if (!user) {
 		let newUserData = {
 			'messenger user id': messenger_user_id,
@@ -65,23 +68,35 @@ let createOrUpdateUser = async (user, query) => {
 			'First Name': first_name,
 			'Last Name': last_name,
 			'Gender': gender,
-			'Last State Searched': search_state ? search_state.trim().toLowerCase() : null,
-			'Last City Searched': search_city ? search_city.trim().toLowerCase() : null,
-			'Last Zip Code Searched': search_zip_code ? Number(search_zip_code.trim()) : null,
+			'Last State Searched': last_state_searched,
+			'Last City Searched': last_city_searched,
+			'Last Zip Code Searched': last_zip_code_searched,
 		}
 
 		let newUser = await createNewUser(newUserData);
+    return newUser;
 	}
   
-  let updateUserData = {
-    'Last State Searched': search_state ? search_state.trim().toLowerCase() : null,
-    'Last City Searched': search_city ? search_city.trim().toLowerCase() : null,
-    'Last Zip Code Searched': search_zip_code ? Number(search_zip_code.trim()) : null,
+  
+  let updateUserData = {};
+  
+  if (last_state_searched) {
+    updateUserData['Last State Searched'] = last_state_searched;
   }
+  
+  if (last_city_searched) {
+    updateUserData['Last City Searched'] = last_city_searched;
+  }
+  
+  if (last_zip_code_searched) {
+    updateUserData['Last Zip Code Searched'] = last_zip_code_searched;
+  }
+  
+  [last_state_sear
 
   let updatedUser = await updateUser(updateUserData, user);
+  return updatedUser;
 }
-
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
@@ -109,6 +124,9 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
 let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;
 
+  let first_name = query['first name'];
+	let messenger_user_id = query['messenger user id'];
+  
 	let providers = await searchProviders(query);
 	let user = await searchUser({ messenger_user_id });
 
@@ -122,6 +140,7 @@ let getProviders = async ({ query, params }, res) => {
 }
 
 let handleErrors = (req, res) => (error) => {
+  console.log(error);
 	let source = 'airtable';
 	res.send({ source, error });
 }
