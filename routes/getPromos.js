@@ -24,26 +24,17 @@ let searchPromotions = async (data, search_type) => {
     search_providers_city: search_promos_city, 
     search_providers_zip_code: search_promos_zip_code,
   });
-
+  
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
 
-  let filterByFormula = '';
-	if (search_type === 'state') {
-		filterByFormula = `{Practice State} = '${search_promos_state.trim().toLowerCase()}'`;
-	} else if (search_type === 'city') {
-		filterByFormula = `{Practice City} = '${search_promos_city.trim().toLowerCase()}'`;
-	} else if (search_type === 'zip_code') {
-		filterByFormula = `{Practice Zip Code} = '${search_promos_zip_code.trim().toLowerCase()}'`;
-	} else if (search_type === 'code') {
-		filterByFormula = `{Practice Code} = '${search_promo_code.trim().toLowerCase()}'`;
-	}
+  let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
 
-  console.log('Formula', filterByFormula);
   let allPromos = [];
   for (let baseID of providersBaseIDs) {
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
     let promos = await getPromos({ filterByFormula });
+    console.log(promos);
     
     allPromos = allPromos.concat(promos);
   }
