@@ -51,9 +51,11 @@ let getPromoProviders = async ({ query, params }, res) => {
 
   let matchedProviders = [];
   for(let provider of providers) {
+    let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
     let promosTable = getPromosTable(provider.fields['Practice Base ID']); 
     let getPromos = getAllDataFromTable(promosTable);
-    let 
+    let promos = await getPromos({ filterByFormula });
+    
   }
   
   
