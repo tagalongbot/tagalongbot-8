@@ -1,4 +1,4 @@
-let { BASEURL } = process.env;
+let { BASEURL, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 let { createGallery } = require('../libs/bots');
 let { shuffleArray } = require('../libs/helpers');
 
@@ -8,7 +8,7 @@ let { getTable, getAllDataFromTable } = require('../libs/data');
 let getServicesTable = getTable('Services');
 
 // Search Methods
-let searchPromotions = async (data, search_type) => {
+let searchServices = async (data, search_type) => {
 	let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
 
   let providers = await searchProviders({
