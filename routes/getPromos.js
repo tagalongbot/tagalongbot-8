@@ -27,7 +27,7 @@ let searchPromotions = async (data, search_type) => {
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
     let promos = await getPromos({ filterByFormula });
-    
+  
     allPromos = allPromos.concat(promos);
   }
   

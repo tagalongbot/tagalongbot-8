@@ -1,4 +1,4 @@
-let { BASEURL, SERVICES_BASE_ID } = process.env;
+let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
 let { searchProviders } = require('../libs/providers');
 let { getTable, findTableData } = require('../libs/data');
@@ -6,13 +6,9 @@ let { getTable, findTableData } = require('../libs/data');
 let express = require('express');
 let router = express.Router();
 
-let getServicesTable = getTable('Services');
-let servicesTable = getServicesTable(SERVICES_BASE_ID);
-let findService = findTableData(servicesTable);
-
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
-  let subtitle = `${provider['Main Provider']}| ${provider['Practice Address']}`;
+  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
   let image_url = provider['Main Provider Image'][0].url;
 
   let btn1 = {
@@ -43,10 +39,8 @@ let searchServiceProviders = async ({ query }, res) => {
 let getServiceProviders = async ({ query, params }, res) => {
   let { search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
   let { search_type } = params;
-  let { service_id, service_name } = query;
+  let { service_name } = query;
   
-  let service = await findService(service_id);
-
   let providers = await searchProviders({
     search_providers_state: search_service_providers_state,
     search_providers_city: search_service_providers_city,
