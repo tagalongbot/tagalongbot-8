@@ -16,7 +16,7 @@ let searchPromotions = async (data, search_type) => {
     search_providers_state: search_promos_state, 
     search_providers_city: search_promos_city, 
     search_providers_zip_code: search_promos_zip_code,
-  });
+  }, search_type);
   
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
 
