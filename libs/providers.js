@@ -1,6 +1,5 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
-let { shuffleArray } = require('../libs/helpers');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 let getPracticeTable = getTable('Practices');

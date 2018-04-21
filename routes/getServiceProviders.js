@@ -12,7 +12,7 @@ let findService = findTableData(servicesTable);
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
-  let subtitle = `${provider['Main Provider']}| ${provider['Address']}`;
+  let subtitle = `${provider['Main Provider']}| ${provider['Practice Address']}`;
   let image_url = provider['Main Provider Image'][0].url;
 
   let btn1 = {
@@ -45,8 +45,6 @@ let getServiceProviders = async ({ query, params }, res) => {
   let { search_type } = params;
   let { service_id, service_name } = query;
   
-  console.log(query);
-
   let service = await findService(service_id);
 
   let providers = await searchProviders({
@@ -54,19 +52,17 @@ let getServiceProviders = async ({ query, params }, res) => {
     search_providers_city: search_service_providers_city,
     search_providers_zip_code: search_service_providers_zip_code,
   }, search_type);
-  
+
   if (!providers[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }
-  
-  console.log(providers[0]['Practice Services']);
-  
+
   let filteredProviders = providers.filter(({ fields: provider }) => {
     return provider['Practice Services'].includes(service_name);
   });
-  
+
   if (!filteredProviders[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
