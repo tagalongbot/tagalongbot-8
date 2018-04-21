@@ -27,8 +27,8 @@ let searchPromotions = async (data, search_type) => {
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
     let promos = await getPromos({ filterByFormula });
-  
-    allPromos = allPromos.concat(promos);
+
+    allPromos = allPromos.concat({ promo_base_id: baseID, promos });
   }
 
   // Need for searching with By Expiration Date
@@ -36,7 +36,7 @@ let searchPromotions = async (data, search_type) => {
   return allPromos;
 }
 
-let toGalleryElement = ({ id: promo_id, fields: promo }) => {
+let toGalleryElement = ({ promo_base_id, promos: { id: promo_id, fields: promo } }) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
@@ -44,7 +44,7 @@ let toGalleryElement = ({ id: promo_id, fields: promo }) => {
   let btn1 = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/details?promo_id=${promo_id}`
+    url: `${BASEURL}/promo/details?promo_id=${promo_id}&promo_type=${encodeURIComponent(promo['Type'])}`
   }
 
   let btn2 = {
@@ -67,7 +67,7 @@ let getPromos = async ({ query, params }, res) => {
 
 	let promotions = await searchPromotions(query, search_type);
 
-  if (!promotions[0]) {
+  if (!promotions[0].promos[0]) {
     let redirect_to_blocks = ['No Promos Found'];
     res.send({ redirect_to_blocks });
     return;

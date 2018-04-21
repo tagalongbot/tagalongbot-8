@@ -13,19 +13,17 @@ let toGalleryElement = (promo) => ({ id: provider_id, fields: provider }) => {
     url: `${BASEURL}/promo/claim?provider_id=${provider_id}&promo_id=${promo.promoid}`
   }
 
-  let btn3 = {
+  let btn2 = {
     title: 'View More Promos',
     type: 'json_plugin_url',
     url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider.practice_name)}`
   }
   
-  let btn2 = {
+  let btn3 = {
     title: 'View Services',
     type: 'json_plugin_url',
     url: `${BASEURL}/provider/services?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider.practice_name)}`
   }
-
-  
   
   let buttons = [btn1, btn2, btn3];
   
