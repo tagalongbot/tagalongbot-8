@@ -3,21 +3,24 @@ let { createGallery } = require('../libs/bots');
 let { searchProviders } = require('../libs/providers');
 let { getTable, findTableData } = require('../libs/data');
 
-let express = require('express');
-let router = express.Router();
-
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
   let image_url = provider['Main Provider Image'][0].url;
 
   let btn1 = {
+    title: 'Claim Promotion',
+    type: 'json_plugin_url',
+    url: `${BASEURL}/promo/claim?provider_id=${provider_id}&promo_id=${promo.promoid}`
+  }
+  
+  let btn2 = {
     title: 'View Promos',
     type: 'json_plugin_url',
     url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
   }
 
-  let btn2 = {
+  let btn3 = {
     title: 'View Services',
     type: 'json_plugin_url',
     url: `${BASEURL}/provider/services?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
@@ -29,18 +32,11 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   return element;
 }
 
-let searchServiceProviders = async ({ query }, res) => {
-  let { service_id, service_name } = query;
-  let set_attributes = { service_id, service_name };
-  let redirect_to_blocks = ['Search Service Providers'];
-  res.send({ set_attributes, redirect_to_blocks });
-}
-
-let getServiceProviders = async ({ query, params }, res) => {
+let getPromoProviders = async ({ query, params }, res) => {
   let { search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
   let { search_type } = params;
   let { service_name } = query;
-  
+
   let providers = await searchProviders({
     search_providers_state: search_service_providers_state,
     search_providers_city: search_service_providers_city,
@@ -69,7 +65,4 @@ let getServiceProviders = async ({ query, params }, res) => {
   res.send({ messages });
 }
 
-router.get('/providers', searchServiceProviders);
-router.get('/providers/:search_type', getServiceProviders);
-
-module.exports = router;
+module.exports = getPromoProviders;

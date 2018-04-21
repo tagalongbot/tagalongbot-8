@@ -2,10 +2,8 @@ let { BASEURL } = process.env;
 let { createButtonMessage } = require('../libs/bots');
 let { getTable, findTableData } = require('../libs/data');
 
-// Get Tables
 let getPromosTable = getTable('Promos');
 
-// Search Methods
 let getPromo = async ({ promo_id, promo_base_id }) => {
   let promoTable = getPromosTable(promo_base_id);
   let findPromo = findTableData(promoTable);

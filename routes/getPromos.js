@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
-let { shuffleArray } = require('../libs/helpers');
+let { shuffleArray, createURL } = require('../libs/helpers');
 
 let { searchProviders } = require('../libs/providers');
 let { getTable, getAllDataFromTable } = require('../libs/data');
@@ -37,22 +37,38 @@ let searchPromotions = async (data, search_type) => {
   return { allPromos, providersBaseIDs };
 }
 
-let toGalleryElement = (providersBaseIDs) => ({ id: promo_id, fields: promo }, index) => {
+let toGalleryElement = (search_type, data, providersBaseIDs) => ({ id: promo_id, fields: promo }, index) => {
+  let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
+
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
 
   let promo_base_id = providersBaseIDs[index];
+
+  let btn1URL = createURL(`${BASEURL}/promo/details`, {
+    promo_id,
+    promo_base_id,
+    promo_type: encodeURIComponent(promo['Type']),
+  });
+  
   let btn1 = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/details?promo_id=${promo_id}&promo_base_id=${promo_base_id}&promo_type=${encodeURIComponent(promo['Type'])}`
+    url: btn1URL,
   }
 
+  let btn2URL = createURL(`${BASEURL}/promo/providers`, {
+    promo_id,
+    promo_base_id,
+    promo_type: encodeURIComponent(promo['Type']),
+    sear
+  });
+  
   let btn2 = {
     title: 'Find Promo Providers',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/providers?promo_id=${promo_id}&promo_base_id=${promo_base_id}&promo_type=${encodeURIComponent(promo['Type'])}`
+    url: btn2URL
   }
 
   let buttons = [btn1, btn2];
@@ -76,7 +92,7 @@ let getPromos = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement(providersBaseIDs));
+  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement(search_type, query, providersBaseIDs));
 	let promotionsGallery = createGallery(randomPromotions);
 
 	let messages = [textMsg, promotionsGallery];
