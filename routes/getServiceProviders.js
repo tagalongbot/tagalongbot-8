@@ -1,7 +1,10 @@
 let { BASEURL, SERVICES_BASE_ID, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
-let { searchProviders } = require('../libs/helpers');
+let { searchProviders } = require('../libs/providers');
 let { getTable, findTableData, getAllDataFromTable } = require('../libs/data');
+
+let express = require('express');
+let router = express.Router();
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
@@ -34,32 +37,39 @@ let toGalleryElement = (provider) => {
   return element;
 }
 
+let searchServiceProviders = async ({ query }, res) => {
+  let { service_id } = query;
+  let set_attributes = { service_id: service_id };
+  let redirect_to_blocks = ['Search Service Providers'];
+  res.send({ set_attributes, redirect_to_blocks });
+}
 
 let getServiceProviders = async ({ query, params }, res) => {
-  let { service_id, search_service_providers_state } = query;
-
-  if (!params['service_id'] && service_id) {
-    let set_attributes = { service_id: service_id };
-    let redirect_to_blocks = ['Search Service Providers'];
-    res.send({ set_attributes, redirect_to_blocks });
-    return;
-  }
+  let { search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
+  let { search_type } = params;
+  let { service_id } = query;
 
   let service = await findService(params['service_id']);
 
-le
-  let matchedProviders = activeProviders.filter((provider) => service.providerid === provider.providerid);
+  let providers = await searchProviders({
+    search_providers_state: search_service_providers_state || null,
+    search_providers_city: search_service_providers_city || null,
+    search_providers_zip_code: search_service_providers_zip_code || null,
+  });
 
-  if (!matchedProviders[0]) {
+  if (!providers[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let providersGalleryData = matchedProviders.map(toGalleryElement);
+  let providersGalleryData = providers.map(toGalleryElement);
   let providersGallery = createGallery(providersGalleryData);
   let messages = [providersGallery];
   res.send({ messages });
 }
 
-module.exports = getServiceProviders;
+router.get('/providers', searchServiceProviders);
+router.get('/providers/:service_id', getServiceProviders);
+
+module.exports = router;

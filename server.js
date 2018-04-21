@@ -34,6 +34,6 @@ app.get('/promo/providers', getPromoProviders);
 // Services
 app.get('/services/:service_type', getServices);
 app.get('/service/description', getServiceDescription);
-app.get('/service/providers/:service_id', getServiceProviders);
+app.use('/service', getServiceProviders);
 
 app.listen(3000, () => console.log('Running on PORT 3000'));
