@@ -45,26 +45,18 @@ let toGalleryElement = (search_type, data, providersBaseIDs) => ({ id: promo_id,
   let image_url = promo['Image'][0].url;
 
   let promo_base_id = providersBaseIDs[index];
+  let promo_type = encodeURIComponent(promo['Type']);
 
-  let btn1URL = createURL(`${BASEURL}/promo/details`, {
-    promo_id,
-    promo_base_id,
-    promo_type: encodeURIComponent(promo['Type']),
-  });
-  
+  let btn1URL = createURL(`${BASEURL}/promo/details`, { promo_id, promo_base_id, promo_type });
+
   let btn1 = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
     url: btn1URL,
   }
 
-  let btn2URL = createURL(`${BASEURL}/promo/providers`, {
-    promo_id,
-    promo_base_id,
-    promo_type: encodeURIComponent(promo['Type']),
-    sear
-  });
-  
+  let btn2URL = createURL(`${BASEURL}/promo/providers`, { search_type, search_promos_state, search_promos_city, search_promos_zip_code, promo_id, promo_base_id, promo_type, });
+
   let btn2 = {
     title: 'Find Promo Providers',
     type: 'json_plugin_url',

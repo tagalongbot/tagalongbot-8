@@ -1,7 +1,9 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
 let { searchProviders } = require('../libs/providers');
-let { getTable, findTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable } = require('../libs/data');
+
+let getPromosTable = getTable('Promos');
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
@@ -33,14 +35,12 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
 }
 
 let getPromoProviders = async ({ query, params }, res) => {
-  let { search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
-  let { search_type } = params;
-  let { service_name } = query;
+  let { search_type, search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = query;
 
   let providers = await searchProviders({
-    search_providers_state: search_service_providers_state,
-    search_providers_city: search_service_providers_city,
-    search_providers_zip_code: search_service_providers_zip_code,
+    search_providers_state: search_promos_state,
+    search_providers_city: search_promos_city,
+    search_providers_zip_code: search_promos_zip_code,
   }, search_type);
 
   if (!providers[0]) {
@@ -49,6 +49,14 @@ let getPromoProviders = async ({ query, params }, res) => {
     return;
   }
 
+  let matchedProviders = [];
+  for(let provider of providers) {
+    let promosTable = getPromosTable(provider.fields['Practice Base ID']); 
+    let getPromos = getAllDataFromTable(promosTable);
+    let 
+  }
+  
+  
   let filteredProviders = providers.filter(({ fields: provider }) => {
     return provider['Practice Services'].includes(service_name);
   });
