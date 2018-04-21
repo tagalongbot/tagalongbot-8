@@ -44,7 +44,15 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 
 let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
-  let first_name = query['first name'];
+
+  if (service_type === 'surgical') {
+    let surgical_services = await searchServices('Surgical');
+    let surgical_services_gallery_data = surgical_services.map(toGalleryElement);
+    let gallery = createGallery(surgical_services_gallery_data);
+    let messages = [gallery];
+    res.send({ messages });
+    return;
+  }
 
   let surgical_category_gallery_element = {
     title: 'Surgical Procedures',
@@ -57,11 +65,13 @@ let getServices = async ({ query, params }, res) => {
   }
 
   let non_surgical_services = await searchServices('Non Surgical');
-  let non_surgical_services_gallery_data = [surgical_category_gallery_element, ...non_surgical_services.map(toGalleryElement)];
-	let non_surgical_services_gallery = createGallery(non_surgical_services_gallery_data);
+  let non_surgical_services_gallery_data = non_surgical_services.map(toGalleryElement).slice(0, 8);
+	let gallery = createGallery([surgical_category_gallery_element, ...non_surgical_services_gallery_data]);
 
+  // Need to add load more mechanisim
+  let first_name = query['first name'];
   let textMsg = { text: `Here's are some services you can search for ${first_name}` };
-	let messages = [textMsg, , non_surgical_services_gallery];
+	let messages = [textMsg, gallery];
 	res.send({ messages });
 }
 
