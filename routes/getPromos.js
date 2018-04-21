@@ -3,7 +3,7 @@ let { createGallery } = require('../libs/bots');
 let { shuffleArray } = require('../libs/helpers');
 
 let { searchProviders } = require('../libs/providers');
-let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable } = require('../libs/data');
 
 // Get Tables
 let getPromosTable = getTable('Promos');
@@ -23,34 +23,37 @@ let searchPromotions = async (data, search_type) => {
   let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
 
   let allPromos = [];
+  let promo_base_ids = [];
   for (let baseID of providersBaseIDs) {
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
     let promos = await getPromos({ filterByFormula });
 
-    allPromos = allPromos.concat({ promo_base_id: baseID, promos });
+    allPromos = allPromos.concat(promos);
+    promo_base_ids = promo_base_ids.concat(promo_base_ids);
   }
 
   // Need for searching with By Expiration Date
   // console.log('All Promos', allPromos);
-  return allPromos;
+  return { allPromos, promo_base_ids };
 }
 
-let toGalleryElement = ({ promo_base_id, promos: { id: promo_id, fields: promo } }) => {
+let toGalleryElement = (promos_base_ids) => ({ id: promo_id, fields: promo }, index) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
 
+  let promo_base_id = promos_base_ids[index];
   let btn1 = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/details?promo_id=${promo_id}&promo_type=${encodeURIComponent(promo['Type'])}`
+    url: `${BASEURL}/promo/details?promo_id=${promo_id}&promo_base_id=${promo_base_id}&promo_type=${encodeURIComponent(promo['Type'])}`
   }
 
   let btn2 = {
     title: 'Find Promo Providers',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/providers?promo_id=${promo_id}&promo_type=${encodeURIComponent(promo['Type'])}`
+    url: `${BASEURL}/promo/providers?promo_id=${promo_id}&promo_base_id=${promo_base_id}&promo_type=${encodeURIComponent(promo['Type'])}`
   }
 
   let buttons = [btn1, btn2];
@@ -65,16 +68,16 @@ let getPromos = async ({ query, params }, res) => {
   let first_name = query['first name'];
 	let messenger_user_id = query['messenger user id'];
 
-	let promotions = await searchPromotions(query, search_type);
+	let { allPromos: promotions, promo_base_ids } = await searchPromotions(query, search_type);
 
-  if (!promotions[0].promos[0]) {
+  if (!promotions[0]) {
     let redirect_to_blocks = ['No Promos Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement);
+  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement(promo_base_ids));
 	let promotionsGallery = createGallery(randomPromotions);
 
 	let messages = [textMsg, promotionsGallery];

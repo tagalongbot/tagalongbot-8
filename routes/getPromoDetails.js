@@ -1,17 +1,25 @@
 let { BASEURL } = process.env;
 let { createButtonMessage } = require('../libs/bots');
-let { getActivePromos } = require('../libs/data');
+let { getTable, findTableData } = require('../libs/data');
+
+// Get Tables
+let getPromosTable = getTable('Promos');
+
+// Search Methods
+let getPromo = async ({ promo_id, promo_base_id }) => {
+  let findPromo = findTableData(promo_base_id);
+  let promo = await findPromo(promo_id);
+  return promo;
+}
 
 let getPromoDetails = async ({ query }, res) => {
-  let { promo_id } = query;
+  let { promo_id, promo_base_id, promo_type } = query;
 
-  let activePromos = await getActivePromos();
-  let promo = activePromos
-    .find((promo) => promo.promoid === Number(promo_id));
-
+  let promo = getPromo({ promo_id, promo_base_id });
+  
   let txtMsg = createButtonMessage(
-    promo.promo_details,
-    `Find Promo Provider|json_plugin_url|${BASEURL}/promo/providers?promo_id=${promo.promoid}`
+    promo.fields['Details'],
+    `Find Promo Provider|json_plugin_url|${BASEURL}/promo/providers?promo_id=${promo.promoid}&promo_base_id=${promo_base_id}&promo_type=${promo_type}`
   );
 
   let messages = [txtMsg];
