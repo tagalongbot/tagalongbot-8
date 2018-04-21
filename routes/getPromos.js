@@ -30,20 +30,19 @@ let searchPromotions = async (data, search_type) => {
     let promos = await getPromos({ filterByFormula });
 
     allPromos = allPromos.concat(promos);
-    promo_base_ids = promo_base_ids.concat(promo_base_ids);
   }
 
   // Need for searching with By Expiration Date
   // console.log('All Promos', allPromos);
-  return { allPromos, promo_base_ids };
+  return { allPromos, providersBaseIDs };
 }
 
-let toGalleryElement = (promos_base_ids) => ({ id: promo_id, fields: promo }, index) => {
+let toGalleryElement = (providersBaseIDs) => ({ id: promo_id, fields: promo }, index) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
 
-  let promo_base_id = promos_base_ids[index];
+  let promo_base_id = providersBaseIDs[index];
   let btn1 = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
@@ -68,7 +67,7 @@ let getPromos = async ({ query, params }, res) => {
   let first_name = query['first name'];
 	let messenger_user_id = query['messenger user id'];
 
-	let { allPromos: promotions, promo_base_ids } = await searchPromotions(query, search_type);
+	let { allPromos: promotions, providersBaseIDs } = await searchPromotions(query, search_type);
 
   if (!promotions[0]) {
     let redirect_to_blocks = ['No Promos Found'];
@@ -77,7 +76,7 @@ let getPromos = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement(promo_base_ids));
+  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement(providersBaseIDs));
 	let promotionsGallery = createGallery(randomPromotions);
 
 	let messages = [textMsg, promotionsGallery];
