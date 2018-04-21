@@ -17,7 +17,7 @@ let searchPromotions = async (data, search_type) => {
     search_providers_city: search_promos_city, 
     search_providers_zip_code: search_promos_zip_code,
   }, search_type);
-  
+
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
 
   let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
@@ -30,7 +30,7 @@ let searchPromotions = async (data, search_type) => {
   
     allPromos = allPromos.concat(promos);
   }
-  
+
   // Need for searching with By Expiration Date
   // console.log('All Promos', allPromos);
   return allPromos;
@@ -50,7 +50,7 @@ let toGalleryElement = ({ id: promo_id, fields: promo }) => {
   let btn2 = {
     title: 'Find Promo Providers',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/providers?promo_id=${promo_id}`
+    url: `${BASEURL}/promo/providers?promo_id=${promo_id}&promo_type=${encodeURIComponent(promo['Type'])}`
   }
 
   let buttons = [btn1, btn2];

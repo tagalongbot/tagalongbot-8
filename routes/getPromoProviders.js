@@ -2,28 +2,30 @@ let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
 let { getActivePromos, getActiveProviders } = require('../libs/data');
 
-let toGalleryElement = (promo) => (provider) => {
-  let title = provider.practice_name.slice(0, 80);
-  let subtitle = `${provider.first_name} ${provider.last_name} | ${provider.address}`;
-  let image_url = provider.practice_panel_photo_uri;
+let toGalleryElement = (promo) => ({ id: provider_id, fields: provider }) => {
+  let title = provider['Practice Name'].slice(0, 80);
+  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
+  let image_url = provider['Main Provider Image'][0].url;
 
   let btn1 = {
     title: 'Claim Promotion',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/claim?promo_id=${promo.promoid}`
-  }
-
-  let btn2 = {
-    title: 'View Services',
-    type: 'json_plugin_url',
-    url: `${BASEURL}/provider/services?provider_id=${provider.providerid}&provider_name=${encodeURIComponent(provider.practice_name)}`
+    url: `${BASEURL}/promo/claim?provider_id=${provider_id}&promo_id=${promo.promoid}`
   }
 
   let btn3 = {
-    title: 'View Promos',
+    title: 'View More Promos',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/promos?provider_id=${provider.providerid}&provider_name=${encodeURIComponent(provider.practice_name)}`
+    url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider.practice_name)}`
   }
+  
+  let btn2 = {
+    title: 'View Services',
+    type: 'json_plugin_url',
+    url: `${BASEURL}/provider/services?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider.practice_name)}`
+  }
+
+  
   
   let buttons = [btn1, btn2, btn3];
   
