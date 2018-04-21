@@ -6,11 +6,12 @@ let { getTable, getAllDataFromTable } = require('../libs/data');
 
 // Get Tables
 let getServicesTable = getTable('Services');
-let getServicesFromTable = getServicesTable(SERVICES_BASE_ID);
+let servicesTable = getServicesTable(SERVICES_BASE_ID);
+let getServicesFromTable = getAllDataFromTable(servicesTable);
 
 // Search Methods
 let searchServices = async (surgical_or_non_surgical) => {
-	let filterByFormula = `AND({Surgical / Non Surgical} = '${surgical_or_non_surgical}')`;
+	let filterByFormula = `{Surgical / Non Surgical} = '${surgical_or_non_surgical}'`;
   let services = await getServicesFromTable({ filterByFormula });
   return services;
 }
@@ -42,6 +43,7 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 }
 
 let getServices = async ({ query, params }, res) => {
+  let { service_type } = params;
   let first_name = query['first name'];
 
   let surgical_category_gallery_element = {
@@ -54,13 +56,12 @@ let getServices = async ({ query, params }, res) => {
     }]
   }
 
-  
-  let non_surgical_services = searchServices('Non Surgical');
-  let non_surgical_services_gallery_data = non_surgical_services.map(toGalleryElement);
+  let non_surgical_services = await searchServices('Non Surgical');
+  let non_surgical_services_gallery_data = [surgical_category_gallery_element, ...non_surgical_services.map(toGalleryElement)];
 	let non_surgical_services_gallery = createGallery(non_surgical_services_gallery_data);
 
   let textMsg = { text: `Here's are some services you can search for ${first_name}` };
-	let messages = [textMsg, surgical_category_gallery_element, non_surgical_services_gallery];
+	let messages = [textMsg, , non_surgical_services_gallery];
 	res.send({ messages });
 }
 
