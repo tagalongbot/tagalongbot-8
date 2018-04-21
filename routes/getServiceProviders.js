@@ -1,6 +1,10 @@
-let { BASEURL } = process.env;
+let { BASEURL, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
-let { getProviderServices, getActiveProviders } = require('../libs/data');
+let { getTable, findTableData } = require('../libs/data');
+
+let getServicesTable = getTable('Services');
+let servicesTable = getServicesTable(SERVICES_BASE_ID);
+let findService = findTableData(servicesTable);
 
 let toGalleryElement = (provider) => {
   let title = provider.practice_name.slice(0, 80);
@@ -27,15 +31,15 @@ let toGalleryElement = (provider) => {
 
 let getServiceProviders = async ({ query }, res) => {
   let { service_id } = query;
-  
+
   let services = await getProviderServices();
   let service = services
     .find(service => service.serviceid === Number(service_id));
 
   let activeProviders = await getActiveProviders();
-  
+
   let matchedProviders = activeProviders.filter((provider) => service.providerid === provider.providerid);
-  
+
   if (!matchedProviders[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
