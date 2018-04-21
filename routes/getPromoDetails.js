@@ -7,7 +7,8 @@ let getPromosTable = getTable('Promos');
 
 // Search Methods
 let getPromo = async ({ promo_id, promo_base_id }) => {
-  let findPromo = findTableData(promo_base_id);
+  let promoTable = getPromosTable(promo_base_id);
+  let findPromo = findTableData(promoTable);
   let promo = await findPromo(promo_id);
   return promo;
 }
@@ -15,7 +16,7 @@ let getPromo = async ({ promo_id, promo_base_id }) => {
 let getPromoDetails = async ({ query }, res) => {
   let { promo_id, promo_base_id, promo_type } = query;
 
-  let promo = getPromo({ promo_id, promo_base_id });
+  let promo = await getPromo({ promo_id, promo_base_id });
   
   let txtMsg = createButtonMessage(
     promo.fields['Details'],

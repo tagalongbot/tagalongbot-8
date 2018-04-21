@@ -14,11 +14,11 @@ let toGalleryElement = (promo) => ({ id: provider_id, fields: provider }) => {
   }
 
   let btn2 = {
-    title: 'View More Promos',
+    title: 'View Provider Promos',
     type: 'json_plugin_url',
     url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider.practice_name)}`
   }
-  
+
   let btn3 = {
     title: 'View Services',
     type: 'json_plugin_url',
