@@ -1,4 +1,4 @@
-let { BASEURL, SURGICAL_SERVICES_IMAGE_URL } = process.env;
+let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 let { createGallery } = require('../libs/bots');
 let { shuffleArray } = require('../libs/helpers');
 
@@ -6,33 +6,13 @@ let { getTable, getAllDataFromTable } = require('../libs/data');
 
 // Get Tables
 let getServicesTable = getTable('Services');
+let getServicesFromTable = getServicesTable(SERVICES_BASE_ID);
 
 // Search Methods
-let searchServices = async (data, search_type) => {
-	let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
-
-  let providers = await searchProviders({
-    search_providers_state: search_promos_state, 
-    search_providers_city: search_promos_city, 
-    search_providers_zip_code: search_promos_zip_code,
-  });
-  
-  let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
-
-  let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
-
-  let allPromos = [];
-  for (let baseID of providersBaseIDs) {
-    let promosTable = getPromosTable(baseID);
-    let getPromos = getAllDataFromTable(promosTable);
-    let promos = await getPromos({ filterByFormula });
-    
-    allPromos = allPromos.concat(promos);
-  }
-  
-  // Need for searching with By Expiration Date
-  // console.log('All Promos', allPromos);
-  return allPromos;
+let searchServices = async (surgical_or_non_surgical) => {
+	let filterByFormula = `AND({Surgical / Non Surgical} = '${surgical_or_non_surgical}')`;
+  let services = await getServicesFromTable({ filterByFormula });
+  return services;
 }
 
 let toGalleryElement = ({ id: promo_id, fields: promo }) => {
@@ -59,24 +39,20 @@ let toGalleryElement = ({ id: promo_id, fields: promo }) => {
 }
 
 let getServices = async ({ query, params }, res) => {
-  let { search_type } = params;
-
   let first_name = query['first name'];
-	let messenger_user_id = query['messenger user id'];
 
-	let promotions = await searchPromotions(query, search_type);
-
-  if (!promotions[0]) {
-    let redirect_to_blocks = ['No Promos Found'];
-    res.send({ redirect_to_blocks });
-    return;
+  let non_surgical_services = searchServices('Non Surgical');
+  
+  let surgical_category_gallery_element = {
+    title: 'Surgical Procedures',
+    image_url: SURGICAL_SERVICES_IMAGE_URL,
   }
+  
+  let non_surgical_services_gallery_data = non_surgical_services.map(toGalleryElement);
+	let non_surgical_services_gallery = createGallery(non_surgical_services_gallery_data);
 
-  let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement);
-	let promotionsGallery = createGallery(randomPromotions);
-
-	let messages = [textMsg, promotionsGallery];
+  let textMsg = { text: `Here's are some services you can search for ${first_name}` };
+	let messages = [textMsg, surgical_category_gallery_element, non_surgical_services_gallery];
 	res.send({ messages });
 }
 
