@@ -44,6 +44,8 @@ let getServiceProviders = async ({ query, params }, res) => {
   let { search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
   let { search_type } = params;
   let { service_id, service_name } = query;
+  
+  console.log(query);
 
   let service = await findService(service_id);
 
@@ -58,22 +60,20 @@ let getServiceProviders = async ({ query, params }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
-
+  
+  console.log(providers[0]['Practice Services']);
   
   let filteredProviders = providers.filter(({ fields: provider }) => {
-    return provider[''];
+    return provider['Practice Services'].includes(service_name);
   });
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  let providersGalleryData = providers.map(toGalleryElement);
+  if (!filteredProviders[0]) {
+    let redirect_to_blocks = ['No Providers Found'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  let providersGalleryData = filteredProviders.map(toGalleryElement);
   let providersGallery = createGallery(providersGalleryData);
   let messages = [providersGallery];
   res.send({ messages });
