@@ -22,17 +22,17 @@ let getServiceProviders = require('./routes/getServiceProviders');
 app.get('/ai', handleAI);
 
 // Providers
-app.get('/providers/:search_type', getProviders);
+app.get('/search/providers/:search_type', getProviders);
 app.get('/provider/services', getProviderServices);
 app.get('/provider/promos', getProviderPromos);
 
 // Promotions
-app.get('/promos/:search_type', getPromos);
+app.get('/search/promos/:search_type', getPromos);
 app.get('/promo/details', getPromoDetails);
 app.get('/promo/providers', getPromoProviders);
 
 // Services
-app.get('/services/:service_type', getServices);
+app.get('/search/services/:service_type', getServices);
 app.get('/service/description', getServiceDescription);
 app.use('/service', getServiceProviders);
 
