@@ -4,12 +4,10 @@ let { shuffleArray } = require('../libs/helpers');
 
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
-// Get Tables
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServicesFromTable = getAllDataFromTable(servicesTable);
 
-// Search Methods
 let searchServices = async (surgical_or_non_surgical) => {
 	let filterByFormula = `{Surgical / Non Surgical} = '${surgical_or_non_surgical}'`;
   let services = await getServicesFromTable({ filterByFormula });
