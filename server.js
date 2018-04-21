@@ -14,13 +14,12 @@ let getPromoDetails = require('./routes/getPromoDetails');
 let getPromoProviders = require('./routes/getPromoProviders');
 
 // Services
-// let getServices = require('./routes/getServices');
+let getServices = require('./routes/getServices');
 let getServiceDescription = require('./routes/getServiceDescription');
 let getServiceProviders = require('./routes/getServiceProviders');
 
 // ROUTES CONFIGURATION
 app.get('/ai', handleAI);
-// app.get('/providers', getProviders);
 
 // Providers
 app.get('/providers/:search_type', getProviders);
@@ -33,7 +32,7 @@ app.get('/promo/details', getPromoDetails);
 app.get('/promo/providers', getPromoProviders);
 
 // Services
-// app.get('/services', getServices);
+app.get('/services/:service_type', getServices);
 app.get('/service/description', getServiceDescription);
 app.get('/service/providers', getServiceProviders);
 

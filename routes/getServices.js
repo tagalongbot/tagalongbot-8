@@ -15,21 +15,24 @@ let searchServices = async (surgical_or_non_surgical) => {
   return services;
 }
 
-let toGalleryElement = ({ id: promo_id, fields: promo }) => {
-  let title = promo['Promotion Name'].slice(0, 80);
-  let subtitle = promo['Terms'];
-  let image_url = promo['Image'][0].url;
+let toGalleryElement = ({ id: service_id, fields: service }) => {
+  let surgical_or_non_surgical = service['Surgical / Non Surgical'];
+  let non_surgical_category = service[`${surgical_or_non_surgical} Category`];
+
+  let title = service['Name'].slice(0, 80);
+  let subtitle = `${surgical_or_non_surgical} | ${non_surgical_category} | ${service[non_surgical_category]}`;
+  let image_url = service['Image URL'];
 
   let btn1 = {
-    title: 'View Promo Details',
+    title: 'View Service Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/details?promo_id=${promo_id}`
+    url: `${BASEURL}/service/description?service_id=${service_id}`
   }
 
   let btn2 = {
-    title: 'Find Promo Providers',
+    title: 'Find Providers',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/providers?promo_id=${promo_id}`
+    url: `${BASEURL}/service/providers?service_id=${service_id}`
   }
 
   let buttons = [btn1, btn2];
@@ -41,13 +44,18 @@ let toGalleryElement = ({ id: promo_id, fields: promo }) => {
 let getServices = async ({ query, params }, res) => {
   let first_name = query['first name'];
 
-  let non_surgical_services = searchServices('Non Surgical');
-  
   let surgical_category_gallery_element = {
     title: 'Surgical Procedures',
     image_url: SURGICAL_SERVICES_IMAGE_URL,
+    buttons: [{
+      title: 'Learn More',
+      type: 'json_plugin_url',
+      web: `${BASEURL}/services/surgical`
+    }]
   }
+
   
+  let non_surgical_services = searchServices('Non Surgical');
   let non_surgical_services_gallery_data = non_surgical_services.map(toGalleryElement);
 	let non_surgical_services_gallery = createGallery(non_surgical_services_gallery_data);
 
