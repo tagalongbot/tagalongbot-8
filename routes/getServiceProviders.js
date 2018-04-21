@@ -1,5 +1,6 @@
 let { BASEURL, SERVICES_BASE_ID, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
+let { searchProviders } = require('../libs/helpers');
 let { getTable, findTableData, getAllDataFromTable } = require('../libs/data');
 
 let getServicesTable = getTable('Services');
@@ -33,17 +34,20 @@ let toGalleryElement = (provider) => {
   return element;
 }
 
-let searchProviders = () => {
-  let filterByFormula = ``;
-}
 
-let getServiceProviders = async ({ query }, res) => {
-  let { service_id } = query;
+let getServiceProviders = async ({ query, params }, res) => {
+  let { service_id, search_service_providers_state } = query;
 
-  let service = await findService(service_id);
+  if (!params['service_id'] && service_id) {
+    let set_attributes = { service_id: service_id };
+    let redirect_to_blocks = ['Search Service Providers'];
+    res.send({ set_attributes, redirect_to_blocks });
+    return;
+  }
 
-  let activeProviders = await getActiveProviders();
+  let service = await findService(params['service_id']);
 
+le
   let matchedProviders = activeProviders.filter((provider) => service.providerid === provider.providerid);
 
   if (!matchedProviders[0]) {
