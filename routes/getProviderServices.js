@@ -1,6 +1,10 @@
-let { BASEURL } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
-let { getServices, getProviderServices } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
+
+let getPracticeTable = getTable('Practices');
+let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
+let findPractice = findTableData(practiceTable);
 
 let toGalleryElement = (provider_name) => (service) => {
   let title = service.service_name;
@@ -28,6 +32,10 @@ let toGalleryElement = (provider_name) => (service) => {
 let getProviderListOfServices = async ({ query }, res) => {
   let { provider_id, provider_name } = query;
 
+  let practice = await findPractice(provider_id);
+
+  
+  
   let providerServices = await getProviderServices();
   let servicesFromProvider = providerServices
     .filter((service) => service.providerid === Number(provider_id))
