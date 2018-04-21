@@ -25,13 +25,13 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   let btn1 = {
     title: 'View Service Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/service/description?service_id=${service_id}`
+    url: `${BASEURL}/service/description?service_id=${service_id}&service_name=${encodeURIComponent(service['Name'])}`
   }
 
   let btn2 = {
     title: 'Find Providers',
     type: 'json_plugin_url',
-    url: `${BASEURL}/service/providers?service_id=${service_id}`
+    url: `${BASEURL}/service/providers?service_id=${service_id}&service_name=${encodeURIComponent(service['Name'])}`
   }
 
   let buttons = [btn1, btn2];

@@ -34,8 +34,8 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
 }
 
 let searchServiceProviders = async ({ query }, res) => {
-  let { service_id } = query;
-  let set_attributes = { service_id: service_id };
+  let { service_id, service_name } = query;
+  let set_attributes = { service_id, service_name };
   let redirect_to_blocks = ['Search Service Providers'];
   res.send({ set_attributes, redirect_to_blocks });
 }
@@ -43,7 +43,7 @@ let searchServiceProviders = async ({ query }, res) => {
 let getServiceProviders = async ({ query, params }, res) => {
   let { search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
   let { search_type } = params;
-  let { service_id } = query;
+  let { service_id, service_name } = query;
 
   let service = await findService(service_id);
 
@@ -59,6 +59,20 @@ let getServiceProviders = async ({ query, params }, res) => {
     return;
   }
 
+  
+  let filteredProviders = providers.filter(({ fields: provider }) => {
+    return provider[''];
+  });
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   let providersGalleryData = providers.map(toGalleryElement);
   let providersGallery = createGallery(providersGalleryData);
   let messages = [providersGallery];
