@@ -54,7 +54,7 @@ let getServices = async ({ query, params }, res) => {
 
   if (service_type === 'surgical') {
     let surgical_services = await searchServices('Surgical');
-    let surgical_services_gallery_data = surgical_services.map(toGalleryElement);
+    let surgical_services_gallery_data = surgical_services.map(toGalleryElement(data));
     let gallery = createGallery(surgical_services_gallery_data);
     let textMsg = { text: `Here's are the top surgical services` };
     let messages = [gallery];
@@ -62,13 +62,14 @@ let getServices = async ({ query, params }, res) => {
     return;
   }
 
+  let surgical_category_btn_url = createURL(`${BASEURL}/services/surgical`, data);
   let surgical_category_gallery_element = {
     title: 'Surgical Procedures',
     image_url: SURGICAL_SERVICES_IMAGE_URL,
     buttons: [{
       title: 'Learn More',
       type: 'json_plugin_url',
-      web: `${BASEURL}/services/surgical`
+      web: surgical_category_btn_url,
     }]
   }
 

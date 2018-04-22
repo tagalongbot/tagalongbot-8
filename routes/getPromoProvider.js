@@ -41,7 +41,7 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 
 let getPromoProvider = async ({ query, params }, res) => {
   let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
-
+  debugger;
   let provider = await findProvider(provider_id);
 
   if (!provider) {
