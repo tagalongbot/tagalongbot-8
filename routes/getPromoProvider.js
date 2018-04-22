@@ -1,5 +1,6 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
+let { createURL } = require('../libs/helpers');
 let { searchProviders } = require('../libs/providers');
 let { getTable, findTableData } = require('../libs/data');
 
@@ -11,19 +12,25 @@ let findProvider = findTableData(providerTable);
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
-  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
+  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`.slice(0, 80);
   let image_url = provider['Main Provider Image'][0].url;
+
+  let provider_base_id = provider['Practice Base ID'];
+  let provider_name = encodeURIComponent(provider['Practice Name']);
+
+  let promos_btn_url = createURL(`${BASEURL}/provider/promos`, { provider_id, provider_base_id, provider_name });
+  let services_btn_url = createURL(`${BASEURL}/provider/services`, { provider_id, provider_base_id, provider_name });
 
   let btn1 = {
     title: 'View Promos',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_base_id=${provider['Practice Base ID']}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: promos_btn_url,
   }
 
   let btn2 = {
     title: 'View Services',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/services?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: services_btn_url,
   }
 
   let buttons = [btn1, btn2];

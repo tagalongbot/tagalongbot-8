@@ -1,4 +1,5 @@
 let { BASEURL } = process.env;
+let { createURL } = require('../libs/helpers');
 let { createGallery } = require('../libs/bots');
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
@@ -9,10 +10,12 @@ let toGalleryElement = ({ provider_id, provider_base_id }) => ({ id: promo_id, f
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
 
+  let promo_details_btn_url = createURL(`${BASEURL}/promo/details`, { provider_id, provider_base_id, promo_id });
+  
   let btn1 = {
     title: 'Read Promo Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/details?provider_id=${provider_id}&provider_base_id=${provider_base_id}&promo_id=${promo_id}`
+    url: 
   }
 
   let buttons = [btn1];

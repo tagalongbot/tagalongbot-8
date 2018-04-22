@@ -13,12 +13,13 @@ let getPromo = async ({ promo_id, promo_base_id }) => {
 }
 
 let getPromoDetails = async ({ query }, res) => {
-  let { provider_id, provider_base_id, promo_id } = query;
+  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender } = query;
 
   let promo = await getPromo({ promo_id, provider_base_id });
 
-  let claim_promo_url = createURL(`${BASEURL}/promo/claim`, { provider_id, provider_base_id, promo_id });
-  let find_promo_url = createURL(`${BASEURL}/promo/provider`, { provider_id, provider_base_id, promo_id });
+  let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender };
+  let claim_promo_url = createURL(`${BASEURL}/promo/claim`, data);
+  let find_promo_url = createURL(`${BASEURL}/promo/provider`, data);
 
   let txtMsg = createButtonMessage(
     promo.fields['Details'],

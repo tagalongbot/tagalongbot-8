@@ -37,14 +37,14 @@ let searchPromotions = async (data, search_type) => {
   return promotions;
 }
 
-let toGalleryElement = ({ provider_id, provider_base_id }) => ({ id: promo_id, fields: promo }, index) => {
+let toGalleryElement = ({ provider_id, provider_base_id, first_name, last_name, gender }) => ({ id: promo_id, fields: promo }, index) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
 
   let promo_type = encodeURIComponent(promo['Type']);
 
-  let btn1URL = createURL(`${BASEURL}/promo/details`, { provider_id, provider_base_id, promo_id });
+  let btn1URL = createURL(`${BASEURL}/promo/details`, { provider_id, provider_base_id, promo_id, first_name, last_name, gender });
 
   let btn1 = {
     title: 'View Promo Details',
@@ -62,6 +62,8 @@ let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
 
   let first_name = query['first name'];
+  let last_name = query['last name'];
+  let gender = query['gender'];
 	let messenger_user_id = query['messenger user id'];
 
 	let promotions = await searchPromotions(query, search_type);
@@ -75,7 +77,7 @@ let getPromos = async ({ query, params }, res) => {
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
 
   let promosGalleryData = promotions.reduce((arr, { provider_id, provider_base_id, promos }) => {
-    return arr.concat(...promos.map(toGalleryElement({ provider_id, provider_base_id })));
+    return arr.concat(...promos.map(toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender })));
   }, []);
     
 	let randomPromotions = shuffleArray(promosGalleryData).slice(0, 10);
