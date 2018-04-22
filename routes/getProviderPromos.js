@@ -34,9 +34,9 @@ let searchPromos = async (provider_base_id) => {
 }
 
 let getProviderPromos = async ({ query }, res) => {
-  let { provider_id, provider_base_id, provider_name, first_name, last_name, gender } = query;
-  let data = { provider_id, provider_base_id, first_name, last_name, gender };
-  
+  let { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id } = query;
+  let data = { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id };
+
   let promos = await searchPromos(provider_base_id);  
 
   if (!promos[0]) {

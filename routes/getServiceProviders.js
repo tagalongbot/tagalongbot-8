@@ -1,26 +1,33 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
+let { createURL } = require('../libs/helpers');
 let { searchProviders } = require('../libs/providers');
 let { getTable, findTableData } = require('../libs/data');
 
 let express = require('express');
 let router = express.Router();
 
-let toGalleryElement = ({ id: provider_id, fields: provider }) => {
+let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
   let image_url = provider['Main Provider Image'][0].url;
 
+  let provider_base_id = provider['Practice Base ID'];
+  let provider_name = encodeURIComponent(provider['Practice Name']);
+  let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
+  let view_promos_url = createURL(`${BASEURL}/provider/promos`, data);
+  let view_services_url = createURL(`${BASEURL}/provider/services`, data);
+
   let btn1 = {
     title: 'View Promos',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_base_id=${provider['Practice Base ID']}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: view_promos_url,
   }
 
   let btn2 = {
     title: 'View Services',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/services?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: view_services_url,
   }
 
   let buttons = [btn1, btn2];
@@ -39,8 +46,8 @@ let searchServiceProviders = async ({ query }, res) => {
 let getServiceProviders = async ({ query, params }, res) => {
   let { search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
   let { search_type } = params;
-  let { service_name } = query;
-  
+  let { service_name, first_name, last_name, gender, messenger_user_id } = query;
+
   let providers = await searchProviders({
     search_providers_state: search_service_providers_state,
     search_providers_city: search_service_providers_city,
@@ -63,7 +70,7 @@ let getServiceProviders = async ({ query, params }, res) => {
     return;
   }
 
-  let providersGalleryData = filteredProviders.map(toGalleryElement);
+  let providersGalleryData = filteredProviders.map(toGalleryElement({ first_name, last_name, gender, messenger_user_id }));
   let providersGallery = createGallery(providersGalleryData);
   let messages = [providersGallery];
   res.send({ messages });

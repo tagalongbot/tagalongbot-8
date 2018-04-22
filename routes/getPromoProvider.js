@@ -10,7 +10,7 @@ let getPromosTable = getTable('Promos');
 let providerTable = getProviderTable(PRACTICE_DATABASE_BASE_ID);
 let findProvider = findTableData(providerTable);
 
-let toGalleryElement = ({ first_name, last_name, gender }) => ({ id: provider_id, fields: provider }) => {
+let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`.slice(0, 80);
   let image_url = provider['Main Provider Image'][0].url;
@@ -18,7 +18,7 @@ let toGalleryElement = ({ first_name, last_name, gender }) => ({ id: provider_id
   let provider_base_id = provider['Practice Base ID'];
   let provider_name = encodeURIComponent(provider['Practice Name']);
 
-  let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender };
+  let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
   let promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
   let services_btn_url = createURL(`${BASEURL}/provider/services`, data);
 
@@ -41,7 +41,7 @@ let toGalleryElement = ({ first_name, last_name, gender }) => ({ id: provider_id
 }
 
 let getPromoProvider = async ({ query, params }, res) => {
-  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender } = query;
+  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
 
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
@@ -62,7 +62,7 @@ let getPromoProvider = async ({ query, params }, res) => {
     return;
   }
 
-  let providersGalleryData = toGalleryElement({ first_name, last_name, gender })(provider);
+  let providersGalleryData = toGalleryElement({ first_name, last_name, gender, messenger_user_id })(provider);
   let providersGallery = createGallery(providersGalleryData);
   let messages = [providersGallery];
   res.send({ messages });
