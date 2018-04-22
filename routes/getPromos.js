@@ -19,28 +19,29 @@ let searchPromotions = async (data, search_type) => {
   }, search_type);
 
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
-
   let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
 
-  let allPromos = [];
-  for (let baseID of providersBaseIDs) {
+  let promotions = [];
+  for (let [index, baseID] of providersBaseIDs.entries()) {
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
     let promos = await getPromos({ filterByFormula });
 
-    allPromos = allPromos.concat(promos);
+    let provider_id = providers[index].id;
+    promotions = promotions.concat({ promos });
   }
 
   // Need for searching with By Expiration Date
-  // console.log('All Promos', allPromos);
-  return { allPromos, providers, providersBaseIDs };
+  // console.log('All Promos', promotions);
+  return { promotions, providers, providersBaseIDs };
 }
 
-let toGalleryElement = (providersBaseIDs) => ({ id: promo_id, fields: promo }, index) => {
+let toGalleryElement = ({ providers, providersBaseIDs }) => ({ id: promo_id, fields: promo }, index) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
 
+  let provider_id = providers
   let promo_base_id = providersBaseIDs[index];
   let promo_type = encodeURIComponent(promo['Type']);
 
@@ -64,7 +65,7 @@ let getPromos = async ({ query, params }, res) => {
   let first_name = query['first name'];
 	let messenger_user_id = query['messenger user id'];
 
-	let { allPromos: promotions, providersBaseIDs } = await searchPromotions(query, search_type);
+	let { promotions, providers, providersBaseIDs } = await searchPromotions(query, search_type);
 
   if (!promotions[0]) {
     let redirect_to_blocks = ['No Promos Found'];
@@ -73,7 +74,7 @@ let getPromos = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement(providersBaseIDs));
+  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement({ providers, providersBaseIDs }));
 	let promotionsGallery = createGallery(randomPromotions);
 
 	let messages = [textMsg, promotionsGallery];
