@@ -9,10 +9,7 @@ let getPromosTable = getTable('Promos');
 let allUsersTable = getUsersTable(USERS_BASE_ID);
 let getAllUsers = getAllDataFromTable(allUsersTable);
 
-let searchUser = () => {
-}
-
-let createOrUpdateUser = async ({ provider_base_id, messenger_user_id }) => {
+let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, provider_base_id, provider_state, provider_city, provider_zip_code }) => {
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
   let createUser = createTableData(usersTable);
@@ -20,21 +17,33 @@ let createOrUpdateUser = async ({ provider_base_id, messenger_user_id }) => {
   let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
   let [user] = await getUsers({ filterByFormula });
 
+  let userData = {
+    'messenger user id': messenger_user_id,
+    'First Name': first_name,
+    'Last Name': last_name,
+    'Gender': gender,
+    'State': provider_state,
+    'City': provider_city,
+    'Zip Code': provider_zip_code,
+  }
+
   if (!user) {
-    let newUserData = {};
-    let newUser = await createUser(newUserData);
+    let newUser = await createUser(userData);
     return newUser;
   }
-  
-  return user;
+
+  let updatedUser = updateTableData(userData, user);
+  return updatedUser;
 }
 
 let claimPromotion = async ({ query }, res) => {
   let { provider_id, provider_base_id, promo_id, messenger_user_id } = query;
-
+  let userData = {  };
+  
   let promosTable = getPromosTable(provider_base_id);
 
   let findPromo = findTableData(promosTable);
+  let updatePromo = updateTableData(promosTable);
 
   let promo = await findPromo(promo_id);
 
@@ -44,9 +53,14 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
   
+  let user = await createOrUpdateUser(userData);
+  
   let updatePromoData = {
-    
+    'Total Claim Count': promo.fields['Total Claim Count'],
+    'Claimed By Users': [user.id, ...promo.fields['Claimed By Users']],
   }
+  
+  let updatedPromo = await updatePromo(updatePromoData, promo);
 }
 
 module.exports = claimPromotion;
