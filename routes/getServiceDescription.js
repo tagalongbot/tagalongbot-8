@@ -13,7 +13,7 @@ let getServiceDescription = async ({ query }, res) => {
 
   let txtMsg = createButtonMessage(
     service.fields['Long Description'].slice(0, 640),
-    `Find Providers|json_plugin_url|${BASEURL}/service/providers?service_id=${service_id}`
+    `Find Providers|json_plugin_url|${BASEURL}/service/providers?service_id=${service_id}&service_name=${encodeURIComponent(service.fields['Name'])}`
   );
 
   let messages = [txtMsg];
