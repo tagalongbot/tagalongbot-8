@@ -11,7 +11,7 @@ let getProviderPromos = require('./routes/getProviderPromos');
 // Promos
 let getPromos = require('./routes/getPromos');
 let getPromoDetails = require('./routes/getPromoDetails');
-let getPromoProviders = require('./routes/getPromoProviders');
+let getPromoProvider = require('./routes/getPromoProvider');
 
 // Services
 let getServices = require('./routes/getServices');
@@ -29,7 +29,7 @@ app.get('/provider/promos', getProviderPromos);
 // Promotions
 app.get('/search/promos/:search_type', getPromos);
 app.get('/promo/details', getPromoDetails);
-app.get('/promo/providers', getPromoProviders);
+app.get('/promo/providers', getPromoProvider);
 
 // Services
 app.get('/search/services/:service_type', getServices);

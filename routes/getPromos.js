@@ -73,19 +73,16 @@ let getPromos = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-  
+
   let promosGalleryData = promotions.reduce((arr, { provider_id, provider_base_id, promos }) => {
     return arr.concat(...promos.map(toGalleryElement({ provider_id, provider_base_id })));
   }, []);
-  
-  console.log(promosGalleryData);
-  return;
-  
-	// let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement({ providers, providersBaseIDs }));
-	// let promotionsGallery = createGallery(randomPromotions);
+    
+	let randomPromotions = shuffleArray(promosGalleryData).slice(0, 10);
+	let promotionsGallery = createGallery(randomPromotions);
 
-	// let messages = [textMsg, promotionsGallery];
-	// res.send({ messages });
+	let messages = [textMsg, promotionsGallery];
+	res.send({ messages });
 }
 
 let handleErrors = (req, res) => (error) => {

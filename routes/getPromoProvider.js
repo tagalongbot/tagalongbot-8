@@ -1,9 +1,13 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
 let { searchProviders } = require('../libs/providers');
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { getTable, findTableData } = require('../libs/data');
 
+let getProviderTable = getTable('Practice');
 let getPromosTable = getTable('Promos');
+
+let providerTable = getProviderTable(PRACTICE_DATABASE_BASE_ID);
+let findProvider = findTableData(providerTable);
 
 let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
@@ -34,45 +38,21 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   return element;
 }
 
-let getPromoProviders = async ({ query, params }, res) => {
-  let { search_type, search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = query;
+let getPromoProvider = async ({ query, params }, res) => {
+  let {  } = query;
+  
+  let provider = await findProvider(provider_id);
 
-  let providers = await searchProviders({
-    search_providers_state: search_promos_state,
-    search_providers_city: search_promos_city,
-    search_providers_zip_code: search_promos_zip_code,
-  }, search_type);
-
-  if (!providers[0]) {
+  if (!provider) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let matchedProviders = [];
-  for(let provider of providers) {
-    let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
-    let promosTable = getPromosTable(provider.fields['Practice Base ID']); 
-    let getPromos = getAllDataFromTable(promosTable);
-    let promos = await getPromos({ filterByFormula });
-    
-  }
-  
-  
-  let filteredProviders = providers.filter(({ fields: provider }) => {
-    return provider['Practice Services'].includes(service_name);
-  });
-
-  if (!filteredProviders[0]) {
-    let redirect_to_blocks = ['No Providers Found'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
-  let providersGalleryData = filteredProviders.map(toGalleryElement);
+  let providersGalleryData = toGalleryElement(provider);
   let providersGallery = createGallery(providersGalleryData);
   let messages = [providersGallery];
   res.send({ messages });
 }
 
-module.exports = getPromoProviders;
+module.exports = getPromoProvider;
