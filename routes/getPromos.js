@@ -23,7 +23,6 @@ let searchPromotions = async (data, search_type) => {
   let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
 
   let allPromos = [];
-  let promo_base_ids = [];
   for (let baseID of providersBaseIDs) {
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
@@ -34,12 +33,10 @@ let searchPromotions = async (data, search_type) => {
 
   // Need for searching with By Expiration Date
   // console.log('All Promos', allPromos);
-  return { allPromos, providersBaseIDs };
+  return { allPromos, providers, providersBaseIDs };
 }
 
-let toGalleryElement = (search_type, data, providersBaseIDs) => ({ id: promo_id, fields: promo }, index) => {
-  let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
-
+let toGalleryElement = (providersBaseIDs) => ({ id: promo_id, fields: promo }, index) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
@@ -55,15 +52,7 @@ let toGalleryElement = (search_type, data, providersBaseIDs) => ({ id: promo_id,
     url: btn1URL,
   }
 
-  let btn2URL = createURL(`${BASEURL}/promo/providers`, { search_type, search_promos_state, search_promos_city, search_promos_zip_code, promo_id, promo_base_id, promo_type, });
-
-  let btn2 = {
-    title: 'Find Promo Providers',
-    type: 'json_plugin_url',
-    url: btn2URL
-  }
-
-  let buttons = [btn1, btn2];
+  let buttons = [btn1];
 
   let element = { title, subtitle, image_url, buttons};
   return element;
@@ -84,7 +73,7 @@ let getPromos = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement(search_type, query, providersBaseIDs));
+  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement(providersBaseIDs));
 	let promotionsGallery = createGallery(randomPromotions);
 
 	let messages = [textMsg, promotionsGallery];
