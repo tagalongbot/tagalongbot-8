@@ -1,5 +1,6 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
+let { createB } = require('../libs/bots');
 let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
 
 let getPracticeTable = getTable('Practices');
