@@ -9,24 +9,18 @@ let getPromosTable = getTable('Promos');
 let providerTable = getProviderTable(PRACTICE_DATABASE_BASE_ID);
 let findProvider = findTableData(providerTable);
 
-let toGalleryElement = ({ fields: promo }) => ({ id: provider_id, fields: provider }) => {
+let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
   let image_url = provider['Main Provider Image'][0].url;
 
   let btn1 = {
-    title: 'Claim Promotion',
-    type: 'json_plugin_url',
-    url: `${BASEURL}/promo/claim?provider_id=${provider_id}&promo_id=${promo.id}`
-  }
-
-  let btn2 = {
     title: 'View Promos',
     type: 'json_plugin_url',
     url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
   }
 
-  let btn3 = {
+  let btn2 = {
     title: 'View Services',
     type: 'json_plugin_url',
     url: `${BASEURL}/provider/services?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`

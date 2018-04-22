@@ -44,7 +44,7 @@ let toGalleryElement = ({ provider_id, provider_base_id }) => ({ id: promo_id, f
 
   let promo_type = encodeURIComponent(promo['Type']);
 
-  let btn1URL = createURL(`${BASEURL}/promo/details`, { provider_id, provider_base_id, promo_id, promo_type });
+  let btn1URL = createURL(`${BASEURL}/promo/details`, { provider_id, provider_base_id, promo_id });
 
   let btn1 = {
     title: 'View Promo Details',

@@ -29,7 +29,7 @@ app.get('/provider/promos', getProviderPromos);
 // Promotions
 app.get('/search/promos/:search_type', getPromos);
 app.get('/promo/details', getPromoDetails);
-app.get('/promo/providers', getPromoProvider);
+app.get('/promo/provider', getPromoProvider);
 
 // Services
 app.get('/search/services/:service_type', getServices);
