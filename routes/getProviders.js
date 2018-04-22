@@ -93,6 +93,8 @@ let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;
 
   let first_name = query['first name'];
+  let last_name = query['last name'];
+  let first_name = query['first name'];
 	let messenger_user_id = query['messenger user id'];
 
 	let user = await searchUser({ messenger_user_id });

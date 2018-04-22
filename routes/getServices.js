@@ -1,6 +1,6 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
+let { createURL, shuffleArray } = require('../libs/helpers');
 let { createGallery } = require('../libs/bots');
-let { shuffleArray } = require('../libs/helpers');
 
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
@@ -14,7 +14,7 @@ let searchServices = async (surgical_or_non_surgical) => {
   return services;
 }
 
-let toGalleryElement = ({ id: service_id, fields: service }) => {
+let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   let surgical_or_non_surgical = service['Surgical / Non Surgical'];
   let non_surgical_category = service[`${surgical_or_non_surgical} Category`];
 
@@ -22,16 +22,20 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   let subtitle = `${surgical_or_non_surgical} | ${non_surgical_category} | ${service[non_surgical_category]}`;
   let image_url = service['Image URL'];
 
+  let service_name = encodeURIComponent(service['Name']);
+  let view_service_details_btn_url = createURL(`${BASEURL}/service/description`, { service_id, service_name, ...data });
+  let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, { service_id, service_name, ...data });
+
   let btn1 = {
     title: 'View Service Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/service/description?service_id=${service_id}&service_name=${encodeURIComponent(service['Name'])}`
+    url: view_service_details_btn_url,
   }
 
   let btn2 = {
     title: 'Find Providers',
     type: 'json_plugin_url',
-    url: `${BASEURL}/service/providers?service_id=${service_id}&service_name=${encodeURIComponent(service['Name'])}`
+    url: find_providers_btn_url,
   }
 
   let buttons = [btn1, btn2];
@@ -42,6 +46,11 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 
 let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
+  let first_name = query['first name'];
+  let last_name = query['last name'];
+  let gender = query['gender'];
+  let messenger_user_id = query['messenger_user_id'];
+  let data = { first_name, last_name, gender, messenger_user_id };
 
   if (service_type === 'surgical') {
     let surgical_services = await searchServices('Surgical');
@@ -64,11 +73,10 @@ let getServices = async ({ query, params }, res) => {
   }
 
   let non_surgical_services = await searchServices('Non Surgical');
-  let non_surgical_services_gallery_data = non_surgical_services.map(toGalleryElement).slice(0, 8);
+  let non_surgical_services_gallery_data = non_surgical_services.map(toGalleryElement(data)).slice(0, 8);
 	let gallery = createGallery([surgical_category_gallery_element, ...non_surgical_services_gallery_data]);
 
   // Need to add load more mechanisim
-  let first_name = query['first name'];
   let textMsg = { text: `Here's are some services you can search for ${first_name}` };
 	let messages = [textMsg, gallery];
 	res.send({ messages });
