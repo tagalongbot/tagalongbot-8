@@ -28,24 +28,23 @@ let searchPromotions = async (data, search_type) => {
     let promos = await getPromos({ filterByFormula });
 
     let provider_id = providers[index].id;
-    promotions = promotions.concat({ promos });
+    let provider_base_id = providersBaseIDs[index];
+    promotions = promotions.concat({ provider_id, provider_base_id, promos });
   }
 
   // Need for searching with By Expiration Date
   // console.log('All Promos', promotions);
-  return { promotions, providers, providersBaseIDs };
+  return promotions;
 }
 
-let toGalleryElement = ({ providers, providersBaseIDs }) => ({ id: promo_id, fields: promo }, index) => {
+let toGalleryElement = ({ provider_id, provider_base_id }) => ({ id: promo_id, fields: promo }, index) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image'][0].url;
 
-  let provider_id = providers
-  let promo_base_id = providersBaseIDs[index];
   let promo_type = encodeURIComponent(promo['Type']);
 
-  let btn1URL = createURL(`${BASEURL}/promo/details`, { promo_id, promo_base_id, promo_type });
+  let btn1URL = createURL(`${BASEURL}/promo/details`, { provider_id, provider_base_id, promo_id, promo_type });
 
   let btn1 = {
     title: 'View Promo Details',
@@ -65,7 +64,7 @@ let getPromos = async ({ query, params }, res) => {
   let first_name = query['first name'];
 	let messenger_user_id = query['messenger user id'];
 
-	let { promotions, providers, providersBaseIDs } = await searchPromotions(query, search_type);
+	let promotions = await searchPromotions(query, search_type);
 
   if (!promotions[0]) {
     let redirect_to_blocks = ['No Promos Found'];
@@ -74,11 +73,19 @@ let getPromos = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-  let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement({ providers, providersBaseIDs }));
-	let promotionsGallery = createGallery(randomPromotions);
+  
+  let promosGalleryData = promotions.reduce((arr, { provider_id, provider_base_id, promos }) => {
+    return arr.concat(...promos.map(toGalleryElement({ provider_id, provider_base_id })));
+  }, []);
+  
+  console.log(promosGalleryData);
+  return;
+  
+	// let randomPromotions = shuffleArray(promotions).slice(0, 10).map(toGalleryElement({ providers, providersBaseIDs }));
+	// let promotionsGallery = createGallery(randomPromotions);
 
-	let messages = [textMsg, promotionsGallery];
-	res.send({ messages });
+	// let messages = [textMsg, promotionsGallery];
+	// res.send({ messages });
 }
 
 let handleErrors = (req, res) => (error) => {
