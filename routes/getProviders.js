@@ -1,6 +1,6 @@
 let { BASEURL, USERS_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
-let { shuffleArray } = require('../libs/helpers');
+let { createURL, shuffleArray } = require('../libs/helpers');
 
 let { searchProviders } = require('../libs/providers');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
@@ -65,21 +65,27 @@ let createOrUpdateUser = async (user, query) => {
   return updatedUser;
 }
 
-let toGalleryElement = ({ id: provider_id, fields: provider }) => {
+let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
   let image_url = provider['Main Provider Image'][0].url;
 
+  let provider_name = encodeURIComponent(provider['Practice Name']);
+  let provider_base_id = provider['Practice Base ID'];
+  let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
+  let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
+  let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
+
   let btn1 = {
     title: 'View Services',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/services?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: view_services_btn_url,
   }
 
   let btn2 = {
     title: 'View Promos',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_base_id=${provider['Practice Base ID']}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: view_promos_btn_url,
   }
 
   let buttons = [btn1, btn2];
@@ -94,8 +100,9 @@ let getProviders = async ({ query, params }, res) => {
 
   let first_name = query['first name'];
   let last_name = query['last name'];
-  let first_name = query['first name'];
+  let gender = query['gender'];
 	let messenger_user_id = query['messenger user id'];
+  let data = { first_name, last_name, gender, messenger_user_id };
 
 	let user = await searchUser({ messenger_user_id });
 	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
@@ -109,7 +116,7 @@ let getProviders = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some providers I found ${first_name}` };
-  let randomProviders = shuffleArray(providers).slice(0, 10).map(toGalleryElement);
+  let randomProviders = shuffleArray(providers).slice(0, 10).map(toGalleryElement(data));
 	let providersGallery = createGallery(randomProviders);
 
 	let messages = [textMsg, providersGallery];
