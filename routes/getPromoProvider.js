@@ -1,7 +1,6 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
-let { searchProviders } = require('../libs/providers');
 let { getTable, findTableData } = require('../libs/data');
 
 let getProviderTable = getTable('Practice');
@@ -43,9 +42,6 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 let getPromoProvider = async ({ query, params }, res) => {
   let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
 
-  let promosTable = getPromosTable(provider_base_id);
-  let findPromo = findTableData(promosTable);
-
   let provider = await findProvider(provider_id);
 
   if (!provider) {
@@ -54,6 +50,8 @@ let getPromoProvider = async ({ query, params }, res) => {
     return;
   }
 
+  let promosTable = getPromosTable(provider_base_id);
+  let findPromo = findTableData(promosTable);
   let promo = await findPromo(promo_id);
 
   if (!promo) {

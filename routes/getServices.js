@@ -49,7 +49,7 @@ let getServices = async ({ query, params }, res) => {
   let first_name = query['first name'];
   let last_name = query['last name'];
   let gender = query['gender'];
-  let messenger_user_id = query['messenger_user_id'];
+  let messenger_user_id = query['messenger user id'];
   let data = { first_name, last_name, gender, messenger_user_id };
 
   if (service_type === 'surgical') {
