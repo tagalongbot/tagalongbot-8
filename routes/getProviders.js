@@ -5,7 +5,6 @@ let { shuffleArray } = require('../libs/helpers');
 let { searchProviders } = require('../libs/providers');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
-// Get Tables
 let getUsersTable = getTable('Users');
 let usersTable = getUsersTable(USERS_BASE_ID);
 
@@ -47,22 +46,21 @@ let createOrUpdateUser = async (user, query) => {
 		let newUser = await createNewUser(newUserData);
     return newUser;
 	}
-  
-  
+
   let updateUserData = {};
-  
+
   if (last_state_searched) {
     updateUserData['Last State Searched'] = last_state_searched;
   }
-  
+
   if (last_city_searched) {
     updateUserData['Last City Searched'] = last_city_searched;
   }
-  
+
   if (last_zip_code_searched) {
     updateUserData['Last Zip Code Searched'] = last_zip_code_searched;
   }
-  
+
   let updatedUser = await updateUser(updateUserData, user);
   return updatedUser;
 }
@@ -81,7 +79,7 @@ let toGalleryElement = ({ id: provider_id, fields: provider }) => {
   let btn2 = {
     title: 'View Promos',
     type: 'json_plugin_url',
-    url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
+    url: `${BASEURL}/provider/promos?provider_id=${provider_id}&provider_base_id=${provider['Practice Base ID']}&provider_name=${encodeURIComponent(provider['Practice Name'])}`
   }
 
   let buttons = [btn1, btn2];

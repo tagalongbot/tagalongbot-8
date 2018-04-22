@@ -1,38 +1,47 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
-let { getActivePromos } = require('../libs/data');
+let { getTable, getAllDataFromTable } = require('../libs/data');
 
-let toGalleryElement = (provider_name) => (promo) => {
-  let title = promo.promo_name;
-  let subtitle = promo.promo_terms;
-  let image_url = promo.promo_photo_uri;
+let getPromosTable = getTable('Promos');
+
+let toGalleryElement = ({ provider_id, provider_base_id }) => ({ id: promo_id, fields: promo }) => {
+  let title = promo['Promotion Name'];
+  let subtitle = promo['Terms'];
+  let image_url = promo['Image'][0].url;
 
   let btn1 = {
     title: 'Read Promo Details',
     type: 'json_plugin_url',
-    url: `${BASEURL}/promo/details?promo_id=${promo.promoid}`
+    url: `${BASEURL}/promo/details?provider_id=${provider_id}&provider_base_id=${provider_base_id}&promo_id=${promo_id}`
   }
 
   let buttons = [btn1];
-  
+
   let element = { title, subtitle, image_url, buttons };
   return element;
 }
 
-let getProviderPromos = async ({ query }, res) => {
-  let { provider_id, provider_name } = query;
-
-  let activePromos = await getActivePromos();
-  let providerPromos = activePromos
-    .filter((promo) => promo.providerid === Number(provider_id));
+let searchPromos = async (provider_base_id) => {
+  let promosTable = getPromosTable(provider_base_id);
+  let getPromos = getAllDataFromTable(promosTable);
   
-  if (!providerPromos[0]) {
+  let filterByFormula = `{Active?}`;
+  let promos = await getPromos({ filterByFormula });
+  return promos;
+}
+
+let getProviderPromos = async ({ query }, res) => {
+  let { provider_id, provider_base_id, provider_name } = query;
+
+  let promos = await searchPromos(provider_base_id);  
+
+  if (!promos[0]) {
     let redirect_to_blocks = ['No Provider Promos Found'];
     res.send({ redirect_to_blocks });
     return;
   }
-  
-  let promosGalleryData = providerPromos.map(toGalleryElement(provider_name)).slice(0, 5);
+
+  let promosGalleryData = promos.map(toGalleryElement({ provider_id, provider_base_id })).slice(0, 5);
   let servicesGallery = createGallery(promosGalleryData);
   let messages = [servicesGallery];
   res.send({ messages });
