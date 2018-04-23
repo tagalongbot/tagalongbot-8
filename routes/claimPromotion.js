@@ -49,7 +49,8 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
 let claimPromotion = async ({ query }, res) => {
   let { promo_id, messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id } = query;
   let userData = { messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id };
-
+  console.log('Query:', query);
+  
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
   let updatePromo = updateTableData(promosTable);
