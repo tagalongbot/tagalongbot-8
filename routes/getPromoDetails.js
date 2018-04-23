@@ -19,12 +19,12 @@ let getPromoDetails = async ({ query }, res) => {
 
   let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
   let claim_promo_url = createURL(`${BASEURL}/promo/claim`, data);
-  let find_promo_url = createURL(`${BASEURL}/promo/provider`, data);
+  let view_provider_url = createURL(`${BASEURL}/promo/provider`, data);
 
   let txtMsg = createButtonMessage(
     promo.fields['Details'],
     `Claim Promotion|json_plugin_url|${claim_promo_url}`,
-    `Find Promo Provider|json_plugin_url|${find_promo_url}`,
+    `View Promo Provider|json_plugin_url|${view_provider_url}`,
   );
 
   let messages = [txtMsg];

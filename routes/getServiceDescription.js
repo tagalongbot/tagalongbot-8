@@ -1,5 +1,5 @@
 let { BASEURL, SERVICES_BASE_ID } = process.env;
-let { createButtonMessage } = require('../libs/bots');
+let { createButtonMessage, createTextMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getTable, findTableData } = require('../libs/data');
 
@@ -16,15 +16,21 @@ let getServiceDescription = async ({ query, params }, res) => {
 
   let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, data);
 
-  let args = [service.fields['Long Description'].slice(0, 640)];
-  
+  let messages = [];
+
   if (show_providers != 'no') {
-    args.push(`Find Providers|json_plugin_url|${find_providers_btn_url}`);
+    let txtMsg = createButtonMessage(
+      service.fields['Long Description'].slice(0, 640),
+      `Find Providers|json_plugin_url|${find_providers_btn_url}`,
+    );
+    messages.push(txtMsg);
+  } else {
+    let txtMsg = createTextMessage(
+      service.fields['Long Description'].slice(0, 640),
+    );
+    messages.push(txtMsg);        
   }
 
-  let txtMsg = createButtonMessage(...args);
-
-  let messages = [txtMsg];
   res.send({ messages });
 }
 
