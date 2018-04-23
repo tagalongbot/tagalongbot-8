@@ -12,6 +12,7 @@ let getProviderPromos = require('./routes/getProviderPromos');
 let getPromos = require('./routes/getPromos');
 let getPromoDetails = require('./routes/getPromoDetails');
 let getPromoProvider = require('./routes/getPromoProvider');
+let claimPromotion = require('./routes/claimPromotion');
 
 // Services
 let getServices = require('./routes/getServices');
@@ -30,10 +31,11 @@ app.get('/provider/promos', getProviderPromos);
 app.get('/search/promos/:search_type', getPromos);
 app.get('/promo/details', getPromoDetails);
 app.get('/promo/provider', getPromoProvider);
+app.get('/promo/claim', claimPromotion);
 
 // Services
 app.get('/search/services/:service_type', getServices);
-app.get('/service/description', getServiceDescription);
+app.get('/service/description/:show_providers', getServiceDescription);
 app.use('/service', getServiceProviders);
 
 app.listen(3000, () => console.log('Running on PORT 3000'));

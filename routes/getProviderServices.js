@@ -17,7 +17,7 @@ let toGalleryElement = (provider_name) => ({ id: service_id, fields: service }) 
   let image_url = service['Image URL'];
 
   let service_name = encodeURIComponent(service['Name']);
-  let read_description_btn_url = createURL(`${BASEURL}/service/description`, { service_id, service_name });
+  let read_description_btn_url = createURL(`${BASEURL}/service/description/no`, { service_id, service_name });
   let btn1 = {
     title: 'Read Description',
     type: 'json_plugin_url',
@@ -25,7 +25,7 @@ let toGalleryElement = (provider_name) => ({ id: service_id, fields: service }) 
   }
 
   let buttons = [btn1];
-  
+
   let element = { title, subtitle, image_url, buttons };
   return element;
 }
@@ -45,7 +45,7 @@ let getProviderListOfServices = async ({ query }, res) => {
     return;
   }
 
-  let servicesGalleryData = servicesFromProvider.map(toGalleryElement(provider_name));
+  let servicesGalleryData = servicesFromProvider.slice(0, 9).map(toGalleryElement(decodeURIComponent(provider_name)));
   let servicesGallery = createGallery(servicesGalleryData);
   let messages = [servicesGallery];
   res.send({ messages });
