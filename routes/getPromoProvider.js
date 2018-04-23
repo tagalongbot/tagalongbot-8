@@ -3,10 +3,10 @@ let { createGallery } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getTable, findTableData } = require('../libs/data');
 
-let getProviderTable = getTable('Practice');
+let getProvidersTable = getTable('Practices');
 let getPromosTable = getTable('Promos');
 
-let providerTable = getProviderTable(PRACTICE_DATABASE_BASE_ID);
+let providerTable = getProvidersTable(PRACTICE_DATABASE_BASE_ID);
 let findProvider = findTableData(providerTable);
 
 let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
@@ -39,10 +39,9 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   return element;
 }
 
-let getPromoProvider = async ({ query, params }, res) => {
+let getPromoProvider = async ({ query }, res) => {
   let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
   let provider = await findProvider(provider_id);
-
   if (!provider) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
