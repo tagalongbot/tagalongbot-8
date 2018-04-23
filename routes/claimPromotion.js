@@ -1,21 +1,29 @@
-let { BASEURL, USERS_BASE_ID } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID } = process.env;
 let { createButtonMessage, createTextMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../libs/data');
 
+let getPracticesTable = getTable('Practices');
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
+
+let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
+let findPractice = findTableData(practicesTable);
 
 let allUsersTable = getUsersTable(USERS_BASE_ID);
 let getAllUsers = getAllDataFromTable(allUsersTable);
 
-let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, provider_base_id, provider_state, provider_city, provider_zip_code }) => {
+let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, provider_base_id }, provider) => {
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
   let createUser = createTableData(usersTable);
 
   let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
   let [user] = await getUsers({ filterByFormula });
+
+  let provider_state = provider.fields['Practice State'];
+  let provider_city = provider.fields['Practice City'];
+  let provider_zip_code = provider.fields['Practice Zip Code'];
 
   let userData = {
     'messenger user id': messenger_user_id,
@@ -27,6 +35,8 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
     'Zip Code': provider_zip_code,
   }
 
+  console.log('User Data', userData);
+
   if (!user) {
     let newUser = await createUser(userData);
     return newUser;
@@ -37,11 +47,10 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { promo_id, messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id, provider_state, provider_city, provider_zip_code } = query;
-  let userData = { messenger_user_id, first_name, last_name, gender, provider_base_id, provider_state, provider_city, provider_zip_code };
+  let { promo_id, messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id } = query;
+  let userData = { messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id };
 
   let promosTable = getPromosTable(provider_base_id);
-
   let findPromo = findTableData(promosTable);
   let updatePromo = updateTableData(promosTable);
 
@@ -53,8 +62,10 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
   
-  let user = await createOrUpdateUser(userData);
-  console.log(user);
+  
+  let provider = await findPractice(provider_id);
+  let user = await createOrUpdateUser(userData, provider);
+  console.log('User:', user);
   let updatePromoData = {
     'Total Claim Count': promo.fields['Total Claim Count'],
     'Claimed By Users': [user.id, ...promo.fields['Claimed By Users']],
