@@ -1,5 +1,5 @@
 let { BASEURL, USERS_BASE_ID } = process.env;
-let { createButtonMessage } = require('../libs/bots');
+let { createButtonMessage, createTextMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../libs/data');
 
@@ -37,8 +37,7 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { provider_id, promo_id } = query;
-  let { messenger_user_id, first_name, last_name, gender, provider_base_id, provider_state, provider_city, provider_zip_code } = query;
+  let { promo_id, messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id, provider_state, provider_city, provider_zip_code } = query;
   let userData = { messenger_user_id, first_name, last_name, gender, provider_base_id, provider_state, provider_city, provider_zip_code };
 
   let promosTable = getPromosTable(provider_base_id);
@@ -49,19 +48,23 @@ let claimPromotion = async ({ query }, res) => {
   let promo = await findPromo(promo_id);
 
   if (!promo) {
-    let redirect_to_blocks = [];
+    let redirect_to_blocks = ['Promo No Longer Valid'];
     res.send({ redirect_to_blocks });
     return;
   }
   
   let user = await createOrUpdateUser(userData);
-  
+  console.log(user);
   let updatePromoData = {
     'Total Claim Count': promo.fields['Total Claim Count'],
     'Claimed By Users': [user.id, ...promo.fields['Claimed By Users']],
   }
   
   let updatedPromo = await updatePromo(updatePromoData, promo);
+  console.log(updatedPromo);
+  let txtMsg = createTextMessage('Test');
+  let messages = [txtMsg];
+  res.send({ messages });
 }
 
 module.exports = claimPromotion;
