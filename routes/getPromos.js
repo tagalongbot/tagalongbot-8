@@ -44,10 +44,9 @@ let toGalleryElement = ({ provider_id, provider_base_id, first_name, last_name, 
 
   let promo_type = encodeURIComponent(promo['Type']);
 
-  let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
-  console.log('Data:', data);
+  let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender1: gender, messenger_user_id };
   let btn1URL = createURL(`${BASEURL}/promo/details`, data);
-
+  console.log('Btn URL:', btn1URL);
   let btn1 = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
