@@ -29,20 +29,18 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
     'messenger user id': messenger_user_id,
     'First Name': first_name,
     'Last Name': last_name,
-    'Gender': gender,
-    'State': provider_state,
-    'City': provider_city,
-    'Zip Code': provider_zip_code,
+    'Gender': gender.toLowerCase(),
+    'State': provider_state.toLowerCase(),
+    'City': provider_city.toLowerCase(),
+    'Zip Code': Number(provider_zip_code),
   }
-
-  console.log('User Data', userData);
 
   if (!user) {
     let newUser = await createUser(userData);
     return newUser;
   }
 
-  let updatedUser = updateTableData(userData, user);
+  let updatedUser = await updateTableData(userData, user);
   return updatedUser;
 }
 
@@ -50,7 +48,7 @@ let claimPromotion = async ({ query }, res) => {
   let { promo_id, messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id } = query;
   let userData = { messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id };
   console.log('Query:', query);
-  
+
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
   let updatePromo = updateTableData(promosTable);
@@ -62,17 +60,20 @@ let claimPromotion = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
-  
+
   let provider = await findPractice(provider_id);
   let user = await createOrUpdateUser(userData, provider);
   console.log('User:', user);
+  console.log('Promo:', promo.fields);
+  console.log('Promo Users:', promo.fields['Claimed By Users']);
   let updatePromoData = {
     'Total Claim Count': promo.fields['Total Claim Count'],
-    'Claimed By Users': [user.id, ...promo.fields['Claimed By Users']],
+    'Claimed By Users': [user.id, ...(promo.fields['Claimed By Users'] || [])],
   }
   
+  console.log('Update Data:', updatePromoData);
   let updatedPromo = await updatePromo(updatePromoData, promo);
-  console.log(updatedPromo);
+  console.log('Updated Promo:', updatedPromo);
   let txtMsg = createTextMessage('Test');
   let messages = [txtMsg];
   res.send({ messages });

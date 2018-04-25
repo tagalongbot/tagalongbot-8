@@ -4,6 +4,7 @@ let Airtable = require('airtable');
 let errorHandler = (resolve, reject) => (error, record) => {
 	if (error) {
 		console.trace();
+    console.log('Airtable Error:', error);
 		reject({ error });
 		return;
 	}
