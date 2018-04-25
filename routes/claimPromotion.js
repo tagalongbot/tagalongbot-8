@@ -14,7 +14,6 @@ let allUsersTable = getUsersTable(USERS_BASE_ID);
 let getAllUsers = getAllDataFromTable(allUsersTable);
 
 let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, provider_base_id }, provider) => {
-  console.log('Gender:', gender);
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
   let createUser = createTableData(usersTable);
@@ -54,11 +53,10 @@ let toUniqueArray = (arr, val) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { promo_id, messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id } = query;
-  let userData = { messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id };
+  let { promo_id, messenger_user_id, first_name, last_name, gender1, provider_id, provider_base_id } = query;
+  let userData = { messenger_user_id, first_name, last_name, gender: gender1, provider_id, provider_base_id };
   let data = { ...query, ...userData };
-  console.log('Data:', data);
-  console.log('Query:', query);
+  console.log('Claimed Gender:', gender1);
 
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
