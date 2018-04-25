@@ -45,13 +45,18 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
   return updatedUser;
 }
 
-let toUniqueArray = () => {
-
+let toUniqueArray = (arr, val) => {
+  if ( !arr.includes(val) ) {
+    return arr.concat(val);
+  }
+  return arr;
 }
 
 let claimPromotion = async ({ query }, res) => {
   let { promo_id, messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id } = query;
   let userData = { messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id };
+  let data = { ...query, ...userData };
+  console.log('Data:', data);
   console.log('Query:', query);
 
   let promosTable = getPromosTable(provider_base_id);
@@ -68,25 +73,23 @@ let claimPromotion = async ({ query }, res) => {
 
   let provider = await findPractice(provider_id);
   let user = await createOrUpdateUser(userData, provider);
-  console.log('User:', user);
-  console.log('Promo:', promo.fields);
-  console.log('Promo Users:', promo.fields['Claimed By Users']);
-  let claimed_users = [user.id, ...(promo.fields['Claimed By Users'] || [])].reduce((arr, val) => {
-    if ( !arr.includes(val) ) {
-      return arr.concat(val);
-    }
-    return arr;
-  });
 
+  let claimed_users = [user.id, ...(promo.fields['Claimed By Users'] || [])].reduce(toUniqueArray, []);
   let updatePromoData = {
     'Total Claim Count': promo.fields['Total Claim Count'],
     'Claimed By Users': claimed_users,
   }
 
-  console.log('Update Data:', updatePromoData);
   let updatedPromo = await updatePromo(updatePromoData, promo);
-  console.log('Updated Promo:', updatedPromo);
-  let txtMsg = createTextMessage('Test');
+  
+  let view_provider_url = createURL(`${BASEURL}/promo/provider`, data);
+
+  let txtMsg = createButtonMessage(
+    `Congrats ${first_name} your promotion has been claimed!`,
+    `View Provider|json_plugin_url|${view_provider_url}`,
+    `Search More Promos|show_block|Search Promos`,
+  );
+
   let messages = [txtMsg];
   res.send({ messages });
 }
