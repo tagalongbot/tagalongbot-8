@@ -63,7 +63,6 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
   
-  
   let provider = await findPractice(provider_id);
   let user = await createOrUpdateUser(userData, provider);
   console.log('User:', user);
