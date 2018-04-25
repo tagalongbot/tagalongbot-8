@@ -14,6 +14,7 @@ let allUsersTable = getUsersTable(USERS_BASE_ID);
 let getAllUsers = getAllDataFromTable(allUsersTable);
 
 let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, provider_base_id }, provider) => {
+  console.log('Gender:', gender);
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
   let createUser = createTableData(usersTable);
