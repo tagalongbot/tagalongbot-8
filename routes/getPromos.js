@@ -44,9 +44,10 @@ let toGalleryElement = ({ provider_id, provider_base_id, first_name, last_name, 
 
   let promo_type = encodeURIComponent(promo['Type']);
 
+  // Bug with Sending "gender" to json_plugin_url button
   let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender1: gender, messenger_user_id };
   let btn1URL = createURL(`${BASEURL}/promo/details`, data);
-  console.log('Btn URL:', btn1URL);
+
   let btn1 = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
@@ -68,7 +69,7 @@ let getPromos = async ({ query, params }, res) => {
 	let messenger_user_id = query['messenger user id'];
 
 	let promotions = await searchPromotions(query, search_type);
-
+  console.log('Promotions: ', promotions);
   if (!promotions[0]) {
     let redirect_to_blocks = ['No Promos Found'];
     res.send({ redirect_to_blocks });

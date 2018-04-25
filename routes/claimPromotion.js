@@ -56,7 +56,6 @@ let claimPromotion = async ({ query }, res) => {
   let { promo_id, messenger_user_id, first_name, last_name, gender1, provider_id, provider_base_id } = query;
   let userData = { messenger_user_id, first_name, last_name, gender: gender1, provider_id, provider_base_id };
   let data = { ...query, ...userData };
-  console.log('Claimed Gender:', gender1);
 
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
@@ -75,7 +74,7 @@ let claimPromotion = async ({ query }, res) => {
 
   let claimed_users = [user.id, ...(promo.fields['Claimed By Users'] || [])].reduce(toUniqueArray, []);
   let updatePromoData = {
-    'Total Claim Count': promo.fields['Total Claim Count'],
+    'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
     'Claimed By Users': claimed_users,
   }
 
