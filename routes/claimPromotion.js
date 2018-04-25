@@ -17,6 +17,7 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
   let createUser = createTableData(usersTable);
+  let updateUser = updateTableData(usersTable);
 
   let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
   let [user] = await getUsers({ filterByFormula });
@@ -40,8 +41,12 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
     return newUser;
   }
 
-  let updatedUser = await updateTableData(userData, user);
+  let updatedUser = await updateUser(userData, user);
   return updatedUser;
+}
+
+let toUniqueArray = () => {
+
 }
 
 let claimPromotion = async ({ query }, res) => {
@@ -66,11 +71,18 @@ let claimPromotion = async ({ query }, res) => {
   console.log('User:', user);
   console.log('Promo:', promo.fields);
   console.log('Promo Users:', promo.fields['Claimed By Users']);
+  let claimed_users = [user.id, ...(promo.fields['Claimed By Users'] || [])].reduce((arr, val) => {
+    if ( !arr.includes(val) ) {
+      return arr.concat(val);
+    }
+    return arr;
+  });
+
   let updatePromoData = {
     'Total Claim Count': promo.fields['Total Claim Count'],
-    'Claimed By Users': [user.id, ...(promo.fields['Claimed By Users'] || [])],
+    'Claimed By Users': claimed_users,
   }
-  
+
   console.log('Update Data:', updatePromoData);
   let updatedPromo = await updatePromo(updatePromoData, promo);
   console.log('Updated Promo:', updatedPromo);
