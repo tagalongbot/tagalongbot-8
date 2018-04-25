@@ -69,22 +69,21 @@ let getPromos = async ({ query, params }, res) => {
 	let messenger_user_id = query['messenger user id'];
 
 	let promotions = await searchPromotions(query, search_type);
-  console.log('Promotions: ', promotions);
-  if (!promotions[0]) {
+  
+  let promosGalleryData = promotions.reduce((arr, { provider_id, provider_base_id, promos }) => {
+    return arr.concat(...promos.map(toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id })));
+  }, []);
+
+  if (!promosGalleryData[0]) {
     let redirect_to_blocks = ['No Promos Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-
-  let promosGalleryData = promotions.reduce((arr, { provider_id, provider_base_id, promos }) => {
-    return arr.concat(...promos.map(toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id })));
-  }, []);
-
 	let randomPromotions = shuffleArray(promosGalleryData).slice(0, 10);
 	let promotionsGallery = createGallery(randomPromotions);
 
+  let textMsg = { text: `Here's are some promotions I found ${first_name}` };
 	let messages = [textMsg, promotionsGallery];
 	res.send({ messages });
 }

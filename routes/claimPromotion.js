@@ -63,7 +63,7 @@ let claimPromotion = async ({ query }, res) => {
 
   let promo = await findPromo(promo_id);
 
-  if (!promo) {
+  if (!promo || promo.fields['Claim Limit Reached'] === "1") {
     let redirect_to_blocks = ['Promo No Longer Valid'];
     res.send({ redirect_to_blocks });
     return;
