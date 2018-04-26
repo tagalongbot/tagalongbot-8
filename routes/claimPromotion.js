@@ -68,10 +68,16 @@ let claimPromotion = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
-
+  
   let provider = await findPractice(provider_id);
   let user = await createOrUpdateUser(userData, provider);
 
+  if (promo.fields['Claimed By Users'].includes(user.id)) {
+    let redirect_to_blocks = ['Promo Already Claimed By User'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+  
   let claimed_users = [user.id, ...(promo.fields['Claimed By Users'] || [])].reduce(toUniqueArray, []);
   let updatePromoData = {
     'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
