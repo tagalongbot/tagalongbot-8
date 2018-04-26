@@ -37,6 +37,9 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
     'Zip Code': Number(provider_zip_code),
   }
 
+  let [userFromAllUsersTable] = await getAllUsers({ filterByFormula });
+  let updatedUserFromAllUsers = await updateUserFromAllUsers(userData, userFromAllUsersTable);
+
   if (!user) {
     let newUser = await createUser(userData);
     return newUser;
@@ -69,24 +72,25 @@ let claimPromotion = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
-  
+
   let provider = await findPractice(provider_id);
   let user = await createOrUpdateUser(userData, provider);
 
-  if (promo.fields['Claimed By Users'].includes(user.id)) {
+  let claimed_by_users = promo.fields['Claimed By Users'];
+  if (claimed_by_users && claimed_by_users.includes(user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];
     res.send({ redirect_to_blocks });
     return;
   }
-  
-  let claimed_users = [user.id, ...(promo.fields['Claimed By Users'] || [])].reduce(toUniqueArray, []);
+
+  let claimed_users = [user.id, ...(claimed_by_users || [])].reduce(toUniqueArray, []);
   let updatePromoData = {
     'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
     'Claimed By Users': claimed_users,
   }
 
   let updatedPromo = await updatePromo(updatePromoData, promo);
-  
+
   let view_provider_url = createURL(`${BASEURL}/promo/provider`, data);
 
   let txtMsg = createButtonMessage(
