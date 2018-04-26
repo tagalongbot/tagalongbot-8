@@ -18,6 +18,7 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   let provider_name = encodeURIComponent(provider['Practice Name']);
 
   let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
+  console.log('Promo Providers:', gender);
   let promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
   let services_btn_url = createURL(`${BASEURL}/provider/services`, data);
 
@@ -40,7 +41,7 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 }
 
 let getPromoProvider = async ({ query }, res) => {
-  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
+  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender1, messenger_user_id } = query;
   let provider = await findProvider(provider_id);
 
   if (!provider) {
@@ -59,7 +60,7 @@ let getPromoProvider = async ({ query }, res) => {
     return;
   }
 
-  let providersGalleryData = [provider].map(toGalleryElement({ first_name, last_name, gender, messenger_user_id }));
+  let providersGalleryData = [provider].map(toGalleryElement({ first_name, last_name, gender: gender1, messenger_user_id }));
   let providersGallery = createGallery(providersGalleryData);
   let messages = [providersGallery];
   res.send({ messages });
