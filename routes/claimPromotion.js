@@ -12,6 +12,7 @@ let findPractice = findTableData(practicesTable);
 
 let allUsersTable = getUsersTable(USERS_BASE_ID);
 let getAllUsers = getAllDataFromTable(allUsersTable);
+let updateUserFromAllUsers = updateTableData(allUsersTable);
 
 let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, provider_base_id }, provider) => {
   let usersTable = getUsersTable(provider_base_id);
