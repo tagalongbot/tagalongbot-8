@@ -22,6 +22,7 @@ let askForUserEmail = async ({ query }, res) => {
 }
 
 let claimProvider = async ({ query }, res) => {
+  console.log('Claimed');
   let { provider_id, gender, user_email } = query;
   let messenger_user_id = query['messenger user id'];
   let first_name = query['first name'];
