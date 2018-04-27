@@ -37,7 +37,10 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
     'Zip Code': Number(provider_zip_code),
   }
 
+  console.log('User Data:', userData);
   let [userFromAllUsersTable] = await getAllUsers({ filterByFormula });
+  console.log('User Data:', userData);
+
   let updatedUserFromAllUsers = await updateUserFromAllUsers(userData, userFromAllUsersTable);
 
   if (!user) {
@@ -76,6 +79,7 @@ let claimPromotion = async ({ query }, res) => {
   let provider = await findPractice(provider_id);
   let user = await createOrUpdateUser(userData, provider);
 
+  console.log('User:', user);
   let claimed_by_users = promo.fields['Claimed By Users'];
   if (claimed_by_users && claimed_by_users.includes(user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];
@@ -83,7 +87,9 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let claimed_users = [user.id, ...(claimed_by_users || [])].reduce(toUniqueArray, []);
+  let claimed_users = [...new Set([user.id, ...(claimed_by_users || [])])];
+  
+  console.log('claimed_users:', claimed_users);
   let updatePromoData = {
     'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
     'Claimed By Users': claimed_users,
