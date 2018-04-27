@@ -7,6 +7,7 @@ let handleAI = require('./routes/ai');
 let getProviders = require('./routes/getProviders');
 let getProviderServices = require('./routes/getProviderServices');
 let getProviderPromos = require('./routes/getProviderPromos');
+let claimProvider = require('./routes/claimProvider');
 
 // Promos
 let getPromos = require('./routes/getPromos');
@@ -26,6 +27,7 @@ app.get('/ai', handleAI);
 app.get('/search/providers/:search_type', getProviders);
 app.get('/provider/services', getProviderServices);
 app.get('/provider/promos', getProviderPromos);
+app.use('/provider/claim', claimProvider);
 
 // Promotions
 app.get('/search/promos/:search_type', getPromos);
