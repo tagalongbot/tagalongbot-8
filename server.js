@@ -31,7 +31,7 @@ app.get('/provider/promos', getProviderPromos);
 app.get('/search/promos/:search_type', getPromos);
 app.get('/promo/details', getPromoDetails);
 app.get('/promo/provider', getPromoProvider);
-app.get('/promo/claim', claimPromotion);
+app.use('/promo/claim', claimPromotion);
 
 // Services
 app.get('/search/services/:service_type', getServices);

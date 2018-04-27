@@ -18,7 +18,7 @@ let allUsersTable = getUsersTable(USERS_BASE_ID);
 let getAllUsers = getAllDataFromTable(allUsersTable);
 let updateUserFromAllUsers = updateTableData(allUsersTable);
 
-let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, provider_base_id }, provider) => {
+let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, user_email, provider_base_id }, provider) => {
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
   let createUser = createTableData(usersTable);
@@ -42,7 +42,7 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
   }
 
   let [userFromAllUsersTable] = await getAllUsers({ filterByFormula });
-  let updatedUserFromAllUsers = await updateUserFromAllUsers(userData, userFromAllUsersTable);
+  let updatedUserFromAllUsers = await updateUserFromAllUsers({ ...userData, 'Email Address': user_email }, userFromAllUsersTable);
 
   if (!user) {
     let newUser = await createUser(userData);
@@ -62,13 +62,15 @@ let askForUserEmail = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
+  console.log('Promotion Claimed');
   let { promo_id, provider_id, messenger_user_id, first_name, last_name, gender, user_email } = query;
-  let userData = { provider_id, messenger_user_id, first_name, last_name, gender, user_email };
 
   let provider = await findPractice(provider_id);
-  let provider_base_id = 
-  
-  let promosTable = getPromosTable(provider.fields['Practice Base ID']);
+  let provider_base_id = provider.fields['Practice Base ID'];
+
+  let userData = { provider_id, provider_base_id, messenger_user_id, first_name, last_name, gender, user_email };
+
+  let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
   let updatePromo = updateTableData(promosTable);
 
@@ -98,7 +100,7 @@ let claimPromotion = async ({ query }, res) => {
 
   let updatedPromo = await updatePromo(updatePromoData, promo);
 
-  let view_provider_url = createURL(`${BASEURL}/promo/provider`, data);
+  let view_provider_url = createURL(`${BASEURL}/promo/provider`, { ...query, ...userData });
 
   let txtMsg = createButtonMessage(
     `Congrats ${first_name} your promotion has been claimed!`,
@@ -110,7 +112,7 @@ let claimPromotion = async ({ query }, res) => {
   res.send({ messages });
 }
 
-router.get('/claim/email', askForUserEmail);
-router.get('/claim', claimPromotion);
+router.get('/email', askForUserEmail);
+router.get('/', claimPromotion);
 
-module.exports = claimPromotion;
+module.exports = router;
