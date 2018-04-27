@@ -1,6 +1,10 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID } = process.env;
 let { createButtonMessage, createTextMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
+
+let express = require('express');
+let router = express.Router();
+
 let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../libs/data');
 
 let getPracticesTable = getTable('Practices');
@@ -49,16 +53,22 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
   return updatedUser;
 }
 
-let askForUserEmail = async ({ query }, res) {
-  
+let askForUserEmail = async ({ query }, res) => {
+  let { promo_id, provider_id } = query;
+
+  let redirect_to_blocks = ['Ask For Email (Promo)'];
+  let set_attributes = { promo_id, provider_id };
+  res.send({ redirect_to_blocks, set_attributes });
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { promo_id, messenger_user_id, first_name, last_name, user_email, gender1, provider_id, provider_base_id } = query;
-  let userData = { messenger_user_id, first_name, last_name, user_email, gender: gender1, provider_id, provider_base_id };
-  let data = { ...query, ...userData };
+  let { promo_id, provider_id, messenger_user_id, first_name, last_name, gender, user_email } = query;
+  let userData = { provider_id, messenger_user_id, first_name, last_name, gender, user_email };
 
-  let promosTable = getPromosTable(provider_base_id);
+  let provider = await findPractice(provider_id);
+  let provider_base_id = 
+  
+  let promosTable = getPromosTable(provider.fields['Practice Base ID']);
   let findPromo = findTableData(promosTable);
   let updatePromo = updateTableData(promosTable);
 
@@ -70,7 +80,6 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let provider = await findPractice(provider_id);
   let user = await createOrUpdateUser(userData, provider);
 
   let claimed_by_users = promo.fields['Claimed By Users'];
@@ -100,5 +109,8 @@ let claimPromotion = async ({ query }, res) => {
   let messages = [txtMsg];
   res.send({ messages });
 }
+
+router.get('/claim/email', askForUserEmail);
+router.get('/claim', claimPromotion);
 
 module.exports = claimPromotion;
