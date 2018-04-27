@@ -37,10 +37,19 @@ let formatPhoneNumber = (phone_number) => {
 	return phoneNumberString;
 }
 
+let toUniqueArray = (arr, val) => {
+  if ( !arr.includes(val) ) {
+    return arr.concat(val);
+  }
+  return arr;
+}
+
+
 module.exports = {
 	createURL,
 	randomize,
 	shuffleArray,
 	getKeysStartingWith,
 	formatPhoneNumber,
+  toUniqueArray,
 }
