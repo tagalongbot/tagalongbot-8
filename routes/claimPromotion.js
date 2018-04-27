@@ -42,8 +42,9 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
   }
 
   let [userFromAllUsersTable] = await getAllUsers({ filterByFormula });
-  let updatedUserFromAllUsers = await updateUserFromAllUsers({ ...userData, 'Email Address': user_email }, userFromAllUsersTable);
+  let updatedUserFromAllUsers = await updateUserFromAllUsers({ 'Email Address': user_email, ...userData }, userFromAllUsersTable);
 
+  // console.log('Updated User:', updatedUserFromAllUsers);
   if (!user) {
     let newUser = await createUser(userData);
     return newUser;
@@ -62,9 +63,12 @@ let askForUserEmail = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  console.log('Promotion Claimed');
-  let { promo_id, provider_id, messenger_user_id, first_name, last_name, gender, user_email } = query;
-
+  let { promo_id, provider_id, gender, user_email } = query;
+  let messenger_user_id = query['messenger user id'];
+  let first_name = query['first name'];
+  let last_name = query['last name'];
+  
+  // console.log('Query:', query);
   let provider = await findPractice(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
