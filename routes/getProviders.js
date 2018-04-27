@@ -77,7 +77,7 @@ let createButtons = (is_provider_claimed, data) => {
     return [btn1, btn2];
   }
 
-  let claim_practice_url = createURL(`${BASEURL}/provider/claim`, {  });
+  let claim_practice_url = createURL(`${BASEURL}/provider/claim`, data);
 
   let btn1 = {
     title: 'Claim Practice',
