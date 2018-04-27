@@ -21,7 +21,7 @@ let searchProviders = async (data, search_type) => {
 	}
 
   // Concatenating Search Formula
-  filterByFormula = `AND({Active?}, ${filterByFormula})`;
+  // filterByFormula = `AND({Active?}, ${filterByFormula})`;
 	let providers = await getPractices({ filterByFormula });
 	return providers;
 }

@@ -77,7 +77,7 @@ let createButtons = (is_provider_claimed, data) => {
     return [btn1, btn2];
   }
 
-  let claim_practice_url = createURL(`${BASEURL}/provider/claim`, data);
+  let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
 
   let btn1 = {
     title: 'Claim Practice',
@@ -97,7 +97,7 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   let provider_base_id = provider['Practice Base ID'];
   let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
 
-  let buttons = createButtons(provider.fileds['Claimed?'], data);
+  let buttons = createButtons(provider['Claimed?'], data);
 
   let element = { title, subtitle, image_url, buttons };
   return element;
