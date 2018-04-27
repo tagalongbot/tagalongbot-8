@@ -49,20 +49,43 @@ let createOrUpdateUser = async (user, query) => {
 
   let updateUserData = {};
 
-  if (last_state_searched) {
-    updateUserData['Last State Searched'] = last_state_searched;
-  }
-
-  if (last_city_searched) {
-    updateUserData['Last City Searched'] = last_city_searched;
-  }
-
-  if (last_zip_code_searched) {
-    updateUserData['Last Zip Code Searched'] = last_zip_code_searched;
-  }
+  if (last_state_searched) updateUserData['Last State Searched'] = last_state_searched;
+  if (last_city_searched) updateUserData['Last City Searched'] = last_city_searched;
+  if (last_zip_code_searched) updateUserData['Last Zip Code Searched'] = last_zip_code_searched;
 
   let updatedUser = await updateUser(updateUserData, user);
   return updatedUser;
+}
+
+let createButtons = (is_provider_claimed, data) => {
+  if (is_provider_claimed) {
+    let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
+    let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
+
+    let btn1 = {
+      title: 'View Services',
+      type: 'json_plugin_url',
+      url: view_services_btn_url,
+    }
+
+    let btn2 = {
+      title: 'View Promos',
+      type: 'json_plugin_url',
+      url: view_promos_btn_url,
+    }
+    
+    return [btn1, btn2];
+  }
+
+  let claim_practice_url = createURL(`${BASEURL}/provider/claim`, {  });
+
+  let btn1 = {
+    title: 'Claim Practice',
+    type: 'json_plugin_url',
+    url: claim_practice_url
+  }
+
+  return [btn1];
 }
 
 let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
@@ -73,24 +96,10 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   let provider_name = encodeURIComponent(provider['Practice Name']);
   let provider_base_id = provider['Practice Base ID'];
   let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
-  let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
-  let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
 
-  let btn1 = {
-    title: 'View Services',
-    type: 'json_plugin_url',
-    url: view_services_btn_url,
-  }
+  let buttons = createButtons(provider.fileds['Claimed?'], data);
 
-  let btn2 = {
-    title: 'View Promos',
-    type: 'json_plugin_url',
-    url: view_promos_btn_url,
-  }
-
-  let buttons = [btn1, btn2];
-
-  let element = { title, subtitle, image_url, buttons};
+  let element = { title, subtitle, image_url, buttons };
   return element;
 }
 
