@@ -44,7 +44,6 @@ let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gend
   let [userFromAllUsersTable] = await getAllUsers({ filterByFormula });
   let updatedUserFromAllUsers = await updateUserFromAllUsers({ 'Email Address': user_email, ...userData }, userFromAllUsersTable);
 
-  // console.log('Updated User:', updatedUserFromAllUsers);
   if (!user) {
     let newUser = await createUser(userData);
     return newUser;
@@ -67,7 +66,7 @@ let claimPromotion = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
   let first_name = query['first name'];
   let last_name = query['last name'];
-  
+
   // console.log('Query:', query);
   let provider = await findPractice(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
@@ -85,9 +84,10 @@ let claimPromotion = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
-
+  
   let user = await createOrUpdateUser(userData, provider);
 
+  // console.log('User:', user);
   let claimed_by_users = promo.fields['Claimed By Users'];
   if (claimed_by_users && claimed_by_users.includes(user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];
