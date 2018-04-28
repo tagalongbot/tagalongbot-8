@@ -57,8 +57,8 @@ let createOrUpdateUser = async (user, query) => {
   return updatedUser;
 }
 
-let createButtons = (is_provider_claimed, data) => {
-  if (is_provider_claimed) {
+let createButtons = (is_provider_active, is_provider_claimed, data) => {
+  if (is_provider_active) {
     let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
     let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
 
@@ -97,7 +97,7 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   let provider_base_id = provider['Practice Base ID'];
   let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
 
-  let buttons = createButtons(provider['Claimed?'], data);
+  let buttons = createButtons(provider['Active?'], provider['Claimed?'], data);
 
   let element = { title, subtitle, image_url, buttons };
   return element;
@@ -106,7 +106,7 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 let firstActiveThenUnclaimed = (provider1, provider2) => {
   if (provider1.fields['Active?'] && !provider2.fields['Active?']) return -1;
   if (provider1.fields['Active?'] && provider2.fields['Active?']) return 0;
-  if (!provider1.fields['Active?']) return 1;
+  if (!provider1.fields['Active?'] && !provider2.fields['Claimed?']) return 1;
 }
 
 // Main
