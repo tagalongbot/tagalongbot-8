@@ -103,6 +103,11 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   return element;
 }
 
+let firstActiveThenUnclaimed = (provider1, provider2) => {
+  if (provider1.fields['Active?']) return 1;
+  if (provider1.fields['Claimed?']) return -1;
+}
+
 // Main
 let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;
@@ -125,7 +130,7 @@ let getProviders = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some providers I found ${first_name}` };
-  let randomProviders = shuffleArray(providers).slice(0, 10).map(toGalleryElement(data));
+  let randomProviders = shuffleArray(providers).slice(0, 10).sort(firstActiveThenUnclaimed).map(toGalleryElement(data));
 	let providersGallery = createGallery(randomProviders);
 
 	let messages = [textMsg, providersGallery];
