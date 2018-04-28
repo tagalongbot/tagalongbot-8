@@ -26,6 +26,13 @@ let searchProviders = async (data, search_type) => {
 	return providers;
 }
 
+let getProviderByUserID = async (messenger_user_id) => {
+  let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
+  let [user] = await getPractices({ filterByFormula });
+  return user;
+}
+
 module.exports = {
   searchProviders,
+  getProviderByUserID,
 }

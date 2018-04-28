@@ -3,21 +3,14 @@ let { createGallery } = require('../libs/bots');
 let { createURL, shuffleArray } = require('../libs/helpers');
 
 let { searchProviders } = require('../libs/providers');
+let { searchUserByMessengerID } = require('../libs/users');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 let getUsersTable = getTable('Users');
 let usersTable = getUsersTable(USERS_BASE_ID);
 
-let getUsers = getAllDataFromTable(usersTable);
 let createNewUser = createTableData(usersTable);
 let updateUser = updateTableData(usersTable);
-
-// Helper Methods
-let searchUser = async ({ messenger_user_id }) => {
-	let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
-	let [user] = await getUsers({ filterByFormula });
-	return user;
-}
 
 let createOrUpdateUser = async (user, query) => {
   let first_name = query['first name'];
@@ -131,7 +124,7 @@ let getProviders = async ({ query, params }, res) => {
 	let messenger_user_id = query['messenger user id'];
   let data = { first_name, last_name, gender, messenger_user_id };
 
-	let user = await searchUser({ messenger_user_id });
+	let user = await searchUserByMessengerID({ messenger_user_id });
 	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
 
 	let providers = await searchProviders(query, search_type);
