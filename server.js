@@ -8,6 +8,7 @@ let getProviders = require('./routes/getProviders');
 let getProviderServices = require('./routes/getProviderServices');
 let getProviderPromos = require('./routes/getProviderPromos');
 let claimProvider = require('./routes/claimProvider');
+let providerClaimed = require('./routes/providerClaimed');
 
 // Promos
 let getPromos = require('./routes/getPromos');
@@ -28,6 +29,7 @@ app.get('/search/providers/:search_type', getProviders);
 app.get('/provider/services', getProviderServices);
 app.get('/provider/promos', getProviderPromos);
 app.use('/provider/claim', claimProvider);
+app.get('/provider/claimed', providerClaimed);
 
 // Promotions
 app.get('/search/promos/:search_type', getPromos);

@@ -77,15 +77,27 @@ let createButtons = (is_provider_active, is_provider_claimed, data) => {
     return [btn1, btn2];
   }
 
-  let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
+  if (!is_provider_claimed) {
+    let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
 
-  let btn1 = {
-    title: 'Claim Practice',
-    type: 'json_plugin_url',
-    url: claim_practice_url
+    let btn = {
+      title: 'Claim Practice',
+      type: 'json_plugin_url',
+      url: claim_practice_url
+    }
+
+    return [btn];
   }
 
-  return [btn1];
+  if (is_provider_claimed && !is_provider_active) {
+    let btn = {
+      title: 'Already Claimed',
+      type: 'show_block',
+      block_name: 'Practice Already Claimed'
+    }
+    
+    return [btn];
+  }
 }
 
 let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
