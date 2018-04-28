@@ -104,8 +104,8 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 }
 
 let firstActiveThenUnclaimed = (provider1, provider2) => {
-  if (provider1.fields['Active?']) return 1;
-  if (provider1.fields['Claimed?']) return -1;
+  if (provider1.fields['Active?']) return -1;
+  if (provider1.fields['Claimed?']) return 1;
 }
 
 // Main
