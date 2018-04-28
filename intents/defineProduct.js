@@ -12,7 +12,7 @@ let defineProduct = async({ res, parameters, user }) => {
     let procedure = procedureorproductcategory.toLowerCase();
     return brandName.includes(serviceName) || procedure.includes(serviceName);
   });
-  
+
   if (!service) {
     let redirect_to_blocks = ['No Service Found'];
     res.send({ redirect_to_blocks });
