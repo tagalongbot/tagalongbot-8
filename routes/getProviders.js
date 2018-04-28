@@ -83,10 +83,13 @@ let createButtons = (is_provider_active, is_provider_claimed, data) => {
   }
 
   if (is_provider_claimed && !is_provider_active) {
+    let { messenger_user_id } = data;
+    let already_claimed_url = createURL(`${BASEURL}/provider/claimed`, { messenger_user_id });
+
     let btn = {
       title: 'Already Claimed',
-      type: 'show_block',
-      block_name: 'Practice Already Claimed'
+      type: 'json_plugin_url',
+      url: already_claimed_url
     }
     
     return [btn];
