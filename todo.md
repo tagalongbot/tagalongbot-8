@@ -17,3 +17,6 @@
 
 `libs/users.js`
   - Create users library to use anywhere that user methods are used
+  
+`libs/services.js`
+  - Create services library to use anywhere that service methods are used

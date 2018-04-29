@@ -1,29 +1,38 @@
-let { BASEURL } = process.env;
+let { BASEURL, SERVICES_BASE_ID } = process.env;
 let { createButtonMessage } = require('../libs/bots');
-let { getServices } = require('../libs/data');
+let { createURL } = require('../libs/helpers');
+let { getTable, getAllDataFromTable } = require('../libs/data');
+
+let getServicesTable = getTable('Services');
+let servicesTable = getServicesTable(SERVICES_BASE_ID);
+let getServices = getAllDataFromTable(servicesTable);
 
 let defineProduct = async({ res, parameters, user }) => {
   let { brand_name, procedureorproductcategory } = parameters;
-  let services = await getServices();
 
-  let service = services.find((service) => {
-    let serviceName = service.service_name.toLowerCase();
-    let brandName = brand_name.toLowerCase();
-    let procedure = procedureorproductcategory.toLowerCase();
-    return brandName.includes(serviceName) || procedure.includes(serviceName);
-  });
+  let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim()}', {Capitalized Name} = '${procedureorproductcategory.trim()}')`;
+  let [service] = await getServices({ filterByFormula });
+
+  // let service = services.find((service) => {
+  //   let serviceName = service.service_name.toLowerCase();
+  //   let brandName = brand_name.toLowerCase();
+  //   let procedure = procedureorproductcategory.toLowerCase();
+  //   return brandName.includes(serviceName) || procedure.includes(serviceName);
+  // });
 
   if (!service) {
     let redirect_to_blocks = ['No Service Found'];
     res.send({ redirect_to_blocks });
     return;
   }
-  
+
+  let service_id = service.id;
+  let find_providers_url = createURL(`${BASEURL}/service/providers`, { service_id });
   let txtMsg = createButtonMessage(
     service.long_description,
-    `Find Providers|json_plugin_url|${BASEURL}/service/providers?service_id=${service.serviceid}`
+    `Find Providers|json_plugin_url|find_providers_url`
   );
-  
+
   let messages = [txtMsg];
   res.send({ messages });
 }
