@@ -44,9 +44,13 @@ let searchServiceProviders = async ({ query }, res) => {
 }
 
 let getServiceProviders = async ({ query, params }, res) => {
-  let { search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
+  let { service_name, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
   let { search_type } = params;
-  let { service_name, first_name, last_name, gender, messenger_user_id } = query;
+
+  let messenger_user_id = query['messenger user id'];
+  let first_name = query['first name'];
+  let last_name = query['last name'];
+  let gender = query['gender'];
 
   let providers = await searchProviders({
     search_providers_state: search_service_providers_state,
