@@ -44,7 +44,6 @@ let toUniqueArray = (arr, val) => {
   return arr;
 }
 
-
 module.exports = {
 	createURL,
 	randomize,
