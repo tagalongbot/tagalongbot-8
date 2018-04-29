@@ -23,8 +23,8 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   let image_url = service['Image URL'];
 
   let service_name = encodeURIComponent(service['Name']);
-  let view_service_details_btn_url = createURL(`${BASEURL}/service/description`, { service_id, service_name, ...data });
-  let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, { service_id, service_name, ...data });
+  let view_service_details_btn_url = createURL(`${BASEURL}/service/description/yes`, { service_id, service_name, ...data });
+  let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, { service_name });
 
   let btn1 = {
     title: 'View Service Details',

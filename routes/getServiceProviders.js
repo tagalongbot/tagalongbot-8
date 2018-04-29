@@ -37,8 +37,8 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 }
 
 let searchServiceProviders = async ({ query }, res) => {
-  let { service_id, service_name } = query;
-  let set_attributes = { service_id, service_name };
+  let { service_name } = query;
+  let set_attributes = { service_name };
   let redirect_to_blocks = ['Search Service Providers'];
   res.send({ set_attributes, redirect_to_blocks });
 }
@@ -57,7 +57,7 @@ let getServiceProviders = async ({ query, params }, res) => {
     search_providers_city: search_service_providers_city,
     search_providers_zip_code: search_service_providers_zip_code,
   }, search_type);
-  
+
   if (!providers[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
