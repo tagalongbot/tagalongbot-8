@@ -19,7 +19,7 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   let non_surgical_category = service[`${surgical_or_non_surgical} Category`];
 
   let title = service['Name'].slice(0, 80);
-  let subtitle = `${surgical_or_non_surgical} | ${non_surgical_category} | ${service[non_surgical_category]}`;
+  let subtitle = `${surgical_or_non_surgical} | ${non_surgical_category} | ${service[non_surgical_category]}`.slice(0, 80);
   let image_url = service['Image URL'];
 
   let service_name = encodeURIComponent(service['Name']);
@@ -45,6 +45,7 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 }
 
 let getServices = async ({ query, params }, res) => {
+  console.log('Query:', query, 'Params:', params);
   let { service_type } = params;
   let first_name = query['first name'];
   let last_name = query['last name'];
@@ -74,7 +75,7 @@ let getServices = async ({ query, params }, res) => {
   }
 
   let non_surgical_services = await searchServices('Non Surgical');
-  let non_surgical_services_gallery_data = non_surgical_services.map(toGalleryElement(data)).slice(0, 8);
+  let non_surgical_services_gallery_data = non_surgical_services.slice(0, 10).map(toGalleryElement);
 	let gallery = createGallery([surgical_category_gallery_element, ...non_surgical_services_gallery_data]);
 
   // Need to add load more mechanisim
