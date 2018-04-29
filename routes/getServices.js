@@ -14,7 +14,7 @@ let searchServices = async (surgical_or_non_surgical) => {
   return services;
 }
 
-let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
+let toGalleryElement = ({ id: service_id, fields: service }) => {
   let surgical_or_non_surgical = service['Surgical / Non Surgical'];
   let non_surgical_category = service[`${surgical_or_non_surgical} Category`];
 
@@ -23,7 +23,7 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   let image_url = service['Image URL'];
 
   let service_name = encodeURIComponent(service['Name']);
-  let view_service_details_btn_url = createURL(`${BASEURL}/service/description/yes`, { service_id, service_name, ...data });
+  let view_service_details_btn_url = createURL(`${BASEURL}/service/description/yes`, { service_id, service_name});
   let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, { service_name });
 
   let btn1 = {
@@ -54,7 +54,7 @@ let getServices = async ({ query, params }, res) => {
 
   if (service_type === 'surgical') {
     let surgical_services = await searchServices('Surgical');
-    let surgical_services_gallery_data = surgical_services.map(toGalleryElement(data));
+    let surgical_services_gallery_data = surgical_services.map(toGalleryElement);
     let gallery = createGallery(surgical_services_gallery_data);
     let textMsg = { text: `Here's are the top surgical services` };
     let messages = [gallery];

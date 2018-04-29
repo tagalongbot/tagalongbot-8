@@ -9,12 +9,11 @@ let findService = findTableData(servicesTable);
 
 let getServiceDescription = async ({ query, params }, res) => {
   let { show_providers } = params;
-  let { service_id, service_name, first_name, last_name, gender, messenger_user_id } = query;
-  let data = { service_id, service_name, first_name, last_name, gender, messenger_user_id };
+  let { service_id, service_name } = query;
 
   let service = await findService(service_id);
 
-  let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, data);
+  let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, { service_name });
 
   let messages = [];
 

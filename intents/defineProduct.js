@@ -26,8 +26,8 @@ let defineProduct = async({ res, parameters, user }) => {
     return;
   }
 
-  let service_id = service.id;
-  let find_providers_url = createURL(`${BASEURL}/service/providers`, { service_id });
+  let service_name = service.fields['Name'];
+  let find_providers_url = createURL(`${BASEURL}/service/providers`, { service_name });
   let txtMsg = createButtonMessage(
     service.fields['Long Description'],
     `Find Providers|json_plugin_url|${find_providers_url}`
