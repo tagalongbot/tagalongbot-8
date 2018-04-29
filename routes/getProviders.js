@@ -2,7 +2,7 @@ let { BASEURL, USERS_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
 let { createURL, shuffleArray } = require('../libs/helpers');
 
-let { searchProviders } = require('../libs/providers');
+let { searchProviders, sortProviders, toGalleryElement } = require('../libs/providers');
 let { searchUserByMessengerID } = require('../libs/users');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
@@ -50,73 +50,6 @@ let createOrUpdateUser = async (user, query) => {
   return updatedUser;
 }
 
-let createButtons = (is_provider_active, is_provider_claimed, data) => {
-  if (is_provider_active) {
-    let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
-    let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
-
-    let btn1 = {
-      title: 'View Services',
-      type: 'json_plugin_url',
-      url: view_services_btn_url,
-    }
-
-    let btn2 = {
-      title: 'View Promos',
-      type: 'json_plugin_url',
-      url: view_promos_btn_url,
-    }
-    
-    return [btn1, btn2];
-  }
-
-  if (!is_provider_claimed) {
-    let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
-
-    let btn = {
-      title: 'Claim Practice',
-      type: 'json_plugin_url',
-      url: claim_practice_url
-    }
-
-    return [btn];
-  }
-
-  if (is_provider_claimed && !is_provider_active) {
-    let { messenger_user_id } = data;
-    let already_claimed_url = createURL(`${BASEURL}/provider/claimed`, { messenger_user_id });
-
-    let btn = {
-      title: 'Already Claimed',
-      type: 'json_plugin_url',
-      url: already_claimed_url
-    }
-    
-    return [btn];
-  }
-}
-
-let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
-  let title = provider['Practice Name'].slice(0, 80);
-  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
-  let image_url = provider['Main Provider Image'][0].url;
-
-  let provider_name = encodeURIComponent(provider['Practice Name']);
-  let provider_base_id = provider['Practice Base ID'];
-  let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
-
-  let buttons = createButtons(provider['Active?'], provider['Claimed?'], data);
-
-  let element = { title, subtitle, image_url, buttons };
-  return element;
-}
-
-let firstActiveThenUnclaimed = (provider1, provider2) => {
-  if (provider1.fields['Active?'] && !provider2.fields['Active?']) return -1;
-  if (provider1.fields['Active?'] && provider2.fields['Active?']) return 0;
-  if (!provider1.fields['Active?']) return 1;
-}
-
 // Main
 let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;
@@ -139,7 +72,7 @@ let getProviders = async ({ query, params }, res) => {
   }
 
   let textMsg = { text: `Here's are some providers I found ${first_name}` };
-  let randomProviders = shuffleArray(providers).slice(0, 10).sort(firstActiveThenUnclaimed).map(toGalleryElement(data));
+  let randomProviders = shuffleArray(providers).slice(0, 10).sort(sortProviders).map(toGalleryElement(data));
 	let providersGallery = createGallery(randomProviders);
 
 	let messages = [textMsg, providersGallery];
