@@ -15,5 +15,5 @@
 `libs/providers.js`
   - Create providers library to use anywhere that provider methods are used
 
-`libs/providers.js`
-  - Create providers library to use anywhere that provider methods are used
+`libs/users.js`
+  - Create users library to use anywhere that user methods are used
