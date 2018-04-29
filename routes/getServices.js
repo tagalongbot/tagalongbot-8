@@ -45,7 +45,6 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 }
 
 let getServices = async ({ query, params }, res) => {
-  console.log('Query:', query, 'Params:', params);
   let { service_type } = params;
   let first_name = query['first name'];
   let last_name = query['last name'];
@@ -75,7 +74,7 @@ let getServices = async ({ query, params }, res) => {
   }
 
   let non_surgical_services = await searchServices('Non Surgical');
-  let non_surgical_services_gallery_data = non_surgical_services.slice(0, 10).map(toGalleryElement);
+  let non_surgical_services_gallery_data = non_surgical_services.slice(0, 9).map(toGalleryElement);
 	let gallery = createGallery([surgical_category_gallery_element, ...non_surgical_services_gallery_data]);
 
   // Need to add load more mechanisim

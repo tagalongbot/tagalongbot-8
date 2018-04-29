@@ -1,8 +1,12 @@
-# Things to do
 ## Routes
 `getProviders.js`
   - Finish rewriting sort algorithim (**LINE 114-118**)
+  
+`getServices.js`
+  - Make loading more services work or load all services
+  - Make multiple gallery method in `helpers.js`
 
+## Intents
 `intents/file.js`
   - Refactor all
 
@@ -20,3 +24,10 @@
   
 `libs/services.js`
   - Create services library to use anywhere that service methods are used
+  
+## Create Admin Routes
+  - Managing Promotions
+    -- Default Promotion Types
+    -- Activate / Deactivate Promos
+    -- 
+  - Getting User Info
