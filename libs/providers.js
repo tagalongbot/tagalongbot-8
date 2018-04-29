@@ -10,13 +10,13 @@ let searchProviders = async (data, search_type) => {
 	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
 
 	let filterByFormula = '';
-	if (search_type === 'state') {
+	if (search_type.toLowerCase() === 'state') {
 		filterByFormula = `{Practice State} = '${search_providers_state.trim().toLowerCase()}'`;
-	} else if (search_type === 'city') {
+	} else if (search_type.toLowerCase() === 'city') {
 		filterByFormula = `{Practice City} = '${search_providers_city.trim().toLowerCase()}'`;
-	} else if (search_type === 'zip_code') {
+	} else if (search_type.toLowerCase() === 'zip_code') {
 		filterByFormula = `{Practice Zip Code} = '${search_providers_zip_code.trim().toLowerCase()}'`;
-	} else if (search_type === 'code') {
+	} else if (search_type.toLowerCase() === 'code') {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
 	}
 

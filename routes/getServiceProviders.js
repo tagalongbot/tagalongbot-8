@@ -57,7 +57,7 @@ let getServiceProviders = async ({ query, params }, res) => {
     search_providers_city: search_service_providers_city,
     search_providers_zip_code: search_service_providers_zip_code,
   }, search_type);
-
+  
   if (!providers[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
@@ -65,7 +65,9 @@ let getServiceProviders = async ({ query, params }, res) => {
   }
 
   let filteredProviders = providers.filter(({ fields: provider }) => {
-    return provider['Practice Services'].includes(service_name);
+    return provider['Practice Services']
+      .map(service => service.toLowerCase())
+      .includes(service_name.toLowerCase());
   });
 
   if (!filteredProviders[0]) {
