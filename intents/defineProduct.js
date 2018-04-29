@@ -10,7 +10,7 @@ let getServices = getAllDataFromTable(servicesTable);
 let defineProduct = async({ res, parameters, user }) => {
   let { brand_name, procedureorproductcategory } = parameters;
 
-  let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim()}', {Capitalized Name} = '${procedureorproductcategory.trim()}')`;
+  let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim().toUpperCase()}', {Capitalized Name} = '${procedureorproductcategory.trim().toUpperCase()}')`;
   let [service] = await getServices({ filterByFormula });
 
   // let service = services.find((service) => {
@@ -29,8 +29,8 @@ let defineProduct = async({ res, parameters, user }) => {
   let service_id = service.id;
   let find_providers_url = createURL(`${BASEURL}/service/providers`, { service_id });
   let txtMsg = createButtonMessage(
-    service.long_description,
-    `Find Providers|json_plugin_url|find_providers_url`
+    service.fields['Long Description'],
+    `Find Providers|json_plugin_url|${find_providers_url}`
   );
 
   let messages = [txtMsg];
