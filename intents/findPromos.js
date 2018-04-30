@@ -1,5 +1,6 @@
 let { BASEURL, SERVICES_BASE_ID, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createTextMessage, createGallery } = require('../libs/bots');
+let { searchProviders } = require('../libs/providers');
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPracticesTable = getTable('Practices');
@@ -37,15 +38,41 @@ let toGalleryElement = (promo) => {
 
 let findPromos = async ({ res, parameters, user}) => {
   let { first_name } = user;
-  let { brand_name, procedure } = parameters;
+  let { brand_name, procedure, location, state, city, zip_code } = parameters;
+
+  let search_type = {
+    [Boolean(state)]: 'state',
+    [Boolean(city)]: 'city',
+    [Boolean(zip_code)]: 'zip_code'
+  }[true];
+  
+  if (!search_type) {
+    let redirect_to_blocks = ['Service Not Available'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+  
+  let providers = await searchProviders({
+    search_providers_state: state, 
+    search_providers_city: city, 
+    search_providers_zip_code: zip_code, 
+  }, search_type);
+    
+  
 
   let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim().toUpperCase()}', {Capitalized Name} = '${procedure.trim().toUpperCase()}')`;
-  let services = await getServices({ filterByFormula });
+  let [service] = await getServices({ filterByFormula });
 
-  let servicesI = services.map((service) => service.id);
+  if (!service) {
+    let redirect_to_blocks = ['Service Not Available'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  let services_ids = services.map((service) => service.id);
 
   let activePromos = await getActivePromos();
-  let matchingPromos = activePromos.filter(({ serviceid }) => servicesI.includes(serviceid));
+  let matchingPromos = activePromos.filter(({ serviceid }) => services_ids.includes(serviceid));
 
   if (!matchingPromos[0]) {
     let redirect_to_blocks = ['No Promos Found'];
