@@ -45,13 +45,23 @@ let findPromos = async ({ res, parameters, user}) => {
     [Boolean(city)]: 'city',
     [Boolean(zip_code)]: 'zip_code'
   }[true];
-  
-  if (!search_type) {
-    let redirect_to_blocks = ['Service Not Available'];
-    res.send({ redirect_to_blocks });
+
+  if ( !search_type && (brand_name || procedure) ) {
+    let redirect_to_blocks = ['Search Promos NLP (By Procedure)'];
+    let procedure_name = (brand_name || procedure);
+    let set_attributes = { procedure_name };
+    res.send({ set_attributes, redirect_to_blocks });
     return;
   }
-  
+
+  if ( !search_type && (!brand_name && !procedure) ) {
+    let redirect_to_blocks = ['Search Promos NLP (No Procedure)'];
+    let procedure_name = (brand_name || procedure);
+    let set_attributes = { procedure_name };
+    res.send({ set_attributes, redirect_to_blocks });
+    return;
+  }
+
   let providers = await searchProviders({
     search_providers_state: state, 
     search_providers_city: city, 
