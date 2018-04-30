@@ -42,10 +42,10 @@ let findPromos = async ({ res, parameters, user}) => {
   let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim().toUpperCase()}', {Capitalized Name} = '${procedure.trim().toUpperCase()}')`;
   let services = await getServices({ filterByFormula });
 
-  let servicesNumArr = services.map((service) => service.id);
+  let servicesI = services.map((service) => service.id);
 
   let activePromos = await getActivePromos();
-  let matchingPromos = activePromos.filter(({ serviceid }) => servicesNumArr.includes(serviceid));
+  let matchingPromos = activePromos.filter(({ serviceid }) => servicesI.includes(serviceid));
 
   if (!matchingPromos[0]) {
     let redirect_to_blocks = ['No Promos Found'];
