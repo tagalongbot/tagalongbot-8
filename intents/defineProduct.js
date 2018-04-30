@@ -8,16 +8,16 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServices = getAllDataFromTable(servicesTable);
 
 let defineProduct = async({ res, parameters, user }) => {
-  let { brand_name, procedureorproductcategory } = parameters;
+  let { brand_name, procedure } = parameters;
 
-  let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim().toUpperCase()}', {Capitalized Name} = '${procedureorproductcategory.trim().toUpperCase()}')`;
+  let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim().toUpperCase()}', {Capitalized Name} = '${procedure.trim().toUpperCase()}')`;
   let [service] = await getServices({ filterByFormula });
 
   // let service = services.find((service) => {
   //   let serviceName = service.service_name.toLowerCase();
   //   let brandName = brand_name.toLowerCase();
-  //   let procedure = procedureorproductcategory.toLowerCase();
-  //   return brandName.includes(serviceName) || procedure.includes(serviceName);
+  //   let procedure_name = procedure.toLowerCase();
+  //   return brandName.includes(serviceName) || procedure_name.includes(serviceName);
   // });
 
   if (!service) {

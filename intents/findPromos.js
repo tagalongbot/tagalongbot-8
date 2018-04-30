@@ -1,8 +1,16 @@
-let { BASEURL } = process.env;
+let { BASEURL, SERVICES_BASE_ID, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createTextMessage, createGallery } = require('../libs/bots');
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
+let getPracticesTable = getTable('Practices');
 let getPromosTable = getTable('Promos');
+let getServicesTable = getTable('Services');
+
+let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
+let servicesTable = getServicesTable(SERVICES_BASE_ID);
+
+let getPractices = getAllDataFromTable(practicesTable);
+let getServices = getAllDataFromTable(servicesTable);
 
 let toGalleryElement = (promo) => {
   let title = promo.promo_name.slice(0, 80);
@@ -31,17 +39,10 @@ let findPromos = async ({ res, parameters, user}) => {
   let { first_name } = user;
   let { brand_name, procedure } = parameters;
 
-  let services = await getServices();
+  let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim().toUpperCase()}', {Capitalized Name} = '${procedure.trim().toUpperCase()}')`;
+  let services = await getServices({ filterByFormula });
 
-  let servicesAskedFor = services.filter(({ service_name }) => {
-    let serviceName = service_name.toLowerCase();
-    let procedureName = procedure.toLowerCase();
-    let brandName = brand_name.toLowerCase();
-
-    return procedureName.includes(serviceName) || brandName.includes(serviceName); 
-  });
-
-  let servicesNumArr = servicesAskedFor.map((service) => service.serviceid);
+  let servicesNumArr = services.map((service) => service.id);
 
   let activePromos = await getActivePromos();
   let matchingPromos = activePromos.filter(({ serviceid }) => servicesNumArr.includes(serviceid));
