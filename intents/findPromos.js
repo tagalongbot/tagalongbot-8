@@ -1,6 +1,8 @@
 let { BASEURL } = process.env;
 let { createTextMessage, createGallery } = require('../libs/bots');
-let { getServices, getActivePromos } = require('../libs/data');
+let { getTable, getAllDataFromTable } = require('../libs/data');
+
+let getPromosTable = getTable('Promos');
 
 let toGalleryElement = (promo) => {
   let title = promo.promo_name.slice(0, 80);
@@ -40,7 +42,7 @@ let findPromos = async ({ res, parameters, user}) => {
   });
 
   let servicesNumArr = servicesAskedFor.map((service) => service.serviceid);
-    
+
   let activePromos = await getActivePromos();
   let matchingPromos = activePromos.filter(({ serviceid }) => servicesNumArr.includes(serviceid));
 

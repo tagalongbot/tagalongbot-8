@@ -1,7 +1,7 @@
 ## Routes
 `getProviders.js`
   - Finish rewriting sort algorithim (**LINE 114-118**)
-  
+
 `getServices.js`
   - Make loading more services work or load all services
   - Make multiple gallery method in `helpers.js`
@@ -21,13 +21,15 @@
 
 `libs/users.js`
   - Create users library to use anywhere that user methods are used
-  
+
 `libs/services.js`
   - Create services library to use anywhere that service methods are used
-  
+
 ## Create Admin Routes
   - Managing Promotions
-    -- Default Promotion Types
-    -- Activate / Deactivate Promos
-    -- 
+    - Default Promotion Types
+    - Updating Promo Info
+    - Activate / Deactivate Promos (Collecting Info)
+        - Expiration Date
+        - Total Claim Limit
   - Getting User Info

@@ -5,10 +5,8 @@ let { shuffleArray, createURL } = require('../libs/helpers');
 let { searchProviders } = require('../libs/providers');
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
-// Get Tables
 let getPromosTable = getTable('Promos');
 
-// Search Methods
 let searchPromotions = async (data, search_type) => {
   // Needs to be updated to use promotion expiration date
 	let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
