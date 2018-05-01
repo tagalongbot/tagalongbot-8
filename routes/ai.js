@@ -21,7 +21,7 @@ let createTextMsg = (text) => {
 let handleResponse = (res, user) => ({ result, sessionId }) => {
   let { parameters, metadata } = result;
   let intentFN = INTENTS[metadata.intentName];
-  
+
   if (result.source === 'agent' && intentFN) {
     intentFN({ res, parameters, user });
     return;
@@ -47,11 +47,11 @@ let handleAI = ({ query }, res) => {
 
   let newSessionId = (!DF_SESSION_ID || DF_SESSION_ID === "0") ? Math.random().toString().slice(2) : 0;
   let sessionId = (DF_SESSION_ID && DF_SESSION_ID != "0") ? DF_SESSION_ID : newSessionId;
-  
+
   let name = (DF_CONTEXT || 'DEFAULT');
   let parameters = query;
   let contexts = [{ name, parameters }];
-  
+
   let request = API_AI_APP.textRequest(queryString, { sessionId, contexts });
 
 	request.on('response', handleResponse(res, user));
