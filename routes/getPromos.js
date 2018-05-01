@@ -13,14 +13,9 @@ let getPromos = async ({ query, params }, res) => {
 
   let { search_promos_state, search_promos_city, search_promos_zip_code } = query;
   
-  let data = {
-    search_providers_state: search_promos_state,
-    search_providers_city: search_promos_city,
-    search_providers_zip_code: search_promos_zip_code,
-  }
+	let promotions = await searchPromotionsByLocation(query, search_type);
 
-	let promotions = await searchPromotionsByLocation(data, search_type);
-
+  console.log('Promos:', promotions);
   let promosGalleryData = promotions.reduce(toGalleryData({ first_name, last_name, gender, messenger_user_id }), []);
 
   if (!promosGalleryData[0]) {

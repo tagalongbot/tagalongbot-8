@@ -16,9 +16,10 @@ let searchPromotionsByLocation = async (data, search_type) => {
   }, search_type);
 
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
-  let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
 
   let promotions = [];
+  let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
+
   for (let [index, baseID] of providersBaseIDs.entries()) {
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
