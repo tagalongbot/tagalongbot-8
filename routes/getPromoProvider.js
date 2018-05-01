@@ -41,20 +41,21 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 
 let getPromoProvider = async ({ query }, res) => {
   let { provider_id, provider_base_id, promo_id, first_name, last_name, gender1, messenger_user_id } = query;
-  let provider = await findProvider(provider_id);
-
-  if (!provider) {
-    let redirect_to_blocks = ['No Providers Found'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
+  
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
   let promo = await findPromo(promo_id);
 
   if (!promo) {
     let redirect_to_blocks = ['Promo No Longer Active'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  let provider = await findProvider(provider_id);
+
+  if (!provider) {
+    let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }

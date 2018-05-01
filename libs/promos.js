@@ -21,6 +21,7 @@ let searchPromotionsByLocation = async (data, search_type) => {
   let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
 
   for (let [index, baseID] of providersBaseIDs.entries()) {
+    if (!baseID) continue;
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
     let promos = await getPromos({ filterByFormula });

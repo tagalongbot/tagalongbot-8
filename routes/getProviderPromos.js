@@ -13,7 +13,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let promo_details_btn_url = createURL(`${BASEURL}/promo/details`, { promo_id, ...data });
 
   let btn1 = {
-    title: 'Read Promo Details',
+    title: 'View Promo Details',
     type: 'json_plugin_url',
     url: promo_details_btn_url,
   }
@@ -27,7 +27,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 let searchPromos = async (provider_base_id) => {
   let promosTable = getPromosTable(provider_base_id);
   let getPromos = getAllDataFromTable(promosTable);
-  
+
   let filterByFormula = `{Active?}`;
   let promos = await getPromos({ filterByFormula });
   return promos;

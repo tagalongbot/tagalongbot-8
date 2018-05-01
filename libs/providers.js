@@ -6,7 +6,7 @@ let getPracticeTable = getTable('Practices');
 let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
 let getPractices = getAllDataFromTable(practiceTable);
 
-let searchProviders = async (data, search_type) => {
+let searchProviders = async (data, { search_type, active }) => {
 	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
 
 	let filterByFormula = '';
