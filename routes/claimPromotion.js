@@ -107,7 +107,7 @@ let claimPromotion = async ({ query }, res) => {
   let view_provider_url = createURL(`${BASEURL}/promo/provider`, { ...query, ...userData });
 
   let txtMsg = createButtonMessage(
-    `Congrats ${first_name} your promotion has been claimed!`,
+    `Congrats ${first_name} your promotion "${updatedPromo.fields['Name']}" has been claimed!`,
     `View Provider|json_plugin_url|${view_provider_url}`,
     `Search More Promos|show_block|Search Promos`,
   );
