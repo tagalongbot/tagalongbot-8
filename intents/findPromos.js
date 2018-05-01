@@ -65,7 +65,7 @@ let findPromos = async ({ res, parameters, user}) => {
     search_providers_city: city, 
     search_providers_zip_code: zip_code, 
   }, search_type);
-  
+
   let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim().toUpperCase()}', {Capitalized Name} = '${procedure.trim().toUpperCase()}')`;
   let [service] = await getServices({ filterByFormula });
 
@@ -74,16 +74,19 @@ let findPromos = async ({ res, parameters, user}) => {
     res.send({ redirect_to_blocks });
     return;
   }
-  
+
   let service_name = service.fields['Name'].toLowerCase();
   let providersWithService = providers.filter((provider) => {
     return provider.fields['Practice Services'].map(service => service.toLowerCase()).includes(service_name);
   });
-  
+
   for (let provider of providersWithService) {
     let base_id = provider.fields['Practice Base ID'];
     let promosTable = getPromosTable(base_id);
     let getPromos = getAllDataFromTable(promosTable);
+
+    let filterByFormula = `OR({Type} = '${brand_name.trim().toLowerCase()}, {Type} = '${procedure.trim().toLowerCase()}')`;
+    let promos = await getPromos({ filterByFormula });
   }
   
   
