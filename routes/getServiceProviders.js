@@ -1,7 +1,7 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
-let { searchProviders, sortProviders, toGalleryElement } = require('../libs/providers');
+let { searchProviders, sortProviders, filterProvidersByService, toGalleryElement } = require('../libs/providers');
 let { getTable, findTableData } = require('../libs/data');
 
 let express = require('express');
@@ -37,19 +37,15 @@ let getServiceProviders = async ({ query, params }, res) => {
     return;
   }
 
-  let filteredProviders = providers.filter(({ fields: provider }) => {
-    return provider['Practice Services']
-      .map(service => service.toLowerCase())
-      .includes(service_name.toLowerCase());
-  });
+  let providersByService = filterProvidersByService(service_name, providers);
 
-  if (!filteredProviders[0]) {
+  if (!providersByService[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let providersGalleryData = filteredProviders.sort(sortProviders).map(toGalleryElement(data));
+  let providersGalleryData = providersByService.sort(sortProviders).map(toGalleryElement(data));
   let providersGallery = createGallery(providersGalleryData);
   let messages = [providersGallery];
   res.send({ messages });

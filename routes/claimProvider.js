@@ -22,7 +22,6 @@ let askForUserEmail = async ({ query }, res) => {
 }
 
 let claimProvider = async ({ query }, res) => {
-  console.log('Claimed');
   let { provider_id, gender, user_email } = query;
   let messenger_user_id = query['messenger user id'];
   let first_name = query['first name'];
@@ -39,7 +38,7 @@ let claimProvider = async ({ query }, res) => {
   let updatedPractice = await updatePractice(updatePracticeData, provider);
   
   let txtMsg = createButtonMessage(
-    `Congrats ${first_name} your practice has been claimed!`,
+    `Congrats ${first_name} your practice "${provider.fields['Practice Name']}" has been claimed!`,
     `Search More Providers|show_block|Search Providers`,
   );
 
