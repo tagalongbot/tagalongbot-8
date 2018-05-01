@@ -1,6 +1,7 @@
 let { BASEURL, SERVICES_BASE_ID, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createTextMessage, createGallery } = require('../libs/bots');
 let { searchProviders } = require('../libs/providers');
+let { toGalleryElement } = require('../libs/promos');
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPracticesTable = getTable('Practices');
@@ -13,30 +14,7 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getPractices = getAllDataFromTable(practicesTable);
 let getServices = getAllDataFromTable(servicesTable);
 
-let toGalleryElement = (promo) => {
-  let title = promo.promo_name.slice(0, 80);
-  let subtitle = promo.promo_terms;
-  let image_url = promo.promo_photo_uri;
-
-  let btn1 = {
-    title: 'View Promo Details',
-    type: 'json_plugin_url',
-    url: `${BASEURL}/promo/details?promo_id=${promo.promoid}`
-  }
-
-  let btn2 = {
-    title: 'Find Promo Provider',
-    type: 'json_plugin_url',
-    url: `${BASEURL}/promo/providers?promo_id=${promo.promoid}`
-  }
-
-  let buttons = [btn1, btn2];
-
-  let element = { title, subtitle, image_url, buttons};
-  return element;
-}
-
-let findPromos = async ({ res, parameters, user}) => {
+let findPromos = async ({ res, parameters, user }) => {
   let { first_name } = user;
   let { brand_name, procedure, location, state, city, zip_code } = parameters;
 
