@@ -1,5 +1,5 @@
 let { BASEURL, SERVICES_BASE_ID, PRACTICE_DATABASE_BASE_ID } = process.env;
-let { createTextMessage, createGallery } = require('../libs/bots');
+let { createURL } = require('../libs/helpers');
 let { searchProviders } = require('../libs/providers');
 let { toGalleryElement } = require('../libs/promos');
 let { getTable, getAllDataFromTable } = require('../libs/data');
@@ -35,6 +35,14 @@ let findPromos = async ({ res, parameters, user }) => {
   if ( !search_type && (!brand_name && !procedure) ) {
     let redirect_to_blocks = ['Search Promos NLP (No Procedure)'];
     res.send({ redirect_to_blocks });
+    return;
+  }
+  
+  if ( search_type && (!brand_name && !procedure) ) {
+    let redirect_url = createURL(`${BASEURL}/search/promos/${search_type}`, {
+      
+    });
+    res.redirect(redirect_url);
     return;
   }
 
