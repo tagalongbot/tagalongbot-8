@@ -5,7 +5,7 @@ let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 
-let searchPromotionsByLocation = async (data, search_type) => {
+let searchPromotionsByLocation = async (data, { search_type }) => {
   // Needs to be updated to use promotion expiration date
 	let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
 
@@ -13,7 +13,7 @@ let searchPromotionsByLocation = async (data, search_type) => {
     search_providers_state: search_promos_state, 
     search_providers_city: search_promos_city, 
     search_providers_zip_code: search_promos_zip_code,
-  }, search_type);
+  }, { search_type, active: true });
 
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
 

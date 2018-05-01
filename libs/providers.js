@@ -6,7 +6,7 @@ let getPracticeTable = getTable('Practices');
 let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
 let getPractices = getAllDataFromTable(practiceTable);
 
-let searchProviders = async (data, { search_type, active }) => {
+let searchProviders = async (data, { search_type, service_name, active = false }) => {
 	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
 
 	let filterByFormula = '';
@@ -21,8 +21,17 @@ let searchProviders = async (data, { search_type, active }) => {
 	}
 
   // Concatenating Search Formula
-  // filterByFormula = `AND({Active?}, ${filterByFormula})`;
+  if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
 	let providers = await getPractices({ filterByFormula });
+
+  if (service_name) {
+    let providersByService = providers.filter((provider) => {
+      return provider.fields['Practice Services'].map(service => service.toLowerCase()).includes(service_name);
+    });
+
+    return providersByService;
+  }
+
 	return providers;
 }
 

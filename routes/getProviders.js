@@ -63,7 +63,7 @@ let getProviders = async ({ query, params }, res) => {
 	let user = await searchUserByMessengerID({ messenger_user_id });
 	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
 
-	let providers = await searchProviders(query, search_type);
+	let providers = await searchProviders(query, { search_type });
 
   if (!providers[0]) {
     let redirect_to_blocks = ['No Providers Found'];

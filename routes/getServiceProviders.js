@@ -29,7 +29,7 @@ let getServiceProviders = async ({ query, params }, res) => {
     search_providers_state: search_service_providers_state,
     search_providers_city: search_service_providers_city,
     search_providers_zip_code: search_service_providers_zip_code,
-  }, search_type);
+  }, { search_type });
 
   if (!providers[0]) {
     let redirect_to_blocks = ['No Providers Found'];
