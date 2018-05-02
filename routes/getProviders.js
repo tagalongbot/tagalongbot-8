@@ -76,9 +76,11 @@ let getProviders = async ({ query, params }, res) => {
   if (service_name) providers = filterProvidersByService(service_name, providers);
 
   let textMsg = { text: `Here's are some providers I found ${first_name}` };
-  let randomProviders = shuffleArray(providers).slice(0, 10).sort(sortProviders).map(toGalleryElement(data));
-	let providersGallery = createGallery(randomProviders);
+  let randomProviders = shuffleArray(providers).slice(0, 9).sort(sortProviders).map(toGalleryElement(data));
 
+  let last_gallery_element = createLastGalleryElement(data);
+
+	let providersGallery = createGallery([...randomProviders, last_gallery_element]);
 	let messages = [textMsg, providersGallery];
 	res.send({ messages });
 }

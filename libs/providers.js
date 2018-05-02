@@ -29,6 +29,12 @@ let searchProviders = async (data, { search_type, active = false }) => {
 	return providers;
 }
 
+let getProviderByUserID = async (messenger_user_id) => {
+  let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
+  let [user] = await getPractices({ filterByFormula });
+  return user;
+}
+
 let filterProvidersByService = (service_name, providers) => {
   let service_name_lowercased = service_name.toLowerCase();
   let providersByService = providers.filter((provider) => {
@@ -38,10 +44,10 @@ let filterProvidersByService = (service_name, providers) => {
   return providersByService;
 }
 
-let getProviderByUserID = async (messenger_user_id) => {
-  let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
-  let [user] = await getPractices({ filterByFormula });
-  return user;
+let sortProviders = (provider1, provider2) => {
+  if (provider1.fields['Active?'] && !provider2.fields['Active?']) return -1;
+  if (provider1.fields['Active?'] && provider2.fields['Active?']) return 0;
+  if (!provider1.fields['Active?']) return 1;
 }
 
 let createButtons = (is_provider_active, is_provider_claimed, data) => {
@@ -105,16 +111,39 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   return element;
 }
 
-let sortProviders = (provider1, provider2) => {
-  if (provider1.fields['Active?'] && !provider2.fields['Active?']) return -1;
-  if (provider1.fields['Active?'] && provider2.fields['Active?']) return 0;
-  if (!provider1.fields['Active?']) return 1;
+let createLastGalleryElement = (data) => {
+  let title = 'More Options';
+
+  // Buttons
+  let list_practice_url = createURL(`${BASEURL}/providers/list`, data);
+  let btn1 = {
+    title: 'List My Practice',
+    type: 'json_plugin_url',
+    url: list_practice_url,
+  }
+
+  let btn2 = {
+    title: 'Main Menu',
+    type: 'show_block',
+    block_name: 'Discover Main Menu',
+  }
+
+  let btn3 = {
+    title: 'Main Menu',
+    type: 'show_block',
+    block_name: 'Discover Main Menu',
+  }
+
+  let buttons = [btn1, btn2, btn3];
+
+  let last_gallery_element = { title, buttons };
+  return last_gallery_element;
 }
 
 module.exports = {
   searchProviders,
   getProviderByUserID,
   filterProvidersByService,
+  
   toGalleryElement,
-  sortProviders,
 }
