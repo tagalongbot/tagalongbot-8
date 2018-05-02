@@ -45,6 +45,21 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   return element;
 }
 
+let createSurgicalCategoryElement = (data) => {
+  let title = 'Surgical Procedures';
+  let image_url = SURGICAL_SERVICES_IMAGE_URL;
+  let surgical_category_btn_url = createURL(`${BASEURL}/services/surgical`, data);
+  
+  let buttons = [{
+    title: 'View Services',
+    type: 'json_plugin_url',
+    web: surgical_category_btn_url,
+  }];
+
+  let surgical_category_gallery_element = { title, image_url, buttons };
+  return surgical_category_gallery_element;
+}
+
 let createLastGalleryElement = ({ service_type, index, data }) => {
   let title = 'More Options';
   let new_index = Number(index + 8);
@@ -96,16 +111,7 @@ let getServices = async ({ query, params }, res) => {
     return;
   }
 
-  let surgical_category_btn_url = createURL(`${BASEURL}/services/surgical`, data);
-  let surgical_category_gallery_element = {
-    title: 'Surgical Procedures',
-    image_url: SURGICAL_SERVICES_IMAGE_URL,
-    buttons: [{
-      title: 'Learn More',
-      type: 'json_plugin_url',
-      web: surgical_category_btn_url,
-    }]
-  }
+  let surgical_category_gallery_element = createSurgicalCategoryElement(data);
 
   let non_surgical_services = await searchServices('Non Surgical');
   let non_surgical_services_gallery_data = non_surgical_services.slice(index, new_index).map(toGalleryElement);
