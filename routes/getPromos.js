@@ -4,7 +4,6 @@ let { shuffleArray, createURL } = require('../libs/helpers');
 let { searchPromotionsByLocation, toGalleryElement, toGalleryData } = require('../libs/promos');
 
 let getPromos = async ({ query, params }, res) => {
-  console.log('GetPromos Query:', query);
   let { search_type } = params;
 
   let first_name = query['first name'] || query['first_name'];

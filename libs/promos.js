@@ -1,11 +1,11 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../libs/helpers');
-let { searchProviders } = require('../libs/providers');
+let { searchProviders, filterProvidersByService } = require('../libs/providers');
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 
-let searchPromotionsByLocation = async (data, { search_type }) => {
+let searchPromotionsByLocation = async (data, { search_type, service_name }) => {
   // Needs to be updated to use promotion expiration date
 	let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
 
@@ -14,6 +14,8 @@ let searchPromotionsByLocation = async (data, { search_type }) => {
     search_providers_city: search_promos_city, 
     search_providers_zip_code: search_promos_zip_code,
   }, { search_type, active: true });
+
+  if (service_name) providers = filterProvidersByService(service_name, providers);
 
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
 
@@ -26,6 +28,7 @@ let searchPromotionsByLocation = async (data, { search_type }) => {
     let getPromos = getAllDataFromTable(promosTable);
     let promos = await getPromos({ filterByFormula });
 
+    if (service_name) promos = promos.filter(promo => promo.fields['Type'].toLowerCase().includes(service_name.toLowerCase()));
     let provider_id = providers[index].id;
     let provider_base_id = providersBaseIDs[index];
     promotions = promotions.concat({ provider_id, provider_base_id, promos });
