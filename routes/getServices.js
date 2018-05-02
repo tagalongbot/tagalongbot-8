@@ -79,7 +79,7 @@ let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
 
   let index = Number(query['index']) || 0;
-  console.log('Index:', index);
+  let new_index = index + 8;
   let first_name = query['first name'];
   let last_name = query['last name'];
   let gender = query['gender'];
@@ -108,12 +108,17 @@ let getServices = async ({ query, params }, res) => {
   }
 
   let non_surgical_services = await searchServices('Non Surgical');
-  let non_surgical_services_gallery_data = non_surgical_services.slice(index, 8).map(toGalleryElement);
+  let non_surgical_services_gallery_data = non_surgical_services.slice(index, new_index).map(toGalleryElement);
 
-  let last_gallery_element = createLastGalleryElement({ service_type, index, data });
-	let gallery = createGallery([surgical_category_gallery_element, ...non_surgical_services_gallery_data, last_gallery_element]);
+  let gallery_array = [surgical_category_gallery_element, ...non_surgical_services_gallery_data];
+
+  if ( new_index < non_surgical_services.length )  {
+    let last_gallery_element = createLastGalleryElement({ service_type, index, data });
+    gallery_array.push(last_gallery_element);
+  }
 
   let textMsg = { text: `Here's are some services you can search for ${first_name}` };
+	let gallery = createGallery(gallery_array);
 	let messages = [textMsg, gallery];
 	res.send({ messages });
 }
