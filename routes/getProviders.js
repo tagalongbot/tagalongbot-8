@@ -2,7 +2,7 @@ let { BASEURL, USERS_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
 let { createURL, shuffleArray } = require('../libs/helpers');
 
-let { searchProviders, filterProvidersByService, sortProviders, toGalleryElement } = require('../libs/providers');
+let { searchProviders, filterProvidersByService, sortProviders, toGalleryElement, createLastGalleryElement } = require('../libs/providers');
 let { searchUserByMessengerID } = require('../libs/users');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
@@ -61,7 +61,7 @@ let getProviders = async ({ query, params }, res) => {
   let data = { first_name, last_name, gender, messenger_user_id };
 
   let service_name = query['service_name'];
-  
+
 	let user = await searchUserByMessengerID({ messenger_user_id });
 	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
 
@@ -72,7 +72,7 @@ let getProviders = async ({ query, params }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
-  
+
   if (service_name) providers = filterProvidersByService(service_name, providers);
 
   let textMsg = { text: `Here's are some providers I found ${first_name}` };

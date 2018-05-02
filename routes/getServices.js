@@ -46,6 +46,7 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 
 let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
+
   let first_name = query['first name'];
   let last_name = query['last name'];
   let gender = query['gender'];
@@ -56,8 +57,8 @@ let getServices = async ({ query, params }, res) => {
     let surgical_services = await searchServices('Surgical');
     let surgical_services_gallery_data = surgical_services.map(toGalleryElement);
     let gallery = createGallery(surgical_services_gallery_data);
-    let textMsg = { text: `Here's are the top surgical services` };
-    let messages = [gallery];
+    let txtMsg = { text: `Here's are the top surgical services` };
+    let messages = [txtMsg, gallery];
     res.send({ messages });
     return;
   }

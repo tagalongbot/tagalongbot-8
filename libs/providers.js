@@ -144,6 +144,7 @@ module.exports = {
   searchProviders,
   getProviderByUserID,
   filterProvidersByService,
-  
+  sortProviders,
   toGalleryElement,
+  createLastGalleryElement,
 }

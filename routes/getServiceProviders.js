@@ -1,7 +1,7 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../libs/bots');
-let { createURL } = require('../libs/helpers');
-let { searchProviders, sortProviders, filterProvidersByService, toGalleryElement } = require('../libs/providers');
+let { createURL, shuffleArray } = require('../libs/helpers');
+let { searchProviders, sortProviders, filterProvidersByService, toGalleryElement, createLastGalleryElement } = require('../libs/providers');
 let { getTable, findTableData } = require('../libs/data');
 
 let express = require('express');
@@ -22,9 +22,9 @@ let getServiceProviders = async ({ query, params }, res) => {
   let first_name = query['first name'];
   let last_name = query['last name'];
   let gender = query['gender'];
-  
+
   let data = { first_name, last_name, gender, messenger_user_id };
-  
+
   let providers = await searchProviders({
     search_providers_state: search_service_providers_state,
     search_providers_city: search_service_providers_city,
@@ -45,8 +45,10 @@ let getServiceProviders = async ({ query, params }, res) => {
     return;
   }
 
-  let providersGalleryData = providersByService.sort(sortProviders).map(toGalleryElement(data));
-  let providersGallery = createGallery(providersGalleryData);
+  let randomProviders = shuffleArray(providersByService).slice(0, 9).sort(sortProviders).map(toGalleryElement(data));
+  let last_gallery_element = createLastGalleryElement(data);
+	let providersGallery = createGallery([...randomProviders, last_gallery_element]);
+  
   let messages = [providersGallery];
   res.send({ messages });
 }
