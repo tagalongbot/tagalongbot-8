@@ -2,9 +2,6 @@
 `getProviders.js`
   - Make sure sort algorithim is correct (**LINE 114-118**)
 
-`listProvider.js`
-  - Make a list provider endpoint
-
 ## Libraries
 - Create methods for `routes/` so redundent code can be removed encapsulating reading / writing data
 

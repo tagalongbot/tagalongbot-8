@@ -46,7 +46,7 @@ let getServiceProviders = async ({ query, params }, res) => {
   }
 
   let randomProviders = shuffleArray(providersByService).slice(0, 9).sort(sortProviders).map(toGalleryElement(data));
-  let last_gallery_element = createLastGalleryElement(data);
+  let last_gallery_element = createLastGalleryElement();
 	let providersGallery = createGallery([...randomProviders, last_gallery_element]);
   
   let messages = [providersGallery];

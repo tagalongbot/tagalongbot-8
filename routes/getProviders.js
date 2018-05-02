@@ -78,7 +78,7 @@ let getProviders = async ({ query, params }, res) => {
   let textMsg = { text: `Here's are some providers I found ${first_name}` };
   let randomProviders = shuffleArray(providers).slice(0, 9).sort(sortProviders).map(toGalleryElement(data));
 
-  let last_gallery_element = createLastGalleryElement(data);
+  let last_gallery_element = createLastGalleryElement();
 
 	let providersGallery = createGallery([...randomProviders, last_gallery_element]);
 	let messages = [textMsg, providersGallery];

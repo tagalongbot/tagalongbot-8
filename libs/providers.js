@@ -117,15 +117,14 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   return element;
 }
 
-let createLastGalleryElement = (data) => {
+let createLastGalleryElement = () => {
   let title = 'More Options';
 
   // Buttons
-  let list_practice_url = createURL(`${BASEURL}/providers/list`, data);
   let btn1 = {
     title: 'List My Practice',
-    type: 'json_plugin_url',
-    url: list_practice_url,
+    type: 'show_block',
+    block_nam: 'List Practice',
   }
 
   let btn2 = {
