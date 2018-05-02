@@ -6,8 +6,8 @@ let { searchPromotionsByLocation, toGalleryElement, toGalleryData } = require('.
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
 
-  let first_name = query['first name'];
-  let last_name = query['last name'];
+  let first_name = query['first name'] || query['first_name'];
+  let last_name = query['last name'] || q
   let gender = query['gender'];
 	let messenger_user_id = query['messenger user id'];
 
