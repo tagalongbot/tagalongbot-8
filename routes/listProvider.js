@@ -1,8 +1,3 @@
-// 1. Ask for email
-// 2. Update User Data
-// 3. Check if user already listed practice
-// 4. Send Confirmation Block Message
-
 let { getUserByMessengerID, updateUser, createUser } = require('../libs/users');
 
 let listProvider = async({ query }, res) => {
@@ -32,8 +27,7 @@ let listProvider = async({ query }, res) => {
     let newUser = await createUser(newUserData);
   }
 
-  let block_name = (provider) ? '' : '';
-  let redirect_to_blocks = [block_name];
+  let redirect_to_blocks = ['List New Practice'];
   res.send({ redirect_to_blocks });
 }
 
