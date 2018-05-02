@@ -129,9 +129,9 @@ let createLastGalleryElement = (data) => {
   }
 
   let btn3 = {
-    title: 'Main Menu',
+    title: 'About Bevl Beauty',
     type: 'show_block',
-    block_name: 'Discover Main Menu',
+    block_name: 'About Bevl Beauty',
   }
 
   let buttons = [btn1, btn2, btn3];

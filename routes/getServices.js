@@ -45,11 +45,12 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   return element;
 }
 
-let createLastGalleryElement = ({ data, index, service_type }) => {
+let createLastGalleryElement = ({ service_type, index, data }) => {
   let title = 'More Options';
+  let new_index = Number(index + 8);
 
   //Buttons
-  let load_more_services_url = createURL(`${BASEURL}/search/services/${service_type}`, { index });
+  let load_more_services_url = createURL(`${BASEURL}/search/services/${service_type}`, { index: new_index });
   let btn1 = {
     title: 'Load More Services',
     type: 'json_plugin_url',
@@ -63,9 +64,9 @@ let createLastGalleryElement = ({ data, index, service_type }) => {
   }
 
   let btn3 = {
-    title: 'Main Menu',
+    title: 'About Bevl Beauty',
     type: 'show_block',
-    block_name: 'Discover Main Menu',
+    block_name: 'About Bevl Beauty',
   }
 
   let buttons = [btn1, btn2, btn3];
@@ -77,7 +78,8 @@ let createLastGalleryElement = ({ data, index, service_type }) => {
 let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
 
-  let index = query['index'];
+  let index = Number(query['index']) || 0;
+  console.log('Index:', index);
   let first_name = query['first name'];
   let last_name = query['last name'];
   let gender = query['gender'];
@@ -106,10 +108,11 @@ let getServices = async ({ query, params }, res) => {
   }
 
   let non_surgical_services = await searchServices('Non Surgical');
-  let non_surgical_services_gallery_data = non_surgical_services.slice(0, 8).map(toGalleryElement);
-	let gallery = createGallery([surgical_category_gallery_element, ...non_surgical_services_gallery_data]);
+  let non_surgical_services_gallery_data = non_surgical_services.slice(index, 8).map(toGalleryElement);
 
-  // Need to add load more mechanisim
+  let last_gallery_element = createLastGalleryElement({ service_type, index, data });
+	let gallery = createGallery([surgical_category_gallery_element, ...non_surgical_services_gallery_data, last_gallery_element]);
+
   let textMsg = { text: `Here's are some services you can search for ${first_name}` };
 	let messages = [textMsg, gallery];
 	res.send({ messages });
