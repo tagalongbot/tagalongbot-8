@@ -2,13 +2,8 @@
 `getProviders.js`
   - Make sure sort algorithim is correct (**LINE 114-118**)
 
-`getServices.js`
-  - Make loading more services work or load all services
-  - Make multiple gallery method in `helpers.js`
-
-`listPractice.js`
-  - Make a list practice endpoint
-  - Make it a button to the last gallery element when searching practices
+`listProvider.js`
+  - Make a list provider endpoint
 
 ## Libraries
 - Create methods for `routes/` so redundent code can be removed encapsulating reading / writing data
@@ -24,6 +19,9 @@
 
 `libs/services.js`
   - Create services library to use anywhere that service methods are used
+  
+`libs/helpers.js`
+  - Make a create multiple gallery method in `helpers.js`
 
 ## Create Admin Routes
   - Managing Promotions
