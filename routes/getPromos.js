@@ -4,16 +4,19 @@ let { shuffleArray, createURL } = require('../libs/helpers');
 let { searchPromotionsByLocation, toGalleryElement, toGalleryData } = require('../libs/promos');
 
 let getPromos = async ({ query, params }, res) => {
+  console.log('GetPromos Query:', query);
   let { search_type } = params;
 
   let first_name = query['first name'] || query['first_name'];
-  let last_name = query['last name'] || q
+  let last_name = query['last name'] || query['last_name'];
   let gender = query['gender'];
-	let messenger_user_id = query['messenger user id'];
+	let messenger_user_id = query['messenger user id'] || query['messenger_user_id'];
+  
+  let service_name = query['service_name'];
 
   let { search_promos_state, search_promos_city, search_promos_zip_code } = query;
 
-	let promotions = await searchPromotionsByLocation(query, { search_type, active: true });
+	let promotions = await searchPromotionsByLocation(query, { search_type, service_name, active: true });
 
   let promosGalleryData = promotions.reduce(toGalleryData({ first_name, last_name, gender, messenger_user_id }), []);
 
