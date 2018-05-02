@@ -1,10 +1,11 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createURL } = require('../libs/helpers');
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { getTable, getAllDataFromTable, updateTableData } = require('../libs/data');
 
 let getPracticeTable = getTable('Practices');
 let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
 let getPractices = getAllDataFromTable(practiceTable);
+let updatePractice = updateTableData(practiceTable);
 
 let searchProviders = async (data, { search_type, active = false }) => {
 	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
@@ -33,6 +34,11 @@ let getProviderByUserID = async (messenger_user_id) => {
   let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
   let [user] = await getPractices({ filterByFormula });
   return user;
+}
+
+let updateProvider = async (updateData, provider) => {
+  let updatedProvider = updatePractice(updateData, provider);
+  return updatedProvider;
 }
 
 let filterProvidersByService = (service_name, providers) => {
@@ -143,6 +149,7 @@ let createLastGalleryElement = (data) => {
 module.exports = {
   searchProviders,
   getProviderByUserID,
+  updateProvider,
   filterProvidersByService,
   sortProviders,
   toGalleryElement,

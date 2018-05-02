@@ -3,7 +3,7 @@ let { createGallery } = require('../libs/bots');
 let { createURL, shuffleArray } = require('../libs/helpers');
 
 let { searchProviders, filterProvidersByService, sortProviders, toGalleryElement, createLastGalleryElement } = require('../libs/providers');
-let { searchUserByMessengerID } = require('../libs/users');
+let { getUserByMessengerID } = require('../libs/users');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
 
 let getUsersTable = getTable('Users');
@@ -62,7 +62,7 @@ let getProviders = async ({ query, params }, res) => {
 
   let service_name = query['service_name'];
 
-	let user = await searchUserByMessengerID({ messenger_user_id });
+	let user = await getUserByMessengerID(messenger_user_id);
 	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
 
 	let providers = await searchProviders(query, { search_type });
