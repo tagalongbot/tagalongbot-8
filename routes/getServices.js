@@ -9,8 +9,9 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServicesFromTable = getAllDataFromTable(servicesTable);
 
 let searchServices = async (surgical_or_non_surgical) => {
+  let view = 'Sorted Alphabetically';
 	let filterByFormula = `{Surgical / Non Surgical} = '${surgical_or_non_surgical}'`;
-  let services = await getServicesFromTable({ filterByFormula });
+  let services = await getServicesFromTable({ view, filterByFormula });
   return services;
 }
 
@@ -44,9 +45,39 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   return element;
 }
 
+let createLastGalleryElement = ({ data, index, service_type }) => {
+  let title = 'More Options';
+
+  //Buttons
+  let load_more_services_url = createURL(`${BASEURL}/search/services/${service_type}`, { index });
+  let btn1 = {
+    title: 'Load More Services',
+    type: 'json_plugin_url',
+    url: load_more_services_url,
+  }
+
+  let btn2 = {
+    title: 'Main Menu',
+    type: 'show_block',
+    block_name: 'Discover Main Menu',
+  }
+
+  let btn3 = {
+    title: 'Main Menu',
+    type: 'show_block',
+    block_name: 'Discover Main Menu',
+  }
+
+  let buttons = [btn1, btn2, btn3];
+
+  let last_gallery_element = { title, buttons };
+  return last_gallery_element;
+}
+
 let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
 
+  let index = query['index'];
   let first_name = query['first name'];
   let last_name = query['last name'];
   let gender = query['gender'];
@@ -75,7 +106,7 @@ let getServices = async ({ query, params }, res) => {
   }
 
   let non_surgical_services = await searchServices('Non Surgical');
-  let non_surgical_services_gallery_data = non_surgical_services.slice(0, 9).map(toGalleryElement);
+  let non_surgical_services_gallery_data = non_surgical_services.slice(0, 8).map(toGalleryElement);
 	let gallery = createGallery([surgical_category_gallery_element, ...non_surgical_services_gallery_data]);
 
   // Need to add load more mechanisim
