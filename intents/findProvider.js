@@ -3,7 +3,7 @@ let { createURL } = require('../libs/helpers');
 
 let findProvider = async ({ res, parameters, user }) => {
   let { first_name, last_name, gender, messenger_user_id } = user;
-  let { brand_name, procedure, location, state, city, zip_code } = parameters;
+  let { provider_type, state, city, zip_code, location, brand_name, procedure } = parameters;
 
   console.log('Parameters', parameters);
   // console.log('User:', user);
@@ -17,13 +17,13 @@ let findProvider = async ({ res, parameters, user }) => {
   // console.log('Search Type:', search_type);
 
   let data = {
-    search_promos_state: state,
-    search_promos_city: city,
-    search_promos_zip_code: zip_code,
+    search_providers_state: state,
+    search_providers_city: city,
+    search_providers_zip_code: zip_code,
   }
 
   if ( !search_type && (brand_name || procedure) ) {
-    let redirect_to_blocks = ['Search Promos NLP (By Service)'];
+    let redirect_to_blocks = ['Search Providers NLP (By Service)'];
     let service_name = (brand_name || procedure).trim();
     let set_attributes = { service_name };
     res.send({ set_attributes, redirect_to_blocks });
@@ -31,7 +31,7 @@ let findProvider = async ({ res, parameters, user }) => {
   }
 
   if ( !search_type && (!brand_name && !procedure) ) {
-    let redirect_to_blocks = ['Search Promos NLP (No Procedure)'];
+    let redirect_to_blocks = ['Search Providers NLP (No Procedure)'];
     res.send({ redirect_to_blocks });
     return;
   }
