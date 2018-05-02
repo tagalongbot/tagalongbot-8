@@ -1,14 +1,18 @@
 ## Routes
 `getProviders.js`
-  - Finish rewriting sort algorithim (**LINE 114-118**)
+  - Make sure sort algorithim is correct (**LINE 114-118**)
+  - Make last element in gallery for
+    1. Listing own practice
+    2. Main Menu
+    3. Learn About Bevl Beauty
 
 `getServices.js`
   - Make loading more services work or load all services
   - Make multiple gallery method in `helpers.js`
 
-## Intents
-`intents/file.js`
-  - Refactor all
+`listPractice.js`
+  - Make a list practice endpoint
+  - Make it a button to the last gallery element when searching practices
 
 ## Libraries
 - Create methods for `routes/` so redundent code can be removed encapsulating reading / writing data
