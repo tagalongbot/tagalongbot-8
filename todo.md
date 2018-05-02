@@ -24,7 +24,7 @@
   - Managing Promotions
     - Default Promotion Types
     - Updating Promo Info
-    - Activate / Deactivate Promos (Collecting Info)
-        - Expiration Date
-        - Total Claim Limit
+      - Expiration Date
+      - Total Claim Limit
+    - Activate / Deactivate Promos
   - Getting User Info
