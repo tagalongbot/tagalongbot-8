@@ -23,7 +23,7 @@ let findPromos = async ({ res, parameters, user }) => {
   }
 
   if ( !search_type && (brand_name || procedure) ) {
-    let redirect_to_blocks = ['Search Promos NLP (By Procedure)'];
+    let redirect_to_blocks = ['Search Promos NLP (By Service)'];
     let service_name = (brand_name || procedure).trim();
     let set_attributes = { service_name };
     res.send({ set_attributes, redirect_to_blocks });
