@@ -19,6 +19,8 @@ let searchProviders = async (data, { search_type, active = false }) => {
 	} else if (search_type.toLowerCase() === 'code') {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
 	}
+  
+  // console.log('Searching Providers:', filterByFormula);
 
   // Concatenating Search Formula
   if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;

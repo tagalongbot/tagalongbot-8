@@ -10,8 +10,8 @@ let searchPromotionsByLocation = async (data, { search_type, service_name }) => 
 	let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = data;
 
   let providers = await searchProviders({
-    search_providers_state: search_promos_state, 
-    search_providers_city: search_promos_city, 
+    search_providers_state: search_promos_state,
+    search_providers_city: search_promos_city,
     search_providers_zip_code: search_promos_zip_code,
   }, { search_type, active: true });
 

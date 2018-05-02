@@ -5,7 +5,7 @@ let findPromos = async ({ res, parameters, user }) => {
   let { first_name, last_name, gender, messenger_user_id } = user;
   let { brand_name, procedure, location, state, city, zip_code } = parameters;
 
-  // console.log('Parameters', parameters);
+  console.log('Parameters', parameters);
   // console.log('User:', user);
 
   let search_type = {
