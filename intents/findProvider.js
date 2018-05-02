@@ -38,13 +38,13 @@ let findProvider = async ({ res, parameters, user }) => {
 
   if ( search_type && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).toLowerCase();
-    let redirect_url = createURL(`${BASEURL}/search/promos/${search_type}`, { service_name, ...user, ...data });
+    let redirect_url = createURL(`${BASEURL}/search/providers/${search_type}`, { service_name, ...user, ...data });
     res.redirect(redirect_url);
     return;
   }
 
   if ( search_type && (!brand_name && !procedure) ) {
-    let redirect_url = createURL(`${BASEURL}/search/promos/${search_type}`, { ...user, ...data });
+    let redirect_url = createURL(`${BASEURL}/search/providers/${search_type}`, { ...user, ...data });
     res.redirect(redirect_url);
     return;
   }
