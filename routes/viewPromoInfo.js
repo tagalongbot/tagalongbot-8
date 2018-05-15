@@ -3,7 +3,7 @@ let { createURL, localizeDate } = require('../libs/helpers');
 let { createGallery, createMultiGallery } = require('../libs/bots');
 let { getProviderByUserID } = require('../libs/providers');
 
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 
@@ -40,22 +40,24 @@ let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) 
   return element;
 }
 
-let viewActivePromos = async ({ query }, res) => {
+let createPromoMsg = (promo) => {
+  let msg = ``;
+}
+
+let viewPromoInfo = async ({ query }, res) => {
+  let { promo_id, provider_base_id } = query;
   let messenger_user_id = query['messenger user id'];
   let provider = await getProviderByUserID(messenger_user_id);
 
-  let provider_base_id = provider.fields['Practice Base ID'];
   let promosTable = getPromosTable(provider_base_id);
-  let getPromos = getAllDataFromTable(promosTable);
+  let findPromo = findTableData(promosTable);
 
-  let view = 'Promotions';
-  let filterByFormula = `{Active?}`;
-  
-  let promos = await getPromos({ filterByFormula });
-  
-  let galleryData = promos.map(toGalleryData({ provider_base_id }));
-  let messages = createMultiGallery(galleryData);
+  let promo = await findPromo(promo_id);
+
+  let promoMsg = createPromoMsg(promo);
+
+  let messages = [promoMsg];
   res.send({ messages });
 }
 
-module.exports = viewActivePromos;
+module.exports = viewPromoInfo;

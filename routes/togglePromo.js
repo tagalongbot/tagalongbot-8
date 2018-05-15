@@ -3,7 +3,7 @@ let { createURL, localizeDate } = require('../libs/helpers');
 let { createGallery, createMultiGallery } = require('../libs/bots');
 let { getProviderByUserID } = require('../libs/providers');
 
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 
