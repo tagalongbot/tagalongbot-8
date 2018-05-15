@@ -44,8 +44,13 @@ exports.createGallery = function(elements, image_aspect_ratio = 'horizontal') {
 	return { attachment };
 }
 
-exports.createMultiGallery = function(elements) {
+exports.createMultiGallery = function(elements, split_count = 10) {
+  let arr = elements.reduce((arr, element, index) => {
+    if (index+1 < split_count) arr.push(element);
+    return arr;
+  }, []);
   
+  return arr;
 }
 
 exports.createImage = function(url) {
