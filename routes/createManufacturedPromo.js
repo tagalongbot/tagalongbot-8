@@ -114,7 +114,6 @@ let sendServicePromos = async ({ query }, res) => {
 
 let createServicePromo = async ({ query }, res) => {
   let { service_id, provider_id, provider_base_id, promo_type } = query;
-
 }
 
 let confirmCreateServicePromo = async ({ query }, res) => {
