@@ -82,10 +82,11 @@ let getServicePromos = (service) => {
 }
 
 let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fields: service }) => (promo_name) => {
-  let title = promo_name.slice();
+  let promo_type = promo_name.slice(6);
+  let title = promo_type;
   let image_url = service[promo_name];
 
-  let create_promo_url = createURL(`${BASEURL}/promo/new/manufactured/service/create`, { service_id, provider_id, provider_base_id });
+  let create_promo_url = createURL(`${BASEURL}/promo/new/manufactured/service/create`, { service_id, provider_id, provider_base_id, promo_type });
 
   let btn = {
     title: 'Create Promo',
@@ -112,18 +113,40 @@ let sendServicePromos = async ({ query }, res) => {
 }
 
 let createServicePromo = async ({ query }, res) => {
-  let { service_id, provider_id, provider_base_id } = query;
-  
+  let { service_id, provider_id, provider_base_id, promo_type } = query;
+
+}
+
+let confirmCreateServicePromo = async ({ query }, res) => {
+  let { service_id, provider_id, provider_base_id, promo_type } = query;
+
   let promosTable = getPromosTable(provider_base_id);
   let createPromo = createTableData(promosTable);
   // let updatePromo = updateTableData(promosTable);
 
   let service = await findService(service_id);
-  
+
+  let new_promo_image = service.fields[`Promo-${promo_type}`];
+
+  let promoData = {
+    ['Promotion Name']: `${promo_type} on ${service.fields['Name']}`,
+    ['Type']: promo_type,
+    ['Active?']: true,
+    ['Terms']: new_promo_terms,
+    ['Details']: new_promo_details,
+    ['Expiration Date']: new_promo_expiration_date,
+    ['Image']: new_promo_image,
+    ['Claim Limit']: new_promo_claim_limit,
+  }
+
+  let newPromo = await createPromo(promoData);
+  let redirect_to_blocks = ['New Promo Created'];
+  res.send({ redirect_to_blocks });
 }
 
 router.get('/', sendManufacturedPromotions);
 router.get('/service', sendServicePromos);
 router.get('/service/create', createServicePromo);
+router.get('/service/create/confirm', confirmCreateServicePromo);
 
 module.exports = router;
