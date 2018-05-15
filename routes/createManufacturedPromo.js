@@ -113,8 +113,7 @@ let sendServicePromos = async ({ query }, res) => {
 }
 
 let createServicePromo = async ({ query }, res) => {
-  console.log('Create:', query);
-
+  // Send Service Name as new_promo_service_name
   let { service_id, provider_id, provider_base_id, promo_type } = query;
   let new_promo_service_id = service_id;
   let new_promo_provider_id = provider_id;
@@ -122,8 +121,8 @@ let createServicePromo = async ({ query }, res) => {
   let new_promo_type = promo_type;
 
   let set_attributes = { new_promo_service_id, new_promo_provider_id, new_promo_provider_base_id, new_promo_type };
-  let redirect_to_blocks = ['Create New Promo'];
-  res.send({ set_attributes });
+  let redirect_to_blocks = ['Create New Manufactured Promo'];
+  res.send({ set_attributes, redirect_to_blocks });
 }
 
 let confirmCreateServicePromo = async ({ query }, res) => {
@@ -141,14 +140,17 @@ let confirmCreateServicePromo = async ({ query }, res) => {
 
   new_promo_expiration_date = new Date(new_promo_expiration_date);
 
+  console.log('Expiration Date:', new_promo_expiration_date);
+  console.log('Expiration Local Date:', new_promo_expiration_date.toLocaleDateString());
+
   let promoData = {
     ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
     ['Type']: new_promo_type,
     ['Active?']: true,
     ['Terms']: `Valid Until ${new_promo_expiration_date.toLocaleDateString()}`,
     // ['Details']: new_promo_details,
-    ['Expiration Date']: new_promo_expiration_date,
-    ['Image']: new_promo_image,
+    ['Expiration Date']: new_promo_expiration_date.toLocaleDateString(),
+    // ['Image']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),
   }
 
