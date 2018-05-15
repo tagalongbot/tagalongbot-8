@@ -3,12 +3,14 @@ let { createURL } = require('../libs/helpers');
 let { createGallery, createMultiGallery } = require('../libs/bots');
 let { getProviderByUserID } = require('../libs/providers');
 
-let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../libs/data');
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServicesFromTable = getAllDataFromTable(servicesTable);
 let findService = findTableData(servicesTable);
+
+let getPromosTable = getTable('Promos');
 
 let express = require('express');
 let router = express.Router();
@@ -27,7 +29,7 @@ let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id
   let title = service['Name'];
 
   let service_types_length = getServicePromosCount(service);
-  let subtitle = `${service_types_length} types of promos`;
+  let subtitle = `${service_types_length} type of promos`;
   let image_url = service['Image URL'];
 
   let view_service_promos_url = createURL(`${BASEURL}/promo/new/manufactured/service`, { service_id, provider_id, provider_base_id });
@@ -46,7 +48,7 @@ let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id
 
 let sendManufacturedPromotions = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
-  let provider = await getProviderByUserID(messenger_user_id, ['Provider Base ID']);
+  let provider = await getProviderByUserID(messenger_user_id, ['Practice Base ID']);
   let provider_base_id = provider.fields['Practice Base ID'];
   let provider_id = provider.id;
 
@@ -104,6 +106,13 @@ let sendServicePromos = async ({ query }, res) => {
 
 let createServicePromo = async ({ query }, res) => {
   let { service_id, provider_id, provider_base_id } = query;
+  
+  let promosTable = getPromosTable(provider_base_id);
+  let createPromo = createTableData(promosTable);
+  // let updatePromo = updateTableData(promosTable);
+
+  let service = await findService(service_id);
+  
   
   
 }
