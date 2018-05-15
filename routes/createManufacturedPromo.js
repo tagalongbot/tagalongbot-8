@@ -120,15 +120,16 @@ let createServicePromo = async ({ query }, res) => {
   let new_promo_type = promo_type;
 
   let set_attributes = { new_promo_service_id, new_promo_provider_id, new_promo_provider_base_id, new_promo_type };
+  let redirect_to_blocks = ['Create New Promo'];
   res.send({ set_attributes });
 }
 
 let confirmCreateServicePromo = async ({ query }, res) => {
   let { new_promo_service_id, new_promo_provider_id, new_promo_provider_base_id, new_promo_type } = query;
-  let { new_promo_expiration_date } = query;
+  let { new_promo_expiration_date, new_promo_claim_limit } = query;
+
   let promosTable = getPromosTable(new_promo_provider_id);
   let createPromo = createTableData(promosTable);
-  // let updatePromo = updateTableData(promosTable);
 
   let service = await findService(new_promo_service_id);
 
