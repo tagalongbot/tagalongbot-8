@@ -28,12 +28,12 @@ exports.createButtonMessage = function(text, ...btns) {
 	return { attachment };
 }
 
-exports.createGallery = function(messages, image_aspect_ratio = 'horizontal') {
-	//check for errors in "messages"
+exports.createGallery = function(elements, image_aspect_ratio = 'horizontal') {
+	//check for errors in "elements"
 	let payload = {
 		template_type: 'generic',
 		image_aspect_ratio,
-		elements: messages
+		elements
 	}
 
 	let attachment = {
@@ -42,6 +42,10 @@ exports.createGallery = function(messages, image_aspect_ratio = 'horizontal') {
 	}
 
 	return { attachment };
+}
+
+exports.createMultiGallery = function(elements) {
+  
 }
 
 exports.createImage = function(url) {

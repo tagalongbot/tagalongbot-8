@@ -28,10 +28,14 @@ let getServices = async () => {
   return services;
 }
 
+let getServicePromosCount = (service) => {
+  return Object.keys(service).filter(key => key.toLowerCase().startsWith('promo-')).length;
+}
+
 let toGalleryElement = ({ id: service_id, fields: service }) => {
   let title = service['Name'];
-
-  let service_types_length = Object.keys(service).filter(key => key.toLowerCase().startsWith('promo-')).length;
+  
+  let service_types_length = getServicePromosCount(service);
   let subtitle = `${service_types_length} types of promos`;
   let image_url = service['Image URL'];
 
@@ -51,9 +55,15 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 
 let sendManufacturedPromotions = async ({ query }, res) => {
   let services_promos = await getServices();
+
+  let services_with_promos = services_promos.filter((service) => {
+    let promos_count = getServicePromosCount(service.fields);
+    return promos_count > 0;
+  });
+
   // console.log(services_promos);
 
-  let galleryData = services_promos.map(toGalleryElement).slice(0,1);
+  let galleryData = services_with_promos.map(toGalleryElement);
   let gallery = createGallery(galleryData);
   let messages = [gallery];
   res.send({ messages });
