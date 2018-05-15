@@ -5,7 +5,7 @@ let BUTTON_TYPES = {
 	phone_number: 'phone_number'
 }
 
-exports.createButtonMessage = function(text, ...btns) {
+let createButtonMessage = (text, ...btns) => {
 	let buttons = btns.map(function(button) {
 		let [title, btnType, value] = button.split('|');
 		let type = btnType.toLowerCase();
@@ -28,7 +28,7 @@ exports.createButtonMessage = function(text, ...btns) {
 	return { attachment };
 }
 
-exports.createGallery = function(elements, image_aspect_ratio = 'horizontal') {
+let createGallery = (elements, image_aspect_ratio = 'horizontal') => {
 	//check for errors in "elements"
 	let payload = {
 		template_type: 'generic',
@@ -44,16 +44,19 @@ exports.createGallery = function(elements, image_aspect_ratio = 'horizontal') {
 	return { attachment };
 }
 
-exports.createMultiGallery = function(elements, split_count = 10) {
-  let arr = elements.reduce((arr, element, index) => {
-    if (index+1 < split_count) arr.push(element);
-    return arr;
-  }, []);
-  
+let createMultiGallery = (elements, split_count = 10) => {
+  let arr = [];
+
+  while (elements.length > 0) {
+    arr.concat(
+      createGallery(elements.splice(0, split_count))
+    );
+  }
+
   return arr;
 }
 
-exports.createImage = function(url) {
+let createImage = (url) => {
 	let attachment = {
 		type: 'image',
 		payload: { url }
@@ -62,6 +65,14 @@ exports.createImage = function(url) {
 	return { attachment };
 }
 
-exports.createTextMessage = function(text) {
+let createTextMessage = (text) => {
 	return { text };
+}
+
+module.exports = {
+  createTextMessage,
+  createGallery,
+  createMultiGallery,
+  createImage,
+  createTextMessage,
 }
