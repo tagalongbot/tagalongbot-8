@@ -23,14 +23,14 @@ let getServicePromosCount = (service) => {
   return Object.keys(service).filter(key => key.toLowerCase().startsWith('promo-')).length;
 }
 
-let toServicesGallery = ({ id: service_id, fields: service }) => {
+let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id, fields: service }) => {
   let title = service['Name'];
-  
+
   let service_types_length = getServicePromosCount(service);
   let subtitle = `${service_types_length} types of promos`;
   let image_url = service['Image URL'];
 
-  let view_service_promos_url = createURL(`${BASEURL}/promo/new/manufactured/service`, { service_id });
+  let view_service_promos_url = createURL(`${BASEURL}/promo/new/manufactured/service`, { service_id, provider_id, provider_base_id });
 
   let btn = {
     title: 'View Service Promos',
@@ -46,9 +46,10 @@ let toServicesGallery = ({ id: service_id, fields: service }) => {
 
 let sendManufacturedPromotions = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
-  let provider = await getProviderByUserID(messenger_user_id);
-  console.log('Provider:', provider);
-  
+  let provider = await getProviderByUserID(messenger_user_id, ['Provider Base ID']);
+  let provider_base_id = provider.fields['Practice Base ID'];
+  let provider_id = provider.id;
+
   let services_promos = await getServices();
 
   let services_with_promos = services_promos.filter((service) => {
@@ -56,7 +57,7 @@ let sendManufacturedPromotions = async ({ query }, res) => {
     return promos_count > 0;
   });
 
-  let galleryData = services_with_promos.map(toServicesGallery(provider.field['Practice Base ID']));
+  let galleryData = services_with_promos.map(toServicesGallery({ provider_id, provider_base_id }));
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
 }
@@ -71,35 +72,39 @@ let getServicePromos = (service) => {
   return promos;
 }
 
-let toPromosGallery = ({ id: service_id, fields: service }) => (promo_name) => {
+let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fields: service }) => (promo_name) => {
   let title = promo_name;
   let image_url = service[promo_name];
-  
-  let create_promo_url = createURL(`${BASEURL}/promo/new/manufactured/service/create`, { service_id });
-  
+
+  let create_promo_url = createURL(`${BASEURL}/promo/new/manufactured/service/create`, { service_id, provider_id, provider_base_id });
+
   let btn = {
     title: 'Create Promo',
     type: 'json_plugin_url',
     url: create_promo_url
   }
-  
+
   let buttons = [btn];
-  
+
   let element = { title, image_url, buttons };
   return element;
 }
 
 let sendServicePromos = async ({ query }, res) => {
-  let service = await findService(query.service_id);
+  let { service_id, provider_id, provider_base_id } = query;
+
+  let service = await findService(service_id);
   let promos = await getServicePromos(service);
 
-  let galleryData = promos.map(toPromosGallery(service));
+  let galleryData = promos.map(toPromosGallery({ provider_id, provider_base_id }, service));
   let gallery = createGallery(galleryData);
   let messages = [gallery];
   res.send({ messages });
 }
 
 let createServicePromo = async ({ query }, res) => {
+  let { service_id, provider_id, provider_base_id } = query;
+  
   
 }
 

@@ -31,7 +31,7 @@ let searchProviders = async (data, { search_type, active = false }) => {
 }
 
 let getProviderByUserID = async (messenger_user_id, fields = []) => {
-  let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
+  let filterByFormula = `{Claimed By Messenger User ID} = '${messenger_user_id}'`;
   let [user] = await getPractices({ filterByFormula, fields });
   return user;
 }

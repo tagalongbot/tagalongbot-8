@@ -63,7 +63,11 @@ let toGalleryElement = ({ provider_id, provider_base_id, first_name, last_name, 
 }
 
 let toGalleryData = ({ first_name, last_name, gender, messenger_user_id }) => (arr, { provider_id, provider_base_id, promos }) => {
-  return arr.concat(...promos.map(toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id })));
+  return arr.concat(
+    ...promos.map(
+      toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id })
+    )
+  );
 }
 
 module.exports = {
