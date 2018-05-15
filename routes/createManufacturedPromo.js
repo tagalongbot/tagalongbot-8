@@ -2,28 +2,15 @@ let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 let { createURL } = require('../libs/helpers');
 let { createGallery, createMultiGallery } = require('../libs/bots');
 
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServicesFromTable = getAllDataFromTable(servicesTable);
+let findService = findTableData(servicesTable);
 
 let express = require('express');
 let router = express.Router();
-
-let getServicePromos = async () => {
-  let view = 'Promotions';
-  let services = await getServicesFromTable({ view });
-  
-  let services_promos = services.map((service) => {
-    return Object.keys(service.fields).reduce((obj, key) => {
-      if (key.toLowerCase().startsWith('promo-')) obj[key] = service.fields[key];
-      return { id: service.id, ...obj };
-    }, {});
-  });
-
-  return services_promos;
-}
 
 let getServices = async () => {
   let view = 'Main View';
@@ -35,7 +22,7 @@ let getServicePromosCount = (service) => {
   return Object.keys(service).filter(key => key.toLowerCase().startsWith('promo-')).length;
 }
 
-let toGalleryElement = ({ id: service_id, fields: service }) => {
+let toServicesGallery = ({ id: service_id, fields: service }) => {
   let title = service['Name'];
   
   let service_types_length = getServicePromosCount(service);
@@ -64,12 +51,34 @@ let sendManufacturedPromotions = async ({ query }, res) => {
     return promos_count > 0;
   });
 
-  let galleryData = services_with_promos.map(toGalleryElement);
+  let galleryData = services_with_promos.map(toServicesGallery);
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
 }
 
+let getServicePromos = async () => {
+  let view = 'Promotions';
+  let services = await getServicesFromTable({ view });
+
+  let services_promos = services.map((service) => {
+    return Object.keys(service.fields).reduce((obj, key) => {
+      if (key.toLowerCase().startsWith('promo-')) obj[key] = service.fields[key];
+      return { id: service.id, ...obj };
+    }, {});
+  });
+
+  return services_promos;
+}
+
+let toPromosGallery = (service) => (promo_name) => {
+  
+}
+
 let sendServicePromos = async ({ query }, res) => {
+  let service = await findService(query.service_id);
+  let promos = await getServicePromos(service);
+  
+  let galleryData = c
   
 }
 
