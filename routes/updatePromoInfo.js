@@ -7,22 +7,18 @@ let { getTable, getAllDataFromTable, findTableData, updateTableData } = require(
 
 let getPromosTable = getTable('Promos');
 
-let createPromoMsg = ({ fields: promo }) => {
-  let msg = `
-  Promotion Name: ${promo['Promotion Name']}
-  Type: ${promo['Type']}
-  Active: ${promo['Active?']}
-  Terms: ${promo['Terms']}
-  Expiration Date: ${promo['Expiration Date']}
-  Claim Limit: ${promo['Claim Limit']}
-  Total Claim Limit: ${promo['Total Claim Limit']}
-  Claim Limit Reached: ${(promo['Claim Limit Reached']) === 1 ? 'TRUE' : 'FALSE'}
-`;
+let express = require('express');
+let router = express.Router();
+
+let getUpdateField = ({ query }, res) => {
+  let { promo_id, provider_base_id } = query;
   
-  return msg;
+  let
+
 }
 
 let updatePromoInfo = async ({ query }, res) => {
+  let update_promo_field_name = query;
   let { promo_id, provider_base_id } = query;
   let messenger_user_id = query['messenger user id'];
   let provider = await getProviderByUserID(messenger_user_id);
@@ -34,7 +30,7 @@ let updatePromoInfo = async ({ query }, res) => {
   let promo = await findPromo(promo_id);
 
   let updatePromoData = {
-    
+    [update_promo_field_name]: 
   }
   
   let updatedPromo = await updatePromo(updatePromoData, promo);
@@ -45,4 +41,7 @@ let updatePromoInfo = async ({ query }, res) => {
   res.send({ messages });
 }
 
-module.exports = updatePromoInfo;
+router.get('/', getUpdateField);
+router.get('/update', updatePromoInfo);
+
+module.exports = router;
