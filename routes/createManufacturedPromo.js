@@ -31,13 +31,13 @@ let toServicesGallery = ({ id: service_id, fields: service }) => {
 
   let view_service_promos_url = createURL(`${BASEURL}/promo/new/manufactured/service`, { service_id });
 
-  let btn1 = {
+  let btn = {
     title: 'View Service Promos',
     type: 'json_plugin_url',
     url: view_service_promos_url
   }
 
-  let buttons = [btn1];
+  let buttons = [btn];
 
   let element = { title, subtitle, image_url, buttons };
   return element;
@@ -56,30 +56,42 @@ let sendManufacturedPromotions = async ({ query }, res) => {
   res.send({ messages });
 }
 
-let getServicePromos = async () => {
-  let view = 'Promotions';
-  let services = await getServicesFromTable({ view });
+let getServicePromos = (service) => {
+  let promos = Object.keys(service.fields)
 
-  let services_promos = services.map((service) => {
-    return Object.keys(service.fields).reduce((obj, key) => {
-      if (key.toLowerCase().startsWith('promo-')) obj[key] = service.fields[key];
-      return { id: service.id, ...obj };
-    }, {});
-  });
+  .filter(
+    (key) => key.toLowerCase().startsWith('promo-')
+  );
 
-  return services_promos;
+  return promos;
 }
 
-let toPromosGallery = (service) => (promo_name) => {
+let toPromosGallery = ({ id: service_id, fields: service }) => (promo_name) => {
+  let title = promo_name;
+  let image_url = service[promo_name];
   
+  let create_promo_url = createURL(`${BASEURL}/promo/new/manufactured/service/create`, { service_id });
+  
+  let btn = {
+    title: 'Create Promo',
+    type: 'json_plugin_url',
+    url: create_promo_url
+  }
+  
+  let buttons = [btn];
+  
+  let element = { title, image_url, buttons };
+  return element;
 }
 
 let sendServicePromos = async ({ query }, res) => {
   let service = await findService(query.service_id);
   let promos = await getServicePromos(service);
-  
-  let galleryData = c
-  
+
+  let galleryData = promos.map(toPromosGallery(service));
+  let gallery = createGallery(galleryData);
+  let messages = [gallery];
+  res.send({ messages });
 }
 
 router.get('/', sendManufacturedPromotions);

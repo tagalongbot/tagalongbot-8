@@ -39,7 +39,7 @@ app.get('/search/promos/:search_type', getPromos);
 app.get('/promo/details', getPromoDetails);
 app.get('/promo/provider', getPromoProvider);
 app.use('/promo/claim', claimPromotion);
-app.get('/promo/new/manufactured', createManufacturedPromo);
+app.use('/promo/new/manufactured', createManufacturedPromo);
 
 // Services
 app.get('/search/services/:service_type', getServices);
