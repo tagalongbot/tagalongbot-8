@@ -18,6 +18,7 @@ let getPromoProvider = require('./routes/getPromoProvider');
 let claimPromotion = require('./routes/claimPromotion');
 let createManufacturedPromo = require('./routes/createManufacturedPromo');
 let createCustomPromo = require('./routes/createCustomPromo');
+let viewActivePromos = require('./routes/viewActivePromos');
 
 // Services
 let getServices = require('./routes/getServices');
@@ -42,6 +43,7 @@ app.get('/promo/provider', getPromoProvider);
 app.use('/promo/claim', claimPromotion);
 app.use('/promo/new/manufactured', createManufacturedPromo);
 app.use('/promo/new/custom', createCustomPromo);
+app.use('/promo/view/active', viewActivePromos);
 
 // Services
 app.get('/search/services/:service_type', getServices);
