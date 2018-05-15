@@ -113,6 +113,8 @@ let sendServicePromos = async ({ query }, res) => {
 }
 
 let createServicePromo = async ({ query }, res) => {
+  console.log('Create:', query);
+
   let { service_id, provider_id, provider_base_id, promo_type } = query;
   let new_promo_service_id = service_id;
   let new_promo_provider_id = provider_id;
@@ -125,6 +127,7 @@ let createServicePromo = async ({ query }, res) => {
 }
 
 let confirmCreateServicePromo = async ({ query }, res) => {
+  console.log('Confirm:', query);
   let { new_promo_service_id, new_promo_provider_id, new_promo_provider_base_id, new_promo_type } = query;
   let { new_promo_expiration_date, new_promo_claim_limit } = query;
 
@@ -133,7 +136,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
 
   let service = await findService(new_promo_service_id);
 
-  let new_promo_details = '';
+  // let new_promo_details = '';
   let new_promo_image = service.fields[`Promo-${new_promo_type}`];
 
   new_promo_expiration_date = new Date(new_promo_expiration_date);
@@ -143,14 +146,14 @@ let confirmCreateServicePromo = async ({ query }, res) => {
     ['Type']: new_promo_type,
     ['Active?']: true,
     ['Terms']: `Valid Until ${new_promo_expiration_date.toLocaleDateString()}`,
-    ['Details']: new_promo_details,
+    // ['Details']: new_promo_details,
     ['Expiration Date']: new_promo_expiration_date,
     ['Image']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),
   }
 
   let newPromo = await createPromo(promoData);
-  let redirect_to_blocks = ['New Promo Created'];
+  let redirect_to_blocks = ['New Manufactured Promo Created'];
   res.send({ redirect_to_blocks });
 }
 
