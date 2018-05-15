@@ -15,10 +15,17 @@ let getPromosTable = getTable('Promos');
 let express = require('express');
 let router = express.Router();
 
-let getServices = async () => {
+let getServices = async (provider) => {
   let view = 'Main View';
   let services = await getServicesFromTable({ view });
-  return services;
+
+  let provider_services = provider.fields['Practice Services'].map(service => service.toLowerCase());
+
+  let matched_services = services.filter(
+    (service) => provider_services.includes(service.fields['Name'].toLowerCase())
+  );
+
+  return matched_services;
 }
 
 let getServicePromosCount = (service) => {
@@ -48,11 +55,11 @@ let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id
 
 let sendManufacturedPromotions = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
-  let provider = await getProviderByUserID(messenger_user_id, ['Practice Base ID']);
+  let provider = await getProviderByUserID(messenger_user_id, ['Practice Base ID', 'Practice Services']);
   let provider_base_id = provider.fields['Practice Base ID'];
   let provider_id = provider.id;
 
-  let services_promos = await getServices();
+  let services_promos = await getServices(provider);
 
   let services_with_promos = services_promos.filter((service) => {
     let promos_count = getServicePromosCount(service.fields);
@@ -75,7 +82,7 @@ let getServicePromos = (service) => {
 }
 
 let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fields: service }) => (promo_name) => {
-  let title = promo_name;
+  let title = promo_name.slice();
   let image_url = service[promo_name];
 
   let create_promo_url = createURL(`${BASEURL}/promo/new/manufactured/service/create`, { service_id, provider_id, provider_base_id });
@@ -112,8 +119,6 @@ let createServicePromo = async ({ query }, res) => {
   // let updatePromo = updateTableData(promosTable);
 
   let service = await findService(service_id);
-  
-  
   
 }
 
