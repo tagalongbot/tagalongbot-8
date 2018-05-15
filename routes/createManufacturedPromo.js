@@ -125,6 +125,8 @@ let confirmCreateServicePromo = async ({ query }, res) => {
 
   let service = await findService(service_id);
 
+  let new_promo_terms = '';
+  let new_promo_details = '';
   let new_promo_image = service.fields[`Promo-${promo_type}`];
 
   let promoData = {
