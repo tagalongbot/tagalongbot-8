@@ -45,15 +45,15 @@ let createGallery = (elements, image_aspect_ratio = 'horizontal') => {
 }
 
 let createMultiGallery = (elements, split_count = 10) => {
-  let arr = [];
+  let galleryArray = [];
 
   while (elements.length > 0) {
-    arr.concat(
+    galleryArray.push(
       createGallery(elements.splice(0, split_count))
     );
   }
 
-  return arr;
+  return galleryArray;
 }
 
 let createImage = (url) => {

@@ -1,6 +1,6 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 let { createURL } = require('../libs/helpers');
-let { createGallery } = require('../libs/bots');
+let { createGallery, createMultiGallery } = require('../libs/bots');
 
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
@@ -8,19 +8,22 @@ let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServicesFromTable = getAllDataFromTable(servicesTable);
 
-// let getServices = async () => {
-//   let view = 'Promotions';
-//   let services = await getServicesFromTable({ view });
-  
-//   let services_promos = services.map((service) => {
-//     return Object.keys(service.fields).reduce((obj, key) => {
-//       if (key.toLowerCase().startsWith('promo-')) obj[key] = service.fields[key];
-//       return { id: service.id, ...obj };
-//     }, {});
-//   });
+let express = require('express');
+let router = express.Router();
 
-//   return services_promos;
-// }
+let getServicePromos = async () => {
+  let view = 'Promotions';
+  let services = await getServicesFromTable({ view });
+  
+  let services_promos = services.map((service) => {
+    return Object.keys(service.fields).reduce((obj, key) => {
+      if (key.toLowerCase().startsWith('promo-')) obj[key] = service.fields[key];
+      return { id: service.id, ...obj };
+    }, {});
+  });
+
+  return services_promos;
+}
 
 let getServices = async () => {
   let view = 'Main View';
@@ -61,12 +64,16 @@ let sendManufacturedPromotions = async ({ query }, res) => {
     return promos_count > 0;
   });
 
-  // console.log(services_promos);
-
   let galleryData = services_with_promos.map(toGalleryElement);
-  let gallery = createGallery(galleryData);
-  let messages = [gallery];
+  let messages = createMultiGallery(galleryData);
   res.send({ messages });
 }
 
-module.exports = sendManufacturedPromotions;
+let sendServicePromos = async ({ query }, res) => {
+  
+}
+
+router.get('/', sendManufacturedPromotions);
+router.get('/service', sendServicePromos);
+
+module.exports = router;
