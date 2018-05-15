@@ -7,41 +7,19 @@ let { getTable, getAllDataFromTable, findTableData, createTableData, updateTable
 
 let getPromosTable = getTable('Promos');
 
-let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) => {
-  let title = promo['Promotion Name'];
-  let subtitle = promo['Terms'];
-  let image_url = promo['Image URL'];
-
-  let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
-  let update_promo_url = createURL(`${BASEURL}/promo/update`, { promo_id, provider_base_id });
-  let toggle_promo_url = createURL(`${BASEURL}/promo/toggle`, { promo_id, provider_base_id });
-
-  let btn1 = {
-    title: 'View Promo Details',
-    type: 'json_plugin_url',
-    url: view_promo_details_url
-  }
-
-  let btn2 = {
-    title: 'Update Promo',
-    type: 'json_plugin_url',
-    url: update_promo_url
-  }
-
-  let btn3 = {
-    title: promo['Active?'] ? 'Deactivate' : 'Reactivate',
-    type: 'json_plugin_url',
-    url: toggle_promo_url
-  }
-
-  let buttons = [btn1, btn2, btn3];
-
-  let element = { title, subtitle, image_url, buttons }
-  return element;
-}
-
-let createPromoMsg = (promo) => {
-  let msg = ``;
+let createPromoMsg = ({ fields: promo }) => {
+  let msg = `
+  Promotion Name: ${promo['Promotion Name']}
+  Type: ${promo['Type']}
+  Active: ${promo['Active?']}
+  Terms: ${promo['Terms']}
+  Expiration Date: ${promo['Expiration Date']}
+  Claim Limit: ${promo['Claim Limit']}
+  Total Claim Limit: ${promo['Total Claim Limit']}
+  Claim Limit Reached: ${(promo['Claim Limit Reached']) === 1 ? 'TRUE' : 'FALSE'}
+`;
+  
+  return msg;
 }
 
 let viewPromoInfo = async ({ query }, res) => {
