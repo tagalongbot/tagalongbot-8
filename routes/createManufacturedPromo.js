@@ -114,30 +114,38 @@ let sendServicePromos = async ({ query }, res) => {
 
 let createServicePromo = async ({ query }, res) => {
   let { service_id, provider_id, provider_base_id, promo_type } = query;
+  let new_promo_service_id = service_id;
+  let new_promo_provider_id = provider_id;
+  let new_promo_provider_base_id = provider_base_id;
+  let new_promo_type = promo_type;
+
+  let set_attributes = { new_promo_service_id, new_promo_provider_id, new_promo_provider_base_id, new_promo_type };
+  res.send({ set_attributes });
 }
 
 let confirmCreateServicePromo = async ({ query }, res) => {
-  let { service_id, provider_id, provider_base_id, promo_type } = query;
-
-  let promosTable = getPromosTable(provider_base_id);
+  let { new_promo_service_id, new_promo_provider_id, new_promo_provider_base_id, new_promo_type } = query;
+  let { new_promo_expiration_date } = query;
+  let promosTable = getPromosTable(new_promo_provider_id);
   let createPromo = createTableData(promosTable);
   // let updatePromo = updateTableData(promosTable);
 
-  let service = await findService(service_id);
+  let service = await findService(new_promo_service_id);
 
-  let new_promo_terms = '';
   let new_promo_details = '';
-  let new_promo_image = service.fields[`Promo-${promo_type}`];
+  let new_promo_image = service.fields[`Promo-${new_promo_type}`];
+
+  new_promo_expiration_date = new Date(new_promo_expiration_date);
 
   let promoData = {
-    ['Promotion Name']: `${promo_type} on ${service.fields['Name']}`,
-    ['Type']: promo_type,
+    ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
+    ['Type']: new_promo_type,
     ['Active?']: true,
-    ['Terms']: new_promo_terms,
+    ['Terms']: `Valid Until ${new_promo_expiration_date.toLocaleDateString()}`,
     ['Details']: new_promo_details,
     ['Expiration Date']: new_promo_expiration_date,
     ['Image']: new_promo_image,
-    ['Claim Limit']: new_promo_claim_limit,
+    ['Claim Limit']: Number(new_promo_claim_limit.trim()),
   }
 
   let newPromo = await createPromo(promoData);
