@@ -44,6 +44,10 @@ let toUniqueArray = (arr, val) => {
   return arr;
 }
 
+let localizeDate = (date) => {
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+}
+
 module.exports = {
 	createURL,
 	randomize,
@@ -51,4 +55,5 @@ module.exports = {
 	getKeysStartingWith,
 	formatPhoneNumber,
   toUniqueArray,
+  localizeDate,
 }

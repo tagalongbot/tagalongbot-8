@@ -1,5 +1,5 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
-let { createURL } = require('../libs/helpers');
+let { createURL, localizeDate } = require('../libs/helpers');
 let { createGallery, createMultiGallery } = require('../libs/bots');
 let { getProviderByUserID } = require('../libs/providers');
 
@@ -135,23 +135,19 @@ let confirmCreateServicePromo = async ({ query }, res) => {
 
   let service = await findService(new_promo_service_id);
 
-  // let new_promo_details = '';
   let new_promo_image = service.fields[`Promo-${new_promo_type}`];
 
   new_promo_expiration_date = new Date(new_promo_expiration_date);
-
-  console.log('Expiration Date:', new_promo_expiration_date);
-  console.log('Expiration Local Date:', new_promo_expiration_date.toLocaleDateString());
 
   let promoData = {
     ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
     ['Type']: new_promo_type,
     ['Active?']: true,
-    ['Terms']: `Valid Until ${new_promo_expiration_date.toLocaleDateString()}`,
-    // ['Details']: new_promo_details,
-    // ['Expiration Date']: new_promo_expiration_date.toLocaleDateString(),
-    // ['Image']: new_promo_image,
+    ['Terms']: `Valid Until ${localizeDate(new_promo_expiration_date)}`,
+    ['Expiration Date']: new_promo_expiration_date,
+    ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),
+    ['Total Claim Count']: 0,
   }
 
   let newPromo = await createPromo(promoData);
