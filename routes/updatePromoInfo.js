@@ -12,32 +12,37 @@ let router = express.Router();
 
 let getUpdateField = ({ query }, res) => {
   let { promo_id, provider_base_id } = query;
-  
-  let
 
+  let set_attributes = {
+    updating_promo_id: promo_id,
+    updating_provider_base_id: provider_base_id
+  }
+
+  let redirect_to_blocks = ['Update Promo'];
+  res.send({ set_attributes, redirect_to_blocks });
 }
 
 let updatePromoInfo = async ({ query }, res) => {
-  let update_promo_field_name = query;
-  let { promo_id, provider_base_id } = query;
+  let { update_promo_field_name, update_promo_field_value } = query;
+  let { updating_promo_id, updating_provider_base_id } = query;
   let messenger_user_id = query['messenger user id'];
   let provider = await getProviderByUserID(messenger_user_id);
 
-  let promosTable = getPromosTable(provider_base_id);
+  let promosTable = getPromosTable(updating_provider_base_id);
   let findPromo = findTableData(promosTable);
   let updatePromo = updateTableData(promosTable);
 
-  let promo = await findPromo(promo_id);
+  let promo = await findPromo(updating_promo_id);
 
   let updatePromoData = {
-    [update_promo_field_name]: 
+    [update_promo_field_name]: update_promo_field_value
   }
-  
-  let updatedPromo = await updatePromo(updatePromoData, promo);
-  
-  let promoMsg = createPromoMsg(promo);
 
-  let messages = [promoMsg];
+  let updatedPromo = await updatePromo(updatePromoData, promo);
+
+  let txtMsg = ``;
+
+  let messages = [{ text: txtMsg }];
   res.send({ messages });
 }
 
