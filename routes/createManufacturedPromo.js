@@ -130,7 +130,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
   let { new_promo_service_id, new_promo_provider_id, new_promo_provider_base_id, new_promo_type } = query;
   let { new_promo_expiration_date, new_promo_claim_limit } = query;
 
-  let promosTable = getPromosTable(new_promo_provider_id);
+  let promosTable = getPromosTable(new_promo_provider_base_id);
   let createPromo = createTableData(promosTable);
 
   let service = await findService(new_promo_service_id);
@@ -149,7 +149,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
     ['Active?']: true,
     ['Terms']: `Valid Until ${new_promo_expiration_date.toLocaleDateString()}`,
     // ['Details']: new_promo_details,
-    ['Expiration Date']: new_promo_expiration_date.toLocaleDateString(),
+    // ['Expiration Date']: new_promo_expiration_date.toLocaleDateString(),
     // ['Image']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),
   }
