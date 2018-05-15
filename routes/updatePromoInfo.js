@@ -47,6 +47,6 @@ let updatePromoInfo = async ({ query }, res) => {
 }
 
 router.get('/', getUpdateField);
-router.get('/update', updatePromoInfo);
+router.get('/field', updatePromoInfo);
 
 module.exports = router;

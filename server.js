@@ -48,7 +48,7 @@ app.use('/promo/new/manufactured', createManufacturedPromo);
 app.use('/promo/new/custom', createCustomPromo);
 app.get('/promo/view/active', viewActivePromos);
 app.get('/promo/view/info', viewPromoInfo);
-app.get('/promo/update', updatePromoInfo);
+app.use('/promo/update', updatePromoInfo);
 app.get('/promo/toggle', togglePromo);
 
 // Services
