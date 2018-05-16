@@ -7,19 +7,28 @@ let { getTable, getAllDataFromTable, findTableData, createTableData, updateTable
 
 let getPromosTable = getTable('Promos');
 
-let createPromoMsg = ({ fields: promo }) => {
-  let te = `
+let createPromoMsg = ({ id: promo_id, fields: promo }, provider_base_id) => {
+  let text = `
   Promotion Name: ${promo['Promotion Name']}
   Type: ${promo['Type']}
   Active: ${promo['Active?']}
   Terms: ${promo['Terms']}
   Expiration Date: ${promo['Expiration Date']}
   Claim Limit: ${promo['Claim Limit']}
-  Total Claim Limit: ${promo['Total Claim Limit']}
+  Total Claim Count: ${promo['Total Claim Count']}
   Claim Limit Reached: ${(promo['Claim Limit Reached']) === 1 ? 'TRUE' : 'FALSE'}
 `;
+
+  let update_promo_url = createURL(`${BASEURL}/promo/update`, { promo_id, provider_base_id });
+  let toggle_promo_url = createURL(`${BASEURL}/promo/toggle`, { promo_id, provider_base_id });
   
-  return msg;
+  let msg = createButtonMessage(
+    text,
+    `${pr.fields['Active?'] ? 'Deactivate' : 'Activate'}|json_plugin_url|${toggle_promo_url}`,
+    `Update Promo|json_plugin_url|${update_promo_url}`,
+  );
+
+  return { text };
 }
 
 let viewPromoInfo = async ({ query }, res) => {
