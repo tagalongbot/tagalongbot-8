@@ -70,7 +70,7 @@ let createTextMessage = (text) => {
 }
 
 module.exports = {
-  createTextMessage,
+  createButtonMessage,
   createGallery,
   createMultiGallery,
   createImage,

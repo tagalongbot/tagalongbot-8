@@ -40,7 +40,7 @@ let updatePromoInfo = async ({ query }, res) => {
 
   let updatedPromo = await updatePromo(updatePromoData, promo);
 
-  let text = `Updated ${update_promo_field_name} to "${update_promo_field_value}" for ${updatedPromo.fields['Promotion Name']} `;
+  let text = `Updated ${update_promo_field_name} to "${update_promo_field_value}" for ${promo.fields['Promotion Name']} `;
 
   let promo_id = updating_promo_id;
   let provider_base_id = updating_provider_base_id;
@@ -48,7 +48,7 @@ let updatePromoInfo = async ({ query }, res) => {
   let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
   let update_promo_url = createURL(`${BASEURL}/promo/update`, { promo_id, provider_base_id });
   let toggle_promo_url = createURL(`${BASEURL}/promo/toggle`, { promo_id, provider_base_id });
-  
+
   let msg = createButtonMessage(
     text,
     `View Promo Details|json_plugin_url|${view_promo_details_url}`,

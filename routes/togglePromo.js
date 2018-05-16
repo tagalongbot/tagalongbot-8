@@ -35,7 +35,7 @@ let togglePromo = async ({ query }, res) => {
     `Update Promo|json_plugin_url|${update_promo_url}`,
   );
 
-  let messages = [{ text: txtMsg }];
+  let messages = [txtMsg];
   res.send({ messages });
 }
 
