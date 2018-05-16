@@ -2,6 +2,7 @@ let express = require('express');
 let app = express();
 
 let handleAI = require('./routes/ai');
+let getAdminMenu = require('./routes/getAdminMenu');
 
 // Providers
 let getProviders = require('./routes/getProviders');
@@ -30,6 +31,7 @@ let getServiceProviders = require('./routes/getServiceProviders');
 
 // ROUTES CONFIGURATION
 app.get('/ai', handleAI);
+app.get('/admin/menu', getAdminMenu);
 
 // Providers
 app.get('/search/providers/:search_type', getProviders);
