@@ -8,7 +8,7 @@ let { getTable, getAllDataFromTable, findTableData, createTableData, updateTable
 let getPromosTable = getTable('Promos');
 
 let createPromoMsg = ({ fields: promo }) => {
-  let msg = `
+  let te = `
   Promotion Name: ${promo['Promotion Name']}
   Type: ${promo['Type']}
   Active: ${promo['Active?']}

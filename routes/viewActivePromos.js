@@ -48,10 +48,7 @@ let viewActivePromos = async ({ query }, res) => {
   let promosTable = getPromosTable(provider_base_id);
   let getPromos = getAllDataFromTable(promosTable);
 
-  let view = 'Promotions';
-  let filterByFormula = `{Active?}`;
-  
-  let promos = await getPromos({ filterByFormula });
+  let promos = await getPromos();
   
   let galleryData = promos.map(toGalleryData({ provider_base_id }));
   let messages = createMultiGallery(galleryData);
