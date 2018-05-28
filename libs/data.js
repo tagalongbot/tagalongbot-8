@@ -1,15 +1,9 @@
 let Airtable = require('airtable');
 
 // Lib Helper Methods
-let errorHandler = (resolve, reject) => (error, record) => {
-	if (error) {
-		console.trace();
-    console.log('Airtable Error:', error);
-		reject({ error });
-		return;
-	}
-
-	resolve(record);
+let errorHandler = (error) => {
+  console.trace();
+  console.log('Airtable Error:', error);
 }
 
 let getOnlyValuesFromData = (data) => {
@@ -30,63 +24,29 @@ let getTable = (tableName) => (baseID) => {
 }
 
 let getDataFromTable = (table) => (filterQuery = {}) => {
-	return new Promise((resolve, reject) => {
-		table.select(filterQuery)
-
-		.firstPage(
-			errorHandler(resolve, reject)
-		);
-	});
+  return table.select(filterQuery).firstPage().catch(errorHandler);
 }
 
 let getAllDataFromTable = (table) => (filterQuery = {}) => {
-	return new Promise((resolve, reject) => {
-		table.select(filterQuery)
-
-		.all(
-			errorHandler(resolve, reject)
-		);
-	});
+  return table.select(filterQuery).all().catch(errorHandler);
 }
 
 let findTableData = (table) => (data_ID) => {
-	return new Promise(function(resolve, reject) {
-		table.find(
-			data_ID,
-			errorHandler(resolve, reject)
-		);
-	});
+	return table.find(data_ID).catch(errorHandler);
 }
 
 let createTableData = (table) => (data) => {
 	let newData = getOnlyValuesFromData(data);
-	return new Promise(function(resolve, reject) {
-		table.create(
-			newData,
-			errorHandler(resolve, reject)
-		);
-	});
+	return table.create(newData).catch(errorHandler);
 }
 
 let updateTableData = (table) => (updateData, dataRecord) => {
 	let newData = getOnlyValuesFromData(updateData);
-
-	return new Promise((resolve, reject) => {
-		table.update(
-			dataRecord.id,
-			newData,
-			errorHandler(resolve, reject)
-		);
-	});
+	return table.update(dataRecord.id, newData).catch(errorHandler);
 }
 
 let destroyTableData = (table) => (data_ID) => {
-	return new Promise(function(resolve, reject) {
-		table.destroy(
-			data_ID,
-			errorHandler(resolve, reject)
-		);
-	});
+	return table.destroy(data_ID).catch(errorHandler);
 }
 
 module.exports = {
