@@ -59,60 +59,34 @@ let sortProviders = (provider1, provider2) => {
 let createButtons = (provider, data) => {
   let is_provider_active = provider['Active?'];
   let is_provider_claimed = provider['Claimed?'];
+  // We're currently not showing unclaimed practices in the bot by passing `{ active: true }` to `searchProviders`
 
-  if (is_provider_active) {
-    let view_provider_site_url = provider['Practice Website'];
-    let view_provider_book_url = provider['Practice Booking URL'];
+  let view_provider_site_url = provider['Practice Website'];
+  let view_provider_book_url = provider['Practice Booking URL'];
 
-    let btns = [];
+  let btns = [];
 
-    if (view_provider_site_url) {
-      let btn = {
-        title: 'Visit Provider Site',
-        type: 'web',
-        url: view_provider_site_url,
-      }
-      
-      btns.push(btn);
-    }
-  
-    if (view_provider_book_url) {
-      let btn = {
-        title: 'Visit Booking Site',
-        type: 'web',
-        url: view_provider_book_url,
-      }
-      
-      btns.push(btn);
-    }
-    
-    return btns;
-  }
-
-  if (!is_provider_claimed) {
-    let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
-
+  if (view_provider_site_url) {
     let btn = {
-      title: 'Claim Practice',
-      type: 'show_block',
-      block_name: 'Claim Practice'
+      title: 'Visit Provider Site',
+      type: 'web',
+      url: view_provider_site_url,
     }
 
-    return [btn];
+    btns.push(btn);
   }
 
-  if (is_provider_claimed && !is_provider_active) {
-    let { messenger_user_id } = data;
-    let already_claimed_url = createURL(`${BASEURL}/provider/claimed`, { messenger_user_id });
-
+  if (view_provider_book_url) {
     let btn = {
-      title: 'Already Claimed',
-      type: 'json_plugin_url',
-      url: already_claimed_url
+      title: 'Visit Booking Site',
+      type: 'web',
+      url: view_provider_book_url,
     }
 
-    return [btn];
+    btns.push(btn);
   }
+
+  return btns;
 }
 
 let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
