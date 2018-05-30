@@ -5,7 +5,7 @@ let findProvider = async ({ res, parameters, user }) => {
   let { first_name, last_name, gender, messenger_user_id } = user;
   let { provider_type, state, city, zip_code, location, brand_name, procedure } = parameters;
 
-  console.log('Parameters', parameters);
+  // console.log('Parameters', parameters);
   // console.log('User:', user);
 
   let search_type = {
