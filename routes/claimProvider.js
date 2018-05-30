@@ -36,7 +36,7 @@ let claimProvider = async ({ query }, res) => {
   }
 
   let updatedPractice = await updatePractice(updatePracticeData, provider);
-  
+
   let txtMsg = createButtonMessage(
     `Congrats ${first_name} your practice "${provider.fields['Practice Name']}" has been claimed!`,
     `Search More Providers|show_block|Search Providers`,

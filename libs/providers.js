@@ -59,29 +59,34 @@ let sortProviders = (provider1, provider2) => {
 let createButtons = (provider, data) => {
   let is_provider_active = provider['Active?'];
   let is_provider_claimed = provider['Claimed?'];
+
   if (is_provider_active) {
     let view_provider_site_url = provider['Practice Website'];
     let view_provider_book_url = provider['Practice Booking URL'];
 
     let btns = [];
-    
-    if (view_provider_site_url) {
-      
-    }
-    
-    let btn1 = {
-      title: 'View Services',
-      type: 'json_plugin_url',
-      url: view_services_btn_url,
-    }
 
-    let btn2 = {
-      title: 'View Promos',
-      type: 'json_plugin_url',
-      url: view_promos_btn_url,
+    if (view_provider_site_url) {
+      let btn = {
+        title: 'Visit Provider Site',
+        type: 'web',
+        url: view_provider_site_url,
+      }
+      
+      btns.push(btn);
+    }
+  
+    if (view_provider_book_url) {
+      let btn = {
+        title: 'Visit Booking Site',
+        type: 'web',
+        url: view_provider_book_url,
+      }
+      
+      btns.push(btn);
     }
     
-    return [btn1, btn2];
+    return btns;
   }
 
   if (!is_provider_claimed) {
@@ -89,8 +94,8 @@ let createButtons = (provider, data) => {
 
     let btn = {
       title: 'Claim Practice',
-      type: 'json_plugin_url',
-      url: claim_practice_url
+      type: 'show_block',
+      block_name: 'Claim Practice'
     }
 
     return [btn];
@@ -105,7 +110,7 @@ let createButtons = (provider, data) => {
       type: 'json_plugin_url',
       url: already_claimed_url
     }
-  
+
     return [btn];
   }
 }
