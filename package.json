@@ -1,16 +1,16 @@
 {
   "name": "the3dwin-bot",
   "version": "0.0.1",
-  "description": "Bot representing @the3dwin",
+  "description": "Bot representing",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "airtable": "^0.5.3",
+    "airtable": "^0.5.6",
     "apiai": "^4.0.3",
     "express": "^4.16.3",
     "node-fetch": "^2.1.2",
-    "request": "^2.85.0"
+    "request": "^2.87.0"
   },
   "engines": {
     "node": "9.x"

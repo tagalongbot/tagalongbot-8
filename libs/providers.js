@@ -1,4 +1,4 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE } = process.env;
 let { createURL } = require('../libs/helpers');
 let { getTable, getAllDataFromTable, updateTableData } = require('../libs/data');
 
@@ -20,7 +20,7 @@ let searchProviders = async (data, { search_type, active = false }) => {
 	} else if (search_type.toLowerCase() === 'code') {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
 	}
-  
+
   // console.log('Searching Providers:', filterByFormula);
 
   // Concatenating Search Formula
@@ -92,7 +92,7 @@ let createButtons = (provider, data) => {
 let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
-  let image_url = provider['Main Provider Image'][0].url;
+  let image_url = provider['Main Provider Image'] ? provider['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
 
   let provider_name = encodeURIComponent(provider['Practice Name']);
   let provider_base_id = provider['Practice Base ID'];
