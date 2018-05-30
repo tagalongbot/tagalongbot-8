@@ -54,10 +54,10 @@ let createOrUpdateUser = async (user, query) => {
 let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;
 
-  let first_name = query['first name'];
-  let last_name = query['last name'];
+  let first_name = query['first name'] || query['first_name'];
+  let last_name = query['last name'] || query['last_name'];
   let gender = query['gender'];
-	let messenger_user_id = query['messenger user id'];
+	let messenger_user_id = query['messenger user id'] || query['messenger_user_id'];
   let data = { first_name, last_name, gender, messenger_user_id };
 
   let service_name = query['service_name'];
