@@ -1,7 +1,7 @@
 {
-  "name": "the3dwin-bot",
+  "name": "bevlbeauty",
   "version": "0.0.1",
-  "description": "Bot representing",
+  "description": "Bevl Beauty Bot",
   "scripts": {
     "start": "node server.js"
   },
