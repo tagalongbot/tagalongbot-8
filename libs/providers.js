@@ -69,7 +69,7 @@ let createButtons = (provider, data) => {
   if (view_provider_site_url) {
     let btn = {
       title: 'Visit Provider Site',
-      type: 'web',
+      type: 'web_url',
       url: view_provider_site_url,
     }
 
@@ -79,7 +79,7 @@ let createButtons = (provider, data) => {
   if (view_provider_book_url) {
     let btn = {
       title: 'Visit Booking Site',
-      type: 'web',
+      type: 'web_url',
       url: view_provider_book_url,
     }
 
