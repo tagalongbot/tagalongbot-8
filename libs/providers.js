@@ -110,7 +110,7 @@ let createLastGalleryElement = () => {
   let btn1 = {
     title: 'List My Practice',
     type: 'show_block',
-    block_nam: 'List Practice',
+    block_name: 'List Practice',
   }
 
   let btn2 = {

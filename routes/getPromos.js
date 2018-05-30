@@ -10,7 +10,7 @@ let getPromos = async ({ query, params }, res) => {
   let last_name = query['last name'] || query['last_name'];
   let gender = query['gender'];
 	let messenger_user_id = query['messenger user id'] || query['messenger_user_id'];
-  
+
   let service_name = query['service_name'];
 
   let { search_promos_state, search_promos_city, search_promos_zip_code } = query;
