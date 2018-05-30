@@ -56,11 +56,19 @@ let sortProviders = (provider1, provider2) => {
   if (!provider1.fields['Active?']) return 1;
 }
 
-let createButtons = (is_provider_active, is_provider_claimed, data) => {
+let createButtons = (provider, data) => {
+  let is_provider_active = provider['Active?'];
+  let is_provider_claimed = provider['Claimed?'];
   if (is_provider_active) {
-    let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
-    let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
+    let view_provider_site_url = provider['Practice Website'];
+    let view_provider_book_url = provider['Practice Booking URL'];
 
+    let btns = [];
+    
+    if (view_provider_site_url) {
+      
+    }
+    
     let btn1 = {
       title: 'View Services',
       type: 'json_plugin_url',
@@ -97,7 +105,7 @@ let createButtons = (is_provider_active, is_provider_claimed, data) => {
       type: 'json_plugin_url',
       url: already_claimed_url
     }
-    
+  
     return [btn];
   }
 }
@@ -110,8 +118,7 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   let provider_name = encodeURIComponent(provider['Practice Name']);
   let provider_base_id = provider['Practice Base ID'];
   let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
-
-  let buttons = createButtons(provider['Active?'], provider['Claimed?'], data);
+  let buttons = createButtons(provider, data);
 
   let element = { title, subtitle, image_url, buttons };
   return element;
