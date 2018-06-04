@@ -23,7 +23,7 @@ let listProvider = async({ query }, res) => {
       ['messenger user id']: messenger_user_id,
       ['Email Address']: user_email,
     }
-    
+
     let newUser = await createUser(newUserData);
   }
 

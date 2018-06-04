@@ -1,4 +1,4 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
 let { createURL } = require('../libs/helpers');
 let { getTable, getAllDataFromTable, updateTableData } = require('../libs/data');
 
@@ -105,7 +105,8 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 
 let createLastGalleryElement = () => {
   let title = 'More Options';
-
+  let image_url = SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL;
+  
   // Buttons
   let btn1 = {
     title: 'List My Practice',
