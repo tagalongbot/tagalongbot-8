@@ -84,7 +84,7 @@ let claimPromotion = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
-  
+
   let user = await createOrUpdateUser(userData, provider);
 
   // console.log('User:', user);
