@@ -18,6 +18,7 @@ let allUsersTable = getUsersTable(USERS_BASE_ID);
 let getAllUsers = getAllDataFromTable(allUsersTable);
 let updateUserFromAllUsers = updateTableData(allUsersTable);
 
+// Need To Refactor and Break This Function Up
 let createOrUpdateUser = async ({ messenger_user_id, first_name, last_name, gender, user_email, provider_base_id }, provider) => {
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
@@ -61,6 +62,7 @@ let askForUserEmail = async ({ query }, res) => {
   res.send({ redirect_to_blocks, set_attributes });
 }
 
+// Need To Refactor and Break This Function Up
 let claimPromotion = async ({ query }, res) => {
   let { promo_id, provider_id, gender, user_email } = query;
   let messenger_user_id = query['messenger user id'];
