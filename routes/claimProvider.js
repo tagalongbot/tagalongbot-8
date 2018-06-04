@@ -1,11 +1,11 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
-let { createButtonMessage, createTextMessage } = require('../libs/bots');
+let { createButtonMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 
 let express = require('express');
 let router = express.Router();
 
-let { getTable, findTableData, createTableData, updateTableData } = require('../libs/data');
+let { getTable, findTableData, updateTableData } = require('../libs/data');
 
 let getPracticesTable = getTable('Practices');
 
@@ -28,6 +28,12 @@ let claimProvider = async ({ query }, res) => {
   let last_name = query['last name'];
 
   let provider = await findPractice(provider_id);
+
+  if (!provider) {
+    let redirect_to_blocks = ['(Claim) Provider Not Available'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
 
   let updatePracticeData = {
     'Claimed?': true,
