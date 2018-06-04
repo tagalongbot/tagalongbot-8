@@ -106,7 +106,7 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
 let createLastGalleryElement = () => {
   let title = 'More Options';
   let image_url = SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL;
-  
+
   // Buttons
   let btn1 = {
     title: 'List My Practice',
