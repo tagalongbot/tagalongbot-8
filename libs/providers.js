@@ -21,8 +21,6 @@ let searchProviders = async (data, { search_type, active = false }) => {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toLowerCase()}'`;
 	}
 
-  // console.log('Searching Providers:', filterByFormula);
-
   // Concatenating Search Formula
   if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
 	let providers = await getPractices({ filterByFormula });
@@ -60,7 +58,49 @@ let createButtons = (provider, data) => {
   let is_provider_active = provider['Active?'];
   let is_provider_claimed = provider['Claimed?'];
 
-  
+  if (is_provider_active) {
+    let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
+    let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
+
+    let btn1 = {
+      title: 'View Services',
+      type: 'json_plugin_url',
+      url: view_services_btn_url,
+    }
+
+    let btn2 = {
+      title: 'View Promos',
+      type: 'json_plugin_url',
+      url: view_promos_btn_url,
+    }
+
+    return [btn1, btn2];
+  }
+
+  if (!is_provider_claimed) {
+    let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
+
+    let btn = {
+      title: 'Claim Practice',
+      type: 'json_plugin_url',
+      url: claim_practice_url
+    }
+
+    return [btn];
+  }
+
+  if (is_provider_claimed && !is_provider_active) {
+    let { messenger_user_id } = data;
+    let already_claimed_url = createURL(`${BASEURL}/provider/claimed`, { messenger_user_id });
+
+    let btn = {
+      title: 'Already Claimed',
+      type: 'json_plugin_url',
+      url: already_claimed_url
+    }
+    
+    return [btn];
+  }
 }
 
 // Booking Site and Site URL Only

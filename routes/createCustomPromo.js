@@ -11,18 +11,18 @@ let createCustomPromo = async ({ query }, res) => {
 
   let messenger_user_id = query['messenger user id'];
   let provider = await getProviderByUserID(messenger_user_id);
-  
+
   let provider_base_id = provider.fields['Practice Base ID'];
   let promosTable = getPromosTable(provider_base_id);
   let createPromo = createTableData(promosTable);
 
-  new_promo_expiration_date = new Date(new_promo_expiration_date);
+  let expiration_date = new Date(new_promo_expiration_date);
 
   let promoData = {
     ['Promotion Name']: new_promo_name,
     ['Active?']: true,
-    ['Terms']: `Valid Until ${localizeDate(new_promo_expiration_date)}`,
-    ['Expiration Date']: new_promo_expiration_date,
+    ['Terms']: `Valid Until ${localizeDate(expiration_date)}`,
+    ['Expiration Date']: expiration_date,
     ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),
     ['Total Claim Count']: 0,
