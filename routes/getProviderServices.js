@@ -48,11 +48,11 @@ let getProviderListOfServices = async ({ query }, res) => {
     return;
   }
 
-  let txtMsg = `Here are the ser`;
-  
+  let text = `Here are the services provided by ${provider.fields['Practice Name']}`;
+
   let servicesGalleryData = servicesFromProvider.slice(0, 9).map(toGalleryElement(data));
   let servicesGallery = createGallery(servicesGalleryData);
-  let messages = [servicesGallery];
+  let messages = [{ text }, servicesGallery];
   res.send({ messages });
 }
 

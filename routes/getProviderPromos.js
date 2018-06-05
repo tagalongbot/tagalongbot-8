@@ -8,7 +8,7 @@ let getPromosTable = getTable('Promos');
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
   let subtitle = promo['Terms'];
-  let image_url = promo['Image'][0].url;
+  let image_url = promo['Image URL'];
 
   let promo_details_btn_url = createURL(`${BASEURL}/promo/details`, { promo_id, ...data });
 
