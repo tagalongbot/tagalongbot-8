@@ -59,36 +59,11 @@ let sortProviders = (provider1, provider2) => {
 let createButtons = (provider, data) => {
   let is_provider_active = provider['Active?'];
   let is_provider_claimed = provider['Claimed?'];
-  // We're currently not showing unclaimed practices in the bot by passing `{ active: true }` to `searchProviders`
 
-  let view_provider_site_url = provider['Practice Website'];
-  let view_provider_book_url = provider['Practice Booking URL'];
-
-  let btns = [];
-
-  if (view_provider_site_url) {
-    let btn = {
-      title: 'Visit Provider Site',
-      type: 'web_url',
-      url: view_provider_site_url,
-    }
-
-    btns.push(btn);
-  }
-
-  if (view_provider_book_url) {
-    let btn = {
-      title: 'Visit Booking Site',
-      type: 'web_url',
-      url: view_provider_book_url,
-    }
-
-    btns.push(btn);
-  }
-
-  return btns;
+  
 }
 
+// Booking Site and Site URL Only
 let createButtons2 = (provider, data) => {
   let is_provider_active = provider['Active?'];
   let is_provider_claimed = provider['Claimed?'];

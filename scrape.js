@@ -16,5 +16,24 @@ if (is_provider_active) {
     url: view_promos_btn_url,
   }
 
-    
-  return [btn1, btn2];
+  if (!is_provider_claimed) {
+    let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
+
+    let btn = {
+      title: 'Claim Practice',
+      type: 'json_plugin_url',
+      url: claim_practice_url
+    }
+  }
+
+  if (is_provider_claimed && !is_provider_active) {
+    let { messenger_user_id } = data;
+    let already_claimed_url = createURL(`${BASEURL}/provider/claimed`, { messenger_user_id });
+
+    let btn = {
+      title: 'Already Claimed',
+      type: 'json_plugin_url',
+      url: already_claimed_url
+    }
+  }
+}
