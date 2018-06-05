@@ -89,6 +89,39 @@ let createButtons = (provider, data) => {
   return btns;
 }
 
+let createButtons2 = (provider, data) => {
+  let is_provider_active = provider['Active?'];
+  let is_provider_claimed = provider['Claimed?'];
+  // We're currently not showing unclaimed practices in the bot by passing `{ active: true }` to `searchProviders`
+
+  let view_provider_site_url = provider['Practice Website'];
+  let view_provider_book_url = provider['Practice Booking URL'];
+
+  let btns = [];
+
+  if (view_provider_site_url) {
+    let btn = {
+      title: 'Visit Provider Site',
+      type: 'web_url',
+      url: view_provider_site_url,
+    }
+
+    btns.push(btn);
+  }
+
+  if (view_provider_book_url) {
+    let btn = {
+      title: 'Visit Booking Site',
+      type: 'web_url',
+      url: view_provider_book_url,
+    }
+
+    btns.push(btn);
+  }
+
+  return btns;
+}
+
 let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
