@@ -69,7 +69,6 @@ let claimPromotion = async ({ query }, res) => {
   let first_name = query['first name'];
   let last_name = query['last name'];
 
-  // console.log('Query:', query);
   let provider = await findPractice(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
@@ -89,7 +88,6 @@ let claimPromotion = async ({ query }, res) => {
 
   let user = await createOrUpdateUser(userData, provider);
 
-  // console.log('User:', user);
   let claimed_by_users = promo.fields['Claimed By Users'];
   if (claimed_by_users && claimed_by_users.includes(user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];
