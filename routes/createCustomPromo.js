@@ -30,7 +30,7 @@ let createCustomPromo = async ({ query }, res) => {
   }
 
   let newPromo = await createPromo(promoData);
-  let redirect_to_blocks = ['New Manufactured Promo Created'];
+  let redirect_to_blocks = ['New Custom Promo Created'];
   res.send({ redirect_to_blocks });
 }
 

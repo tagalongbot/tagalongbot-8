@@ -24,7 +24,7 @@ let createViewProviderPromosMsg = (service, data) => {
 
   let txtMsg = createButtonMessage(
     service.fields['Long Description'].slice(0, 640),
-    `View Provider Promos|json_plugin_url|${view_provider_promos}`
+    `View Promos|json_plugin_url|${view_provider_promos}`
   );
 
   return [txtMsg];
