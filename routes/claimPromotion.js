@@ -97,6 +97,7 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
+  // Refactor this clusterfuck
   let claimed_users = [...new Set([user.id, ...(claimed_by_users || [])])];
 
   let updatePromoData = {
