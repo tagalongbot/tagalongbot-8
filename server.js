@@ -27,6 +27,7 @@ let togglePromo = require('./routes/togglePromo');
 // Services
 let getServices = require('./routes/getServices');
 let getServiceDescription = require('./routes/getServiceDescription');
+let getServiceProviderPromos = require('./routes/getServiceProviderPromos');
 let getServiceProviders = require('./routes/getServiceProviders');
 
 // ROUTES CONFIGURATION
@@ -56,6 +57,7 @@ app.get('/promo/toggle', togglePromo);
 // Services
 app.get('/search/services/:service_type', getServices);
 app.get('/service/description/:show_providers', getServiceDescription);
+app.use('/service/provider/promos', getServiceProviderPromos);
 app.use('/service', getServiceProviders);
 
 app.listen(3000, () => console.log('Running on PORT 3000'));

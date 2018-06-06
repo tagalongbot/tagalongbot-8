@@ -30,10 +30,10 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   return element;
 }
 
-let getProviderListOfServices = async ({ query }, res) => {
+let getProviderServices = async ({ query }, res) => {
   let { provider_id, provider_name } = query;
   let { messenger_user_id, first_name, last_name, gender } = query;
-  let data = { messenger_user_id, first_name, last_name, gender, provider_name };
+  let data = { messenger_user_id, first_name, last_name, gender, provider_id, provider_name };
 
   let provider = await findPractice(provider_id);
   let services = await getServices();
@@ -56,4 +56,4 @@ let getProviderListOfServices = async ({ query }, res) => {
   res.send({ messages });
 }
 
-module.exports = getProviderListOfServices;
+module.exports = getProviderServices;
