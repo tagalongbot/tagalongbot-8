@@ -33,10 +33,11 @@ let createPromoValidMsg = ({ promo, query }) => {
 
 let createPromoInvalidMsg = ({ query }) => {
   let first_name = query['first name'];
-  
+
   let msg = createButtonMessage(
     `Sorry ${first_name} this promo does not exist (Invalid Promo Code)`,
-    ``,
+    `Try Again|show_block|Verify Promotion`,
+    `Admin Menu|show_block|Get Admin Menu`
   );
   
   return [msg];
@@ -48,7 +49,7 @@ let verifyPromo = async ({ query }, res) => {
 
   let provider = await getProviderByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];
-  
+
   let promo = await getPromo({ provider_base_id, promo_id });
 
   let messages = (promo) ? createPromoValidMsg({ promo, query }) : createPromoInvalidMsg({ query });
