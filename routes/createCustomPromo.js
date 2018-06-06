@@ -20,6 +20,7 @@ let createCustomPromo = async ({ query }, res) => {
 
   let promoData = {
     ['Promotion Name']: new_promo_name,
+    ['Type']: 'CUSTOM',
     ['Active?']: true,
     ['Terms']: `Valid Until ${localizeDate(expiration_date)}`,
     ['Expiration Date']: expiration_date,
