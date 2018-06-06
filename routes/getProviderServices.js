@@ -33,9 +33,9 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
 let getProviderServices = async ({ query }, res) => {
   let { provider_id, provider_name } = query;
   let { messenger_user_id, first_name, last_name, gender } = query;
-  let data = { messenger_user_id, first_name, last_name, gender, provider_id, provider_name };
 
   let provider = await findPractice(provider_id);
+  let provider_base_id = provider.fields['Base ID'];
   let services = await getServices();
 
   let servicesFromProvider = services.filter((service) => {
@@ -50,6 +50,7 @@ let getProviderServices = async ({ query }, res) => {
 
   let text = `Here are the services provided by ${provider.fields['Practice Name']}`;
 
+  let data = { messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id, provider_name };
   let servicesGalleryData = servicesFromProvider.slice(0, 9).map(toGalleryElement(data));
   let servicesGallery = createGallery(servicesGalleryData);
   let messages = [{ text }, servicesGallery];
