@@ -15,7 +15,7 @@ let getPromosTable = getTable('Promos');
 let express = require('express');
 let router = express.Router();
 
-let getServices = async (provider) => {
+let getProviderServices = async (provider) => {
   let view = 'Main View';
   let services = await getServicesFromTable({ view });
 
@@ -59,9 +59,9 @@ let sendManufacturedPromotions = async ({ query }, res) => {
   let provider_base_id = provider.fields['Practice Base ID'];
   let provider_id = provider.id;
 
-  let services_promos = await getServices(provider);
+  let provider_services = await getProviderServices(provider);
 
-  let services_with_promos = services_promos.filter((service) => {
+  let services_with_promos = provider_services.filter((service) => {
     let promos_count = getServicePromosCount(service.fields);
     return promos_count > 0;
   });

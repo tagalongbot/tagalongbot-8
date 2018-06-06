@@ -5,7 +5,7 @@ let getPromosTable = getTable('Promos');
 let getPromos = async ({ service_name, provider_base_id }) => {
   let promosTable = getPromosTable(provider_base_id);
   let view = 'Active Promos';
-  let filterByFormula = `{Type} = ''`;
+  let filterByFormula = `{Type} = '${service_name.toLowerCase()}'`;
   let promos = await getAllDataFromTable({ view, filterByFormula });
   return promos;
 }
