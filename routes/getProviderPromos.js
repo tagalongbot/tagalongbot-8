@@ -12,13 +12,13 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   let promo_details_btn_url = createURL(`${BASEURL}/promo/details`, { promo_id, ...data });
 
-  let btn1 = {
+  let btn = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
     url: promo_details_btn_url,
   }
 
-  let buttons = [btn1];
+  let buttons = [btn];
 
   let element = { title, subtitle, image_url, buttons };
   return element;
@@ -34,8 +34,7 @@ let searchPromos = async (provider_base_id) => {
 }
 
 let getProviderPromos = async ({ query }, res) => {
-  let { provider_id, provider_base_id, provider_name, first_name, last_name, gender1, messenger_user_id } = query;
-  let data = { provider_id, provider_base_id, first_name, last_name, gender: gender1, messenger_user_id };
+  let { provider_id, provider_base_id, first_name, last_name, gender1, messenger_user_id } = query;
   let promos = await searchPromos(provider_base_id);  
 
   if (!promos[0]) {
@@ -44,6 +43,7 @@ let getProviderPromos = async ({ query }, res) => {
     return;
   }
 
+  let data = { provider_id, provider_base_id, first_name, last_name, gender: gender1, messenger_user_id };
   let promosGalleryData = promos.map(toGalleryElement(data)).slice(0, 5);
   let servicesGallery = createGallery(promosGalleryData);
   let messages = [servicesGallery];

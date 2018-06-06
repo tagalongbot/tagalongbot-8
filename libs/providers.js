@@ -142,9 +142,8 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
   let image_url = provider['Main Provider Image'] ? provider['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
 
-  let provider_name = encodeURIComponent(provider['Practice Name']);
   let provider_base_id = provider['Practice Base ID'];
-  let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
+  let data = { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id };
   let buttons = createButtons(provider, data);
 
   let element = { title, subtitle, image_url, buttons };

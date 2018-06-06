@@ -15,9 +15,8 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   let image_url = provider['Main Provider Image'][0].url;
 
   let provider_base_id = provider['Practice Base ID'];
-  let provider_name = encodeURIComponent(provider['Practice Name']);
 
-  let data = { provider_id, provider_base_id, provider_name, first_name, last_name, gender, messenger_user_id };
+  let data = { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id };
   let promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
   let services_btn_url = createURL(`${BASEURL}/provider/services`, data);
 

@@ -31,11 +31,12 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
 }
 
 let getProviderServices = async ({ query }, res) => {
-  let { provider_id, provider_name } = query;
+  let { provider_id } = query;
   let { messenger_user_id, first_name, last_name, gender } = query;
 
   let provider = await findPractice(provider_id);
-  let provider_base_id = provider.fields['Base ID'];
+  let provider_name = provider.fields['Practice Name'];
+  let provider_base_id = provider.fields['Practice Base ID'];
   let services = await getServices();
 
   let servicesFromProvider = services.filter((service) => {
