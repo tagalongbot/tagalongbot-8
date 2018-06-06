@@ -1,4 +1,6 @@
-let { PRACTICE_DATABASE_BASE_ID } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
+let { createButtonMessage } = require('../libs/bots');
+let { createURL } = require('../libs/helpers');
 let { getProviderByUserID } = require('../libs/provider');
 
 let { getTable, findTableData } = require('../libs/data');
@@ -15,12 +17,29 @@ let getPromo = async ({ provider_base_id, promo_id }) => {
   return promo;
 }
 
-let createPromoValidMsg = () => {
-  
+let createPromoValidMsg = ({ promo, query }) => {
+  let first_name = query['first name'];
+  let promo_id = promo.id;
+  let update_promo_url = createURL(`${BASEURL}/promo/verify/update`, { promo_id });
+
+  let msg = createButtonMessage(
+    `${first_name} this is a valid promo, would you like to update this promo as used`,
+    `Update Promo As Used|json_plugin_url|${update_promo_url}`,
+    `Admin Menu|show_block|Get Admin Menu`
+  );
+
+  return [msg];
 }
 
-let createPromoInvalidMsg = () => {
-
+let createPromoInvalidMsg = ({ query }) => {
+  let first_name = query['first name'];
+  
+  let msg = createButtonMessage(
+    `Sorry ${first_name} this promo does not exist (Invalid Promo Code)`,
+    ``,
+  );
+  
+  return [msg];
 }
 
 let verifyPromo = async ({ query }, res) => {
@@ -32,7 +51,7 @@ let verifyPromo = async ({ query }, res) => {
   
   let promo = await getPromo({ provider_base_id, promo_id });
 
-  let messages = (promo) ? createPromoValidMsg(promo) : createPromoInvalidMsg();
+  let messages = (promo) ? createPromoValidMsg({ promo, query }) : createPromoInvalidMsg({ query });
   res.send({ messages });
 }
 
