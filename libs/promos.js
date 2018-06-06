@@ -21,13 +21,12 @@ let searchPromotionsByLocation = async (data, { search_type, service_name }) => 
 
   let promotions = [];
   let view = 'Active Promos';
-  let filterByFormula = `NOT({Claim Limit Reached})`;
 
   for (let [index, baseID] of providersBaseIDs.entries()) {
     if (!baseID) continue;
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
-    let promos = await getPromos({ view, filterByFormula });
+    let promos = await getPromos({ view });
 
     if (service_name) promos = promos.filter(promo => promo.fields['Type'].toLowerCase().includes(service_name.toLowerCase()));
     let provider_id = providers[index].id;

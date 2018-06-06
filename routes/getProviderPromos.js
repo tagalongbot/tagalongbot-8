@@ -29,8 +29,7 @@ let searchPromos = async (provider_base_id) => {
   let getPromos = getAllDataFromTable(promosTable);
 
   let view = 'Active Promos';
-  let filterByFormula = `NOT({Claim Limit Reached})`;
-  let promos = await getPromos({ view, filterByFormula });
+  let promos = await getPromos({ view });
   return promos;
 }
 
