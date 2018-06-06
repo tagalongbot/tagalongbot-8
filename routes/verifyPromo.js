@@ -17,10 +17,10 @@ let getPromo = async ({ provider_base_id, promo_id }) => {
   return promo;
 }
 
-let createPromoValidMsg = ({ promo, query }) => {
+let createPromoValidMsg = ({ promo, provider_base_id, query }) => {
   let first_name = query['first name'];
   let promo_id = promo.id;
-  let update_promo_url = createURL(`${BASEURL}/promo/verify/update`, { promo_id });
+  let update_promo_url = createURL(`${BASEURL}/promo/verify/get_user_id`, { provider_base_id, promo_id });
 
   let msg = createButtonMessage(
     `${first_name} this is a valid promo, would you like to update this promo as used`,
@@ -52,7 +52,7 @@ let verifyPromo = async ({ query }, res) => {
 
   let promo = await getPromo({ provider_base_id, promo_id });
 
-  let messages = (promo) ? createPromoValidMsg({ promo, query }) : createPromoInvalidMsg({ query });
+  let messages = (promo) ? createPromoValidMsg({ promo, provider_base_id, query }) : createPromoInvalidMsg({ query });
   res.send({ messages });
 }
 
