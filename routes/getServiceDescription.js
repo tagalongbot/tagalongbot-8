@@ -18,9 +18,9 @@ let createFindProvidersMsg = (service) => {
   return [txtMsg];
 }
 
-let createViewProviderPromosMsg = ({ service, provider_id, provider_base_id }) => {
+let createViewProviderPromosMsg = (service, data) => {
   let service_name = service.fields['Name'];
-  let view_provider_promos = createURL(`${BASEURL}/service/provider/promos`, { service_name, provider_id, provider_base_id });
+  let view_provider_promos = createURL(`${BASEURL}/service/provider/promos`, data);
 
   let txtMsg = createButtonMessage(
     service.fields['Long Description'].slice(0, 640),
@@ -36,7 +36,7 @@ let getServiceDescription = async ({ query, params }, res) => {
 
   let service = await findService(service_id);
 
-  let messages = (show_providers === 'no') ? createViewProviderPromosMsg({ service, provider_id, provider_base_id }) : createFindProvidersMsg(service);
+  let messages = (show_providers === 'no') ? createViewProviderPromosMsg(service, query) : createFindProvidersMsg(service);
   res.send({ messages });
 }
 

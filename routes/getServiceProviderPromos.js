@@ -19,7 +19,7 @@ let getServiceProviderPromos = async ({ query }, res) => {
   let { service_name, provider_base_id } = query;
 
   let promos = await getPromos({ service_name, provider_base_id });
-  let galleryData = promos.map(toGalleryElement({ provider_base_id }));
+  let galleryData = promos.map(toGalleryElement(query));
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
 }
