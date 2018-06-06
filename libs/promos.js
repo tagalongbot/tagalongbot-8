@@ -20,13 +20,14 @@ let searchPromotionsByLocation = async (data, { search_type, service_name }) => 
   let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
 
   let promotions = [];
-  let filterByFormula = `AND({Active?}, NOT({Claim Limit Reached}))`;
+  let view = 'Active Promos';
+  let filterByFormula = `NOT({Claim Limit Reached})`;
 
   for (let [index, baseID] of providersBaseIDs.entries()) {
     if (!baseID) continue;
     let promosTable = getPromosTable(baseID);
     let getPromos = getAllDataFromTable(promosTable);
-    let promos = await getPromos({ filterByFormula });
+    let promos = await getPromos({ view, filterByFormula });
 
     if (service_name) promos = promos.filter(promo => promo.fields['Type'].toLowerCase().includes(service_name.toLowerCase()));
     let provider_id = providers[index].id;
@@ -34,8 +35,6 @@ let searchPromotionsByLocation = async (data, { search_type, service_name }) => 
     promotions = promotions.concat({ provider_id, provider_base_id, promos });
   }
 
-  // Need for searching with By Expiration Date
-  // console.log('All Promos', promotions);
   return promotions;
 }
 
