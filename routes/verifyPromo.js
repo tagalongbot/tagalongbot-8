@@ -23,7 +23,7 @@ let createPromoValidMsg = ({ promo, provider_base_id, query }) => {
   let update_promo_url = createURL(`${BASEURL}/promo/verify/get_user_id`, { provider_base_id, promo_id });
 
   let msg = createButtonMessage(
-    `${first_name} this is a valid promo, would you like to update this promo as used`,
+    `${first_name} this is a valid promo, would you like to mark this promo as used`,
     `Update Promo As Used|json_plugin_url|${update_promo_url}`,
     `Admin Menu|show_block|Get Admin Menu`
   );
