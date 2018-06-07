@@ -46,7 +46,7 @@ let toGalleryElement = ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
   let subtitle = `Promo Expires On ${promo['Expiration Date']}`;
   let image_url = promo['Image URL'];
-  
+
   let get_promo_id_url = createURL(`${BASEURL}`);
   let view_promo_provider_url = createURL(`${BASEURL}`);
 
@@ -71,9 +71,9 @@ let viewClaimedPromos = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
 
   let user = await getUserByMessengerID(messenger_user_id);
-  
+
   let practice_base_ids = user.fields['Practices Claimed Promos From'].split(',');
-  
+
   let promos = Promise.all(
     practice_base_ids.map(getUserPromos(messenger_user_id))
   );
