@@ -59,10 +59,14 @@ let verifyPromo = async ({ query }, res) => {
   }
 
   if (promo.fields['Total Used'] >= promo.fields['Total Claim Count']) {
-    
+    let redirect_to_users = ['[Admin Verify Promo] Used Limit Reached'];
+    let promo_claim_limit = promo.fields['Total Claim Count'];
+    let set_attributes = { promo_claim_limit };
+    res.send({ redirect_to_users });
+    return;
   }
 
-  let messages = (promo) ? createPromoValidMsg({ promo, provider_base_id, query }) : createPromoInvalidMsg({ query });
+  let messages = createPromoValidMsg({ promo, provider_base_id, query });
   res.send({ messages });
 }
 
