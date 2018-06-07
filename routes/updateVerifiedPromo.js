@@ -17,12 +17,21 @@ let getPromo = async ({ provider_base_id, promo_id }) => {
   return promo;
 }
 
-let updatePromo = async ({ provider_base_id, promo }) => {
+let updatePromo = async ({ provider_base_id, promo, user_id }) => {
   let promosTable = getPromosTable(provider_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
+
+  let already_used_user_ids = promo.fields['Promo Used By Users'];
+
+  let new_used_user_ids = [
+    ...new Set([user_id, ...already_used_user_ids])
+  ];
+
+  let updateData = {
+    ['Promo Used By Users']: new_used_user_ids
+  }
   
   
-  let updateData = {};
   
   let updatedPromo = await updatePromoFromTable(updateData, promo);
   return updatedPromo;
@@ -46,13 +55,13 @@ let createUpdateMsg = async () => {
 
 let updateVerifiedPromo = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
-  let promo_id = query['promo_id'];
+  let { promo_id, user_id } = query;
 
   let provider = await getProviderByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let promo = await getPromo({ provider_base_id, promo_id });
-  let updatedPromo = await updatePromo({ provider_base_id, promo });
+  let updatedPromo = await updatePromo({ provider_base_id, promo, user_id });
 
   let messages = createUpdateMsg();
   res.send({ messages });
