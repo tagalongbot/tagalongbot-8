@@ -42,13 +42,13 @@ let getUserPromos = (messenger_user_id) => async (practice_base_id) => {
   return user_promos;
 }
 
-let toGalleryElement = ({ id: promo_id, fields: promo }) => {
+let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
   let subtitle = `Promo Expires On ${promo['Expiration Date']}`;
   let image_url = promo['Image URL'];
 
-  let get_promo_id_url = createURL(`${BASEURL}`);
-  let view_promo_provider_url = createURL(`${BASEURL}`);
+  let get_promo_id_url = createURL(`${BASEURL}`, { promo_id, ...data });
+  let view_promo_provider_url = createURL(`${BASEURL}`, { promo_id, ...data });
 
   let btn1 = {
     title: 'Get Promo ID',
@@ -69,16 +69,20 @@ let toGalleryElement = ({ id: promo_id, fields: promo }) => {
 
 let viewClaimedPromos = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
+  let first_name = query['first name'];
+  let last_name = query['last name'];
+  let gender1 = query['gender'];
+  let data = { first_name, last_name, gender1, messenger_user_id };
 
   let user = await getUserByMessengerID(messenger_user_id);
 
-  let practice_base_ids = user.fields['Practices Claimed Promos From'].split(',');
+  let practice_ids = user.fields['Practices Claimed Promos From'].split(',');
 
   let promos = Promise.all(
-    practice_base_ids.map(getUserPromos(messenger_user_id))
+    practice_ids.map(getUserPromos(messenger_user_id))
   );
 
-  let galleryData = promos.map(toGalleryElement);
+  let galleryData = promos.map(toGalleryElement(data));
 
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
