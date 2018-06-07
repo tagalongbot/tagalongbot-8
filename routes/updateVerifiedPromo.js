@@ -9,6 +9,14 @@ let getPracticesTable = getTable('Practices');
 let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
 let findPractice = findTableData(practicesTable);
 let getPromosTable = getTable('Promos');
+let getUsersTable = getTable('Customers');
+
+let getUser = async ({ provider_base_id, user_id }) => {
+  let customersTable = getUsersTable(provider_base_id); 
+  let findCustomer = findTableData(customersTable);
+  let customer = await findCustomer(user_id);
+  return customer;
+}
 
 let getPromo = async ({ provider_base_id, promo_id }) => {
   let promosTable = getPromosTable(provider_base_id);
@@ -53,6 +61,16 @@ let createUpdateMsg = async () => {
   return [msg];
 }
 
+let createUserAlreadyUsedMsg = async ({ provider_base_id, user_id }) => {
+  let user = await getUser({ provider_base_id, user_id });  
+  let user_name = user.fields['First Name'];
+
+  let set_attributes = { user_name };
+  let redirect_to_blocks = ['User Already Used Promo'];
+
+  return { set_attributes, redirect_to_blocks };
+}
+
 let updateVerifiedPromo = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
   let { promo_id, user_id } = query;
@@ -65,7 +83,9 @@ let updateVerifiedPromo = async ({ query }, res) => {
   let user_ids = promo.fields['Promo Used By Users'];
 
   if (user_ids.includes(user_id)) {
-    
+    let msg = createUserAlreadyUsedMsg({ provider_base_id, user_id });
+    res.send(msg);
+    return;
   }
 
   let updatedPromo = await updatePromo({ provider_base_id, promo, user_id });
