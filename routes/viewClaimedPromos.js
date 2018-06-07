@@ -1,16 +1,19 @@
-let { BASEURL, USERS_BASE_ID } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID } = process.env;
 
-let { createURL } = require('../libs/helpers');
+let { createURL, flattenArray } = require('../libs/helpers');
 let { createMultiGallery } = require('../libs/bots');
-let { getTable, getDataFromTable, getAllDataFromTable } = require('../libs/data');
+let { getTable, getDataFromTable, getAllDataFromTable, findTableData } = require('../libs/data');
 
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
+let getPracticesTable = getTable('Practices');
+let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
+let findProvider = findTableData(practicesTable);
 
 let { getUserByMessengerID } = require('../libs/users');
 
-let getUserFromPracticeBase = async ({ practice_base_id, messenger_user_id }) => {
-  let usersTable = getUsersTable(practice_base_id);
+let getUserFromPracticeBase = async ({ provider_base_id, messenger_user_id }) => {
+  let usersTable = getUsersTable(provider_base_id);
   let getUsers = getDataFromTable(usersTable);
 
   let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
@@ -19,8 +22,8 @@ let getUserFromPracticeBase = async ({ practice_base_id, messenger_user_id }) =>
   return user;
 }
 
-let getPromosFromPracticeBase = async ({ practice_base_id }) => {
-  let promosTable = getPromosTable(practice_base_id);
+let getPromosFromPracticeBase = async ({ provider_base_id }) => {
+  let promosTable = getPromosTable(provider_base_id);
   let getPromos = getAllDataFromTable(promosTable);
 
   let view = 'Active Promos';
@@ -29,9 +32,12 @@ let getPromosFromPracticeBase = async ({ practice_base_id }) => {
   return promos;
 }
 
-let getUserPromos = (messenger_user_id) => async (practice_base_id) => {
-  let user = getUserFromPracticeBase({ practice_base_id, messenger_user_id });
-  let promos = getPromosFromPracticeBase({ practice_base_id, messenger_user_id });
+let getUserPromos = ({ messenger_user_id, data }) => async (provider_id) => {
+  let provider = await findProvider(provider_id);
+  let provider_base_id = provider.fields['Practice Base ID'];
+
+  let user = getUserFromPracticeBase({ provider_base_id, messenger_user_id });
+  let promos = getPromosFromPracticeBase({ provider_base_id, messenger_user_id });
   
   let promo_ids = user.fields['Promos Claimed'];
 
@@ -39,7 +45,7 @@ let getUserPromos = (messenger_user_id) => async (practice_base_id) => {
     promo => promo_ids.includes(promo.id)
   );
   
-  return user_promos;
+  return user_promos.map(toGalleryElement({ provider_id, provider_base_id, ...data }));
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
@@ -78,11 +84,13 @@ let viewClaimedPromos = async ({ query }, res) => {
 
   let practice_ids = user.fields['Practices Claimed Promos From'].split(',');
 
-  let promos = Promise.all(
-    practice_ids.map(getUserPromos(messenger_user_id))
+  let promos = practice_ids.map(
+    getUserPromos({ messenger_user_id, data })
   );
 
-  let galleryData = promos.map(toGalleryElement(data));
+  let galleryData = flattenArray(
+    Promise.all(promos)
+  );
 
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
