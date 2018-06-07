@@ -51,7 +51,7 @@ let verifyPromo = async ({ query }, res) => {
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let promo = await getPromo({ provider_base_id, promo_id });
-
+  
   let messages = (promo) ? createPromoValidMsg({ promo, provider_base_id, query }) : createPromoInvalidMsg({ query });
   res.send({ messages });
 }
