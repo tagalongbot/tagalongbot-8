@@ -61,13 +61,10 @@ let createUpdateMsg = async () => {
   return [msg];
 }
 
-let createUserAlreadyUsedMsg = async ({ provider_base_id, user_id }) => {
-  let user = await getUser({ provider_base_id, user_id });  
+let createUserAlreadyUsedMsg = async ({ provider_base_id, user }) => {
   let user_name = user.fields['First Name'];
-
   let set_attributes = { user_name };
   let redirect_to_blocks = ['User Already Used Promo'];
-
   return { set_attributes, redirect_to_blocks };
 }
 
@@ -79,6 +76,7 @@ let updateVerifiedPromo = async ({ query }, res) => {
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let promo = await getPromo({ provider_base_id, promo_id });
+  let user = await getUser({ provider_base_id, user_id });
 
   let user_ids = promo.fields['Promo Used By Users'];
 
