@@ -21,7 +21,7 @@ let updatePromo = async ({ provider_base_id, promo }) => {
   let promosTable = getPromosTable(provider_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
   
-
+  
   let updateData = {};
   
   let updatedPromo = await updatePromoFromTable(updateData, promo);
@@ -52,9 +52,8 @@ let updateVerifiedPromo = async ({ query }, res) => {
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let promo = await getPromo({ provider_base_id, promo_id });
-  
   let updatedPromo = await updatePromo({ provider_base_id, promo });
-  
+
   let messages = createUpdateMsg();
   res.send({ messages });
 }

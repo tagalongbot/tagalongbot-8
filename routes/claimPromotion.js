@@ -88,15 +88,16 @@ let claimPromotion = async ({ query }, res) => {
 
   let user = await createOrUpdateUser(userData, provider);
 
-  let claimed_by_users = promo.fields['Claimed By Users'];
-  if (claimed_by_users && claimed_by_users.includes(user.id)) {
+  let claimed_by_users = promo.fields['Claimed By Users'] || [];
+  if (claimed_by_users.includes(user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  // Refactor this clusterfuck
-  let claimed_users = [...new Set([user.id, ...(claimed_by_users || [])])];
+  let claimed_users = [
+    ...new Set([user.id, ...claimed_by_users])
+  ];
 
   let updatePromoData = {
     'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
