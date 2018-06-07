@@ -1,4 +1,4 @@
-let { USERS_BASE_ID } = process.env;
+let { BASEURL, USERS_BASE_ID } = process.env;
 
 let { createURL } = require('../libs/helpers');
 let { createMultiGallery } = require('../libs/bots');
@@ -39,32 +39,32 @@ let getUserPromos = (messenger_user_id) => async (practice_base_id) => {
     promo => promo_ids.includes(promo.id)
   );
   
-  r
+  return user_promos;
+}
+
+let toGalleryElement = ({ id: promo_id, fields: promo }) => {
+  let title = promo['Promotion Name'];
+  let subtitle = `Promo Expires On ${promo['Expiration Date']}`;
+  let image_url = promo['Image URL'];
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  let get_promo_id_url = createURL(`${BASEURL}`);
+  let view_promo_provider_url = createURL(`${BASEURL}`);
+
+  let btn1 = {
+    title: 'Get Promo ID',
+    type: 'json_plugin_url',
+    url: get_promo_id_url
+  }
+
+  let btn2 = {
+    title: 'View Promo Provider',
+    type: 'json_plugin_url',
+    url: view_promo_provider_url
+  }
+
+  let buttons = [btn1, btn2];
+
+  return { title, subtitle, image_url, buttons };
 }
 
 let viewClaimedPromos = async ({ query }, res) => {
