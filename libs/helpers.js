@@ -1,3 +1,7 @@
+let fs = require('fs');
+let { promisify } = require('util');
+let appendFile = promisify(fs.appendFile);
+
 let createURL = (url, obj = {}) => {
 	return Object.keys(obj).reduce(function(query, key, index) {
 		if (index === 0) query += '?';
@@ -48,6 +52,32 @@ let localizeDate = (date) => {
   return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 }
 
+let flattenArray = (arr) => {
+  return [].concat.apply([], arr);
+}
+
+let flattenDeepArray = (x) => {
+  return Array.isArray(x) ? [].concat(...x.map(flattenDeepArray)) : x;
+}
+
+let timeout = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+let logError = async (error) => {
+  let path = '.data/errors.txt';
+  let date = new Date();
+  let new_error = `\nNew Error: ${date.toString()}|${JSON.stringify(error)}`;
+  let new_appended_error = await appendFile(path, new_error);
+}
+
+let logToFile = async (logMsg) => {
+  let path = '.data/logs.txt';
+  let date = new Date();
+  let new_log_msg = `\nNew Log: ${date.toString()}|${logMsg}`;
+  let logged_message = await appendFile(path, new_log_msg);
+}
+
 module.exports = {
 	createURL,
 	randomize,
@@ -56,4 +86,9 @@ module.exports = {
 	formatPhoneNumber,
   toUniqueArray,
   localizeDate,
+  flattenArray,
+  flattenDeepArray,
+  timeout,
+  logError,
+  logToFile,
 }

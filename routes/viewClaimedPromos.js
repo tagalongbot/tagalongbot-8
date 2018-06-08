@@ -36,15 +36,20 @@ let getUserPromos = ({ messenger_user_id, data }) => async (provider_id) => {
   let provider = await findProvider(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
-  let user = getUserFromPracticeBase({ provider_base_id, messenger_user_id });
-  let promos = getPromosFromPracticeBase({ provider_base_id, messenger_user_id });
-  
+  let user = await getUserFromPracticeBase({ provider_base_id, messenger_user_id });
+  let promos = await getPromosFromPracticeBase({ provider_base_id });
+
   let promo_ids = user.fields['Promos Claimed'];
+  console.log('promo_ids', promo_ids);
 
   let user_promos = promos.filter(
     promo => promo_ids.includes(promo.id)
   );
   
+  console.log('promos:', promos.map(promo => promo.id));
+  
+  console.log('user_promos', user_promos);
+
   return user_promos.map(toGalleryElement({ provider_id, provider_base_id, ...data }));
 }
 
@@ -82,7 +87,7 @@ let viewClaimedPromos = async ({ query }, res) => {
 
   let user = await getUserByMessengerID(messenger_user_id);
 
-  let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',');
+  let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',').filter(Boolean);
 
   let promos = practice_ids.map(
     getUserPromos({ messenger_user_id, data })
@@ -93,6 +98,7 @@ let viewClaimedPromos = async ({ query }, res) => {
   );
 
   let messages = createMultiGallery(galleryData);
+  console.log('messages', messages)
   res.send({ messages });
 }
 
