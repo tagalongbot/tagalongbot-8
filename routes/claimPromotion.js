@@ -48,14 +48,18 @@ let createOrUpdateUser = async (data, provider) => {
   let [userFromAllUsersTable] = await getAllUsers({ filterByFormula });
 
   let provider_ids = (userFromAllUsersTable.fields['Practices Claimed Promos From'] || '').split(',');
-  
+
   let new_provider_ids = [
     ...new Set([provider_id, ...provider_ids])
   ];
   
-  let update
+  let updateUserData = { 
+    ['Practices Claimed Promos From']: new_provider_ids,
+    ['Email Address']: user_email, 
+    ...userData 
+  }
   
-  let updatedUserFromAllUsers = await updateUserFromAllUsers({ 'Email Address': user_email, ...userData }, userFromAllUsersTable);
+  let updatedUserFromAllUsers = await updateUserFromAllUsers(updateUserData, userFromAllUsersTable);
 
   if (!user) {
     let newUser = await createUser(userData);

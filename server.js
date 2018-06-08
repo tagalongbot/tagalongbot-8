@@ -23,6 +23,8 @@ let viewActivePromos = require('./routes/viewActivePromos');
 let viewPromoInfo = require('./routes/viewPromoInfo');
 let updatePromoInfo = require('./routes/updatePromoInfo');
 let togglePromo = require('./routes/togglePromo');
+let verifyPromo = require('./routes/verifyPromo');
+let { getUserIDForPromoUpdate, updateVerifiedPromo } = require('./routes/updateVerifiedPromo');
 
 // Services
 let getServices = require('./routes/getServices');
@@ -53,6 +55,9 @@ app.get('/promo/view/active', viewActivePromos);
 app.get('/promo/view/info', viewPromoInfo);
 app.use('/promo/update', updatePromoInfo);
 app.get('/promo/toggle', togglePromo);
+app.get('/promo/verify', verifyPromo);
+app.get('/promo/verify/get_user_id', getUserIDForPromoUpdate);
+app.get('/promo/verify/update', updateVerifiedPromo);
 
 // Services
 app.get('/search/services/:service_type', getServices);
