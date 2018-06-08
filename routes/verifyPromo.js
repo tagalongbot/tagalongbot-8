@@ -1,7 +1,7 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
 let { createButtonMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
-let { getProviderByUserID } = require('../libs/provider');
+let { getProviderByUserID } = require('../libs/providers');
 
 let { getTable, findTableData } = require('../libs/data');
 

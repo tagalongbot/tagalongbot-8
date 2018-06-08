@@ -53,8 +53,8 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let subtitle = `Promo Expires On ${promo['Expiration Date']}`;
   let image_url = promo['Image URL'];
 
-  let get_promo_id_url = createURL(`${BASEURL}`, { promo_id, ...data });
-  let view_promo_provider_url = createURL(`${BASEURL}`, { promo_id, ...data });
+  let get_promo_id_url = createURL(`${BASEURL}/promo/id`, { promo_id, ...data });
+  let view_promo_provider_url = createURL(`${BASEURL}/promo/provider`, { promo_id, ...data });
 
   let btn1 = {
     title: 'Get Promo ID',
