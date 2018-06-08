@@ -1,16 +1,11 @@
-let { BASEURL } = process.env;
-let { createURL } = require('../libs/helpers');
 let { createButtonMessage } = require('../libs/bots');
 
 let viewPromoId = async ({ query }, res) => {
-  console.log('query', query);
-  let { messenger_user_id, first_name, last_name, gender1, promo_id } = query;
-
-  let view_claimed_promos = createURL(`${BASEURL}/promo/view/claimed`, { messenger_user_id, first_name, last_name, gender: gender1 });
+  let { messenger_user_id, promo_id } = query;
 
   let msg = createButtonMessage(
-    `User ID: ${messenger_user_id} \n\n Promo ID: ${promo_id}`,
-    `View Claimed Promos|json_plugin_url|${view_claimed_promos}`,
+    `User ID: ${messenger_user_id} \n\nPromo ID: ${promo_id}`,
+    `View Claimed Promos|show_block|[User] View Claimed Promotions`,
     `Main Menu|show_block|Discover Main Menu`
   );
 

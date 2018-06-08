@@ -39,7 +39,7 @@ let getUserPromos = ({ messenger_user_id, data }) => async (provider_id) => {
   let user = await getUserFromPracticeBase({ provider_base_id, messenger_user_id });
   let promos = await getPromosFromPracticeBase({ provider_base_id });
 
-  let promo_ids = user.fields['Promos Claimed'];
+  let promo_ids = user.fields['Promos Claimed'] || [];
 
   let user_promos = promos.filter(
     promo => promo_ids.includes(promo.id)
@@ -55,7 +55,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let subtitle = `Promo Expires On ${localizeDate(promo_expiration_date)}`;
   let image_url = promo['Image URL'];
 
-  let get_promo_id_url = createURL(`${BASEURL}/promo/id`, { promo_id, ...data });
+  let get_promo_id_url = createURL(`${BASEURL}/promo/view/id`, { promo_id, ...data });
   let view_promo_provider_url = createURL(`${BASEURL}/promo/provider`, { promo_id, ...data });
 
   let btn1 = {
@@ -93,6 +93,12 @@ let viewClaimedPromos = async ({ query }, res) => {
   let galleryData = flattenArray(
     await Promise.all(promos)
   );
+
+  if (!galleryData[0]) {
+    let redirect_to_blocks = ['[User] No Claimed Promos'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
 
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
