@@ -40,7 +40,7 @@ let searchPromotionsByLocation = async (data, { search_type, service_name }) => 
 let toGalleryElement = ({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
-  let image_url = promo['Image'][0].url;
+  let image_url = promo['Image URL'];
 
   let promo_type = encodeURIComponent(promo['Type']);
 

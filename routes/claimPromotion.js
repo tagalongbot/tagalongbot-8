@@ -54,7 +54,7 @@ let createOrUpdateUser = async (data, provider) => {
   ];
   
   let updateUserData = { 
-    ['Practices Claimed Promos From']: new_provider_ids,
+    ['Practices Claimed Promos From']: new_provider_ids.join(','),
     ['Email Address']: user_email, 
     ...userData 
   }
@@ -125,7 +125,7 @@ let claimPromotion = async ({ query }, res) => {
   let view_provider_url = createURL(`${BASEURL}/promo/provider`, { ...query, ...userData });
 
   let txtMsg = createButtonMessage(
-    `Congrats ${first_name} your promotion "${updatedPromo.fields['Name']}" has been claimed!`,
+    `Congrats ${first_name} your promotion "${updatedPromo.fields['Promotion Name']}" has been claimed!`,
     `View Provider|json_plugin_url|${view_provider_url}`,
     `Search More Promos|show_block|Search Promos`,
   );
