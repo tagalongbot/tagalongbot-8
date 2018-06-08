@@ -1,6 +1,6 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID } = process.env;
 
-let { createURL, flattenArray } = require('../libs/helpers');
+let { createURL, flattenArray, localizeDate } = require('../libs/helpers');
 let { createMultiGallery } = require('../libs/bots');
 let { getTable, getDataFromTable, getAllDataFromTable, findTableData } = require('../libs/data');
 
@@ -40,22 +40,19 @@ let getUserPromos = ({ messenger_user_id, data }) => async (provider_id) => {
   let promos = await getPromosFromPracticeBase({ provider_base_id });
 
   let promo_ids = user.fields['Promos Claimed'];
-  console.log('promo_ids', promo_ids);
 
   let user_promos = promos.filter(
     promo => promo_ids.includes(promo.id)
   );
-  
-  console.log('promos:', promos.map(promo => promo.id));
-  
-  console.log('user_promos', user_promos);
 
   return user_promos.map(toGalleryElement({ provider_id, provider_base_id, ...data }));
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
+  let promo_expiration_date = new Date(promo['Expiration Date']);
+
   let title = promo['Promotion Name'];
-  let subtitle = `Promo Expires On ${promo['Expiration Date']}`;
+  let subtitle = `Promo Expires On ${localizeDate(promo_expiration_date)}`;
   let image_url = promo['Image URL'];
 
   let get_promo_id_url = createURL(`${BASEURL}/promo/id`, { promo_id, ...data });
@@ -94,11 +91,10 @@ let viewClaimedPromos = async ({ query }, res) => {
   );
 
   let galleryData = flattenArray(
-    Promise.all(promos)
+    await Promise.all(promos)
   );
 
   let messages = createMultiGallery(galleryData);
-  console.log('messages', messages)
   res.send({ messages });
 }
 

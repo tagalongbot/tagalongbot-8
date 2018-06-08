@@ -3,7 +3,8 @@ let { createURL } = require('../libs/helpers');
 let { createButtonMessage } = require('../libs/bots');
 
 let viewPromoId = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender1, promo_id} = query;
+  console.log('query', query);
+  let { messenger_user_id, first_name, last_name, gender1, promo_id } = query;
 
   let view_claimed_promos = createURL(`${BASEURL}/promo/view/claimed`, { messenger_user_id, first_name, last_name, gender: gender1 });
 
