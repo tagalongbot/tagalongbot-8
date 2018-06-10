@@ -88,8 +88,6 @@ let claimPromotion = async ({ query }, res) => {
   let provider = await findPractice(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
-  let userData = { provider_id, provider_base_id, messenger_user_id, first_name, last_name, gender, user_email };
-
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
   let updatePromo = updateTableData(promosTable);
@@ -102,6 +100,7 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
+  let userData = { provider_id, provider_base_id, messenger_user_id, first_name, last_name, gender, user_email };
   let user = await createOrUpdateUser(userData, provider);
 
   let claimed_by_users = promo.fields['Claimed By Users'] || [];
