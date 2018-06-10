@@ -53,7 +53,7 @@ app.get('/promo/provider', getPromoProvider);
 app.use('/promo/claim', claimPromotion);
 app.use('/promo/new/manufactured', createManufacturedPromo);
 app.use('/promo/new/custom', createCustomPromo);
-app.get('/promo/view/active', viewActivePromos);
+app.get('/promo/view/all', viewActivePromos);
 app.get('/promo/view/info', viewPromoInfo);
 app.get('/promo/view/claimed', viewClaimedPromos);
 app.get('/promo/view/id', viewPromoId);

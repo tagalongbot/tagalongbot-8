@@ -24,15 +24,15 @@ let togglePromo = async ({ query }, res) => {
 
   let updatedPromo = await updatePromo(updatePromoData, promo);
   
-  let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
-  let update_promo_url = createURL(`${BASEURL}/promo/update`, { promo_id, provider_base_id });
   let toggle_promo_url = createURL(`${BASEURL}/promo/toggle`, { promo_id, provider_base_id });
+  let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
+  let view_active_promos_url = createURL(`${BASEURL}/promo/view/all`, { messenger_user_id });
 
   let txtMsg = createButtonMessage(
     `${promo.fields['Promotion Name']} is now ${updatedPromo.fields['Active?'] ? 'Active' : 'Deactivated'}`,
-    `${updatedPromo.fields['Active?'] ? 'Deactivate' : 'Activate'}|json_plugin_url|${toggle_promo_url}`,
+    `${updatedPromo.fields['Active?'] ? 'Deactivate' : 'Reactivate'}|json_plugin_url|${toggle_promo_url}`,
     `View Promo Details|json_plugin_url|${view_promo_details_url}`,
-    `Update Promo|json_plugin_url|${update_promo_url}`,
+    `View All Promotions|json_plugin_url|${view_active_promos_url}`
   );
 
   let messages = [txtMsg];

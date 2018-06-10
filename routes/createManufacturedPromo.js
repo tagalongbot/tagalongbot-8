@@ -148,6 +148,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
     ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),
     ['Total Claim Count']: 0,
+    ['Total Used']: 0,
   }
 
   let newPromo = await createPromo(promoData);
