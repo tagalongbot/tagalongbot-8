@@ -43,12 +43,13 @@ let claimProvider = async ({ query }, res) => {
 
   let updatedPractice = await updatePractice(updatePracticeData, provider);
 
-  let txtMsg = createButtonMessage(
-    `Congrats ${first_name} your practice "${provider.fields['Practice Name']}" has been claimed!`,
-    `Search More Providers|show_block|Search Providers`,
+  let msg = createButtonMessage(
+    `Congrats ${first_name} your practice "${provider.fields['Practice Name']}" has been claimed! We will reach out to you soon and activate your practice on Bevl Beauty`,
+    `Main Menu|show_block|Discover Main Menu`,
+    `About Bevl Beauty|show_block|AboutBB`,
   );
 
-  let messages = [txtMsg];
+  let messages = [msg];
   res.send({ messages });
 }
 
