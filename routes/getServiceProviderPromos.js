@@ -1,6 +1,7 @@
-let { PRACTICE_DATABASE_BASE_ID } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
+let { createURL } = require('../libs/helpers');
 let { toGalleryElement } = require('../libs/promos');
-let { createMultiGallery } = require('../libs/bots');
+let { createMultiGallery, createButtonMessage } = require('../libs/bots');
 let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
 
 let getPracticesTable = getTable('Practices');
@@ -20,6 +21,18 @@ let getPromos = async ({ service_name, provider_base_id }) => {
   return matched_promos;
 }
 
+let createNoPromosMsg = async (data) => {
+  let { first_name } = data;
+  let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
+
+  let msg = createButtonMessage(
+    `Sorry ${first_name} looks like this provider does not have any promotions for this service at the moment`,
+    `View Services Again|json_plugin_url|${view_services_btn_url}`
+  );
+
+  return [msg];
+}
+
 let getServiceProviderPromos = async ({ query }, res) => {
   let { service_name, provider_id, provider_base_id } = query;
 
@@ -27,9 +40,9 @@ let getServiceProviderPromos = async ({ query }, res) => {
   let provider_name = provider.fields['Practice Name'];
   let promos = await getPromos({ service_name, provider_base_id });
 
-  if (!promos) {
-    let redirect_to_blocks = ['No Service Promos From Provider Found'];
-    res.send({ redirect_to_blocks });
+  if (!promos[0]) {
+    let messages = createNoPromosMsg(query);
+    res.send({ messages });
     return;
   }
 
