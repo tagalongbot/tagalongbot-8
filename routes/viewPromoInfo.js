@@ -20,7 +20,7 @@ let createPromoMsg = ({ id: promo_id, fields: promo }, provider_base_id, messeng
     `Total Claim Count: ${promo['Total Claim Count']}`,
     `Total Used: ${promo['Total Used']}`,
     `Claim Limit Reached: ${(promo['Claim Limit Reached']) === 1 ? 'TRUE' : 'FALSE'}`,
-    `All Claimed Promos Used: ${(promo['Total Claim Count'] === promo['Total Used']) ? 'TRUE' : 'FALSE'}`,
+    `All Claimed Promos Used: ${(promo['Total Claim Count'] === promo['Total Used'] && promo['Total Claim Count'] != 0) ? 'TRUE' : 'FALSE'}`,
   ].join('\n\n');
 
   let update_promo_url = createURL(`${BASEURL}/promo/update`, { promo_id, provider_base_id });
