@@ -36,7 +36,7 @@ let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id
   let title = service['Name'];
 
   let service_types_length = getServicePromosCount(service);
-  let subtitle = `${service_types_length} type of promos`;
+  let subtitle = `Promo Types Available: ${service_types_length}`;
   let image_url = service['Image URL'];
 
   let view_service_promos_url = createURL(`${BASEURL}/promo/new/manufactured/service`, { service_id, provider_id, provider_base_id });
