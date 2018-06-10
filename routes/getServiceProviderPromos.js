@@ -26,6 +26,13 @@ let getServiceProviderPromos = async ({ query }, res) => {
   let provider = await findPractice(provider_id);
   let provider_name = provider.fields['Practice Name'];
   let promos = await getPromos({ service_name, provider_base_id });
+
+  if (!promos) {
+    let redirect_to_blocks = ['No Service Promos From Provider Found'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
   let galleryData = promos.map(toGalleryElement(query));
   let text = `Here are some ${service_name} promos by ${provider_name}`;
   let messages = [{ text }, ...createMultiGallery(galleryData)];
