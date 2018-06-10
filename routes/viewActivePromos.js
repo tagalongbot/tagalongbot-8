@@ -10,13 +10,15 @@ let getPromosTable = getTable('Promos');
 let isPromoExpired = (promo_expiration_date) => {
   let date = new Date();
   let promo_date = new Date(promo_expiration_date);
-  return (date.getMonth() === promo_date.getMonth() && date.getDate() === promo_date.getDate() && date.getFullYear() === )
+  return date.getMonth() === promo_date.getMonth() && 
+    date.getDate() === promo_date.getDate() && 
+    date.getFullYear() === promo_date.getFullYear();
 }
 
-
 let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) => {
+  let expiredText = isPromoExpired(promo['Expiration Date']) ? 'EXPIRED' : 'NOT EXPIRED';
   let title = promo['Promotion Name'];
-  let subtitle = `${} - ${promo['Terms']}`;
+  let subtitle = `${expiredText} - ${promo['Terms']}`;
   let image_url = promo['Image URL'];
 
   let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
