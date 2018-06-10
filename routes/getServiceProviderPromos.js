@@ -21,7 +21,7 @@ let getPromos = async ({ service_name, provider_base_id }) => {
   return matched_promos;
 }
 
-let createNoPromosMsg = async (data) => {
+let createNoPromosMsg = (data) => {
   let { first_name } = data;
   let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
 
