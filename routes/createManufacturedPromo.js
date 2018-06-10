@@ -85,8 +85,9 @@ let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fiel
   let promo_type = promo_name.slice(6);
   let title = promo_type;
   let image_url = service[promo_name];
-
-  let create_promo_url = createURL(`${BASEURL}/promo/new/manufactured/service/create`, { service_id, provider_id, provider_base_id, promo_type });
+  
+  let service_name = service['Name'];  
+  let create_promo_url = createURL(`${BASEURL}/promo/new/manufactured/service/create`, { service_id, service_name, provider_id, provider_base_id, promo_type });
 
   let btn = {
     title: 'Create Promo',
@@ -113,14 +114,14 @@ let sendServicePromos = async ({ query }, res) => {
 }
 
 let createServicePromo = async ({ query }, res) => {
-  // Send Service Name as new_promo_service_name
-  let { service_id, provider_id, provider_base_id, promo_type } = query;
+  let { service_id, service_name, provider_id, provider_base_id, promo_type } = query;
   let new_promo_service_id = service_id;
+  let new_promo_service_name = service_name
   let new_promo_provider_id = provider_id;
   let new_promo_provider_base_id = provider_base_id;
   let new_promo_type = promo_type;
 
-  let set_attributes = { new_promo_service_id, new_promo_provider_id, new_promo_provider_base_id, new_promo_type };
+  let set_attributes = { new_promo_service_id, new_promo_service_name, new_promo_provider_id, new_promo_provider_base_id, new_promo_type };
   let redirect_to_blocks = ['Create New Manufactured Promo'];
   res.send({ set_attributes, redirect_to_blocks });
 }
