@@ -87,6 +87,8 @@ let claimPromotion = async ({ query }, res) => {
 
   let provider = await findPractice(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
+  let provider_phone_number = provider.fields['Practice Phone #'];
+  let provider_booking_url = provider.fields['Practice Booking URL'];
 
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
@@ -125,8 +127,9 @@ let claimPromotion = async ({ query }, res) => {
 
   let txtMsg = createButtonMessage(
     `Congrats ${first_name} your promotion "${updatedPromo.fields['Promotion Name']}" has been claimed!`,
+    `Call Provider|phone_number|${provider_phone_number}`,
+    `View Booking Site|web_url|${provider_booking_url}`,
     `View Provider|json_plugin_url|${view_provider_url}`,
-    `Search More Promos|show_block|Search Promos`,
   );
 
   let messages = [txtMsg];
