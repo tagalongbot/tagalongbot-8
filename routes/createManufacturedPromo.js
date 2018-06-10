@@ -143,7 +143,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
     ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
     ['Type']: `${service.fields['Name']}-${new_promo_type.trim().toLowerCase()}`,
     ['Active?']: true,
-    ['Terms']: `Valid Until ${localizeDate(new_promo_expiration_date)}`,
+    ['Terms']: `Valid Until ${localizeDate(expiration_date)}`,
     ['Expiration Date']: expiration_date,
     ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),

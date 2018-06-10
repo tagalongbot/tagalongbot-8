@@ -7,9 +7,16 @@ let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 
+let isPromoExpired = (promo_expiration_date) => {
+  let date = new Date();
+  let promo_date = new Date(promo_expiration_date);
+  return (date.getMonth() === promo_date.getMonth() && date.getDate() === promo_date.getDate() && date.getFullYear() === )
+}
+
+
 let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
-  let subtitle = promo['Terms'];
+  let subtitle = `${} - ${promo['Terms']}`;
   let image_url = promo['Image URL'];
 
   let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
@@ -49,7 +56,13 @@ let viewActivePromos = async ({ query }, res) => {
   let getPromos = getAllDataFromTable(promosTable);
 
   let promos = await getPromos();
-  
+
+  if (!promos[0]) {
+    let redirect_to_blocks = ['No Promotions Setup'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
   let galleryData = promos.map(toGalleryData({ provider_base_id }));
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
