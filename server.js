@@ -4,13 +4,12 @@ let app = express();
 let handleAI = require('./routes/ai');
 let getAdminMenu = require('./routes/getAdminMenu');
 
-// Providers
-let getProviders = require('./routes/getProviders');
-let getProviderServices = require('./routes/getProviderServices');
-let getProviderPromos = require('./routes/getProviderPromos');
-let claimProvider = require('./routes/claimProvider');
-let providerClaimed = require('./routes/providerClaimed');
-let listProvider = require('./routes/listProvider');
+let providersRouter = require('./routes/providers');
+let promosRouter = require('./routes/promos');
+let servicesRouter = require('./routes/service');
+
+
+
 
 // Promos
 let getPromos = require('./routes/getPromos');
