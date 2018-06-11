@@ -50,7 +50,7 @@ let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id
   let title = promo['Promotion Name'];
   let subtitle = promo['Terms'];
   let image_url = promo['Image URL'];
-  let user_ids = promo['Promo Used By Users'];
+  let user_ids = promo['Promo Used By Users'] || [];
 
   let data = { provider_base_id, promo_id, user_messenger_id };
 
@@ -78,7 +78,9 @@ let verifyPromo = async ({ query }, res) => {
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let user = await getUser({ provider_base_id, user_messenger_id });
-  let promos = await getUserPromos({ provider_base_id, user_messenger_id });
+  let user_id = user.id;
+
+  let promos = await getUserPromos({ provider_base_id, user_id });
 
   if (!promos[0]) {
     let redirect_to_blocks = ['[Admin Verify Promo] No User Promos Found'];

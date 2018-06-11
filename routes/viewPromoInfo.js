@@ -38,7 +38,7 @@ let createPromoMsg = ({ id: promo_id, fields: promo }, provider_base_id, messeng
 
 let viewPromoInfo = async ({ query }, res) => {
   let { promo_id, provider_base_id } = query;
-  let messenger_user_id = query['messenger user id'];
+  let messenger_user_id = query['messenger user id'] || query['messenger_user_id'];
 
   let promosTable = getPromosTable(provider_base_id);
   let findPromo = findTableData(promosTable);
