@@ -1,5 +1,5 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
-let { createButtonMessage } = require('../libs/bots');
+let { createButtonMessage, createMultiGallery } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getProviderByUserID } = require('../libs/providers');
 
@@ -8,7 +8,13 @@ let { getTable, getAllDataTable, findTableData } = require('../libs/data');
 let getPracticesTable = getTable('Practices');
 let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
 let findPractice = findTableData(practicesTable);
+
 let getPromosTable = getTable('Promos');
+let getUsersTable = getTable('Users');
+
+let getUser = async ({ user_id }) => {
+
+}
 
 let getUserPromos = async ({ provider_base_id, user_id }) => {
   let promosTable = getPromosTable(provider_base_id);
@@ -23,9 +29,29 @@ let getUserPromos = async ({ provider_base_id, user_id }) => {
   return matched_promos;
 }
 
-let toGalleryElement = ({ id: promo_id, fields: promo }) => {
+let toGalleryElement = ({ provider_base_id, messenger_user_id }) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
-  let subtitle = promo[''];
+  let subtitle = promo['Terms'];
+  let image_url = promo['Image URL'];
+
+  let view_promo_info_url = createURL(`${BASEURL}/promo/info`, { provider_base_id, promo_id, messenger_user_id });
+  let update_promo_url = createURL(`${BASEURL}/promo/verify/update`, { provider_base_id, promo_id });
+
+  let btn1 = {
+    title: 'View Promo Details',
+    type: 'json_plugin_url',
+    url: view_promo_info_url,
+  }
+
+  let btn2 = {
+    title: 'Mark Promo As Used',
+    type: 'json_plugin_url',
+    url: update_promo_url,
+  }
+
+  let buttons = [btn1];
+
+  return { title, subtitle, image_url, buttons };
 }
 
 let verifyPromo = async ({ query }, res) => {
@@ -38,13 +64,16 @@ let verifyPromo = async ({ query }, res) => {
   let promos = await getUserPromos({ provider_base_id, user_id });
 
   if (!promos[0]) {
-  
+    let redirect_to_blocks = ['[Admin Verify Promo] No User Promos Found'];
+    res.send({ redirect_to_blocks });
+    return;
   }
 
-  
+  let galleryData = promos.map(
+    toGalleryElement({ provider_base_id, messenger_user_id })
+  );
 
-
-  let messages = createPromoValidMsg({ promo, provider_base_id, query });
+  let messages = createMultiGallery(galleryData);
   res.send({ messages });
 }
 
