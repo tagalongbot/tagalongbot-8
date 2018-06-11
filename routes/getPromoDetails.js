@@ -14,9 +14,11 @@ let getPromo = async ({ promo_id, provider_base_id }) => {
 
 let getPromoDetails = async ({ query }, res) => {
   let { provider_id, provider_base_id, promo_id, first_name, last_name, gender1, messenger_user_id } = query;
+
+  console.log('query', query);
   let promo = await getPromo({ promo_id, provider_base_id });
 
-  let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender1: gender1, messenger_user_id };
+  let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender: gender1, messenger_user_id };
   let claim_promo_url = createURL(`${BASEURL}/promo/claim/email`, { provider_id, promo_id });
   let view_provider_url = createURL(`${BASEURL}/promo/provider`, data);
 
