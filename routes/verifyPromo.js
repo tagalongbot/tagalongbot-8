@@ -30,7 +30,7 @@ let getUserPromos = async ({ provider_base_id, user_id }) => {
   return matched_promos;
 }
 
-let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id }) => ({ id: promo_id, fields: promo }) => {
+let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id, user_record_id }) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
   let subtitle = promo['Terms'];
   let image_url = promo['Image URL'];

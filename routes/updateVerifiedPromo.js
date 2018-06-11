@@ -1,7 +1,6 @@
 let { BASEURL } = process.env;
 let { createButtonMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
-let { getProviderByUserID } = require('../libs/providers');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../libs/data');
 
@@ -44,6 +43,17 @@ let updatePromo = async ({ provider_base_id, promo, user_record_id }) => {
   return updatedPromo;
 }
 
+let createUserDoesNotExistMsg = () => {
+  let redirect_to_blocks = ['[Admin Verify Promo] User Does Not Exist'];
+  return { redirect_to_blocks };
+}
+
+let createUserAlreadyUsedMsg = ({ user_name }) => {
+  let set_attributes = { user_name };
+  let redirect_to_blocks = ['User Already Used Promo'];
+  return { set_attributes, redirect_to_blocks };
+}
+
 let createUpdateMsg = async () => {
   let msg = createButtonMessage(
     `Promo Claimed Successfully`,
@@ -60,12 +70,21 @@ let updateVerifiedPromo = async ({ query }, res) => {
   let user = await getUser({ provider_base_id, user_messenger_id });
 
   if (!user) {
-    let redirect_to_blocks = ['[Admin Verify Promo] User Does Not Exist'];
-    res.send({ redirect_to_blocks });
+    let msg = createUserDoesNotExistMsg();
+    res.send(msg);
     return;
   }
 
   let user_record_id = user.id;
+  let user_name = user.fields['First Name'];
+  let user_ids = promo.fields['Promo Used By Users'];
+
+  if (user_ids.includes(user_record_id)) {
+    let msg = createUserAlreadyUsedMsg({ user_name });
+    res.send(msg);
+    return;
+  }
+
   let updatedPromo = await updatePromo({ provider_base_id, promo, user_record_id });
 
   let messages = createUpdateMsg();
@@ -73,14 +92,3 @@ let updateVerifiedPromo = async ({ query }, res) => {
 }
 
 module.exports = updateVerifiedPromo;
-
-/*
-  let user_record_id = user.id;
-  let user_ids = promo.fields['Promo Used By Users'];
-
-  if (user_ids.includes(user_record_id)) {
-    let msg = createUserAlreadyUsedMsg({ provider_base_id, user_id });
-    res.send(msg);
-    return;
-  }
-*/
