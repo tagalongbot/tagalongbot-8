@@ -9,9 +9,8 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServicesFromTable = getAllDataFromTable(servicesTable);
 
 let searchServices = async (surgical_or_non_surgical) => {
-  let view = 'Sorted Alphabetically';
 	let filterByFormula = `{Surgical / Non Surgical} = '${surgical_or_non_surgical}'`;
-  let services = await getServicesFromTable({ view, filterByFormula });
+  let services = await getServicesFromTable({ filterByFormula });
   return services;
 }
 
