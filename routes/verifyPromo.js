@@ -61,7 +61,7 @@ let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id
     type: 'json_plugin_url',
     url: view_promo_info_url,
   }
-  
+
   let buttons = [btn1];
 
   let btn2 = createUpdateBtn({ user_record_id, user_ids, ...data });
