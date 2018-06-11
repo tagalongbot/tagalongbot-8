@@ -15,7 +15,7 @@ let getPromos = async ({ service_name, provider_base_id }) => {
   let view = 'Active Promos';
   let promos = await getPromosFromTable({ view });
   let matched_promos = promos.filter(
-    promo => promo.fields['Type'].toLowerCase().includes(service_name)
+    promo => promo.fields['Type'].toLowerCase().includes(service_name.toLowerCase())
   );
 
   return matched_promos;
