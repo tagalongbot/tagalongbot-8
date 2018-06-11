@@ -1,21 +1,18 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
+let { BASEURL } = process.env;
 let { createButtonMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getProviderByUserID } = require('../libs/providers');
 
 let { getTable, findTableData, updateTableData } = require('../libs/data');
 
-let getPracticesTable = getTable('Practices');
-let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
-let findPractice = findTableData(practicesTable);
 let getPromosTable = getTable('Promos');
-let getUsersTable = getTable('Customers');
+let getUsersTable = getTable('Users');
 
 let getUser = async ({ provider_base_id, user_id }) => {
-  let customersTable = getUsersTable(provider_base_id); 
-  let findCustomer = findTableData(customersTable);
-  let customer = await findCustomer(user_id);
-  return customer;
+  let usersTable = getUsersTable(provider_base_id); 
+  let findUser = findTableData(usersTable);
+  let user = await findUser(user_id);
+  return user;
 }
 
 let getPromo = async ({ provider_base_id, promo_id }) => {
@@ -45,13 +42,6 @@ let updatePromo = async ({ provider_base_id, promo, user_id }) => {
   return updatedPromo;
 }
 
-let getUserIDForPromoUpdate = async ({ query }, res) => {
-  let { promo_id } = query;
-  let set_attributes = { promo_id };
-  let redirect_to_blocks = ['Update Verified Promo'];
-  res.send({ set_attributes, redirect_to_blocks });
-}
-
 let createUpdateMsg = async () => {
   let msg = createButtonMessage(
     `Promo Claimed Successfully`,
@@ -61,16 +51,9 @@ let createUpdateMsg = async () => {
   return [msg];
 }
 
-let createUserAlreadyUsedMsg = async ({ provider_base_id, user }) => {
-  let user_name = user.fields['First Name'];
-  let set_attributes = { user_name };
-  let redirect_to_blocks = ['User Already Used Promo'];
-  return { set_attributes, redirect_to_blocks };
-}
-
 let updateVerifiedPromo = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];
-  let { promo_id, user_id } = query;
+  let { promo_id, user_id, provider_base_id } = query;
 
   let provider = await getProviderByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];

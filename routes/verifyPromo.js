@@ -1,24 +1,25 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
+let { BASEURL } = process.env;
 let { createButtonMessage, createMultiGallery } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getProviderByUserID } = require('../libs/providers');
 
-let { getTable, getAllDataTable, findTableData } = require('../libs/data');
-
-let getPracticesTable = getTable('Practices');
-let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
-let findPractice = findTableData(practicesTable);
+let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 let getUsersTable = getTable('Users');
 
-let getUser = async ({ user_id }) => {
+let getUser = async ({ user_id, provider_base_id }) => {
+  let usersTable = getUsersTable(provider_base_id);
+  let getUsers = getAllDataFromTable(usersTable);
 
+  let filterByFormula = `{ messenger user id } = '${user_id}'`;
+  let [user] = await getUsers({ filterByFormula });
+  return user;
 }
 
 let getUserPromos = async ({ provider_base_id, user_id }) => {
   let promosTable = getPromosTable(provider_base_id);
-  let getPromos = getAllDataTable(promosTable);
+  let getPromos = getAllDataFromTable(promosTable);
   let view = 'Active Promos';
   let promos = await getPromos({ view });
   
@@ -61,11 +62,14 @@ let verifyPromo = async ({ query }, res) => {
   let provider = await getProviderByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
+  let user = await getUser({ provider_base_id, user_id });
   let promos = await getUserPromos({ provider_base_id, user_id });
 
   if (!promos[0]) {
     let redirect_to_blocks = ['[Admin Verify Promo] No User Promos Found'];
-    res.send({ redirect_to_blocks });
+    let user_name = user.fields['First Name'];
+    let set_attributes = { user_name };
+    res.send({ redirect_to_blocks, set_attributes });
     return;
   }
 
