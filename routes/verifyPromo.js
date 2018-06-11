@@ -8,11 +8,11 @@ let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
 let getPromosTable = getTable('Promos');
 let getUsersTable = getTable('Users');
 
-let getUser = async ({ user_id, provider_base_id }) => {
+let getUser = async ({ user_messenger_id, provider_base_id }) => {
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
 
-  let filterByFormula = `{ messenger user id } = '${user_id}'`;
+  let filterByFormula = `{ messenger user id } = '${user_messenger_id}'`;
   let [user] = await getUsers({ filterByFormula });
   return user;
 }
@@ -30,13 +30,13 @@ let getUserPromos = async ({ provider_base_id, user_id }) => {
   return matched_promos;
 }
 
-let toGalleryElement = ({ provider_base_id, messenger_user_id }) => ({ id: promo_id, fields: promo }) => {
+let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id }) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
   let subtitle = promo['Terms'];
   let image_url = promo['Image URL'];
 
   let view_promo_info_url = createURL(`${BASEURL}/promo/info`, { provider_base_id, promo_id, messenger_user_id });
-  let update_promo_url = createURL(`${BASEURL}/promo/verify/update`, { provider_base_id, promo_id });
+  let update_promo_url = createURL(`${BASEURL}/promo/verify/update`, { provider_base_id, promo_id, user_messenger_id });
 
   let btn1 = {
     title: 'View Promo Details',
@@ -50,20 +50,22 @@ let toGalleryElement = ({ provider_base_id, messenger_user_id }) => ({ id: promo
     url: update_promo_url,
   }
 
-  let buttons = [btn1];
+  let buttons = [btn1, btn2];
 
   return { title, subtitle, image_url, buttons };
 }
 
 let verifyPromo = async ({ query }, res) => {
+  // `messenger_user_id` is the messenger id of the provider
+  // `user_messenger_id` is the messenger id of the consumer
   let messenger_user_id = query['messenger user id'];
-  let user_id = query['user_id'];
+  let user_messenger_id = query['user_messenger_id'];
 
   let provider = await getProviderByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
-  let user = await getUser({ provider_base_id, user_id });
-  let promos = await getUserPromos({ provider_base_id, user_id });
+  let user = await getUser({ provider_base_id, user_messenger_id });
+  let promos = await getUserPromos({ provider_base_id, user_messenger_id });
 
   if (!promos[0]) {
     let redirect_to_blocks = ['[Admin Verify Promo] No User Promos Found'];
@@ -74,7 +76,7 @@ let verifyPromo = async ({ query }, res) => {
   }
 
   let galleryData = promos.map(
-    toGalleryElement({ provider_base_id, messenger_user_id })
+    toGalleryElement({ provider_base_id, messenger_user_id, user_messenger_id })
   );
 
   let messages = createMultiGallery(galleryData);

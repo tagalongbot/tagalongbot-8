@@ -3,15 +3,17 @@ let { createButtonMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getProviderByUserID } = require('../libs/providers');
 
-let { getTable, findTableData, updateTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 let getUsersTable = getTable('Users');
 
-let getUser = async ({ provider_base_id, user_id }) => {
-  let usersTable = getUsersTable(provider_base_id); 
-  let findUser = findTableData(usersTable);
-  let user = await findUser(user_id);
+let getUser = async ({ user_messenger_id, provider_base_id }) => {
+  let usersTable = getUsersTable(provider_base_id);
+  let getUsers = getAllDataFromTable(usersTable);
+
+  let filterByFormula = `{ messenger user id } = '${user_messenger_id}'`;
+  let [user] = await getUsers({ filterByFormula });
   return user;
 }
 
@@ -22,7 +24,7 @@ let getPromo = async ({ provider_base_id, promo_id }) => {
   return promo;
 }
 
-let updatePromo = async ({ provider_base_id, promo, user_id }) => {
+let updatePromo = async ({ provider_base_id, promo, user_record_id }) => {
   let promosTable = getPromosTable(provider_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
 
@@ -30,7 +32,7 @@ let updatePromo = async ({ provider_base_id, promo, user_id }) => {
   let total_used = Number(promo.fields['Total Used']);
 
   let new_used_user_ids = [
-    ...new Set([user_id, ...already_used_user_ids])
+    ...new Set([user_record_id, ...already_used_user_ids])
   ];
 
   let updateData = {
@@ -52,14 +54,10 @@ let createUpdateMsg = async () => {
 }
 
 let updateVerifiedPromo = async ({ query }, res) => {
-  let messenger_user_id = query['messenger user id'];
-  let { promo_id, user_id, provider_base_id } = query;
-
-  let provider = await getProviderByUserID(messenger_user_id);
-  let provider_base_id = provider.fields['Practice Base ID'];
+  let { provider_base_id, promo_id, user_messenger_id } = query;
 
   let promo = await getPromo({ provider_base_id, promo_id });
-  let user = await getUser({ provider_base_id, user_id });
+  let user = await getUser({ provider_base_id, user_messenger_id });
 
   if (!user) {
     let redirect_to_blocks = ['[Admin Verify Promo] User Does Not Exist'];
@@ -67,21 +65,22 @@ let updateVerifiedPromo = async ({ query }, res) => {
     return;
   }
 
-  let user_ids = promo.fields['Promo Used By Users'];
-
-  if (user_ids.includes(user_id)) {
-    let msg = createUserAlreadyUsedMsg({ provider_base_id, user_id });
-    res.send(msg);
-    return;
-  }
-
-  let updatedPromo = await updatePromo({ provider_base_id, promo, user_id });
+  let user_record_id = user.id;
+  let updatedPromo = await updatePromo({ provider_base_id, promo, user_record_id });
 
   let messages = createUpdateMsg();
   res.send({ messages });
 }
 
-module.exports = {
-  getUserIDForPromoUpdate,
-  updateVerifiedPromo,
-}
+module.exports = updateVerifiedPromo;
+
+/*
+  let user_record_id = user.id;
+  let user_ids = promo.fields['Promo Used By Users'];
+
+  if (user_ids.includes(user_record_id)) {
+    let msg = createUserAlreadyUsedMsg({ provider_base_id, user_id });
+    res.send(msg);
+    return;
+  }
+*/
