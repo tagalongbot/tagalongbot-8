@@ -82,4 +82,6 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   return { title, subtitle, image_url, buttons };
 }
 
-module.exp
+module.exports = {
+  getUserPromos
+}

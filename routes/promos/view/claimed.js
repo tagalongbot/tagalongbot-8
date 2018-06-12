@@ -1,7 +1,8 @@
-let { flattenArray } = require('../libs/helpers');
-let { createMultiGallery } = require('../libs/bots');
+let { flattenArray } = require('../../../libs/helpers.js');
+let { createMultiGallery } = require('../../../libs/bots.js');
 
-let { getUserByMessengerID } = require('../libs/users');
+let { getUserByMessengerID } = require('../../../libs/users.js');
+let { getUserPromos } = require('../../../libs/claimed.js');
 
 let viewClaimedPromos = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'] || query['messenger_user_id'];
