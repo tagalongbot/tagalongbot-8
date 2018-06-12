@@ -52,21 +52,7 @@ let createUserData = ({ messenger_user_id, first_name, last_name, gender, provid
   return user_data;
 }
 
-let createOrUpdateUser = async (data, provider) => {
-  let { messenger_user_id, first_name, last_name, gender, user_email, provider_base_id } = data;
-
-  let user_messenger_id = messenger_user_id;
-  let user = await getUserByMessengerID(messenger_user_id);
-  let practice_user = await getUserFromPractice({ user_messenger_id, provider_base_id });
-
-  let provider_id = provider.id;
-  let provider_state = provider.fields['Practice State'];
-  let provider_city = provider.fields['Practice City'];
-  let provider_zip_code = provider.fields['Practice Zip Code'];
-  
-  let user_data = createUserData({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code });
-
-
+let updateUserFromAllUsersBase = async ({ user, user_email, user_data, provider_id }) => {
   let provider_ids = (user.fields['Practices Claimed Promos From'] || '').split(',');
 
   let new_provider_ids = [
@@ -80,6 +66,25 @@ let createOrUpdateUser = async (data, provider) => {
   }
 
   let updated_user = await updateUser(updateUserData, user);
+
+  return updated_user;
+}
+
+let createOrUpdateUser = async (data, provider) => {
+  let { messenger_user_id, first_name, last_name, gender, user_email, provider_base_id } = data;
+
+  let provider_id = provider.id;
+  let provider_state = provider.fields['Practice State'];
+  let provider_city = provider.fields['Practice City'];
+  let provider_zip_code = provider.fields['Practice Zip Code'];
+
+  let user_messenger_id = messenger_user_id;
+  let user = await getUserByMessengerID(messenger_user_id);
+  let practice_user = await getUserFromPractice({ user_messenger_id, provider_base_id });
+
+  let user_data = createUserData({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code });
+
+  let updated_user = await updateUserFromAllUsersBase({ user, user_email, user_data, provider_id });
 
   if (!practice_user) {
     let newUser = await createPracticeUser({ provider_base_id, user_data });
