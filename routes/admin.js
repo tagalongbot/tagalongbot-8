@@ -1,0 +1,22 @@
+let express = require('express');
+let router = express.Router();
+
+let createManufacturedPromo = require('./routes/admin/promos/create/manufactured.js');
+let createCustomPromo = require('./routes/admin/promos/create/custom.js');
+let viewAllPromos = require('./routes/admin/promos/view/all.js');
+let viewUserPromos = require('./routes/admin/promos/view/user.js');
+let viewPromoInfo = require('./routes/admin/promos/view/info.js');
+let updatePromoInfo = require('./routes/admin/promos/update.js');
+let togglePromo = require('./routes/admin/promos/toggle.js');
+let updateUserPromo = require('./routes/admin/promos/user/update.js');
+
+router.use('/promos/create/manufactured', createManufacturedPromo);
+router.use('/promos/create/custom', createCustomPromo);
+router.get('/promos/view/all', viewAllPromos);
+router.get('/promos/view/user', viewUserPromos);
+router.get('/promos/view/info', viewPromoInfo);
+router.use('/promos/update', updatePromoInfo);
+router.get('/promos/toggle', togglePromo);
+router.get('/promo/verify/update', updateUserPromo);
+
+module.exports = router;
