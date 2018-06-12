@@ -70,13 +70,13 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_data, provider_
   return updated_user;
 }
 
-let createOrUpdateUser = async (data, provider) => {
-  let { messenger_user_id, first_name, last_name, gender, user_email, provider_base_id } = data;
+let createOrUpdateUser = async (data, { id: provider_id, fields: provider }) => {
+  let { messenger_user_id, first_name, last_name, gender, user_email } = data;
 
-  let provider_id = provider.id;
-  let provider_state = provider.fields['Practice State'];
-  let provider_city = provider.fields['Practice City'];
-  let provider_zip_code = provider.fields['Practice Zip Code'];
+  let provider_base_id = provider['Practice Base ID'];
+  let provider_state = provider['Practice State'];
+  let provider_city = provider['Practice City'];
+  let provider_zip_code = provider['Practice Zip Code'];
 
   let user_messenger_id = messenger_user_id;
   let user = await getUserByMessengerID(messenger_user_id);
@@ -93,4 +93,19 @@ let createOrUpdateUser = async (data, provider) => {
 
   let updated_practice_user = await updatePracticeUser({ provider_base_id, user_data, practice_user });
   return updated_practice_user;
+}
+
+let createClaimedMsg = ({ query, user_data, updated_promo, provider_phone_number, provider_booking_url }) => {
+  let { first_name } = user_data;
+
+  let view_provider_url = createURL(`${BASEURL}/promo/provider`, { ...query, ...user_data });
+
+  let msg = createButtonMessage(
+    `Congrats ${first_name} your promotion "${updated_promo.fields['Promotion Name']}" has been claimed!`,
+    `Call Provider|phone_number|${provider_phone_number}`,
+    `View Booking Site|web_url|${provider_booking_url}`,
+    `View Provider|json_plugin_url|${view_provider_url}`,
+  );
+  
+  return msg;
 }

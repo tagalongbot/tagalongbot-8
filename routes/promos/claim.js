@@ -32,9 +32,8 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let userData = { provider_base_id, messenger_user_id, first_name, last_name, gender, user_email };
-  let userData = { messenger_user_id, first_name, last_name, gender, user_email, provider_base_id };
-  let user = await createOrUpdateUser(userData, provider);
+  let user_data = { messenger_user_id, first_name, last_name, gender, user_email };
+  let user = await createOrUpdateUser(user_data, provider);
 
   let claimed_by_users = promo.fields['Claimed By Users'] || [];
   if (claimed_by_users.includes(user.id)) {
@@ -43,27 +42,20 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let claimed_users = [
+  let new_claimed_users = [
     ...new Set([user.id, ...claimed_by_users])
   ];
 
   let updatePromoData = {
     'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
-    'Claimed By Users': claimed_users,
+    'Claimed By Users': new_claimed_users,
   }
 
   let updatedPromo = await updatePromo(updatePromoData, promo);
 
-  let view_provider_url = createURL(`${BASEURL}/promo/provider`, { ...query, ...userData });
+  let claimedMsg = createClaimedMsg();
 
-  let txtMsg = createButtonMessage(
-    `Congrats ${first_name} your promotion "${updatedPromo.fields['Promotion Name']}" has been claimed!`,
-    `Call Provider|phone_number|${provider_phone_number}`,
-    `View Booking Site|web_url|${provider_booking_url}`,
-    `View Provider|json_plugin_url|${view_provider_url}`,
-  );
-
-  let messages = [txtMsg];
+  let messages = [claimedMsg];
   res.send({ messages });
 }
 
