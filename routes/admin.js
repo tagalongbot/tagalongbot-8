@@ -9,7 +9,7 @@ let createManufacturedPromo = require('../routes/admin/promos/create/manufacture
 // let viewPromoInfo = require('../routes/admin/promos/view/info.js');
 // let updatePromoInfo = require('../routes/admin/promos/update.js');
 // let togglePromo = require('../routes/admin/promos/toggle.js');
-// let updateUserPromo = require('../routes/admin/promos/user/update.js');
+let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
 // router.get('/menu', getAdminMenu);
 router.get('/promos/create/custom', createCustomPromo);
@@ -19,6 +19,6 @@ router.get('/promos/create/manufactured', createManufacturedPromo);
 // router.get('/promos/view/info', viewPromoInfo);
 // router.get('/promos/update', updatePromoInfo);
 // router.get('/promos/toggle', togglePromo);
-// router.get('/promos/user/update', updateUserPromo);
+router.get('/promos/user/update', updateUserPromo);
 
 module.exports = router;

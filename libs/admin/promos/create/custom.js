@@ -26,3 +26,7 @@ let createNewPromo = async (data) => {
 
   return newPromo;
 }
+
+module.exports = {
+  createNewPromo,
+}
