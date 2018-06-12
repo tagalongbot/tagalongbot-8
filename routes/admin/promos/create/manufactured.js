@@ -2,6 +2,8 @@ let { SERVICES_BASE_ID } = process.env;
 let { createGallery, createMultiGallery } = require('../../../../libs/bots');
 let { getProviderByUserID } = require('../../../../libs/providers');
 
+let { getProviderServices, getServicePromos, getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured');
+
 let { getTable, getAllDataFromTable, findTableData } = require('../../../../libs/data');
 
 let getServicesTable = getTable('Services');

@@ -1,7 +1,7 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
-let { createURL, localizeDate } = require('../libs/helpers');
+let { createURL, localizeDate } = require('../../../helpers.js');
 
-let { getTable, getAllDataFromTable, findTableData, createTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData, createTableData } = require('../../../data.js');
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
@@ -140,7 +140,6 @@ let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fiel
 
 module.exports = {
   getProviderServices,
-  getServicePromosCount,
   getServicePromos,
   getServicesWithPromos,
   createNewPromo,
