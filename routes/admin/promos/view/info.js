@@ -1,4 +1,4 @@
-let {} = require();
+let { findPromoFromPractice, createPromoMsg } = require('../../../../libs/admin/promos/view/info.js');
 
 let viewPromoInfo = async ({ query }, res) => {
   let { promo_id, provider_base_id } = query;

@@ -8,7 +8,7 @@ let getUser = async ({ user_messenger_id, provider_base_id }) => {
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
 
-  let filterByFormula = `{ messenger user id } = '${user_messenger_id}'`;
+  let filterByFormula = `{messenger user id} = '${user_messenger_id}'`;
   let [user] = await getUsers({ filterByFormula });
   return user;
 }

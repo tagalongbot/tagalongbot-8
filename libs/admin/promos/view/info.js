@@ -46,4 +46,5 @@ let createPromoMsg = ({ id: promo_id, fields: promo }, { provider_base_id, messe
 
 module.exports = {
   findPromoFromPractice,
+  createPromoMsg,
 }
