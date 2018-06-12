@@ -3,13 +3,10 @@ let { createURL } = require('../libs/helpers');
 let { createButtonMessage } = require('../libs/bots');
 let { getProviderByUserID } = require('../libs/providers');
 
-let { getTable, findTableData, updateTableData } = require('../libs/data');
-
-let getPromosTable = getTable('Promos');
-
 let togglePromo = async ({ query }, res) => {
   let { promo_id, provider_base_id } = query;
   let messenger_user_id = query['messenger user id'];
+  
   let provider = await getProviderByUserID(messenger_user_id);
 
   let promosTable = getPromosTable(provider_base_id);

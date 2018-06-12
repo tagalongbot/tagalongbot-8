@@ -1,9 +1,8 @@
 let { BASEURL } = process.env;
-let { createButtonMessage, createMultiGallery } = require('../libs/bots');
-let { createURL } = require('../libs/helpers');
-let { getProviderByUserID } = require('../libs/providers');
+let { createMultiGallery } = require('../../../../libs/bots');
+let { createURL } = require('../../../../libs/helpers');
 
-let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable } = require('../../../../libs/data');
 
 let getPromosTable = getTable('Promos');
 let getUsersTable = getTable('Users');
@@ -69,4 +68,10 @@ let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id
   if (btn2) buttons = [btn1, btn2];
 
   return { title, subtitle, image_url, buttons };
+}
+
+module.exports = {
+  getUser,
+  getUserPromos,
+  toGalleryElement,
 }
