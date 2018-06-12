@@ -2,8 +2,7 @@ let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID } = process.env;
 let { createButtonMessage, createTextMessage } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 
-let express = require('express');
-let router = express.Router();
+let { getUserByMessengerID, updateUser } = require('../libs/users');
 
 let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../libs/data');
 
@@ -12,13 +11,9 @@ let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
 let findPractice = findTableData(practicesTable);
 
 let getUsersTable = getTable('Users');
-let allUsersTable = getUsersTable(USERS_BASE_ID);
-let getAllUsers = getAllDataFromTable(allUsersTable);
-let updateUserFromAllUsers = updateTableData(allUsersTable);
-
 let getPromosTable = getTable('Promos');
 
-let getUser = async ({ user_messenger_id, provider_base_id }) => {
+let getUserFromPractice = async ({ user_messenger_id, provider_base_id }) => {
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
 
@@ -27,21 +22,30 @@ let getUser = async ({ user_messenger_id, provider_base_id }) => {
   return user;
 }
 
+let createPracticeUser = async () => {
+  let usersTable = getUsersTable(provider_base_id);
+  let createUser = createTableData(usersTable);
+
+}
+
+let updatePracticeUser = async () => {
+  let usersTable = getUsersTable(provider_base_id);
+  let updateUser = updateTableData(usersTable);
+  
+}
+
 let createOrUpdateUser = async (data, provider) => {
   let { messenger_user_id, first_name, last_name, gender, user_email, provider_base_id } = data;
 
-  let createUser = createTableData(usersTable);
-  let updateUser = updateTableData(usersTable);
-
   let user_messenger_id = messenger_user_id;
-  let practice_user = await getUser({ user_messenger_id, provider_base_id });
+  let practice_user = await getUserFromPractice({ user_messenger_id, provider_base_id });
 
   let provider_id = provider.id;
   let provider_state = provider.fields['Practice State'];
   let provider_city = provider.fields['Practice City'];
   let provider_zip_code = provider.fields['Practice Zip Code'];
 
-  let userData = {
+  let user_data = {
     'messenger user id': messenger_user_id,
     'First Name': first_name,
     'Last Name': last_name,
@@ -51,27 +55,27 @@ let createOrUpdateUser = async (data, provider) => {
     'Zip Code': Number(provider_zip_code),
   }
 
-  let [userFromAllUsersTable] = await getAllUsers({ filterByFormula });
+  let user = await getUserByMessengerID(messenger_user_id);
 
-  let provider_ids = (userFromAllUsersTable.fields['Practices Claimed Promos From'] || '').split(',');
+  let provider_ids = (user.fields['Practices Claimed Promos From'] || '').split(',');
 
   let new_provider_ids = [
     ...new Set([provider_id, ...provider_ids])
   ];
-  
+
   let updateUserData = { 
     ['Practices Claimed Promos From']: new_provider_ids.join(','),
     ['Email Address']: user_email, 
-    ...userData 
+    ...user_data 
   }
-  
-  let updatedUserFromAllUsers = await updateUserFromAllUsers(updateUserData, userFromAllUsersTable);
 
-  if (!user) {
-    let newUser = await createUser(userData);
+  let updated_user = await updateUserFromAllUsers(updateUserData, user);
+
+  if (!practice_user) {
+    let newUser = await createPracticeUser({ provider_base_id, user_data });
     return newUser;
   }
 
-  let updatedUser = await updateUser(userData, user);
-  return updatedUser;
+  let updated_practice_user = await updateUser(user_data, practice_user);
+  return updated_practice_user;
 }
