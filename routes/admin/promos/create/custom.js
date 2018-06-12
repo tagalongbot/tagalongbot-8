@@ -6,13 +6,9 @@ let { getTable, createTableData } = require('../../../../libs/data');
 
 let getPromosTable = getTable('Promos');
 
-let createCustomPromo = async ({ query }, res) => {
-  let { new_promo_name, new_promo_expiration_date, new_promo_claim_limit, new_promo_image } = query;
-
-  let messenger_user_id = query['messenger user id'];
-  let provider = await getProviderByUserID(messenger_user_id);
-
-  let provider_base_id = provider.fields['Practice Base ID'];
+let createNewPromo = async (data) => {
+  let { provider_base_id, new_promo_expiration_date, new_promo_name, new_promo_image, new_promo_claim_limit } = data;
+  
   let promosTable = getPromosTable(provider_base_id);
   let createPromo = createTableData(promosTable);
 
@@ -30,6 +26,20 @@ let createCustomPromo = async ({ query }, res) => {
   }
 
   let newPromo = await createPromo(promoData);
+
+  return newPromo;
+}
+
+let createCustomPromo = async ({ query }, res) => {
+  let { new_promo_name, new_promo_expiration_date, new_promo_claim_limit, new_promo_image } = query;
+  let data = { provider_base_id, new_promo_expiration_date, new_promo_name, new_promo_image, new_promo_claim_limit };
+
+  let messenger_user_id = query['messenger user id'];
+  let provider = await getProviderByUserID(messenger_user_id);
+  let provider_base_id = provider.fields['Practice Base ID'];
+
+  let new_promo = await createNewPromo(data);
+
   let redirect_to_blocks = ['New Custom Promo Created'];
   res.send({ redirect_to_blocks });
 }
