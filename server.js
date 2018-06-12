@@ -9,8 +9,6 @@ let promosRouter = require('./routes/promos');
 let servicesRouter = require('./routes/service');
 
 
-
-
 // Promos
 let getPromos = require('./routes/getPromos');
 let getPromoDetails = require('./routes/getPromoDetails');
@@ -27,23 +25,10 @@ let togglePromo = require('./routes/togglePromo');
 let verifyPromo = require('./routes/verifyPromo');
 let updateVerifiedPromo = require('./routes/updateVerifiedPromo');
 
-// Services
-let getServices = require('./routes/getServices');
-let getServiceDescription = require('./routes/getServiceDescription');
-let getServiceProviderPromos = require('./routes/getServiceProviderPromos');
-let getServiceProviders = require('./routes/getServiceProviders');
 
 // ROUTES CONFIGURATION
 app.get('/ai', handleAI);
 app.get('/admin/menu', getAdminMenu);
-
-// Providers
-app.get('/search/providers/:search_type', getProviders);
-app.get('/provider/services', getProviderServices);
-app.get('/provider/promos', getProviderPromos);
-app.use('/provider/claim', claimProvider);
-app.get('/provider/claimed', providerClaimed);
-app.get('/provider/list', listProvider);
 
 // Promotions
 app.get('/search/promos/:search_type', getPromos);
@@ -61,10 +46,5 @@ app.get('/promo/toggle', togglePromo);
 app.get('/promo/verify', verifyPromo);
 app.get('/promo/verify/update', updateVerifiedPromo);
 
-// Services
-app.get('/search/services/:service_type', getServices);
-app.get('/service/description/:show_providers', getServiceDescription);
-app.use('/service/provider/promos', getServiceProviderPromos);
-app.use('/service', getServiceProviders);
 
 app.listen(3000, () => console.log('Running on PORT 3000'));
