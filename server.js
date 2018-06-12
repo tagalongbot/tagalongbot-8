@@ -1,16 +1,11 @@
 let express = require('express');
 let app = express();
 
-let handleAI = require('./routes/ai');
-let getAdminMenu = require('./routes/getAdminMenu');
-
+let AIRoute = require('./routes/ai');
 let providersRouter = require('./routes/providers');
 let promosRouter = require('./routes/promos');
 let servicesRouter = require('./routes/service');
 
-// ROUTES CONFIGURATION
-app.get('/ai', handleAI);
-app.get('/admin/menu', getAdminMenu);
-
+app.get('/ai', AIRoute);
 
 app.listen(3000, () => console.log('Running on PORT 3000'));
