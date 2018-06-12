@@ -1,19 +1,10 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../libs/helpers');
-let { createMultiGallery } = require('../libs/bots');
 let { getProviderByUserID } = require('../libs/providers');
 
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
-
-let getPracticePromos = async ({ provider_base_id }) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let getPromos = getAllDataFromTable(promosTable);
-
-  let promos = await getPromos();
-  return promos;
-}
 
 let isPromoExpired = (promo_expiration_date) => {
   let date = new Date();
@@ -21,6 +12,14 @@ let isPromoExpired = (promo_expiration_date) => {
   return date.getMonth() === promo_date.getMonth() && 
     date.getDate() === promo_date.getDate() && 
     date.getFullYear() === promo_date.getFullYear();
+}
+
+let getPracticePromos = async ({ provider_base_id }) => {
+  let promosTable = getPromosTable(provider_base_id);
+  let getPromos = getAllDataFromTable(promosTable);
+
+  let promos = await getPromos();
+  return promos;
 }
 
 // Mapping Functions
@@ -58,25 +57,7 @@ let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) 
   return element;
 }
 
-let viewAllPromos = async ({ query }, res) => {
-  let messenger_user_id = query['messenger user id'];
-  let provider = await getProviderByUserID(messenger_user_id);
-
-  let provider_base_id = provider.fields['Practice Base ID'];
-  let promos = await getPracticePromos({ provider_base_id });
-
-  if (!promos[0]) {
-    let redirect_to_blocks = ['No Promotions Setup'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
-  let galleryData = promos.map(
-    toGalleryData({ provider_base_id })
-  );
-
-  let messages = createMultiGallery(galleryData);
-  res.send({ messages });
+module.exports = {
+  getPracticePromos,
+  toGalleryData,
 }
-
-module.exports = viewAllPromos;
