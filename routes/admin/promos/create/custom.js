@@ -1,8 +1,8 @@
 let { BASEURL } = process.env;
-let { createURL, localizeDate } = require('../libs/helpers');
-let { getProviderByUserID } = require('../libs/providers');
+let { createURL, localizeDate } = require('../../../../libs/helpers');
+let { getProviderByUserID } = require('../../../../libs/providers');
 
-let { getTable, createTableData } = require('../libs/data');
+let { getTable, createTableData } = require('../../../../libs/data');
 
 let getPromosTable = getTable('Promos');
 
