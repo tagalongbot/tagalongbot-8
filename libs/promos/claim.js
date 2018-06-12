@@ -22,29 +22,23 @@ let getUserFromPractice = async ({ user_messenger_id, provider_base_id }) => {
   return user;
 }
 
-let createPracticeUser = async () => {
+let createPracticeUser = async ({ provider_base_id, user_data }) => {
   let usersTable = getUsersTable(provider_base_id);
   let createUser = createTableData(usersTable);
 
+  let new_user = await createUser(user_data);
+  return new_user;
 }
 
-let updatePracticeUser = async () => {
+let updatePracticeUser = async ({ provider_base_id, user_data, practice_user }) => {
   let usersTable = getUsersTable(provider_base_id);
   let updateUser = updateTableData(usersTable);
   
+  let updated_user = await updateUser(user_data, practice_user);
+  return updated_user;
 }
 
-let createOrUpdateUser = async (data, provider) => {
-  let { messenger_user_id, first_name, last_name, gender, user_email, provider_base_id } = data;
-
-  let user_messenger_id = messenger_user_id;
-  let practice_user = await getUserFromPractice({ user_messenger_id, provider_base_id });
-
-  let provider_id = provider.id;
-  let provider_state = provider.fields['Practice State'];
-  let provider_city = provider.fields['Practice City'];
-  let provider_zip_code = provider.fields['Practice Zip Code'];
-
+let createUserData = ({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code }) => {
   let user_data = {
     'messenger user id': messenger_user_id,
     'First Name': first_name,
@@ -55,7 +49,23 @@ let createOrUpdateUser = async (data, provider) => {
     'Zip Code': Number(provider_zip_code),
   }
 
+  return user_data;
+}
+
+let createOrUpdateUser = async (data, provider) => {
+  let { messenger_user_id, first_name, last_name, gender, user_email, provider_base_id } = data;
+
+  let user_messenger_id = messenger_user_id;
   let user = await getUserByMessengerID(messenger_user_id);
+  let practice_user = await getUserFromPractice({ user_messenger_id, provider_base_id });
+
+  let provider_id = provider.id;
+  let provider_state = provider.fields['Practice State'];
+  let provider_city = provider.fields['Practice City'];
+  let provider_zip_code = provider.fields['Practice Zip Code'];
+  
+  let user_data = createUserData({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code });
+
 
   let provider_ids = (user.fields['Practices Claimed Promos From'] || '').split(',');
 
@@ -69,13 +79,13 @@ let createOrUpdateUser = async (data, provider) => {
     ...user_data 
   }
 
-  let updated_user = await updateUserFromAllUsers(updateUserData, user);
+  let updated_user = await updateUser(updateUserData, user);
 
   if (!practice_user) {
     let newUser = await createPracticeUser({ provider_base_id, user_data });
     return newUser;
   }
 
-  let updated_practice_user = await updateUser(user_data, practice_user);
+  let updated_practice_user = await updatePracticeUser({ provider_base_id, user_data, practice_user });
   return updated_practice_user;
 }
