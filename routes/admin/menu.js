@@ -1,4 +1,4 @@
-let { getProviderByUserID } = require('../libs/providers');
+let { getProviderByUserID } = require('../../../libs/providers');
 
 let getAdminMenu = async ({ query }, res) => {
   let messenger_user_id = query['messenger user id'];

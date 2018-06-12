@@ -37,6 +37,8 @@ let createUpdateMsg = ({ messenger_user_id, promo_id, provider_base_id, promo, u
     `View Promo Details|json_plugin_url|${view_promo_details_url}`,
     `View All Promotions|json_plugin_url|${view_active_promos_url}`
   );
+  
+  return txtMsg;
 }
 
 module.exports = {
