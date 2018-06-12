@@ -1,8 +1,8 @@
 let { SERVICES_BASE_ID } = process.env;
-let { createGallery, createMultiGallery } = require('../libs/bots');
-let { getProviderByUserID } = require('../libs/providers');
+let { createGallery, createMultiGallery } = require('../../../../libs/bots');
+let { getProviderByUserID } = require('../../../../libs/providers');
 
-let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData } = require('../../../../libs/data');
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
@@ -35,7 +35,10 @@ let sendServicePromos = async ({ query }, res) => {
   let service = await findService(service_id);
   let promos = await getServicePromos(service);
 
-  let galleryData = promos.map(toPromosGallery({ provider_id, provider_base_id }, service));
+  let galleryData = promos.map(
+    toPromosGallery({ provider_id, provider_base_id }, service)
+  );
+
   let gallery = createGallery(galleryData);
   let messages = [gallery];
   res.send({ messages });
