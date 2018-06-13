@@ -8,7 +8,7 @@ let getPractices = getAllDataFromTable(practiceTable);
 let findPractice = findTableData(practiceTable);
 let updatePractice = updateTableData(practiceTable);
 
-let searchProviders = async (data, { search_type, active = false }) => {
+let searchProviders = async ({ search_type, active = false }, data) => {
 	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
 
 	let filterByFormula = '';
@@ -47,9 +47,12 @@ let updateProvider = async (updateData, provider) => {
 
 let filterProvidersByService = (service_name, providers) => {
   let service_name_lowercased = service_name.toLowerCase();
-  let providersByService = providers.filter((provider) => {
-    return provider.fields['Practice Services'].map(service => service.toLowerCase()).includes(service_name_lowercased);
-  });
+
+  let serviceToLowerCase = service => service.toLowerCase();
+
+  let providersByService = providers.filter(
+    (provider) => provider.fields['Practice Services'].map(serviceToLowerCase).includes(service_name_lowercased)
+  );
 
   return providersByService;
 }

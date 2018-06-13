@@ -15,10 +15,6 @@ let searchPromotionsByLocation = async (search_data) => {
     service_name
   } = search_data;
 
-  if (service_name) providers = filterProvidersByService(service_name, providers);
-
-  let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
-
   let promotions = [];
   let view = 'Active Promos';
 
