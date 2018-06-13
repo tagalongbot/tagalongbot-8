@@ -25,11 +25,9 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers = await getProviders({ search_promos_state, search_promos_city, search_promos_zip_code, search_type });
 
-  if (service_name) providers = filterProvidersByService(service_name, providers);
+  let providers_by_service = filterProvidersByService(service_name, providers);
 
-  let providersBaseIDs = providers.map((provider) => provider.fields['Practice Base ID']);
-
-  
+  let providersBaseIDs = (providers_by_service || providers).map((provider) => provider.fields['Practice Base ID']);
   
   
   
