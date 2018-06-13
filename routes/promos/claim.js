@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 
-let 
+let { getProviderByID } = require('../../libs/providers.js');
 let { getPromo, updatePromo, createUserData, updateUserFromAllUsersBase, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 
 let askForUserEmail = async ({ query }, res) => {
@@ -18,7 +18,7 @@ let claimPromotion = async ({ query }, res) => {
   let first_name = query['first name'];
   let last_name = query['last name'];
 
-  let provider = await findPractice(provider_id);
+  let provider = await getProviderByID(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
   let provider_phone_number = provider.fields['Practice Phone #'];
   let provider_booking_url = provider.fields['Practice Booking URL'];
