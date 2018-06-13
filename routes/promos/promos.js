@@ -25,15 +25,17 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers = await getProviders({ search_promos_state, search_promos_city, search_promos_zip_code, search_type });
 
-  let providers_by_service = filterProvidersByService(service_name, providers);
-  
-  let promotions = Promise.all(
+  let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : [];
+
+  let promotions = await Promise.all(
     (providers_by_service || providers).map(getProviderPromosByService(service_name))
   );
+  
+  let randomPromotions = shuffleArray(
+    flattenArray(promotions)
+  ).slice(0, 10);
 
-  console.log('promotions', promotions);
-
-  let promosGalleryData = flattenArray(promotions).map(
+  let promosGalleryData = randomPromotions.map(
     toGalleryData({ first_name, last_name, gender, messenger_user_id })
   );
 
@@ -43,8 +45,7 @@ let getPromos = async ({ query, params }, res) => {
     return;
   }
 
-	let randomPromotions = shuffleArray(promosGalleryData).slice(0, 10);
-	let promotionsGallery = createGallery(randomPromotions);
+	let promotionsGallery = createGallery(promosGalleryData);
 
   let textMsg = { text: `Here's are some promotions I found ${first_name}` };
 	let messages = [textMsg, promotionsGallery];
