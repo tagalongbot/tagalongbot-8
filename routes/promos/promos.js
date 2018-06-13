@@ -5,6 +5,7 @@ let { searchPromotionsByLocation, toGalleryElement, toGalleryData } = require('.
 
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
+  let { search_promos_state, search_promos_city, search_promos_zip_code } = query;
 
   let first_name = query['first name'] || query['first_name'];
   let last_name = query['last name'] || query['last_name'];
@@ -13,7 +14,6 @@ let getPromos = async ({ query, params }, res) => {
 
   let service_name = query['service_name'];
 
-  let { search_promos_state, search_promos_city, search_promos_zip_code } = query;
 
 	let promotions = await searchPromotionsByLocation(query, { search_type, service_name, active: true });
 
