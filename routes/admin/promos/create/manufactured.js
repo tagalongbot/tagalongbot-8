@@ -15,7 +15,7 @@ let express = require('express');
 let router = express.Router();
 
 let sendManufacturedPromotions = async ({ query }, res) => {
-  let messenger_user_id = query['messenger user id'];
+  let { messenger_user_id } = query;
   let provider = await getProviderByUserID(messenger_user_id, ['Practice Base ID', 'Practice Services']);
   let provider_id = provider.id;
   let provider_base_id = provider.fields['Practice Base ID'];

@@ -2,9 +2,13 @@ let { getProviderByUserID } = require('../../../../libs/providers.js');
 let { createNewPromo } = require('../../../../libs/admin/promos/create/custom.js');
 
 let createCustomPromo = async ({ query }, res) => {
-  let { new_promo_name, new_promo_image, new_promo_expiration_date, new_promo_claim_limit } = query;
-
-  let messenger_user_id = query['messenger user id'];
+  let { 
+    messenger_user_id,
+    new_promo_name,
+    new_promo_image,
+    new_promo_expiration_date,
+    new_promo_claim_limit
+  } = query;
 
   let provider = await getProviderByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];

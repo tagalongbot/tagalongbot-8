@@ -5,10 +5,7 @@ let { getUserByMessengerID } = require('../../../libs/users.js');
 let { getUserPromos } = require('../../../libs/claimed.js');
 
 let viewClaimedPromos = async ({ query }, res) => {
-  let messenger_user_id = query['messenger user id'] || query['messenger_user_id'];
-  let first_name = query['first name'] || query['first_name'];
-  let last_name = query['last name'] || query['last_name'];
-  let gender = query['gender'] || query['gender'];
+  let { messenger_user_id, first_name, last_name, gender } = query;
 
   let data = { first_name, last_name, gender1: gender, messenger_user_id };
 

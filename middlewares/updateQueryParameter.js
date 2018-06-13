@@ -1,7 +1,4 @@
 let updateQueryParameter = ({ query }, res, next) => {
-  query['messenger_user_id'] = query['messenger_user_id'] || query['messenger user id'];
-  
-  
   let keys = Object.keys(query);
   
   for (let key of keys) {

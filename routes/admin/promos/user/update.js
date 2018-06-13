@@ -1,3 +1,5 @@
+let { getUser, getPromo, updatePromo, createUpdateMsg } = require('../../../../libs/admin/promos/user/update.js');
+
 let updateUserPromo = async ({ query }, res) => {
   let { provider_base_id, promo_id, user_messenger_id } = query;
 

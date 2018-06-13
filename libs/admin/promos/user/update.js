@@ -1,5 +1,5 @@
-let { createButtonMessage } = require('../../../../libs/bots');
-let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../../../libs/data');
+let { createButtonMessage } = require('../../../../libs/bots.js');
+let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../../../libs/data.js');
 
 let getPromosTable = getTable('Promos');
 let getUsersTable = getTable('Users');

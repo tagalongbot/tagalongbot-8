@@ -16,13 +16,12 @@ let getUpdateField = ({ query }, res) => {
 
 let updatePromoInfo = async ({ query }, res) => {
   let { 
+    messenger_user_id,
     updating_promo_id,
     updating_provider_base_id,
     update_promo_field_name, 
     update_promo_field_value 
   } = query;
-
-  let messenger_user_id = query['messenger user id'];
 
   let promo_id = updating_promo_id;
   let provider_base_id = updating_provider_base_id;

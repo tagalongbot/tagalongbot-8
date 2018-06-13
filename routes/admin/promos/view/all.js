@@ -3,7 +3,7 @@ let { getProviderByUserID } = require('../../../../libs/providers.js');
 let { getPracticePromos, toGalleryData } = require('../../../../libs/admin/promos/view/all.js');
 
 let viewAllPromos = async ({ query }, res) => {
-  let messenger_user_id = query['messenger user id'];
+  let { messenger_user_id } = query;
   let provider = await getProviderByUserID(messenger_user_id);
 
   let provider_base_id = provider.fields['Practice Base ID'];
