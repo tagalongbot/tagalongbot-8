@@ -5,10 +5,9 @@ let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 let { filterProvidersByService } = require('../../libs/providers.js');
 let { getProviders, getProviderPromosByService, toGalleryElement } = require('../../libs/promos.js');
 
-let reducer = (mapper) => {
+let fn = (providers, fn) => {
   
 }
-
 
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
