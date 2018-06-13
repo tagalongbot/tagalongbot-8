@@ -2,7 +2,7 @@ let { BASEURL } = process.env;
 let { createGallery } = require('../../libs/bots.js');
 let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 let { searchProviders, filterProvidersByService } = require('../../libs/providers.js');
-let { searchPromotionsByLocation, toGalleryElement, toGalleryData } = require('../../libs/promos.js');
+let { getProviderPromosByService, toGalleryElement, toGalleryData } = require('../../libs/promos.js');
 
 let getProviders = async ({ search_promos_state, search_promos_city, search_promos_zip_code, search_type }) => {
   let search_providers_state = search_promos_state;
@@ -17,17 +17,6 @@ let getProviders = async ({ search_promos_state, search_promos_city, search_prom
   return providers;
 }
 
-let searchPromotionsByLocation = async (search_data) => {
-  let view = 'Active Promos';
-  let promosTable = getPromosTable(baseID);
-  let getPromos = getAllDataFromTable(promosTable);
-  let promos = await getPromos({ view });
-
-  if (service_name) promos = promos.filter(promo => promo.fields['Type'].toLowerCase().includes(service_name.toLowerCase()));
-
-  return promos;
-}
-
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
 
@@ -37,20 +26,14 @@ let getPromos = async ({ query, params }, res) => {
   let providers = await getProviders({ search_promos_state, search_promos_city, search_promos_zip_code, search_type });
 
   let providers_by_service = filterProvidersByService(service_name, providers);
-
-  let providersBaseIDs = (providers_by_service || providers).map(
-    (provider) => provider.fields['Practice Base ID']
-  );
   
-  
-  
-  
-
-	let promotions = await searchPromotionsByLocation(
-    { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code, search_type, service_name }
+  let promotions = Promise.all(
+    (providers_by_service || providers).map(getProviderPromosByService(service_name))
   );
 
-  let promosGalleryData = promotions.map(
+  console.log('promotions', promotions);
+
+  let promosGalleryData = flattenArray(promotions).map(
     toGalleryData({ first_name, last_name, gender, messenger_user_id })
   );
 

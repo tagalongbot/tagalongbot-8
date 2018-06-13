@@ -1,9 +1,24 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../libs/helpers');
-let { searchProviders, filterProvidersByService } = require('../libs/providers');
 let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
+
+let getProviderPromosByService = (service_name) => async (provider) => {
+  let provider_base_id = provider.fields['Practice Base ID'];
+  let service_name_lowercased = service_name.toLowerCase();
+
+  let view = 'Active Promos';
+  let promosTable = getPromosTable(provider_base_id);
+  let getPromos = getAllDataFromTable(promosTable);
+  let promos = await getPromos({ view });
+
+  let matching_promos = promos.filter(
+    promo => promo.fields['Type'].toLowerCase().includes(service_name_lowercased)
+  );
+
+  return promos;
+}
 
 let toGalleryElement = ({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'].slice(0, 80);
@@ -37,7 +52,7 @@ let toGalleryData = ({ first_name, last_name, gender, messenger_user_id }) => (a
 }
 
 module.exports = {
-  searchPromotionsByLocation,
+  getProviderPromosByService,
   toGalleryElement,
   toGalleryData,
 }
