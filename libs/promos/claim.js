@@ -133,3 +133,12 @@ let createClaimedMsg = ({ query, user_data, updated_promo, provider_phone_number
   
   return msg;
 }
+
+module.exports = {
+  getPromo,
+  updatePromo,
+  createUserData,
+  updateUserFromAllUsersBase,
+  createOrUpdateUser,
+  createClaimedMsg,
+}

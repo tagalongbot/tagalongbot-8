@@ -1,10 +1,11 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
 let { createURL } = require('../libs/helpers');
-let { getTable, getAllDataFromTable, updateTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../libs/data');
 
 let getPracticeTable = getTable('Practices');
 let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
 let getPractices = getAllDataFromTable(practiceTable);
+let findPractice = findTableData(practiceTable);
 let updatePractice = updateTableData(practiceTable);
 
 let searchProviders = async (data, { search_type, active = false }) => {
@@ -32,6 +33,11 @@ let getProviderByUserID = async (messenger_user_id, fields = []) => {
   let filterByFormula = `{Claimed By Messenger User ID} = '${messenger_user_id}'`;
   let [user] = await getPractices({ filterByFormula, fields });
   return user;
+}
+
+let getProviderByID = async (provider_id) => {
+  let practice = await findPractice(provider_id);
+  return practice;
 }
 
 let updateProvider = async (updateData, provider) => {
@@ -182,6 +188,7 @@ let createLastGalleryElement = () => {
 module.exports = {
   searchProviders,
   getProviderByUserID,
+  getProviderByID,
   updateProvider,
   filterProvidersByService,
   sortProviders,

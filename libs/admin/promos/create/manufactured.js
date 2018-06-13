@@ -25,20 +25,10 @@ let getProviderServices = async (provider) => {
   return matched_services;
 }
 
-let getServicePromosCount = (service) => {
-  let service_keys = Object.keys(service);
-
-  let promo_keys = service_keys.filter(
-    key => key.toLowerCase().startsWith('promo-')
-  );
-
-  return promo_keys.length;
-}
-
 let getServicePromos = (service) => {
-  let promos = Object.keys(service.fields)
+  let service_keys = Object.keys(service.fields);
 
-  .filter(
+  let promos = service_keys.filter(
     (key) => key.toLowerCase().startsWith('promo-')
   );
 
@@ -47,7 +37,7 @@ let getServicePromos = (service) => {
 
 let getServicesWithPromos = (services) => {
   let services_with_promos = services.filter((service) => {
-    let promos_count = getServicePromosCount(service.fields);
+    let promos_count = getServicePromos(service).length;
     return promos_count > 0;
   });
   
@@ -92,7 +82,7 @@ let createNewPromo = async (data) => {
 let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id, fields: service }) => {
   let title = service['Name'];
 
-  let service_types_length = getServicePromosCount(service);
+  let service_types_length = getServicePromos(service).length;
   let subtitle = `Promo Types Available: ${service_types_length}`;
   let image_url = service['Image URL'];
 

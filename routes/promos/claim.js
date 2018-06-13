@@ -1,6 +1,9 @@
 let express = require('express');
 let router = express.Router();
 
+let 
+let { getPromo, updatePromo, createUserData, updateUserFromAllUsersBase, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
+
 let askForUserEmail = async ({ query }, res) => {
   let { promo_id, provider_id } = query;
 
@@ -39,7 +42,7 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let updatedPromo = await updatePromo({ provider_base_id, promo, user, claimed_by_users });
+  let updated_promo = await updatePromo({ provider_base_id, promo, user, claimed_by_users });
 
   let claimedMsg = createClaimedMsg({ query, user_data, updated_promo, provider_phone_number, provider_booking_url });
 
