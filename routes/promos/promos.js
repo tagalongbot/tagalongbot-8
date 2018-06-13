@@ -15,8 +15,12 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : [];
 
+  let 
+  
   let promotions = await Promise.all(
-    (providers_by_service || providers).map(getProviderPromosByService(service_name))
+    (providers_by_service || providers).map(
+      getProviderPromosByService(service_name)
+    )
   );
 
   let randomPromotions = shuffleArray(
