@@ -5,34 +5,6 @@ let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 
-let searchPromotionsByLocation = async (search_data) => {
-	let {
-    search_promos_state, 
-    search_promos_city, 
-    search_promos_zip_code, 
-    search_promo_code,
-    search_type,
-    service_name
-  } = search_data;
-
-  let promotions = [];
-  let view = 'Active Promos';
-
-  for (let [index, baseID] of providersBaseIDs.entries()) {
-    if (!baseID) continue;
-    let promosTable = getPromosTable(baseID);
-    let getPromos = getAllDataFromTable(promosTable);
-    let promos = await getPromos({ view });
-
-    if (service_name) promos = promos.filter(promo => promo.fields['Type'].toLowerCase().includes(service_name.toLowerCase()));
-    let provider_id = providers[index].id;
-    let provider_base_id = providersBaseIDs[index];
-    promotions = promotions.concat({ provider_id, provider_base_id, promos });
-  }
-
-  return promotions;
-}
-
 let toGalleryElement = ({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];

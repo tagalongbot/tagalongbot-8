@@ -17,6 +17,17 @@ let getProviders = async ({ search_promos_state, search_promos_city, search_prom
   return providers;
 }
 
+let searchPromotionsByLocation = async (search_data) => {
+  let view = 'Active Promos';
+  let promosTable = getPromosTable(baseID);
+  let getPromos = getAllDataFromTable(promosTable);
+  let promos = await getPromos({ view });
+
+  if (service_name) promos = promos.filter(promo => promo.fields['Type'].toLowerCase().includes(service_name.toLowerCase()));
+
+  return promos;
+}
+
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
 
@@ -27,7 +38,9 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers_by_service = filterProvidersByService(service_name, providers);
 
-  let providersBaseIDs = (providers_by_service || providers).map((provider) => provider.fields['Practice Base ID']);
+  let providersBaseIDs = (providers_by_service || providers).map(
+    (provider) => provider.fields['Practice Base ID']
+  );
   
   
   
