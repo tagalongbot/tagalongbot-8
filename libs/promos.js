@@ -5,14 +5,15 @@ let { getTable, getAllDataFromTable } = require('../libs/data');
 
 let getPromosTable = getTable('Promos');
 
-let searchPromotionsByLocation = async (search_data, { search_type, service_name }) => {
-	let { search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = search_data;
-
-  let providers = await searchProviders({
-    search_providers_state: search_promos_state,
-    search_providers_city: search_promos_city,
-    search_providers_zip_code: search_promos_zip_code,
-  }, { search_type, active: true });
+let searchPromotionsByLocation = async (search_data) => {
+	let {
+    search_promos_state, 
+    search_promos_city, 
+    search_promos_zip_code, 
+    search_promo_code,
+    search_type,
+    service_name
+  } = search_data;
 
   if (service_name) providers = filterProvidersByService(service_name, providers);
 
