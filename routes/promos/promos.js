@@ -5,18 +5,6 @@ let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 let { filterProvidersByService } = require('../../libs/providers.js');
 let { getProviders, getProviderPromosByService, toGalleryElement } = require('../../libs/promos.js');
 
-let doubleMap = async (arr, fn1, fn2) => {
-  let new_arr = [];
-
-  for (let element of arr) {
-    let async_results = await fn(element);
-    let mapped_async_results = async_results.map(fn2);
-    new_arr = [...new_arr, ...mapped_async_results];
-  }
-
-  return new_arr;
-}
-
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
 
