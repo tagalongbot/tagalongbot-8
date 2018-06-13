@@ -1,8 +1,22 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../libs/helpers');
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { createURL } = require('../libs/helpers.js');
+let { getTable, getAllDataFromTable } = require('../libs/data.js');
+let { searchProviders } = require('../libs/providers.js');
 
 let getPromosTable = getTable('Promos');
+
+let getProviders = async ({ search_promos_state, search_promos_city, search_promos_zip_code, search_type }) => {
+  let search_providers_state = search_promos_state;
+  let search_providers_city = search_promos_city;
+  let search_providers_zip_code = search_promos_zip_code;
+
+  let providers = await searchProviders(
+    { search_type, active: true },
+    { search_providers_state, search_providers_city, search_providers_zip_code, }
+  );
+
+  return providers;
+}
 
 let getProviderPromosByService = (service_name) => async (provider) => {
   let provider_base_id = provider.fields['Practice Base ID'];

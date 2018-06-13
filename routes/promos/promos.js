@@ -1,21 +1,9 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../../libs/bots.js');
 let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
-let { searchProviders, filterProvidersByService } = require('../../libs/providers.js');
-let { getProviderPromosByService, toGalleryElement, toGalleryData } = require('../../libs/promos.js');
 
-let getProviders = async ({ search_promos_state, search_promos_city, search_promos_zip_code, search_type }) => {
-  let search_providers_state = search_promos_state;
-  let search_providers_city = search_promos_city;
-  let search_providers_zip_code = search_promos_zip_code;
-
-  let providers = await searchProviders(
-    { search_type, active: true },
-    { search_providers_state, search_providers_city, search_providers_zip_code, }
-  );
-
-  return providers;
-}
+let { filterProvidersByService } = require('../../libs/providers.js');
+let { getProviders, getProviderPromosByService, toGalleryElement } = require('../../libs/promos.js');
 
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
@@ -30,13 +18,13 @@ let getPromos = async ({ query, params }, res) => {
   let promotions = await Promise.all(
     (providers_by_service || providers).map(getProviderPromosByService(service_name))
   );
-  
+
   let randomPromotions = shuffleArray(
     flattenArray(promotions)
   ).slice(0, 10);
 
   let promosGalleryData = randomPromotions.map(
-    toGalleryData({ first_name, last_name, gender, messenger_user_id })
+    toGalleryElement({ messenger_user_id, provider_id, provider_base_id, first_name, last_name, gender })
   );
 
   if (!promosGalleryData[0]) {
