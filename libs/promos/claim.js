@@ -1,10 +1,10 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID } = process.env;
-let { createButtonMessage, createTextMessage } = require('../libs/bots');
-let { createURL } = require('../libs/helpers');
+let { createButtonMessage } = require('../../libs/bots');
+let { createURL } = require('../../libs/helpers');
 
-let { getUserByMessengerID, updateUser } = require('../libs/users');
+let { getUserByMessengerID, updateUser } = require('../../libs/users');
 
-let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../../libs/data');
 
 let getPracticesTable = getTable('Practices');
 let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
@@ -12,6 +12,30 @@ let findPractice = findTableData(practicesTable);
 
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
+
+let getPromo = async ({ provider_base_id, promo_id }) => {
+  let promosTable = getPromosTable(provider_base_id);
+  let findPromo = findTableData(promosTable);
+  let promo = await findPromo(promo_id);
+  return promo;
+}
+
+let updatePromo = async ({ provider_base_id, promo, user, claimed_by_users }) => {
+  let promosTable = getPromosTable(provider_base_id);
+  let updatePromoFromTable = updateTableData(promosTable);
+
+  let new_claimed_users = [
+    ...new Set([user.id, ...claimed_by_users])
+  ];
+
+  let updateData = {
+    'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
+    'Claimed By Users': new_claimed_users,
+  }
+
+  let updatedPromo = await updatePromoFromTable(updateData, promo);
+  return updatedPromo;
+}
 
 let getUserFromPractice = async ({ user_messenger_id, provider_base_id }) => {
   let usersTable = getUsersTable(provider_base_id);

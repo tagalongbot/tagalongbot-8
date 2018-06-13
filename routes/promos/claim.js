@@ -20,13 +20,9 @@ let claimPromotion = async ({ query }, res) => {
   let provider_phone_number = provider.fields['Practice Phone #'];
   let provider_booking_url = provider.fields['Practice Booking URL'];
 
-  let promosTable = getPromosTable(provider_base_id);
-  let findPromo = findTableData(promosTable);
-  let updatePromo = updateTableData(promosTable);
+  let promo = await getPromo({ provider_base_id, promo_id });
 
-  let promo = await findPromo(promo_id);
-
-  if (!promo || promo.fields['Claim Limit Reached'] === "1") {
+  if (!promo || promo.fields['Claim Limit Reached'] === '1') {
     let redirect_to_blocks = ['Promo No Longer Valid'];
     res.send({ redirect_to_blocks });
     return;
@@ -36,24 +32,16 @@ let claimPromotion = async ({ query }, res) => {
   let user = await createOrUpdateUser(user_data, provider);
 
   let claimed_by_users = promo.fields['Claimed By Users'] || [];
+
   if (claimed_by_users.includes(user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let new_claimed_users = [
-    ...new Set([user.id, ...claimed_by_users])
-  ];
+  let updatedPromo = await updatePromo({ provider_base_id, promo, user, claimed_by_users });
 
-  let updatePromoData = {
-    'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
-    'Claimed By Users': new_claimed_users,
-  }
-
-  let updatedPromo = await updatePromo(updatePromoData, promo);
-
-  let claimedMsg = createClaimedMsg();
+  let claimedMsg = createClaimedMsg({ query, user_data, updated_promo, provider_phone_number, provider_booking_url });
 
   let messages = [claimedMsg];
   res.send({ messages });
