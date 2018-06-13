@@ -5,10 +5,16 @@ let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 let { filterProvidersByService } = require('../../libs/providers.js');
 let { getProviders, getProviderPromosByService, toGalleryElement } = require('../../libs/promos.js');
 
-let doubleMap = (arr, fn1, fn2) => {
-  let result = arr.map(
-    element => fn1(element).map(f
-  )
+let doubleMap = async (arr, fn1, fn2) => {
+  let new_arr = [];
+
+  for (let element of arr) {
+    let async_results = await fn(element);
+    let mapped_async_results = async_results.map(fn2);
+    new_arr = [...new_arr, ...mapped_async_results];
+  }
+
+  return new_arr;
 }
 
 let getPromos = async ({ query, params }, res) => {
@@ -21,11 +27,17 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : [];
 
-  let promotions = await Promise.all(
-    (providers_by_service || providers).map(
-      getProviderPromosByService(service_name)
-    )
+  let promotions = await doubleMap(
+    (providers_by_service || providers),
+    getProviderPromosByService(service_name),
+    toGalleryElement({ messenger_user_id, provider_id, provider_base_id, first_name, last_name, gender })
   );
+  
+  // let promotions = await Promise.all(
+  //   (providers_by_service || providers).map(
+  //     getProviderPromosByService(service_name)
+  //   )
+  // );
 
   let randomPromotions = shuffleArray(
     flattenArray(promotions)
