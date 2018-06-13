@@ -13,11 +13,7 @@ let createNewUser = createTableData(usersTable);
 let updateUser = updateTableData(usersTable);
 
 let createOrUpdateUser = async (user, query) => {
-  let first_name = query['first name'];
-	let last_name = query['last name'];
-	let gender = query['gender'];
-	let messenger_user_id = query['messenger user id'];
-
+  let { messenger_user_id, first_name, last_name, gender } = query;
   let { search_providers_state, search_providers_city, search_providers_zip_code } = query;
 
   let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;

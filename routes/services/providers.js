@@ -15,13 +15,10 @@ let searchServiceProviders = async ({ query }, res) => {
 }
 
 let getServiceProviders = async ({ query, params }, res) => {
-  let { service_name, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
   let { search_type } = params;
-
-  let messenger_user_id = query['messenger user id'];
-  let first_name = query['first name'];
-  let last_name = query['last name'];
-  let gender = query['gender'];
+  
+  let { service_name, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
+  let { messenger_user_id, first_name, last_name, gender } = query;
 
   let data = { first_name, last_name, gender, messenger_user_id };
 

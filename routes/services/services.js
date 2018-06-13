@@ -91,14 +91,13 @@ let createLastGalleryElement = ({ service_type, index, data }) => {
 
 let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
+  
+  let { messenger_user_id, first_name, last_name, gender } = query;
+  
+  let data = { first_name, last_name, gender, messenger_user_id };
 
   let index = Number(query['index']) || 0;
   let new_index = index + 8;
-  let first_name = query['first name'];
-  let last_name = query['last name'];
-  let gender = query['gender'];
-  let messenger_user_id = query['messenger user id'];
-  let data = { first_name, last_name, gender, messenger_user_id };
 
   if (service_type === 'surgical') {
     let surgical_services = await searchServices('Surgical');

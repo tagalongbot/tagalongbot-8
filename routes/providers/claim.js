@@ -22,10 +22,7 @@ let askForUserEmail = async ({ query }, res) => {
 }
 
 let claimProvider = async ({ query }, res) => {
-  let { provider_id, gender, user_email } = query;
-  let messenger_user_id = query['messenger user id'];
-  let first_name = query['first name'];
-  let last_name = query['last name'];
+  let { provider_id, gender, user_email, messenger_user_id, first_name, last_name } = query;
 
   let provider = await findPractice(provider_id);
 

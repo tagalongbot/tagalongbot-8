@@ -1,11 +1,7 @@
 let { getUserByMessengerID, updateUser, createUser } = require('../libs/users');
 
 let listProvider = async({ query }, res) => {
-  let first_name = query['first name'];
-  let last_name = query['last name'];
-  let gender = query['gender'];
-  let messenger_user_id = query['messenger user id'];
-  let { user_email } = query;
+  let { messenger_user_id, first_name, last_name, gender, user_email } = query;
 
   let user = await getUserByMessengerID(messenger_user_id);
 
