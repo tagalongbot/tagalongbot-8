@@ -1,5 +1,5 @@
-let { getProviderByID } = require('../libs/providers.js');
-let { updatePractice, createUpdateMsg } = require('../libs/providers/claim.js');
+let { getProviderByID } = require('../../libs/providers.js');
+let { updatePractice, createUpdateMsg } = require('../../libs/providers/claim.js');
 let express = require('express');
 let router = express.Router();
 

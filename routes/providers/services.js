@@ -1,7 +1,7 @@
 let { createGallery } = require('../../libs/bots.js');
 let { getProviderByID } = require('../../libs/providers.js');
-let { getServices } = require('../../libs/services.js');
-let { filterServicesFromProvider, toGalleryElement } = require('../../libs/providers/services.js');
+let { getServices, filterServicesFromProvider } = require('../../libs/services.js');
+let { toGalleryElement } = require('../../libs/providers/services.js');
 
 let getProviderServices = async ({ query }, res) => {
   let { provider_id, messenger_user_id, first_name, last_name, gender } = query;

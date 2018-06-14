@@ -1,8 +1,8 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../../../libs/helpers');
-let { createButtonMessage } = require('../../../libs/bots');
+let { createURL } = require('../../../libs/helpers.js');
+let { createButtonMessage } = require('../../../libs/bots.js');
 
-let { getTable, getAllDataFromTable, updateTableData } = require('../../../libs/data');
+let { getTable, getAllDataFromTable, updateTableData } = require('../../../libs/data.js');
 
 let getPromosTable = getTable('Promos');
 let getUsersTable = getTable('Users');

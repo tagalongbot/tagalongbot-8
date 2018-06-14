@@ -1,9 +1,9 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../libs/helpers.js');
-let { createGallery } = require('../libs/bots.js');
+let { createURL } = require('../../libs/helpers.js');
+let { createGallery } = require('../../libs/bots.js');
 
-let { getPracticePromos } = require('../libs/practice/promos.js');
-let { toGalleryElement } = require('../libs/providers/promos.js');
+let { getPracticePromos } = require('../../libs/practice/promos.js');
+let { toGalleryElement } = require('../../libs/providers/promos.js');
 
 let getProviderPromos = async ({ query }, res) => {
   let { provider_id, provider_base_id, first_name, last_name, gender1, messenger_user_id } = query;

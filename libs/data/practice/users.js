@@ -1,7 +1,7 @@
 // This library is used for users inside a practice base
 let { BASEURL } = process.env;
-let { createURL } = require('../../libs/helpers.js');
-let { getTable, getAllDataFromTable } = require('../../libs/data.js');
+let { createURL } = require('../../../libs/helpers.js');
+let { getTable, getAllDataFromTable } = require('../../../libs/data.js');
 
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');

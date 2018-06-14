@@ -1,7 +1,7 @@
 // This library is used for promos inside a practice base
 let { BASEURL } = process.env;
-let { createURL } = require('../../libs/helpers.js');
-let { getTable, getAllDataFromTable, findTableData } = require('../../libs/data.js');
+let { createURL } = require('../../../libs/helpers.js');
+let { getTable, getAllDataFromTable, findTableData } = require('../../../libs/data.js');
 
 let getPromosTable = getTable('Promos');
 

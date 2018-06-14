@@ -1,6 +1,6 @@
 let { updatePromo, createUpdateMsg } = require('../../../../libs/admin/promos/user/update.js');
-let { getPracticePromo } = require('../../../../libs/practice/promos.js');
-let { getPracticeUser } = require('../../../../libs/practice/users.js');
+let { getPracticePromo } = require('../../../../libs/data/practice/promos.js');
+let { getPracticeUser } = require('../../../../libs/data/practice/users.js');
 
 let updateUserPromo = async ({ query }, res) => {
   let { provider_base_id, promo_id, user_messenger_id } = query;
