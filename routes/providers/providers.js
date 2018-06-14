@@ -8,7 +8,6 @@ let { getTable, getAllDataFromTable, createTableData, updateTableData } = requir
 
 let getUsersTable = getTable('Users');
 let usersTable = getUsersTable(USERS_BASE_ID);
-
 let createNewUser = createTableData(usersTable);
 let updateUser = updateTableData(usersTable);
 

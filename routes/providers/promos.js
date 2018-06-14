@@ -1,41 +1,13 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../libs/helpers');
-let { createGallery } = require('../libs/bots');
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { createURL } = require('../libs/helpers.js');
+let { createGallery } = require('../libs/bots.js');
 
-let getPromosTable = getTable('Promos');
-
-let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
-  let title = promo['Promotion Name'];
-  let subtitle = promo['Terms'];
-  let image_url = promo['Image URL'];
-
-  let promo_details_btn_url = createURL(`${BASEURL}/promo/details`, { promo_id, ...data });
-
-  let btn = {
-    title: 'View Promo Details',
-    type: 'json_plugin_url',
-    url: promo_details_btn_url,
-  }
-
-  let buttons = [btn];
-
-  let element = { title, subtitle, image_url, buttons };
-  return element;
-}
-
-let searchPromos = async (provider_base_id) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let getPromos = getAllDataFromTable(promosTable);
-
-  let view = 'Active Promos';
-  let promos = await getPromos({ view });
-  return promos;
-}
+let { getPracticePromos } = require('../libs/practice/promos.js');
+let { toGalleryElement } = require('../libs/providers/promos.js');
 
 let getProviderPromos = async ({ query }, res) => {
   let { provider_id, provider_base_id, first_name, last_name, gender1, messenger_user_id } = query;
-  let promos = await searchPromos(provider_base_id);  
+  let promos = await getPracticePromos({ provider_base_id });  
 
   if (!promos[0]) {
     let redirect_to_blocks = ['No Provider Promos Found'];
@@ -43,8 +15,10 @@ let getProviderPromos = async ({ query }, res) => {
     return;
   }
 
-  let data = { provider_id, provider_base_id, first_name, last_name, gender: gender1, messenger_user_id };
-  let promosGalleryData = promos.map(toGalleryElement(data)).slice(0, 5);
+  let promosGalleryData = promos.map(
+    toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender: gender1, messenger_user_id })
+  ).slice(0, 5);
+
   let servicesGallery = createGallery(promosGalleryData);
   let messages = [servicesGallery];
   res.send({ messages });
