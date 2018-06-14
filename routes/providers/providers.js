@@ -1,49 +1,10 @@
 let { BASEURL, USERS_BASE_ID } = process.env;
-let { createGallery } = require('../libs/bots');
-let { createURL, shuffleArray } = require('../libs/helpers');
+let { createGallery } = require('../libs/bots.js');
+let { createURL, shuffleArray } = require('../libs/helpers.js');
 
-let { searchProviders, filterProvidersByService, sortProviders, toGalleryElement, createLastGalleryElement } = require('../libs/providers');
-let { getUserByMessengerID } = require('../libs/users');
-let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data');
-
-let getUsersTable = getTable('Users');
-let usersTable = getUsersTable(USERS_BASE_ID);
-let createNewUser = createTableData(usersTable);
-let updateUser = updateTableData(usersTable);
-
-let createOrUpdateUser = async (user, query) => {
-  let { messenger_user_id, first_name, last_name, gender } = query;
-  let { search_providers_state, search_providers_city, search_providers_zip_code } = query;
-
-  let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;
-  let last_city_searched = search_providers_city ? search_providers_city.trim().toLowerCase() : null;
-  let last_zip_code_searched = search_providers_zip_code ? Number(search_providers_zip_code.trim()) : null;
-
-  if (!user) {
-		let newUserData = {
-			'messenger user id': messenger_user_id,
-			'User Type': 'CONSUMER',
-			'First Name': first_name,
-			'Last Name': last_name,
-			'Gender': gender,
-			'Last State Searched': last_state_searched,
-			'Last City Searched': last_city_searched,
-			'Last Zip Code Searched': last_zip_code_searched,
-		}
-
-		let newUser = await createNewUser(newUserData);
-    return newUser;
-	}
-
-  let updateUserData = {};
-
-  if (last_state_searched) updateUserData['Last State Searched'] = last_state_searched;
-  if (last_city_searched) updateUserData['Last City Searched'] = last_city_searched;
-  if (last_zip_code_searched) updateUserData['Last Zip Code Searched'] = last_zip_code_searched;
-
-  let updatedUser = await updateUser(updateUserData, user);
-  return updatedUser;
-}
+let { searchProviders, filterProvidersByService, sortProviders, toGalleryElement, createLastGalleryElement } = require('../libs/providers.js');
+let { getUserByMessengerID } = require('../libs/users.js');
+let { createOrUpdateUser } = require('../libs/providers/providers.js');
 
 // Main
 let getProviders = async ({ query, params }, res) => {
@@ -58,7 +19,7 @@ let getProviders = async ({ query, params }, res) => {
   let service_name = query['service_name'];
 
 	let user = await getUserByMessengerID(messenger_user_id);
-	let createdOrUpdatedUser = await createOrUpdateUser(user, query);
+	let new_updated_user = await createOrUpdateUser(user, query);
 
 	let providers = await searchProviders(query, { search_type });
 
