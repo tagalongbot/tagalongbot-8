@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
-let { createButtonMessage } = require('../../libs/bots');
-let { createURL } = require('../../libs/helpers');
+let { createButtonMessage } = require('../../libs/bots.js');
+let { createURL } = require('../../libs/helpers.js');
 
 let createDetailsMsg = ({ data, promo }) => {
   let { provider_id, promo_id } = data;

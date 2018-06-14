@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
-let { createMultiGallery } = require('../../../../libs/bots');
-let { createURL } = require('../../../../libs/helpers');
+let { createMultiGallery } = require('../../../../libs/bots.js');
+let { createURL } = require('../../../../libs/helpers.js');
 
 let createUpdateBtn = (data) => {
   let { provider_base_id, promo_id, user_messenger_id, user_record_id, user_ids } = data;

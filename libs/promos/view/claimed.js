@@ -1,8 +1,8 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
 
-let { createURL, flattenArray, localizeDate } = require('../libs/helpers');
-let { createMultiGallery } = require('../libs/bots');
-let { getTable, getDataFromTable, getAllDataFromTable, findTableData } = require('../libs/data');
+let { createURL, flattenArray, localizeDate } = require('../libs/helpers.js');
+let { createMultiGallery } = require('../libs/bots.js');
+let { getTable, getDataFromTable, getAllDataFromTable, findTableData } = require('../libs/data.js');
 
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');

@@ -1,9 +1,10 @@
 let { SERVICES_BASE_ID } = process.env;
-let { getTable, getAllDataFromTable, findTableData } = require('../../libs/data');
+let { getTable, getAllDataFromTable, findTableData } = require('../../libs/data.js');
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServices = getAllDataFromTable(servicesTable);
+let findService = findTableData(servicesTable);
 
 let filterServicesFromProvider = ({ services, provider }) => {
   let toLowerCase = data => data.toLowerCase();
@@ -17,5 +18,6 @@ let filterServicesFromProvider = ({ services, provider }) => {
 
 module.exports = {
   getServices,
+  findService,
   filterServicesFromProvider
 }

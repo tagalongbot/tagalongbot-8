@@ -1,7 +1,7 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
-let { createURL } = require('../../../libs/helpers.js');
-let { toGalleryElement } = require('../../../libs/promos.js');
-let { createMultiGallery, createButtonMessage } = require('../../../libs/bots.js');
+let { getProviderByID } = require('../../../libs/providers.js');
+let { getServicePromos, createNoPromosMsg } = require('../../../libs/services/provider/promos.js');
+let { toGalleryElement } = require('../../../libs/promos/promos.js');
+let { createMultiGallery } = require('../../../libs/bots.js');
 
 let getServiceProviderPromos = async ({ query }, res) => {
   let { service_name, provider_id, provider_base_id } = query;
@@ -9,7 +9,7 @@ let getServiceProviderPromos = async ({ query }, res) => {
   let provider = await getProviderByID(provider_id);
   let provider_name = provider.fields['Practice Name'];
 
-  let promos = await getPromos({ service_name, provider_base_id });
+  let promos = await getServicePromos({ service_name, provider_base_id });
 
   if (!promos[0]) {
     let messages = createNoPromosMsg(query);
@@ -22,7 +22,11 @@ let getServiceProviderPromos = async ({ query }, res) => {
   );
 
   let text = `Here are some ${service_name} promos by ${provider_name}`;
-  let messages = [{ text }, ...createMultiGallery(galleryData)];
+  let messages = [
+    { text }, 
+    ...createMultiGallery(galleryData)
+  ];
+
   res.send({ messages });
 }
 

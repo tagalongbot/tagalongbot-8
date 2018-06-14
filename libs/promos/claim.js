@@ -1,10 +1,10 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID } = process.env;
-let { createButtonMessage } = require('../../libs/bots');
-let { createURL } = require('../../libs/helpers');
+let { createButtonMessage } = require('../../libs/bots.js');
+let { createURL } = require('../../libs/helpers.js');
 
-let { getUserByMessengerID, updateUser } = require('../../libs/users');
+let { getUserByMessengerID, updateUser } = require('../../libs/users.js');
 
-let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../../libs/data');
+let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../../libs/data.js');
 
 let getPracticesTable = getTable('Practices');
 let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);

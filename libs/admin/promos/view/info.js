@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
-let { createURL, localizeDate } = require('../../../../libs/helpers');
-let { createButtonMessage } = require('../../../../libs/bots');
+let { createURL, localizeDate } = require('../../../../libs/helpers.js');
+let { createButtonMessage } = require('../../../../libs/bots.js');
 
 let createPromoMsg = ({ id: promo_id, fields: promo }, { provider_base_id, messenger_user_id }) => {
   let expiration_date = new Date(promo['Expiration Date']);

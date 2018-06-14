@@ -1,7 +1,7 @@
 let { BASEURL, SERVICES_BASE_ID } = process.env;
-let { createButtonMessage } = require('../libs/bots');
-let { createURL } = require('../libs/helpers');
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { createButtonMessage } = require('../libs/bots.js');
+let { createURL } = require('../libs/helpers.js');
+let { getTable, getAllDataFromTable } = require('../libs/data.js');
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);

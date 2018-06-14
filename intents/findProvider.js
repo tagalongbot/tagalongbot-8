@@ -1,5 +1,5 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../libs/helpers');
+let { createURL } = require('../libs/helpers.js');
 
 let findProvider = async ({ res, parameters, user }) => {
   let { first_name, last_name, gender, messenger_user_id } = user;
