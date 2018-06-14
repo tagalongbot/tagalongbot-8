@@ -1,6 +1,7 @@
 let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/providers.js');
-let { getUser, getUserPromos, toGalleryElement } = require('../../../../libs/admin/promos/view/user.js');
+let { toGalleryElement } = require('../../../../libs/admin/promos/view/user.js');
+let { getPracticeUser, getUserPromos } = require('../../../../libs/practice/users.js');
 
 let viewUserPromos = async ({ query }, res) => {
   let { 
@@ -11,7 +12,7 @@ let viewUserPromos = async ({ query }, res) => {
   let provider = await getProviderByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
-  let user = await getUser({ provider_base_id, user_messenger_id });
+  let user = await getPracticeUser({ provider_base_id, user_messenger_id });
   let user_id = user.id;
 
   let promos = await getUserPromos({ provider_base_id, user_id });

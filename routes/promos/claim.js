@@ -2,9 +2,8 @@ let express = require('express');
 let router = express.Router();
 
 let { getProviderByID } = require('../../libs/providers.js');
-let { getPromo, updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
+let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 let { getPracticePromo } = require('../../libs/practice/promos.js');
-
 
 let askForUserEmail = async ({ query }, res) => {
   let { promo_id, provider_id } = query;
@@ -15,22 +14,13 @@ let askForUserEmail = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { 
-    messenger_user_id,
-    first_name,
-    last_name,
-    promo_id, 
-    provider_id, 
-    gender, 
-    user_email 
-  } = query;
-
+  let { messenger_user_id, first_name, last_name, promo_id,  provider_id,  gender,  user_email } = query;
   let provider = await getProviderByID(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
   let provider_phone_number = provider.fields['Practice Phone #'];
   let provider_booking_url = provider.fields['Practice Booking URL'];
 
-  let promo = await getPromo({ provider_base_id, promo_id });
+  let promo = await getPracticePromo({ provider_base_id, promo_id });
 
   if (!promo || promo.fields['Claim Limit Reached'] === '1') {
     let redirect_to_blocks = ['Promo No Longer Valid'];

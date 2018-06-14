@@ -1,10 +1,10 @@
-let { findPromoFromPractice, createPromoMsg } = require('../../../../libs/admin/promos/view/info.js');
-let { getPracticePromo } = require('../../../../libs/practice/promos.js');
+let { createPromoMsg } = require('../../../../libs/admin/promos/view/info.js');
+let { getPracticePromos } = require('../../../../libs/practice/promos.js');
 
 let viewPromoInfo = async ({ query }, res) => {
   let { messenger_user_id, promo_id, provider_base_id } = query;
 
-  let promo = await findPromoFromPractice({ promo_id, provider_base_id });
+  let promo = await getPracticePromos({ promo_id, provider_base_id });
 
   let promoMsg = createPromoMsg(
     promo,

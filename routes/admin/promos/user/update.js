@@ -1,11 +1,12 @@
-let { getUser, updatePromo, createUpdateMsg } = require('../../../../libs/admin/promos/user/update.js');
+let { updatePromo, createUpdateMsg } = require('../../../../libs/admin/promos/user/update.js');
 let { getPracticePromo } = require('../../../../libs/practice/promos.js');
+let { getPracticeUser } = require('../../../../libs/practice/users.js');
 
 let updateUserPromo = async ({ query }, res) => {
   let { provider_base_id, promo_id, user_messenger_id } = query;
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
-  let user = await getUser({ provider_base_id, user_messenger_id });
+  let user = await getPracticeUser({ provider_base_id, user_messenger_id });
 
   if (!user) {
     let redirect_to_blocks = ['[Admin Verify Promo] User Does Not Exist'];

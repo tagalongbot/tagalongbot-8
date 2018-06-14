@@ -2,34 +2,6 @@ let { BASEURL } = process.env;
 let { createMultiGallery } = require('../../../../libs/bots');
 let { createURL } = require('../../../../libs/helpers');
 
-let { getTable, getAllDataFromTable } = require('../../../../libs/data');
-
-let getPromosTable = getTable('Promos');
-let getUsersTable = getTable('Users');
-
-let getUser = async ({ user_messenger_id, provider_base_id }) => {
-  let usersTable = getUsersTable(provider_base_id);
-  let getUsers = getAllDataFromTable(usersTable);
-
-  let filterByFormula = `{messenger user id} = '${user_messenger_id}'`;
-  let [user] = await getUsers({ filterByFormula });
-  return user;
-}
-
-let getUserPromos = async ({ provider_base_id, user_id }) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let getPromos = getAllDataFromTable(promosTable);
-
-  let view = 'Active Promos';
-  let promos = await getPromos({ view });
-  
-  let matched_promos = promos.filter(
-    promo => promo.fields['Claimed By Users'].includes(user_id)
-  );
-
-  return matched_promos;
-}
-
 let createUpdateBtn = (data) => {
   let { provider_base_id, promo_id, user_messenger_id, user_record_id, user_ids } = data;
 
@@ -71,7 +43,5 @@ let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id
 }
 
 module.exports = {
-  getUser,
-  getUserPromos,
   toGalleryElement,
 }

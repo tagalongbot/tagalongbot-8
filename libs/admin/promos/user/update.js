@@ -1,17 +1,7 @@
 let { createButtonMessage } = require('../../../../libs/bots.js');
-let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../../../libs/data.js');
+let { getTable, updateTableData } = require('../../../../libs/data.js');
 
 let getPromosTable = getTable('Promos');
-let getUsersTable = getTable('Users');
-
-let getUser = async ({ user_messenger_id, provider_base_id }) => {
-  let usersTable = getUsersTable(provider_base_id);
-  let getUsers = getAllDataFromTable(usersTable);
-
-  let filterByFormula = `{messenger user id} = '${user_messenger_id}'`;
-  let [user] = await getUsers({ filterByFormula });
-  return user;
-}
 
 let updatePromo = async ({ provider_base_id, promo, user_record_id }) => {
   let promosTable = getPromosTable(provider_base_id);
@@ -43,7 +33,6 @@ let createUpdateMsg = async () => {
 }
 
 module.exports = {
-  getUser,
   updatePromo,
   createUpdateMsg,
 }
