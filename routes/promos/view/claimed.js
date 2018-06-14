@@ -2,25 +2,25 @@ let { flattenArray } = require('../../../libs/helpers.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
 
 let { getUserByMessengerID } = require('../../../libs/users.js');
-let { getUserPromos } = require('../../../libs/claimed.js');
+let { getUserClaimedPromos, toGalleryElement } = require('../../../libs/promos/view/claimed.js');
 
 let viewClaimedPromos = async ({ query }, res) => {
+  // Need to check if gender problem still exists
   let { messenger_user_id, first_name, last_name, gender } = query;
 
-  // Need to check if gender problem still exists
-
   let user = await getUserByMessengerID(messenger_user_id);
-
+  let user_id = user.id;
+  
   let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',').filter(Boolean);
 
   let practice_promos = practice_ids.map(
-    getUserPromos({ messenger_user_id, data })
+    getUserClaimedPromos({ messenger_user_id, user_id })
   );
-  
+
   let promos = flattenArray(
     await Promise.all(promos)
   );
-  
+
   let galleryData = promos.map(
     toGalleryElement({ messenger_user_id, first_name, last_name, gender1: gender })
   );

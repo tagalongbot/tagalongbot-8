@@ -7,7 +7,7 @@ let getPromoDetails = async ({ query }, res) => {
   let promo = await getPracticePromo({ promo_id, provider_base_id });
 
   let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender: gender1, messenger_user_id };
-  
+
   let msg = createDetailsMsg({ data, promo });
 
   let messages = [msg];
