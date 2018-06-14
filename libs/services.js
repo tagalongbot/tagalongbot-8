@@ -6,6 +6,12 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServices = getAllDataFromTable(servicesTable);
 let findService = findTableData(servicesTable);
 
+let searchSurgicalNonSurgicalServices = async (surgical_or_non_surgical) => {
+	let filterByFormula = `{Surgical / Non Surgical} = '${surgical_or_non_surgical}'`;
+  let services = await getServices({ filterByFormula });
+  return services;
+}
+
 let filterServicesFromProvider = ({ services, provider }) => {
   let toLowerCase = data => data.toLowerCase();
 
@@ -19,5 +25,6 @@ let filterServicesFromProvider = ({ services, provider }) => {
 module.exports = {
   getServices,
   findService,
+  searchSurgicalNonSurgicalServices,
   filterServicesFromProvider
 }
