@@ -15,17 +15,11 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : [];
 
-  let promotions = await doubleMap(
-    (providers_by_service || providers),
-    getProviderPromosByService(service_name),
-    toGalleryElement({ messenger_user_id, provider_id, provider_base_id, first_name, last_name, gender })
+  let promotions = await Promise.all(
+    (providers_by_service || providers).map(
+      getProviderPromosByService(service_name)
+    )
   );
-  
-  // let promotions = await Promise.all(
-  //   (providers_by_service || providers).map(
-  //     getProviderPromosByService(service_name)
-  //   )
-  // );
 
   let randomPromotions = shuffleArray(
     flattenArray(promotions)
