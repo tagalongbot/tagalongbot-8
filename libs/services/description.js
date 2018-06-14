@@ -1,10 +1,15 @@
 let { BASEURL } = process.env;
-let { createButtonMessage } = require('../libs/bots');
-let { createURL } = require('../libs/helpers');
+let { createButtonMessage } = require('../../libs/bots.js');
+let { createURL } = require('../../libs/helpers.js');
 
 let createFindProvidersMsg = (service) => {
   let service_name = service.fields['Name'];
-  let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, { service_name });
+
+  let find_providers_btn_url = createURL(
+    `${BASEURL}/service/providers`, 
+    { service_name }
+  );
+
   let txtMsg = createButtonMessage(
     service.fields['Long Description'].slice(0, 640),
     `Find Providers|json_plugin_url|${find_providers_btn_url}`,
@@ -15,7 +20,11 @@ let createFindProvidersMsg = (service) => {
 
 let createViewProviderPromosMsg = (service, data) => {
   let service_name = service.fields['Name'];
-  let view_provider_promos = createURL(`${BASEURL}/service/provider/promos`, data);
+
+  let view_provider_promos = createURL(
+    `${BASEURL}/service/provider/promos`, 
+    data
+  );
 
   let txtMsg = createButtonMessage(
     service.fields['Long Description'].slice(0, 640),

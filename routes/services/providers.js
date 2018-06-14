@@ -1,8 +1,7 @@
-let { BASEURL } = process.env;
+let { shuffleArray } = require('../libs/helpers');
 let { createGallery } = require('../libs/bots');
-let { createURL, shuffleArray } = require('../libs/helpers');
-let { searchProviders, sortProviders, filterProvidersByService, toGalleryElement, createLastGalleryElement } = require('../libs/providers');
-let { getTable, findTableData } = require('../libs/data');
+let { sortProviders, filterProvidersByService, toGalleryElement, createLastGalleryElement } = require('../libs/providers');
+let { getProviders } = require('../../libs/services/providers.js');
 
 let express = require('express');
 let router = express.Router();
@@ -16,17 +15,10 @@ let searchServiceProviders = async ({ query }, res) => {
 
 let getServiceProviders = async ({ query, params }, res) => {
   let { search_type } = params;
-  
-  let { service_name, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
-  let { messenger_user_id, first_name, last_name, gender } = query;
 
-  let data = { first_name, last_name, gender, messenger_user_id };
+  let { messenger_user_id, first_name, last_name, gender, service_name, ...search_providers_data } = query;
 
-  let providers = await searchProviders({
-    search_providers_state: search_service_providers_state,
-    search_providers_city: search_service_providers_city,
-    search_providers_zip_code: search_service_providers_zip_code,
-  }, { search_type });
+  let providers = await getProviders(search_providers_data);
 
   if (!providers[0]) {
     let redirect_to_blocks = ['No Providers Found'];
@@ -42,10 +34,12 @@ let getServiceProviders = async ({ query, params }, res) => {
     return;
   }
 
-  let randomProviders = shuffleArray(providersByService).slice(0, 9).sort(sortProviders).map(toGalleryElement(data));
+  let randomProviders = shuffleArray(providersByService).slice(0, 9).sort(sortProviders).map(
+    toGalleryElement({ first_name, last_name, gender, messenger_user_id })
+  );
+
   let last_gallery_element = createLastGalleryElement();
 	let providersGallery = createGallery([...randomProviders, last_gallery_element]);
-
   let messages = [providersGallery];
   res.send({ messages });
 }
