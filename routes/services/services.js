@@ -1,8 +1,9 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
-let { createURL, shuffleArray } = require('../libs/helpers');
-let { createGallery } = require('../libs/bots');
+let { createURL, shuffleArray } = require('../libs/helpers.js');
+let { createGallery } = require('../libs/bots.js');
+let { getProviderByID } = require('../libs/providers.js');
 
-let { getTable, getAllDataFromTable } = require('../libs/data');
+let { getTable, getAllDataFromTable } = require('../libs/data.js');
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);

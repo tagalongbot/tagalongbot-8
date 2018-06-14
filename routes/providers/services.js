@@ -1,34 +1,11 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID, SERVICES_BASE_ID } = process.env;
+let { BASEURL, SERVICES_BASE_ID } = process.env;
 let { createGallery } = require('../libs/bots');
 let { createURL } = require('../libs/helpers');
 let { getTable, getAllDataFromTable, findTableData } = require('../libs/data');
 
-let getPracticeTable = getTable('Practices');
-let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
-let findPractice = findTableData(practiceTable);
-
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServices = getAllDataFromTable(servicesTable);
-
-let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
-  let title = service['Name'];
-  let subtitle = `Service provided by ${decodeURIComponent(data.provider_name)}`.slice(0, 80);
-  let image_url = service['Image URL'];
-
-  let service_name = encodeURIComponent(service['Name']);
-  let read_description_btn_url = createURL(`${BASEURL}/service/description/no`, { service_id, service_name, ...data });
-  let btn = {
-    title: 'Read Description',
-    type: 'json_plugin_url',
-    url: read_description_btn_url,
-  }
-
-  let buttons = [btn];
-
-  let element = { title, subtitle, image_url, buttons };
-  return element;
-}
 
 let getProviderServices = async ({ query }, res) => {
   let { provider_id } = query;
