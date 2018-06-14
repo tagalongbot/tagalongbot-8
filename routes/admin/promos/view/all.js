@@ -1,7 +1,7 @@
 let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/providers.js');
 let { toGalleryData } = require('../../../../libs/admin/promos/view/all.js');
-let { getPracticePromos } = require('../../../../libs/practice/promos.js');
+let { getPracticePromos } = require('../../../../libs/data/practice/promos.js');
 
 let viewAllPromos = async ({ query }, res) => {
   let { messenger_user_id } = query;

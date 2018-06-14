@@ -78,3 +78,9 @@ let createLastGalleryElement = ({ service_type, index, data }) => {
   let last_gallery_element = { title, buttons };
   return last_gallery_element;
 }
+
+module.exports = {
+  toGalleryElement,
+  createSurgicalCategoryElement,
+  createLastGalleryElement,
+}

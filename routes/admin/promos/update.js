@@ -1,5 +1,5 @@
 let { updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
-let { getPracticePromo } = require('../../../libs/practice/promos.js');
+let { getPracticePromo } = require('../../../libs/data/practice/promos.js');
 
 let express = require('express');
 let router = express.Router();

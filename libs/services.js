@@ -6,8 +6,14 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServices = getAllDataFromTable(servicesTable);
 let findService = findTableData(servicesTable);
 
-let searchSurgicalNonSurgicalServices = async (surgical_or_non_surgical) => {
-	let filterByFormula = `{Surgical / Non Surgical} = '${surgical_or_non_surgical}'`;
+let getNonSurgicalServices = async () => {
+  let filterByFormula = `{Surgical / Non Surgical} = 'Non Surgical'`;
+  let services = await getServices({ filterByFormula });
+  return services;
+}
+
+let getSurgicalServices = async () => {
+	let filterByFormula = `{Surgical / Non Surgical} = 'Surgical'`;
   let services = await getServices({ filterByFormula });
   return services;
 }
@@ -25,6 +31,7 @@ let filterServicesFromProvider = ({ services, provider }) => {
 module.exports = {
   getServices,
   findService,
-  searchSurgicalNonSurgicalServices,
+  getNonSurgicalServices,
+  getSurgicalServices,
   filterServicesFromProvider
 }

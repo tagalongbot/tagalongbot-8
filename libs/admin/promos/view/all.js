@@ -1,5 +1,5 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../libs/helpers.js');
+let { createURL } = require('../../../../libs/helpers.js');
 
 let isPromoExpired = (promo_expiration_date) => {
   let date = new Date();
