@@ -2,7 +2,9 @@ let express = require('express');
 let router = express.Router();
 
 let { getProviderByID } = require('../../libs/providers.js');
-let { getPromo, updatePromo, createUserData, updateUserFromAllUsersBase, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
+let { getPromo, updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
+let { getPracticePromo } = require('../../libs/practice/promos.js');
+
 
 let askForUserEmail = async ({ query }, res) => {
   let { promo_id, provider_id } = query;

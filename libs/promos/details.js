@@ -1,16 +1,6 @@
 let { BASEURL } = process.env;
 let { createButtonMessage } = require('../../libs/bots');
 let { createURL } = require('../../libs/helpers');
-let { getTable, findTableData } = require('../../libs/data');
-
-let getPromosTable = getTable('Promos');
-
-let getPromo = async ({ promo_id, provider_base_id }) => {
-  let promoTable = getPromosTable(provider_base_id);
-  let findPromo = findTableData(promoTable);
-  let promo = await findPromo(promo_id);
-  return promo;
-}
 
 let createDetailsMsg = ({ data, promo }) => {
   let { provider_id, promo_id } = data;
@@ -28,6 +18,5 @@ let createDetailsMsg = ({ data, promo }) => {
 }
 
 module.exports = {
-  getPromo,
   createDetailsMsg,
 }

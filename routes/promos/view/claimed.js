@@ -7,6 +7,7 @@ let { getUserPromos } = require('../../../libs/claimed.js');
 let viewClaimedPromos = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
 
+  // Need to check if gender problem still exists
   let data = { first_name, last_name, gender1: gender, messenger_user_id };
 
   let user = await getUserByMessengerID(messenger_user_id);

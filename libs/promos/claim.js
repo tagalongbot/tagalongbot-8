@@ -13,13 +13,6 @@ let findPractice = findTableData(practicesTable);
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
 
-let getPromo = async ({ provider_base_id, promo_id }) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let findPromo = findTableData(promosTable);
-  let promo = await findPromo(promo_id);
-  return promo;
-}
-
 let updatePromo = async ({ provider_base_id, promo, user, claimed_by_users }) => {
   let promosTable = getPromosTable(provider_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
@@ -135,7 +128,6 @@ let createClaimedMsg = ({ query, user_data, updated_promo, provider_phone_number
 }
 
 module.exports = {
-  getPromo,
   updatePromo,
   createUserData,
   updateUserFromAllUsersBase,

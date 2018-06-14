@@ -1,10 +1,5 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../libs/helpers');
-let { getProviderByUserID } = require('../libs/providers');
-
-let { getTable, getAllDataFromTable } = require('../libs/data');
-
-let getPromosTable = getTable('Promos');
 
 let isPromoExpired = (promo_expiration_date) => {
   let date = new Date();
@@ -12,14 +7,6 @@ let isPromoExpired = (promo_expiration_date) => {
   return date.getMonth() === promo_date.getMonth() && 
     date.getDate() === promo_date.getDate() && 
     date.getFullYear() === promo_date.getFullYear();
-}
-
-let getPracticePromos = async ({ provider_base_id }) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let getPromos = getAllDataFromTable(promosTable);
-
-  let promos = await getPromos();
-  return promos;
 }
 
 // Mapping Functions
@@ -58,6 +45,5 @@ let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) 
 }
 
 module.exports = {
-  getPracticePromos,
   toGalleryData,
 }

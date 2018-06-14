@@ -1,7 +1,7 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../libs/helpers.js');
-let { getTable, getAllDataFromTable } = require('../libs/data.js');
-let { searchProviders } = require('../libs/providers.js');
+let { createURL } = require('../../libs/helpers.js');
+let { getTable, getAllDataFromTable } = require('../../libs/data.js');
+let { searchProviders } = require('../../libs/providers.js');
 
 let getPromosTable = getTable('Promos');
 
@@ -60,6 +60,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 }
 
 module.exports = {
+  getProviders,
   getProviderPromosByService,
   toGalleryElement,
 }

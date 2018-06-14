@@ -15,7 +15,7 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : [];
 
-  // Study transducers to improve code to not have to map twic
+  // Study transducers to improve code to not have to map twice
   let provider_promotions = await Promise.all(
     (providers_by_service || providers).map(
       getProviderPromosByService(service_name)

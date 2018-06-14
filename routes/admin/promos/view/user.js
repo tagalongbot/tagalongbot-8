@@ -1,6 +1,5 @@
 let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/providers.js');
-
 let { getUser, getUserPromos, toGalleryElement } = require('../../../../libs/admin/promos/view/user.js');
 
 let viewUserPromos = async ({ query }, res) => {

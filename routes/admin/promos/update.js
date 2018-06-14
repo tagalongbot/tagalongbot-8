@@ -1,4 +1,5 @@
-let { getPromo, updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
+let { updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
+let { getPracticePromo } = require('../../../libs/practice/promos.js');
 
 let express = require('express');
 let router = express.Router();
@@ -26,7 +27,7 @@ let updatePromoInfo = async ({ query }, res) => {
   let promo_id = updating_promo_id;
   let provider_base_id = updating_provider_base_id;
 
-  let promo = await getPromo({ provider_base_id, promo_id });
+  let promo = await getPracticePromo({ provider_base_id, promo_id });
   let updatedPromo = await updatePromo({ provider_base_id, promo, update_promo_field_name, update_promo_field_value });
 
   let updateMsg = createUpdateMsg({ promo_id, provider_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value });

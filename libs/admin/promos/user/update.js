@@ -13,13 +13,6 @@ let getUser = async ({ user_messenger_id, provider_base_id }) => {
   return user;
 }
 
-let getPromo = async ({ provider_base_id, promo_id }) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let findPromo = findTableData(promosTable);
-  let promo = await findPromo(promo_id);
-  return promo;
-}
-
 let updatePromo = async ({ provider_base_id, promo, user_record_id }) => {
   let promosTable = getPromosTable(provider_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
@@ -51,7 +44,6 @@ let createUpdateMsg = async () => {
 
 module.exports = {
   getUser,
-  getPromo,
   updatePromo,
   createUpdateMsg,
 }

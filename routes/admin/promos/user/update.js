@@ -1,9 +1,10 @@
-let { getUser, getPromo, updatePromo, createUpdateMsg } = require('../../../../libs/admin/promos/user/update.js');
+let { getUser, updatePromo, createUpdateMsg } = require('../../../../libs/admin/promos/user/update.js');
+let { getPracticePromo } = require('../../../../libs/practice/promos.js');
 
 let updateUserPromo = async ({ query }, res) => {
   let { provider_base_id, promo_id, user_messenger_id } = query;
 
-  let promo = await getPromo({ provider_base_id, promo_id });
+  let promo = await getPracticePromo({ provider_base_id, promo_id });
   let user = await getUser({ provider_base_id, user_messenger_id });
 
   if (!user) {
