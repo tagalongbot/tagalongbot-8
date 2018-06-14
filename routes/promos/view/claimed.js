@@ -8,18 +8,21 @@ let viewClaimedPromos = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
 
   // Need to check if gender problem still exists
-  let data = { first_name, last_name, gender1: gender, messenger_user_id };
 
   let user = await getUserByMessengerID(messenger_user_id);
 
   let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',').filter(Boolean);
 
-  let promos = practice_ids.map(
+  let practice_promos = practice_ids.map(
     getUserPromos({ messenger_user_id, data })
   );
-
-  let galleryData = flattenArray(
+  
+  let promos = flattenArray(
     await Promise.all(promos)
+  );
+  
+  let galleryData = promos.map(
+    toGalleryElement({ messenger_user_id, first_name, last_name, gender1: gender })
   );
 
   if (!galleryData[0]) {

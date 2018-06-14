@@ -1,41 +1,16 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
+let { BASEURL } = process.env;
+let { createURL, localizeDate } = require('../../../libs/helpers.js');
+let { getProviderByID } = require('../../../libs/providers.js');
+let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
+let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
 
-let { createURL, flattenArray, localizeDate } = require('../libs/helpers.js');
-let { createMultiGallery } = require('../libs/bots.js');
-let { getTable, getDataFromTable, getAllDataFromTable, findTableData } = require('../libs/data.js');
 
-let getUsersTable = getTable('Users');
-let getPromosTable = getTable('Promos');
-let getPracticesTable = getTable('Practices');
-let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
-let findProvider = findTableData(practicesTable);
-
-let getUserFromPractice = async ({ provider_base_id, messenger_user_id }) => {
-  let usersTable = getUsersTable(provider_base_id);
-  let getUsers = getDataFromTable(usersTable);
-
-  let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
-  let [user] = await getUsers({ filterByFormula });
-
-  return user;
-}
-
-let getPromosFromPractice = async ({ provider_base_id }) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let getPromos = getAllDataFromTable(promosTable);
-
-  let view = 'Active Promos';
-  let promos = await getPromos({ view });
-
-  return promos;
-}
-
-let getUserPromos = ({ messenger_user_id, data }) => async (provider_id) => {
-  let provider = await findProvider(provider_id);
+let getUserPromos = ({ messenger_user_id }) => async (provider_id) => {
+  let provider = await getProviderByID(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let user = await getUserFromPractice({ provider_base_id, messenger_user_id });
-  let promos = await getPromosFromPractice({ provider_base_id });
+  let promos = await getPracticePromos({ provider_base_id });
 
   let promo_ids = user.fields['Promos Claimed'] || [];
 
@@ -43,9 +18,7 @@ let getUserPromos = ({ messenger_user_id, data }) => async (provider_id) => {
     promo => promo_ids.includes(promo.id)
   );
 
-  return user_promos.map(
-    toGalleryElement({ provider_id, provider_base_id, ...data })
-  );
+  return user_promos;
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
@@ -83,5 +56,6 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 }
 
 module.exports = {
-  getUserPromos
+  getUserPromos,
+  toGalleryElement,
 }

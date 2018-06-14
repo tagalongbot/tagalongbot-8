@@ -21,7 +21,7 @@ let getUserPromos = async ({ provider_base_id, user_id }) => {
 
   let view = 'Active Promos';
   let promos = await getPromos({ view });
-  
+
   let matched_promos = promos.filter(
     promo => promo.fields['Claimed By Users'].includes(user_id)
   );
