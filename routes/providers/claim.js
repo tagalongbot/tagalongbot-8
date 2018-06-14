@@ -1,17 +1,7 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID } = process.env;
+let { getProviderByID } = require('../libs/providers.js');
+let { updatePractice, createUpdateMsg } = require('../libs/providers/claim.js');
 let express = require('express');
 let router = express.Router();
-
-let { createButtonMessage } = require('../libs/bots');
-let { createURL } = require('../libs/helpers');
-
-let { getTable, findTableData, updateTableData } = require('../libs/data');
-
-let getPracticesTable = getTable('Practices');
-
-let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
-let findPractice = findTableData(practicesTable);
-let updatePractice = updateTableData(practicesTable);
 
 let askForUserEmail = async ({ query }, res) => {
   let { provider_id } = query;
@@ -22,9 +12,9 @@ let askForUserEmail = async ({ query }, res) => {
 }
 
 let claimProvider = async ({ query }, res) => {
-  let { provider_id, gender, user_email, messenger_user_id, first_name, last_name } = query;
+  let { messenger_user_id, provider_id, first_name, user_email } = query;
 
-  let provider = await findPractice(provider_id);
+  let provider = await getProviderByID(provider_id);
 
   if (!provider) {
     let redirect_to_blocks = ['(Claim) Provider Not Available'];
@@ -32,19 +22,9 @@ let claimProvider = async ({ query }, res) => {
     return;
   }
 
-  let updatePracticeData = {
-    'Claimed?': true,
-    'Claimed By Messenger User ID': messenger_user_id,
-    'Claimed By Email': user_email,
-  }
+  let updatedPractice = await updatePractice({ messenger_user_id, user_email, practice: provider });
 
-  let updatedPractice = await updatePractice(updatePracticeData, provider);
-
-  let msg = createButtonMessage(
-    `Congrats ${first_name} your practice "${provider.fields['Practice Name']}" has been claimed! We will reach out to you soon and activate your practice on Bevl Beauty`,
-    `Main Menu|show_block|Discover Main Menu`,
-    `About Bevl Beauty|show_block|AboutBB`,
-  );
+  let msg = createUpdateMsg({ practice: provider, first_name });
 
   let messages = [msg];
   res.send({ messages });

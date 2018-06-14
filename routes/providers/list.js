@@ -5,8 +5,19 @@ let listProvider = async({ query }, res) => {
 
   let user = await getUserByMessengerID(messenger_user_id);
 
+  let updateData = {
+    ['Email Address']: user_email,
+  }
+
+  if (!user) {
+    
+  }
+  
+  
+  let updatedUser = await updateUser(updateData, user);
+  
   if (user) {
-    let updateData = { 
+    let updateData = {
       ['Email Address']: user_email,
     }
 
