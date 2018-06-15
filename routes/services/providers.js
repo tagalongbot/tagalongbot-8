@@ -1,5 +1,5 @@
-let { shuffleArray } = require('../../libs/helpers');
-let { createGallery } = require('../../libs/bots');
+let { shuffleArray } = require('../../libs/helpers.js');
+let { createGallery } = require('../../libs/bots.js');
 let { sortProviders, filterProvidersByService } = require('../../libs/providers.js');
 let { getProviders } = require('../../libs/services/providers.js');
 let { toGalleryElement, createLastGalleryElement } = require('../../libs/providers/providers.js');
@@ -17,9 +17,12 @@ let searchServiceProviders = async ({ query }, res) => {
 let getServiceProviders = async ({ query, params }, res) => {
   let { search_type } = params;
 
-  let { messenger_user_id, first_name, last_name, gender, service_name, ...search_providers_data } = query;
+  let { messenger_user_id, first_name, last_name, gender } = query;
+  let { service_name, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
 
-  let providers = await getProviders(search_providers_data);
+  let providers = await getProviders(
+    { search_type, service_name, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code }
+  );
 
   if (!providers[0]) {
     let redirect_to_blocks = ['No Providers Found'];
@@ -45,7 +48,7 @@ let getServiceProviders = async ({ query, params }, res) => {
   res.send({ messages });
 }
 
-router.get('/providers', searchServiceProviders);
-router.get('/providers/:search_type', getServiceProviders);
+router.get('/', searchServiceProviders);
+router.get('/:search_type', getServiceProviders);
 
 module.exports = router;

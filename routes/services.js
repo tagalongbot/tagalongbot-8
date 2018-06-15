@@ -8,7 +8,7 @@ let getServiceProviders = require('../routes/services/providers.js');
 
 router.get('/search/:service_type', getServices);
 router.get('/description/:show_providers', getServiceDescription);
-router.use('/provider/promos', getServiceProviderPromos);
+router.get('/provider/promos', getServiceProviderPromos);
 router.use('/providers', getServiceProviders);
 
 module.exports = router;
