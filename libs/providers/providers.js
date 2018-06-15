@@ -46,12 +46,17 @@ let createOrUpdateUser = async (user, query) => {
   let { search_providers_state, search_providers_city, search_providers_zip_code } = query;
 
   if (!user) {
-    let new_user_data = createNewUserData({ search_providers_state, search_providers_city, search_providers_zip_code, messenger_user_id, first_name, last_name, gender });
+    let new_user_data = createNewUserData(
+      { search_providers_state, search_providers_city, search_providers_zip_code, messenger_user_id, first_name, last_name, gender }
+    );
+
 		let newUser = await createUser(new_user_data);
     return newUser;
 	}
 
-  let update_user_data = createUpdateUserData();
+  let update_user_data = createUpdateUserData(
+    { last_state_searched, last_city_searched, last_zip_code_searched }
+  );
 
   let updatedUser = await updateUser(update_user_data, user);
   return updatedUser;
