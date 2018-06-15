@@ -3,9 +3,11 @@
 - Restructure the way manufactured and custom promotions images and details are managed
 
 # Code
+- Update Insomnia Endpoints
 - Check if `gender` query parameter error still occurs
   - `/routes/promos/details.js`
-  - `
+  - `/routes/promos/provider.js`
+  - `/routes/providers/promos.js`
 - Work on Error Handling
 - Test code with Insomnia
 - Update the way manufactured and custom promotions are created
