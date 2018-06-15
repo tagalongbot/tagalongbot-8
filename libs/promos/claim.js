@@ -3,7 +3,7 @@ let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/users.js');
-let { getPracticeUser } = require('../../libs/data/practice/users.js');
+let { getPracticeUser, createPracticeUser, updatePracticeUser } = require('../../libs/data/practice/users.js');
 let { getTable, createTableData, updateTableData } = require('../../libs/data.js');
 
 let getPromosTable = getTable('Promos');
