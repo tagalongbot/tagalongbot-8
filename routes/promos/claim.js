@@ -15,6 +15,7 @@ let askForUserEmail = async ({ query }, res) => {
 
 let claimPromotion = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, promo_id,  provider_id,  gender,  user_email } = query;
+
   let provider = await getProviderByID(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
   let provider_phone_number = provider.fields['Practice Phone #'];
