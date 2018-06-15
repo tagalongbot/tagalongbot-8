@@ -39,16 +39,4 @@ let getProviders = async ({ query, params }, res) => {
 	res.send({ messages });
 }
 
-let handleErrors = (req, res) => (error) => {
-  console.log(error);
-	let source = 'airtable';
-	res.send({ source, error });
-}
-
-module.exports = (req, res) => {
-	getProviders(req, res)
-
-	.catch(
-		handleErrors(req, res)
-	);
-}
+module.exports = getProviders;
