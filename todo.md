@@ -3,6 +3,9 @@
 - Restructure the way manufactured and custom promotions images and details are managed
 
 # Code
+- Update Intents
+  - Update route endpoints
+- Check if `gender` query parameter error still occurs
 - Work on Error Handling
 - Test code with Insomnia
 - Update the way manufactured and custom promotions are created
