@@ -6,9 +6,6 @@ let { getUserByMessengerID, updateUser } = require('../../libs/users.js');
 let { getPracticeUser } = require('../../libs/data/practice/users.js');
 let { getTable, createTableData, updateTableData } = require('../../libs/data.js');
 
-getUserPromos
-
-let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
 
 let createUserData = ({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code }) => {
