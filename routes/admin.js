@@ -37,7 +37,7 @@ router.get(
   '/promos/view/info', viewPromoInfo
 );
 
-router.get(
+router.use(
   '/promos/update', updatePromoInfo
 );
 

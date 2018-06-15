@@ -35,7 +35,7 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 let createSurgicalCategoryElement = (data) => {
   let title = 'Surgical Procedures';
   let image_url = SURGICAL_SERVICES_IMAGE_URL;
-  let surgical_category_btn_url = createURL(`${BASEURL}/services/surgical`, data);
+  let surgical_category_btn_url = createURL(`${BASEURL}/services/search/surgical`, data);
   
   let btn = {
     title: 'View Services',
