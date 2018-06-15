@@ -11,7 +11,7 @@ let getProviderServices = async ({ query }, res) => {
   let provider_base_id = provider.fields['Practice Base ID'];
   let services = await getServices();
 
-  let services_from_provider = filterServicesFromProvider();
+  let services_from_provider = filterServicesFromProvider({ services, provider });
 
   if (!services_from_provider[0]) {
     let redirect_to_blocks = ['No Provider Services Found'];

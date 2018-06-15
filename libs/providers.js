@@ -12,11 +12,11 @@ let searchProviders = async ({ search_type, active = false }, data) => {
 
 	let filterByFormula = '';
 	if (search_type.toLowerCase() === 'state') {
-		filterByFormula = `{All Uppercase Practice State} = '${search_providers_state.trim().toLowerCase()}'`;
+		filterByFormula = `{All Uppercase Practice State} = '${search_providers_state.trim().toUpperCase()}'`;
 	} else if (search_type.toLowerCase() === 'city') {
-		filterByFormula = `{All Uppercase Practice City} = '${search_providers_city.trim().toLowerCase()}'`;
+		filterByFormula = `{All Uppercase Practice City} = '${search_providers_city.trim().toUpperCase()}'`;
 	} else if (search_type.toLowerCase() === 'zip_code') {
-		filterByFormula = `{Practice Zip Code} = '${search_providers_zip_code.trim().toLowerCase()}'`;
+		filterByFormula = `{Practice Zip Code} = '${search_providers_zip_code.trim().toUpperCase()}'`;
 	} else if (search_type.toLowerCase() === 'code') {
 		filterByFormula = `{Practice Code} = '${search_provider_code.trim().toUpperCase()}'`;
 	}
