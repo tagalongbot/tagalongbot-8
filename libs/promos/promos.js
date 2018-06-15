@@ -5,10 +5,11 @@ let { searchProviders } = require('../../libs/providers.js');
 
 let getPromosTable = getTable('Promos');
 
-let getProviders = async ({ search_promos_state, search_promos_city, search_promos_zip_code, search_type }) => {
+let getProviders = async ({ search_promos_state, search_promos_city, search_promos_zip_code, search_promos_code, search_type }) => {
   let search_providers_state = search_promos_state;
   let search_providers_city = search_promos_city;
   let search_providers_zip_code = search_promos_zip_code;
+  let search_providers_code = search_promos_code;
 
   let providers = await searchProviders(
     { search_type, active: true },
@@ -55,6 +56,6 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
 module.exports = {
   getProviders,
-  getProviderPromosByService,
+  filterPromosByService,
   toGalleryElement,
 }

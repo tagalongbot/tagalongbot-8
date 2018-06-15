@@ -4,7 +4,7 @@ let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 
 let { filterProvidersByService } = require('../../libs/providers.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
-let { getProviders, getProviderPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
+let { getProviders, filterPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
 
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
@@ -16,28 +16,24 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : null;
 
-  // Study transducers to improve code to not have to map twice
-  let provider_promotions = await Promise.all(
-    (providers_by_service || providers).map(provider => {
+  // Study transducers to improve code
+  let provider_promos = await Promise.all(
+    (providers_by_service || providers).map(async (provider) => {
+      let provider_id = provider.id;
       let provider_base_id = provider.fields['Practice Base ID'];
       let view = 'Active Promos';
-      return getPracticePromos({ provider_base_id, view });
+      let promos = await getPracticePromos({ provider_base_id, view });
+
+      let matching_promos = (service_name) ? filterPromosByService({ service_name, promos }) : promos;
+
+      return matching_promos.map(
+        toGalleryElement({ messenger_user_id, provider_id, provider_base_id, first_name, last_name, gender })
+      );
     })
   );
 
-  let promos = provider_promotions.map((promos, index) => {
-    let provider = providers[index];
-    let provider_id = provider.id;
-    let provider_base_id = provider.fields['Practice Base ID'];
-    let promos_gallery_elements = promos.map(
-      toGalleryElement({ messenger_user_id, provider_id, provider_base_id, first_name, last_name, gender })
-    );
-
-    return promos_gallery_elements;
-  });
-
   let randomPromotions = shuffleArray(
-    flattenArray(promos)
+    flattenArray(provider_promos)
   ).slice(0, 10);
 
   if (!randomPromotions[0]) {
