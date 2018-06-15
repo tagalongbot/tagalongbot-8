@@ -13,7 +13,7 @@ let getPromos = async ({ query, params }, res) => {
 
   let providers = await getProviders({ search_promos_state, search_promos_city, search_promos_zip_code, search_type });
 
-  let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : [];
+  let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : null;
 
   // Study transducers to improve code to not have to map twice
   let provider_promotions = await Promise.all(
@@ -29,6 +29,8 @@ let getPromos = async ({ query, params }, res) => {
     let promos_gallery_elements = promos.map(
       toGalleryElement({ messenger_user_id, provider_id, provider_base_id, first_name, last_name, gender })
     );
+
+    return promos_gallery_elements;
   });
 
   let randomPromotions = shuffleArray(

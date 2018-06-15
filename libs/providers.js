@@ -45,7 +45,7 @@ let updateProvider = async (updateData, provider) => {
 }
 
 let filterProvidersByService = (service_name, providers) => {
-  let service_name_lowercased = service_name.toLowerCase();
+  let service_name_lowercased = service_name.trim().toLowerCase();
 
   let serviceToLowerCase = service => service.toLowerCase();
 
