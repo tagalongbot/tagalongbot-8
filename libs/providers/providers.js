@@ -31,8 +31,12 @@ let createNewUserData = (data) => {
   return new_user_data;
 }
 
-let createUpdateUserData = ({ last_state_searched, last_city_searched, last_zip_code_searched }) => {
+let createUpdateUserData = ({ search_providers_state, search_providers_city, search_providers_zip_code }) => {
   let update_user_data = {};
+
+  let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;
+  let last_city_searched = search_providers_city ? search_providers_city.trim().toLowerCase() : null;
+  let last_zip_code_searched = search_providers_zip_code ? Number(search_providers_zip_code.trim()) : null;
 
   if (last_state_searched) update_user_data['Last State Searched'] = last_state_searched;
   if (last_city_searched) update_user_data['Last City Searched'] = last_city_searched;
@@ -55,7 +59,7 @@ let createOrUpdateUser = async (user, query) => {
 	}
 
   let update_user_data = createUpdateUserData(
-    { last_state_searched, last_city_searched, last_zip_code_searched }
+    { search_providers_state, search_providers_city, search_providers_zip_code }
   );
 
   let updatedUser = await updateUser(update_user_data, user);
