@@ -1,4 +1,3 @@
-let { BASEURL } = process.env;
 let { createGallery } = require('../../libs/bots.js');
 let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 
@@ -12,7 +11,11 @@ let getPromos = async ({ query, params }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
   let { service_name, search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = query;
 
-  let providers = await getProviders({ search_promos_state, search_promos_city, search_promos_zip_code, search_type });
+  // Handle searching by `promo_code`
+  
+  let providers = await getProviders(
+    { search_promos_state, search_promos_city, search_promos_zip_code, search_type }
+  );
 
   let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : null;
 
@@ -49,16 +52,4 @@ let getPromos = async ({ query, params }, res) => {
 	res.send({ messages });
 }
 
-let handleErrors = (req, res) => (error) => {
-  console.log(error);
-	let source = 'airtable';
-	res.send({ source, error });
-}
-
-module.exports = (req, res) => {
-	getPromos(req, res)
-
-	.catch(
-		handleErrors(req, res)
-	);
-}
+module.exports = getPromos;
