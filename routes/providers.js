@@ -11,7 +11,7 @@ let providerClaimed = require('../routes/providers/claimed.js');
 let listProvider = require('../routes/providers/list.js');
 
 router.get(
-  '/search/:search_type', 
+  '/search/:search_type',
   handleRoute(getProviders, '[Search Providers] Error')
 );
 
