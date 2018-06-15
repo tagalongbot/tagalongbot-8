@@ -1,7 +1,7 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
-let { shuffleArray } = require('../libs/helpers.js');
-let { createGallery } = require('../libs/bots.js');
-let { getProviderByID } = require('../libs/providers.js');
+let { shuffleArray } = require('../../libs/helpers.js');
+let { createGallery } = require('../../libs/bots.js');
+let { getProviderByID } = require('../../libs/providers.js');
 let { getNonSurgicalServices, getSurgicalServices } = require('../../libs/services.js');
 let { toGalleryElement, createSurgicalCategoryElement, createLastGalleryElement } = require('../../libs/services/services.js');
 

@@ -1,5 +1,5 @@
 let { SERVICES_BASE_ID } = process.env;
-let { getTable, getAllDataFromTable, findTableData } = require('../../libs/data.js');
+let { getTable, getAllDataFromTable, findTableData } = require('../libs/data.js');
 
 let getServicesTable = getTable('Services');
 let servicesTable = getServicesTable(SERVICES_BASE_ID);
@@ -29,6 +29,7 @@ let filterServicesFromProvider = ({ services, provider }) => {
 }
 
 module.exports = {
+  // Should probably expose the first 2 functions with a wrapping function for when I update code to
   getServices,
   findService,
   getNonSurgicalServices,

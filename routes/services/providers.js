@@ -1,6 +1,6 @@
-let { shuffleArray } = require('../libs/helpers');
-let { createGallery } = require('../libs/bots');
-let { sortProviders, filterProvidersByService, toGalleryElement, createLastGalleryElement } = require('../libs/providers');
+let { shuffleArray } = require('../../libs/helpers');
+let { createGallery } = require('../../libs/bots');
+let { sortProviders, filterProvidersByService, toGalleryElement, createLastGalleryElement } = require('../../libs/providers');
 let { getProviders } = require('../../libs/services/providers.js');
 
 let express = require('express');

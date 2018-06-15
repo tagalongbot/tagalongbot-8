@@ -1,5 +1,4 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
-let { createURL } = require('../libs/helpers');
+let { PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
 let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../libs/data');
 
 let getPracticeTable = getTable('Practices');
@@ -63,131 +62,6 @@ let sortProviders = (provider1, provider2) => {
   if (!provider1.fields['Active?']) return 1;
 }
 
-let createButtons = (provider, data) => {
-  let is_provider_active = provider['Active?'];
-  let is_provider_claimed = provider['Claimed?'];
-
-  if (is_provider_active) {
-    let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
-    let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
-
-    let btn1 = {
-      title: 'View Services',
-      type: 'json_plugin_url',
-      url: view_services_btn_url,
-    }
-
-    let btn2 = {
-      title: 'View Promos',
-      type: 'json_plugin_url',
-      url: view_promos_btn_url,
-    }
-
-    return [btn1, btn2];
-  }
-
-  if (!is_provider_claimed) {
-    let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
-
-    let btn = {
-      title: 'Claim Practice',
-      type: 'json_plugin_url',
-      url: claim_practice_url
-    }
-
-    return [btn];
-  }
-
-  if (is_provider_claimed && !is_provider_active) {
-    let { messenger_user_id } = data;
-    let already_claimed_url = createURL(`${BASEURL}/provider/claimed`, { messenger_user_id });
-
-    let btn = {
-      title: 'Already Claimed',
-      type: 'json_plugin_url',
-      url: already_claimed_url
-    }
-    
-    return [btn];
-  }
-}
-
-// Booking Site and Site URL Only
-let createButtons2 = (provider, data) => {
-  let is_provider_active = provider['Active?'];
-  let is_provider_claimed = provider['Claimed?'];
-  // We're currently not showing unclaimed practices in the bot by passing `{ active: true }` to `searchProviders`
-
-  let view_provider_site_url = provider['Practice Website'];
-  let view_provider_book_url = provider['Practice Booking URL'];
-
-  let btns = [];
-
-  if (view_provider_site_url) {
-    let btn = {
-      title: 'Visit Provider Site',
-      type: 'web_url',
-      url: view_provider_site_url,
-    }
-
-    btns.push(btn);
-  }
-
-  if (view_provider_book_url) {
-    let btn = {
-      title: 'Visit Booking Site',
-      type: 'web_url',
-      url: view_provider_book_url,
-    }
-
-    btns.push(btn);
-  }
-
-  return btns;
-}
-
-let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) => ({ id: provider_id, fields: provider }) => {
-  let title = provider['Practice Name'].slice(0, 80);
-  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
-  let image_url = provider['Main Provider Image'] ? provider['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
-
-  let provider_base_id = provider['Practice Base ID'];
-  let data = { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id };
-  let buttons = createButtons(provider, data);
-
-  let element = { title, subtitle, image_url, buttons };
-  return element;
-}
-
-let createLastGalleryElement = () => {
-  let title = 'More Options';
-  let image_url = SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL;
-
-  // Buttons
-  let btn1 = {
-    title: 'List My Practice',
-    type: 'show_block',
-    block_name: 'List Practice',
-  }
-
-  let btn2 = {
-    title: 'Main Menu',
-    type: 'show_block',
-    block_name: 'Discover Main Menu',
-  }
-
-  let btn3 = {
-    title: 'About Bevl Beauty',
-    type: 'show_block',
-    block_name: 'About Bevl Beauty',
-  }
-
-  let buttons = [btn1, btn2, btn3];
-
-  let last_gallery_element = { title, buttons };
-  return last_gallery_element;
-}
-
 module.exports = {
   searchProviders,
   getProviderByUserID,
@@ -195,6 +69,4 @@ module.exports = {
   updateProvider,
   filterProvidersByService,
   sortProviders,
-  toGalleryElement,
-  createLastGalleryElement,
 }
