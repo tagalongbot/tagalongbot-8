@@ -1,59 +1,15 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID, USERS_BASE_ID } = process.env;
+let { BASEURL } = process.env;
 let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/users.js');
+let { getPracticeUser } = require('../../libs/data/practice/users.js');
+let { getTable, createTableData, updateTableData } = require('../../libs/data.js');
 
-let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../../libs/data.js');
-
-let getPracticesTable = getTable('Practices');
-let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
-let findPractice = findTableData(practicesTable);
+getUserPromos
 
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
-
-let updatePromo = async ({ provider_base_id, promo, user, claimed_by_users }) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let updatePromoFromTable = updateTableData(promosTable);
-
-  let new_claimed_users = [
-    ...new Set([user.id, ...claimed_by_users])
-  ];
-
-  let updateData = {
-    'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
-    'Claimed By Users': new_claimed_users,
-  }
-
-  let updatedPromo = await updatePromoFromTable(updateData, promo);
-  return updatedPromo;
-}
-
-let getUserFromPractice = async ({ user_messenger_id, provider_base_id }) => {
-  let usersTable = getUsersTable(provider_base_id);
-  let getUsers = getAllDataFromTable(usersTable);
-
-  let filterByFormula = `{messenger user id} = '${user_messenger_id}'`;
-  let [user] = await getUsers({ filterByFormula });
-  return user;
-}
-
-let createPracticeUser = async ({ provider_base_id, user_data }) => {
-  let usersTable = getUsersTable(provider_base_id);
-  let createUser = createTableData(usersTable);
-
-  let new_user = await createUser(user_data);
-  return new_user;
-}
-
-let updatePracticeUser = async ({ provider_base_id, user_data, practice_user }) => {
-  let usersTable = getUsersTable(provider_base_id);
-  let updateUser = updateTableData(usersTable);
-  
-  let updated_user = await updateUser(user_data, practice_user);
-  return updated_user;
-}
 
 let createUserData = ({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code }) => {
   let user_data = {
@@ -87,6 +43,24 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_data, provider_
   return updated_user;
 }
 
+// Exposed Functions
+let updatePromo = async ({ provider_base_id, promo, user, claimed_by_users }) => {
+  let promosTable = getPromosTable(provider_base_id);
+  let updatePromoFromTable = updateTableData(promosTable);
+
+  let new_claimed_users = [
+    ...new Set([user.id, ...claimed_by_users])
+  ];
+
+  let updateData = {
+    'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
+    'Claimed By Users': new_claimed_users,
+  }
+
+  let updatedPromo = await updatePromoFromTable(updateData, promo);
+  return updatedPromo;
+}
+
 let createOrUpdateUser = async (data, { id: provider_id, fields: provider }) => {
   let { messenger_user_id, first_name, last_name, gender, user_email } = data;
 
@@ -97,7 +71,7 @@ let createOrUpdateUser = async (data, { id: provider_id, fields: provider }) => 
 
   let user_messenger_id = messenger_user_id;
   let user = await getUserByMessengerID(messenger_user_id);
-  let practice_user = await getUserFromPractice({ user_messenger_id, provider_base_id });
+  let practice_user = await getPracticeUser({ user_messenger_id, provider_base_id });
 
   let user_data = createUserData({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code });
 
@@ -117,11 +91,16 @@ let createClaimedMsg = ({ query, user_data, updated_promo, provider_phone_number
 
   let view_provider_url = createURL(`${BASEURL}/promo/provider`, { ...query, ...user_data });
 
+  let btns = [
+    `View Provider|json_plugin_url|${view_provider_url}`,
+    `Call Provider|phone_number|${provider_phone_number}`,
+  ]
+  
+  if (provider_booking_url) btns.push(`View Booking Site|web_url|${provider_booking_url}`);
+  
   let msg = createButtonMessage(
     `Congrats ${first_name} your promotion "${updated_promo.fields['Promotion Name']}" has been claimed!`,
-    `Call Provider|phone_number|${provider_phone_number}`,
-    `View Booking Site|web_url|${provider_booking_url}`,
-    `View Provider|json_plugin_url|${view_provider_url}`,
+    ...btns
   );
   
   return msg;
@@ -129,8 +108,6 @@ let createClaimedMsg = ({ query, user_data, updated_promo, provider_phone_number
 
 module.exports = {
   updatePromo,
-  createUserData,
-  updateUserFromAllUsersBase,
   createOrUpdateUser,
   createClaimedMsg,
 }
