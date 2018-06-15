@@ -5,16 +5,11 @@ let findProvider = async ({ res, parameters, user }) => {
   let { first_name, last_name, gender, messenger_user_id } = user;
   let { provider_type, state, city, zip_code, location, brand_name, procedure } = parameters;
 
-  // console.log('Parameters', parameters);
-  // console.log('User:', user);
-
   let search_type = {
     [Boolean(state)]: 'state',
     [Boolean(city)]: 'city',
     [Boolean(zip_code)]: 'zip_code'
   }[true];
-
-  // console.log('Search Type:', search_type);
 
   let data = {
     search_providers_state: state,
@@ -38,13 +33,22 @@ let findProvider = async ({ res, parameters, user }) => {
 
   if ( search_type && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).toLowerCase();
-    let redirect_url = createURL(`${BASEURL}/search/providers/${search_type}`, { service_name, ...user, ...data });
+
+    let redirect_url = createURL(
+      `${BASEURL}/providers/search/${search_type}`, 
+      { service_name, ...user, ...data }
+    );
+
     res.redirect(redirect_url);
     return;
   }
 
   if ( search_type && (!brand_name && !procedure) ) {
-    let redirect_url = createURL(`${BASEURL}/search/providers/${search_type}`, { ...user, ...data });
+    let redirect_url = createURL(
+      `${BASEURL}/providers/search/${search_type}`, 
+      { ...user, ...data }
+    );
+
     res.redirect(redirect_url);
     return;
   }

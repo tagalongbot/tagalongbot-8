@@ -40,11 +40,7 @@ let handleError = (res) => (error) => {
 
 let handleAI = ({ query }, res) => {
   let { DF_SESSION_ID, DF_CONTEXT, queryString } = query;
-  let first_name = query['first name'];
-  let last_name = query['last name'];
-  let gender = query['gender'];
-  let messenger_user_id = query['messenger user id'];
-  let user = { first_name, last_name, gender, messenger_user_id }; 
+  let { messenger_user_id, first_name, last_name, gender } = query;
 
   let newSessionId = (!DF_SESSION_ID || DF_SESSION_ID === "0") ? Math.random().toString().slice(2) : 0;
   let sessionId = (DF_SESSION_ID && DF_SESSION_ID != "0") ? DF_SESSION_ID : newSessionId;
@@ -55,6 +51,7 @@ let handleAI = ({ query }, res) => {
 
   let request = API_AI_APP.textRequest(queryString, { sessionId, contexts });
 
+  let user = { first_name, last_name, gender, messenger_user_id }; 
 	request.on('response', handleResponse(res, user));
 	request.on('error', handleError(res));
 	request.end();
