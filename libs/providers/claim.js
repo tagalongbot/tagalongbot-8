@@ -16,7 +16,7 @@ let updatePractice = async ({ messenger_user_id, user_email, practice }) => {
     'Claimed By Email': user_email,
   }
 
-  let updated_practice = await updatePractice(update_practice_data, practice);
+  let updated_practice = await updatePracticeTable(update_practice_data, practice);
 
   return updated_practice;
 }

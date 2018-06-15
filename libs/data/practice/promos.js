@@ -12,7 +12,7 @@ let getPracticePromo = async ({ provider_base_id, promo_id }) => {
   return promo;
 }
 
-let getPracticePromos = async ({ provider_base_id, view = 'Main Menu' }) => {
+let getPracticePromos = async ({ provider_base_id, view = 'Main View' }) => {
   let promosTable = getPromosTable(provider_base_id);
   let getPromos = getAllDataFromTable(promosTable);
 

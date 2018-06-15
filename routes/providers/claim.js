@@ -3,6 +3,8 @@ let { updatePractice, createUpdateMsg } = require('../../libs/providers/claim.js
 let express = require('express');
 let router = express.Router();
 
+let handleRoute = require('../../middlewares/handleRoute.js');
+
 let askForUserEmail = async ({ query }, res) => {
   let { provider_id } = query;
 
@@ -30,7 +32,13 @@ let claimProvider = async ({ query }, res) => {
   res.send({ messages });
 }
 
-router.get('/email', askForUserEmail);
-router.get('/', claimProvider);
+router.get(
+  '/email', 
+  handleRoute(askForUserEmail, '[Claim Provider Promo] Error')
+);
+
+router.get(
+  '/', claimProvider
+);
 
 module.exports = router;

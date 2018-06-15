@@ -25,9 +25,9 @@ router.get(
   handleRoute(getProviderPromos, '[Provider Promos] Error')
 );
 
-router.get(
-  '/claim', 
-  handleRoute(claimProvider, '[Claim Provider Promo] Error')
+router.use(
+  '/claim',
+  claimProvider,
 );
 
 router.get(
