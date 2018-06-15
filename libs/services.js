@@ -29,7 +29,7 @@ let filterServicesFromProvider = ({ services, provider }) => {
 }
 
 module.exports = {
-  // Should probably expose the first 2 functions with a wrapping function for when I update code to
+  // Should probably expose the first 2 functions with a wrapping function for when I update code to Sarge's Database
   getServices,
   findService,
   getNonSurgicalServices,

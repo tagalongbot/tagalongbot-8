@@ -1,4 +1,10 @@
+# Airtable
 - Delete "Terms" field in promotions bases
+- Restructure the way manufactured and custom promotions images and details are managed
+
+# Code
+- Work on Error Handling
+- Test code with Insomnia
+- Update the way manufactured and custom promotions are created
 - Pass "BASEURL" to all functions that use it without being passed to make those functions PURE
-- Create a library file for each route
-- Create a middleware function that allows me to easily destructure each query parameter
+- Create a logging system
