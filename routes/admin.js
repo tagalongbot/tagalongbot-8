@@ -21,7 +21,7 @@ router.get(
   '/promos/create/custom', createCustomPromo
 );
 
-router.get(
+router.use(
   '/promos/create/manufactured', createManufacturedPromo
 );
 

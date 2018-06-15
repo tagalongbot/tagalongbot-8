@@ -1,15 +1,10 @@
-let { SERVICES_BASE_ID } = process.env;
 let { createGallery, createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/providers.js');
+let { findService } = require('../../../../libs/services.js');
 
 let { getProviderServices, getServicePromos, getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured.js');
 
 let { getTable, getAllDataFromTable, findTableData } = require('../../../../libs/data.js');
-
-let getServicesTable = getTable('Services');
-let servicesTable = getServicesTable(SERVICES_BASE_ID);
-let getServicesFromTable = getAllDataFromTable(servicesTable);
-let findService = findTableData(servicesTable);
 
 let express = require('express');
 let router = express.Router();
