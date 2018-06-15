@@ -3,6 +3,7 @@ let { createGallery } = require('../../libs/bots.js');
 let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 
 let { filterProvidersByService } = require('../../libs/providers.js');
+let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 let { getProviders, getProviderPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
 
 let getPromos = async ({ query, params }, res) => {
@@ -17,9 +18,11 @@ let getPromos = async ({ query, params }, res) => {
 
   // Study transducers to improve code to not have to map twice
   let provider_promotions = await Promise.all(
-    (providers_by_service || providers).map(
-      getProviderPromosByService(service_name)
-    )
+    (providers_by_service || providers).map(provider => {
+      let provider_base_id = provider.fields['Practice Base ID'];
+      let view = 'Active Promos';
+      return getPracticePromos({ provider_base_id, view });
+    })
   );
 
   let promos = provider_promotions.map((promos, index) => {

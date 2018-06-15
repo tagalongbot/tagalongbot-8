@@ -18,20 +18,14 @@ let getProviders = async ({ search_promos_state, search_promos_city, search_prom
   return providers;
 }
 
-let getProviderPromosByService = (service_name) => async (provider) => {
-  let provider_base_id = provider.fields['Practice Base ID'];
+let filterPromosByService = ({ service_name, promos }) => {
   let service_name_lowercased = service_name.toLowerCase();
-
-  let view = 'Active Promos';
-  let promosTable = getPromosTable(provider_base_id);
-  let getPromos = getAllDataFromTable(promosTable);
-  let promos = await getPromos({ view });
 
   let matching_promos = promos.filter(
     promo => promo.fields['Type'].toLowerCase().includes(service_name_lowercased)
   );
 
-  return promos;
+  return matching_promos;
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
