@@ -35,7 +35,7 @@ let getServicePromos = (service) => {
   return promos;
 }
 
-let getServicesWithPromos = (services) => {
+let getServicesWithPromos = (s) => {
   let services_with_promos = services.filter((service) => {
     let promos_count = getServicePromos(service).length;
     return promos_count > 0;
