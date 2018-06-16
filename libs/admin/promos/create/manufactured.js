@@ -34,7 +34,7 @@ let getServicesWithPromos = async ({ services }) => {
   return services_with_promos;
 }
 
-let getServicePromos = async ({ service }) => {
+let getServiceManufacturedPromos = async ({ service }) => {
   
 }
 
@@ -104,7 +104,7 @@ let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fiel
     `${BASEURL}/admin/promos/create/manufactured/service/create`,
     { service_id, service_name, provider_id, provider_base_id, promo_type }
   );
-  
+
   let btn = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);
 
   let buttons = [btn];

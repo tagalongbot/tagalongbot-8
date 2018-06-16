@@ -2,7 +2,7 @@ let { createGallery, createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/providers.js');
 let { findService } = require('../../../../libs/services.js');
 
-let { getProviderServices, getServicePromos, getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured.js');
+let { getProviderServices, getServiceManufacturedPromos, getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured.js');
 
 let express = require('express');
 let router = express.Router();
@@ -26,11 +26,11 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
   res.send({ messages });
 }
 
-let sendServicePromos = async ({ query }, res) => {
+let sendServiceManufacturedPromos = async ({ query }, res) => {
   let { service_id, provider_id, provider_base_id } = query;
 
   let service = await findService(service_id);
-  let promos = await getServicePromos(service);
+  let promos = await getServiceManufacturedPromos(service);
 
   let galleryData = promos.map(
     toPromosGallery({ provider_id, provider_base_id }, service)
@@ -78,7 +78,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
 }
 
 router.get('/', sendManufacturedServicesWithPromotions);
-router.get('/service', sendServicePromos);
+router.get('/service', sendServiceManufacturedPromos);
 router.get('/service/create', createServicePromo);
 router.get('/service/create/confirm', confirmCreateServicePromo);
 
