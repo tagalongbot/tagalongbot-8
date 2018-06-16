@@ -92,7 +92,10 @@ let createButtons = (provider, data) => {
   }
 
   if (!is_provider_claimed) {
-    let claim_practice_url = createURL(`${BASEURL}/providers/claim/email`, data);
+    let claim_practice_url = createURL(
+      `${BASEURL}/providers/claim/email`,
+      { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
+    );
 
     let btn = {
       title: 'Claim Practice',
@@ -116,7 +119,7 @@ let createButtons = (provider, data) => {
       type: 'json_plugin_url',
       url: already_claimed_url
     }
-    
+
     return [btn];
   }
 }

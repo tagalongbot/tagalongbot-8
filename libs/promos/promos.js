@@ -35,20 +35,18 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let subtitle = promo['Terms'];
   let image_url = promo['Image URL'];
 
-  let promo_type = encodeURIComponent(promo['Type']);
-
-  let btn1URL = createURL(
+  let view_promo_details_url = createURL(
     `${BASEURL}/promos/details`, 
     { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
-  let btn1 = {
+  let btn = {
     title: 'View Promo Details',
     type: 'json_plugin_url',
-    url: btn1URL,
+    url: view_promo_details_url,
   }
 
-  let buttons = [btn1];
+  let buttons = [btn];
 
   let element = { title, subtitle, image_url, buttons};
   return element;

@@ -16,13 +16,13 @@ let getServiceProviderPromos = async ({ query }, res) => {
   let promos = await getServicePromos({ service_name, provider_base_id });
 
   if (!promos[0]) {
-    let messages = createNoPromosMsg(query);
+    let messages = createNoPromosMsg({ first_name, provider_id });
     res.send({ messages });
     return;
   }
 
   let galleryData = promos.map(
-    toGalleryElement({ first_name, provider_id })
+    toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id })
   );
 
   let text = `Here are some ${service_name} promos by ${provider_name}`;
