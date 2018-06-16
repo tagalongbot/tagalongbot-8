@@ -86,7 +86,7 @@ let createOrUpdateUser = async (data, { id: provider_id, fields: provider }) => 
 let createClaimedMsg = ({ query, user_data, updated_promo, provider_phone_number, provider_booking_url }) => {
   let { first_name } = user_data;
 
-  let view_provider_url = createURL(`${BASEURL}/promo/provider`, { ...query, ...user_data });
+  let view_provider_url = createURL(`${BASEURL}/promos/provider`, { ...query, ...user_data });
 
   let btns = [
     `View Provider|json_plugin_url|${view_provider_url}`,

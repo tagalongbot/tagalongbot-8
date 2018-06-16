@@ -16,9 +16,9 @@ let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) 
   let subtitle = `${expiredText} - ${promo['Terms']}`;
   let image_url = promo['Image URL'];
 
-  let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
-  let update_promo_url = createURL(`${BASEURL}/promo/update`, { promo_id, provider_base_id });
-  let toggle_promo_url = createURL(`${BASEURL}/promo/toggle`, { promo_id, provider_base_id });
+  let view_promo_details_url = createURL(`${BASEURL}/admin/promos/view/info`, { promo_id, provider_base_id });
+  let update_promo_url = createURL(`${BASEURL}/admin/promos/update`, { promo_id, provider_base_id });
+  let toggle_promo_url = createURL(`${BASEURL}/admin/promos/toggle`, { promo_id, provider_base_id });
 
   let btn1 = {
     title: 'View Promo Details',

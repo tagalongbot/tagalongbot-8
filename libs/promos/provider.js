@@ -9,8 +9,8 @@ let toGalleryElement = ({ first_name, last_name, gender, messenger_user_id }) =>
   let provider_base_id = provider['Practice Base ID'];
 
   let data = { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id };
-  let promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
-  let services_btn_url = createURL(`${BASEURL}/provider/services`, data);
+  let promos_btn_url = createURL(`${BASEURL}/providers/promos`, data);
+  let services_btn_url = createURL(`${BASEURL}/providers/services`, data);
 
   let btn1 = {
     title: 'View Promos',

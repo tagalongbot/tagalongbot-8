@@ -7,7 +7,7 @@ let createUpdateBtn = (data) => {
 
   if (user_ids.includes(user_record_id)) return null;
 
-  let update_promo_url = createURL(`${BASEURL}/promo/verify/update`, { provider_base_id, promo_id, user_messenger_id });
+  let update_promo_url = createURL(`${BASEURL}/admin/promos/user/update`, { provider_base_id, promo_id, user_messenger_id });
 
   let btn = {
     title: 'Mark Promo As Used',
@@ -26,7 +26,7 @@ let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id
 
   let data = { provider_base_id, promo_id, user_messenger_id };
 
-  let view_promo_info_url = createURL(`${BASEURL}/promo/info`, data);
+  let view_promo_info_url = createURL(`${BASEURL}/admin/promos/info`, data);
 
   let btn1 = {
     title: 'View Promo Details',

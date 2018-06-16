@@ -22,9 +22,9 @@ let updatePromo = async ({ provider_base_id, promo, update_promo_field_name, upd
 let createUpdateMsg = ({ promo_id, provider_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }) => {
   let text = `Updated ${update_promo_field_name} to "${update_promo_field_value}" for ${promo.fields['Promotion Name']} `;
 
-  let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
-  let update_promo_url = createURL(`${BASEURL}/promo/update`, { promo_id, provider_base_id });
-  let toggle_promo_url = createURL(`${BASEURL}/promo/toggle`, { promo_id, provider_base_id });
+  let view_promo_details_url = createURL(`${BASEURL}/admin/promos/view/info`, { promo_id, provider_base_id });
+  let update_promo_url = createURL(`${BASEURL}/admin/promos/update`, { promo_id, provider_base_id });
+  let toggle_promo_url = createURL(`${BASEURL}/admin/promos/toggle`, { promo_id, provider_base_id });
 
   let msg = createButtonMessage(
     text,

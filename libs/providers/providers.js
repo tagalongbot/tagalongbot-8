@@ -119,7 +119,6 @@ let createButtons = (provider, data) => {
 let createButtons2 = (provider, data) => {
   let is_provider_active = provider['Active?'];
   let is_provider_claimed = provider['Claimed?'];
-  // We're currently not showing unclaimed practices in the bot by passing `{ active: true }` to `searchProviders`
 
   let view_provider_site_url = provider['Practice Website'];
   let view_provider_book_url = provider['Practice Booking URL'];

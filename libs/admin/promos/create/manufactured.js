@@ -112,7 +112,7 @@ let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fiel
   let service_name = service['Name'];
 
   let create_promo_url = createURL(
-    `${BASEURL}/promo/new/manufactured/service/create`,
+    `${BASEURL}/admin/promos/create/manufactured/service/create`,
     { service_id, service_name, provider_id, provider_base_id, promo_type }
   );
 

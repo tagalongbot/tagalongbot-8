@@ -28,12 +28,12 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let image_url = promo['Image URL'];
 
   let view_promo_details_url = createURL(
-    `${BASEURL}/promo/details`, 
+    `${BASEURL}/promos/details`, 
     { promo_id, ...data }
   );
 
   let view_promo_provider_url = createURL(
-    `${BASEURL}/promo/provider`, 
+    `${BASEURL}/promos/provider`, 
     { promo_id, ...data }
   );
 

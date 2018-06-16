@@ -27,9 +27,9 @@ let updatePromo = async ({ provider_base_id, promo }) => {
 }
 
 let createUpdateMsg = ({ messenger_user_id, promo_id, provider_base_id, promo, updatedPromo }) => {
-  let toggle_promo_url = createURL(`${BASEURL}/promo/toggle`, { promo_id, provider_base_id });
-  let view_promo_details_url = createURL(`${BASEURL}/promo/view/info`, { promo_id, provider_base_id });
-  let view_active_promos_url = createURL(`${BASEURL}/promo/view/all`, { messenger_user_id });
+  let toggle_promo_url = createURL(`${BASEURL}/admin/promos/toggle`, { promo_id, provider_base_id });
+  let view_promo_details_url = createURL(`${BASEURL}/admin/promos/view/info`, { promo_id, provider_base_id });
+  let view_active_promos_url = createURL(`${BASEURL}/admin/promos/view/all`, { messenger_user_id });
 
   let txtMsg = createButtonMessage(
     `${promo.fields['Promotion Name']} is now ${updatedPromo.fields['Active?'] ? 'Active' : 'Deactivated'}`,

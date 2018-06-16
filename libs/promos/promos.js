@@ -37,7 +37,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   // Bug with Sending "gender" to json_plugin_url button
   let btn1URL = createURL(
-    `${BASEURL}/promo/details`, 
+    `${BASEURL}/promos/details`, 
     data
   );
 
