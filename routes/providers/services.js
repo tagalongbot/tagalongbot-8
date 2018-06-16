@@ -23,7 +23,7 @@ let getProviderServices = async ({ query }, res) => {
   );
 
   let servicesGallery = createMultiGallery(servicesGalleryData, 10, 'square');
-  let text = `Here are the services provided by ${provider.fields['Practice Name']}`;
+  let text = `Here are the services provided by ${provider_name}`;
   let messages = [{ text }, ...servicesGallery];
   res.send({ messages });
 }
