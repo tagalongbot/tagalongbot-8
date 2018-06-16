@@ -25,7 +25,7 @@ let createViewProviderPromosMsg = (service, data) => {
 
   let view_provider_promos = createURL(
     `${BASEURL}/services/provider/promos`, 
-    { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id, provider_name }
+    { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id }
   );
 
   let txtMsg = createButtonMessage(

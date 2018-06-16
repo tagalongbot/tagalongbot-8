@@ -4,11 +4,10 @@ let { getServices, filterServicesFromProvider } = require('../../libs/services.j
 let { toGalleryElement } = require('../../libs/providers/services.js');
 
 let getProviderServices = async ({ query }, res) => {
-  let { provider_id, messenger_user_id, first_name, last_name, gender } = query;
+  let { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id } = query;
 
   let provider = await getProviderByID(provider_id);
   let provider_name = provider.fields['Practice Name'];
-  let provider_base_id = provider.fields['Practice Base ID'];
   let services = await getServices();
 
   let services_from_provider = filterServicesFromProvider({ services, provider });
