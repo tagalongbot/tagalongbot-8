@@ -16,12 +16,12 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   let image_url = service['Image URL'];
 
   let view_service_details_btn_url = createURL(
-    `${BASEURL}/service/description/yes`,
+    `${BASEURL}/services/description/yes`,
     { service_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let find_providers_btn_url = createURL(
-    `${BASEURL}/service/providers`,
+    `${BASEURL}/services/providers`,
     { service_id, messenger_user_id, first_name, last_name, gender }
   );
 

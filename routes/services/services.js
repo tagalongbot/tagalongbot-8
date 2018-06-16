@@ -30,7 +30,9 @@ let getServices = async ({ query, params }, res) => {
   );
 
   let non_surgical_services = await getNonSurgicalServices();
-  let non_surgical_services_gallery_data = non_surgical_services.slice(index, new_index).map(toGalleryElement);
+  let non_surgical_services_gallery_data = non_surgical_services.slice(index, new_index).map(
+    toGalleryElement({ messenger_user_id, first_name, last_name, gender })
+  );
 
   let gallery_array = [surgical_category_gallery_element, ...non_surgical_services_gallery_data];
 

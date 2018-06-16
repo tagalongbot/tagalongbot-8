@@ -9,8 +9,8 @@ let express = require('express');
 let router = express.Router();
 
 let searchServiceProviders = async ({ query }, res) => {
-  let { service_name } = query;
-  let set_attributes = { service_name };
+  let { service_id } = query;
+  let set_attributes = { service_id };
   let redirect_to_blocks = ['Search Service Providers'];
   res.send({ set_attributes, redirect_to_blocks });
 }
