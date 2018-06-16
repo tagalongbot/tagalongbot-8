@@ -36,9 +36,10 @@ let createSurgicalCategoryElement = (data) => {
   let title = 'Surgical Procedures';
   let image_url = SURGICAL_SERVICES_IMAGE_URL;
   let surgical_category_btn_url = createURL(`${BASEURL}/services/search/surgical`, data);
+  console.log('surgical_category_btn_url', surgical_category_btn_url);
   
   let btn = {
-    title: 'View Services',
+    title: 'View services',
     type: 'json_plugin_url',
     web: surgical_category_btn_url,
   }
@@ -53,8 +54,8 @@ let createLastGalleryElement = ({ service_type, index, data }) => {
   let title = 'More Options';
   let new_index = Number(index + 8);
 
-  //Buttons
   let load_more_services_url = createURL(`${BASEURL}/search/services/${service_type}`, { index: new_index });
+
   let btn1 = {
     title: 'Load More Services',
     type: 'json_plugin_url',

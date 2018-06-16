@@ -14,7 +14,9 @@ let getServices = async ({ query, params }, res) => {
   let index = Number(query['index']) || 0;
   let new_index = index + 8;
 
+  console.log('service_type', service_type);
   if (service_type === 'surgical') {
+    console.log('Inside Surgical');
     let surgical_services = await getSurgicalServices();
     let surgical_services_gallery_data = surgical_services.map(toGalleryElement);
     let gallery = createGallery(surgical_services_gallery_data);
@@ -42,16 +44,4 @@ let getServices = async ({ query, params }, res) => {
 	res.send({ messages });
 }
 
-let handleErrors = (req, res) => (error) => {
-  console.log(error);
-	let source = 'airtable';
-	res.send({ source, error });
-}
-
-module.exports = (req, res) => {
-	getServices(req, res)
-
-	.catch(
-		handleErrors(req, res)
-	);
-}
+module.exports = getServices;
