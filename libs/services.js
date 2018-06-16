@@ -6,8 +6,9 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServices = getAllDataFromTable(servicesTable);
 let findService = findTableData(servicesTable);
 
-let getAllServices = await () => {
-  
+let getAllServices = async () => {
+  let services = await getServices();
+  return services;  
 }
 
 let getNonSurgicalServices = async () => {
@@ -33,8 +34,8 @@ let filterServicesFromProvider = ({ services, provider }) => {
 }
 
 module.exports = {
-  // Should probably expose the first 2 functions with a wrapping function for when I update code to Sarge's Database
-  getServices,
+  getAllServices,
+  // Expose function below as getServiceById
   findService,
   getNonSurgicalServices,
   getSurgicalServices,

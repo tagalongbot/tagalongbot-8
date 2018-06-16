@@ -33,11 +33,14 @@ let getServicePromos = (service) => {
 }
 
 let getServicesWithPromos = async (services) => {
-  let services_with_promos = services.filter((service) => {
-    let promos_count = getServicePromos(service).length;
-    return promos_count > 0;
-  });
-  
+  let manufactured_promos = await getManufacturedPromos();
+  let all_manufactured_service_name = manufactured_promos.map(promo => promo.fields['Service Name'].toUpperCase());
+  let manufacutred_promo_service_names = [...new Set(all_manufactured_service_name)];
+
+  let services_with_promos = services.filter(
+    service => manufacutred_promo_service_names.includes(service.fields['Name'].toUpperCase())
+  );
+
   return services_with_promos;
 }
 
