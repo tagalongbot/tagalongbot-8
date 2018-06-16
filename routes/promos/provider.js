@@ -6,7 +6,7 @@ let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/promos/provider.js');
 
 let getPromoProvider = async ({ query }, res) => {
-  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender1, messenger_user_id } = query;
+  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
 
@@ -24,9 +24,8 @@ let getPromoProvider = async ({ query }, res) => {
     return;
   }
 
-  // Check for `gender` error
   let providersGalleryData = [provider].map(
-    toGalleryElement({ first_name, last_name, gender: gender1, messenger_user_id })
+    toGalleryElement({ first_name, last_name, gender, messenger_user_id })
   );
 
   let providersGallery = createGallery(providersGalleryData);

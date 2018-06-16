@@ -2,11 +2,18 @@ let { BASEURL } = process.env;
 let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
-let createDetailsMsg = ({ data, promo }) => {
-  let { provider_id, promo_id } = data;
+let createDetailsMsg = (promo, data) => {
+  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
 
-  let claim_promo_url = createURL(`${BASEURL}/promos/claim/email`, { provider_id, promo_id });
-  let view_provider_url = createURL(`${BASEURL}/promos/provider`, data);
+  let claim_promo_url = createURL(
+    `${BASEURL}/promos/claim/email`, 
+    { provider_id, promo_id }
+  );
+  
+  let view_provider_url = createURL(
+    `${BASEURL}/promos/provider`, 
+    { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
+  );
 
   let msg = createButtonMessage(
     promo.fields['Details'],

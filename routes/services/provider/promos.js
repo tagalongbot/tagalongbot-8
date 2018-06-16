@@ -18,12 +18,12 @@ let getServiceProviderPromos = async ({ query }, res) => {
   }
 
   let galleryData = promos.map(
-    toGalleryElement(query)
+    toGalleryElement({ provider_id })
   );
 
   let text = `Here are some ${service_name} promos by ${provider_name}`;
   let messages = [
-    { text }, 
+    { text },
     ...createMultiGallery(galleryData)
   ];
 

@@ -29,16 +29,17 @@ let filterPromosByService = ({ service_name, promos }) => {
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
+  let { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id } = data;
+
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = promo['Terms'];
   let image_url = promo['Image URL'];
 
   let promo_type = encodeURIComponent(promo['Type']);
 
-  // Bug with Sending "gender" to json_plugin_url button
   let btn1URL = createURL(
     `${BASEURL}/promos/details`, 
-    data
+    { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
   let btn1 = {
