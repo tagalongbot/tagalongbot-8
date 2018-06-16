@@ -6,6 +6,7 @@ let handleRoute = require('../middlewares/handleRoute.js');
 let getAdminMenu = require('../routes/admin/menu.js');
 let createCustomPromo = require('../routes/admin/promos/create/custom.js');
 let createManufacturedPromo = require('../routes/admin/promos/create/manufactured.js');
+let viewManufacturedPromoDetails = require('../routes/admin/promos/view/manufactured/details.js');
 let viewAllPromos = require('../routes/admin/promos/view/all.js');
 let viewUserPromos = require('../routes/admin/promos/view/user.js');
 let viewPromoInfo = require('../routes/admin/promos/view/info.js');
@@ -23,6 +24,11 @@ router.get(
 
 router.use(
   '/promos/create/manufactured', createManufacturedPromo
+);
+
+router.get(
+  '/promos/view/manufactured/details',
+  viewManufacturedPromoDetails
 );
 
 router.get(
