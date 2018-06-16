@@ -1,5 +1,6 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../../libs/helpers.js');
+let { createBtn } = require('../../libs/bots.js');
 let { getTable, getAllDataFromTable } = require('../../libs/data.js');
 let { searchProviders } = require('../../libs/providers.js');
 
@@ -39,12 +40,8 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
     `${BASEURL}/promos/details`, 
     { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
-
-  let btn = {
-    title: 'View Promo Details',
-    type: 'json_plugin_url',
-    url: view_promo_details_url,
-  }
+  
+  let btn = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);
 
   let buttons = [btn];
 

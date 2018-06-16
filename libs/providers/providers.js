@@ -1,5 +1,6 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
-let { createURL } = require('../../libs/helpers');
+let { createURL } = require('../../libs/helpers.js');
+let { createBtn } = require('../../libs/bots.js');
 let { getUserByMessengerID, createUser, updateUser } = require('../../libs/users.js');
 
 let createNewUserData = (data) => {
@@ -76,18 +77,9 @@ let createButtons = (provider, data) => {
       { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }  
     );
 
-    let btn1 = {
-      title: 'View Services',
-      type: 'json_plugin_url',
-      url: view_services_btn_url,
-    }
-
-    let btn2 = {
-      title: 'View Promos',
-      type: 'json_plugin_url',
-      url: view_promos_btn_url,
-    }
-
+    let btn1 = createBtn(`View Services|json_plugin_url|${view_services_btn_url}`);
+    let btn2 = createBtn(`View Promos|json_plugin_url|${view_promos_btn_url}`);
+  
     return [btn1, btn2];
   }
 
@@ -97,11 +89,7 @@ let createButtons = (provider, data) => {
       { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
     );
 
-    let btn = {
-      title: 'Claim Practice',
-      type: 'json_plugin_url',
-      url: claim_practice_url
-    }
+    let btn = createBtn(`Claim Practice|json_plugin_url|${claim_practice_url}`);
 
     return [btn];
   }
@@ -114,11 +102,7 @@ let createButtons = (provider, data) => {
       { messenger_user_id }
     );
 
-    let btn = {
-      title: 'Already Claimed',
-      type: 'json_plugin_url',
-      url: already_claimed_url
-    }
+    let btn = createBtn(`Already Claimed|json_plugin_url|${already_claimed_url}`);
 
     return [btn];
   }
@@ -135,10 +119,12 @@ let createButtons2 = (provider, data) => {
   let btns = [];
 
   if (view_provider_site_url) {
+    let btn = createBtn(`Visit Provider Site|web_url|${view_provider_site_url}`);
+
     let btn = {
-      title: 'Visit Provider Site',
-      type: 'web_url',
-      url: view_provider_site_url,
+      title: '',
+      type: '',
+      url: ,
     }
 
     btns.push(btn);

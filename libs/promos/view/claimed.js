@@ -1,4 +1,5 @@
 let { BASEURL } = process.env;
+let { createBtn } = require('../../../libs/bots.js');
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
 let { getProviderByID } = require('../../../libs/providers.js');
 let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
@@ -37,23 +38,9 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
     { promo_id, ...data }
   );
 
-  let btn1 = {
-    title: 'View Promo Info',
-    type: 'json_plugin_url',
-    url: view_promo_details_url
-  }
-
-  let btn2 = {
-    title: 'View Promo Provider',
-    type: 'json_plugin_url',
-    url: view_promo_provider_url
-  }
-
-  let btn3 = {
-    title: 'Get My User ID',
-    type: 'show_block',
-    block_name: 'Get User ID'
-  }
+  let btn1 = createBtn(`View Promo Info|json_plugin_url|${view_promo_details_url}`);
+  let btn2 = createBtn(`View Promo Provider|json_plugin_url|${view_promo_provider_url}`);
+  let btn3 = createBtn(`Get My User ID|show_block|Get User ID`);
 
   let buttons = [btn1, btn2, btn3];
 

@@ -1,5 +1,6 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../../libs/helpers.js');
+let { createBtn } = require('../../libs/bots.js');
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id } = data;
@@ -13,11 +14,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
     { promo_id, provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
   );
 
-  let btn = {
-    title: 'View Promo Details',
-    type: 'json_plugin_url',
-    url: promo_details_btn_url,
-  }
+  let btn = createBtn(`View Promo Details|json_plugin_url|${promo_details_btn_url}`);
 
   let buttons = [btn];
 

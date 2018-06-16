@@ -1,5 +1,5 @@
 let { BASEURL } = process.env;
-let { createMultiGallery } = require('../../../../libs/bots.js');
+let { createBtn, createMultiGallery } = require('../../../../libs/bots.js');
 let { createURL } = require('../../../../libs/helpers.js');
 
 let createUpdateBtn = (data) => {
@@ -7,13 +7,12 @@ let createUpdateBtn = (data) => {
 
   if (user_ids.includes(user_record_id)) return null;
 
-  let update_promo_url = createURL(`${BASEURL}/admin/promos/user/update`, { provider_base_id, promo_id, user_messenger_id });
+  let update_promo_url = createURL(
+    `${BASEURL}/admin/promos/user/update`, 
+    { provider_base_id, promo_id, user_messenger_id }
+  );
 
-  let btn = {
-    title: 'Mark Promo As Used',
-    type: 'json_plugin_url',
-    url: update_promo_url,
-  }
+  let btn = createBtn(`Mark Promo As Used|json_plugin_url|${update_promo_url}`);
 
   return btn;
 }
@@ -28,11 +27,7 @@ let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id
 
   let view_promo_info_url = createURL(`${BASEURL}/admin/promos/info`, data);
 
-  let btn1 = {
-    title: 'View Promo Details',
-    type: 'json_plugin_url',
-    url: view_promo_info_url,
-  }
+  let btn1 = createBtn(`View Promo Details|json_plugin_url|${view_promo_info_url}`);
 
   let buttons = [btn1];
 

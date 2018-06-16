@@ -17,15 +17,25 @@ let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) 
   let subtitle = `${expiredText} - ${promo['Terms']}`;
   let image_url = promo['Image URL'];
 
-  let view_promo_details_url = createURL(`${BASEURL}/admin/promos/view/info`, { promo_id, provider_base_id });
-  let update_promo_url = createURL(`${BASEURL}/admin/promos/update`, { promo_id, provider_base_id });
-  let toggle_promo_url = createURL(`${BASEURL}/admin/promos/toggle`, { promo_id, provider_base_id });
+  let view_promo_details_url = createURL(
+    `${BASEURL}/admin/promos/view/info`,
+    { promo_id, provider_base_id }
+  );
 
+  let update_promo_url = createURL(
+    `${BASEURL}/admin/promos/update`,
+    { promo_id, provider_base_id }
+  );
+
+  let toggle_promo_url = createURL(
+    `${BASEURL}/admin/promos/toggle`,
+    { promo_id, provider_base_id }
+  );
   
   let btn1 = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);
   let btn2 = createBtn(`Update Promo|json_plugin_url|${update_promo_url}`);
-  let btn3 = createBtn(`${promo['Active?'] ? 'Deactivate' : 'Reactivate}|json_plugin_url|${toggle_promo_url}`);
-  
+  let btn3 = createBtn(`${promo['Active?'] ? 'Deactivate' : 'Reactivate'}|json_plugin_url|${toggle_promo_url}`);
+
   let buttons = [btn1, btn2, btn3];
 
   let element = { title, subtitle, image_url, buttons }
