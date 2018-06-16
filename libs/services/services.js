@@ -50,7 +50,7 @@ let createSurgicalCategoryElement = (data) => {
   return surgical_category_gallery_element;
 }
 
-let createLastGalleryElement = ({ service_type, index, data }) => {
+let createLastGalleryElement = ({ service_type, index }) => {
   let title = 'More Options';
   let new_index = Number(index + 8);
 

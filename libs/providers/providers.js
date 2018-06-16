@@ -3,15 +3,8 @@ let { createURL } = require('../../libs/helpers');
 let { getUserByMessengerID, createUser, updateUser } = require('../../libs/users.js');
 
 let createNewUserData = (data) => {
-  let { 
-    search_providers_state, 
-    search_providers_city, 
-    search_providers_zip_code,
-    messenger_user_id,
-    first_name,
-    last_name,
-    gender,
-  } = data;
+  let { messenger_user_id, first_name, last_name, gender } = data;
+  let { search_providers_state, search_providers_city, search_providers_zip_code } = data;
 
   let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;
   let last_city_searched = search_providers_city ? search_providers_city.trim().toLowerCase() : null;
