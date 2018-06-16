@@ -1,5 +1,5 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
-let { createURL, localizeDate } = require('../../../../libshelpers.js');
+let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 let { getTable, createTableData } = require('../../../../libs/data.js');
 
@@ -8,7 +8,7 @@ let { getManufacturedPromos, getManufacturedPromosByService } = require('../../.
 
 let getPromosTable = getTable('Promos');
 
-let getProviderServices = async (provider) => {
+let getProviderServices = async ({ provider }) => {
   let services = await getAllServics();
 
   let provider_services = provider.fields['Practice Services'].map(
@@ -22,7 +22,7 @@ let getProviderServices = async (provider) => {
   return matched_services;
 }
 
-let getServicePromos = (service) => {
+let getServicePromos = ({ service }) => {
   let service_keys = Object.keys(service.fields);
 
   let promos = service_keys.filter(
@@ -32,7 +32,7 @@ let getServicePromos = (service) => {
   return promos;
 }
 
-let getServicesWithPromos = async (services) => {
+let getServicesWithPromos = async ({ services }) => {
   let manufactured_promos = await getManufacturedPromos();
   let all_manufactured_service_name = manufactured_promos.map(promo => promo.fields['Service Name'].toUpperCase());
   let manufacutred_promo_service_names = [...new Set(all_manufactured_service_name)];
@@ -79,11 +79,11 @@ let createNewPromo = async (data) => {
 }
 
 // Mapping Functions
-let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id, fields: service }) => {
+let toServicesGallery = ({ provider_id, provider_base_id, total_service_promos_available }) => ({ id: service_id, fields: service }) => {
   let title = service['Name'];
 
-  let service_types_length = getServicePromos(service).length;
-  let subtitle = `Promo Types Available: ${service_types_length}`;
+  let total_service_promos_available = getServicePromos(service).length;
+  let subtitle = `Promo Types Available: ${total_service_promos_available}`;
   let image_url = service['Image URL'];
 
   let view_service_promos_url = createURL(

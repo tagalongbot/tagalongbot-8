@@ -7,14 +7,15 @@ let { getProviderServices, getServicePromos, getServicesWithPromos, createNewPro
 let express = require('express');
 let router = express.Router();
 
-let sendManufacturedPromotions = async ({ query }, res) => {
+let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
   let { messenger_user_id } = query;
-  let provider = await getProviderByUserID(messenger_user_id, ['Practice Base ID', 'Practice Services']);
+
+  let provider = await getProviderByUserID(messenger_user_id);
   let provider_id = provider.id;
   let provider_base_id = provider.fields['Practice Base ID'];
 
-  let provider_services = await getProviderServices(provider);
-  let services_with_promos = getServicesWithPromos(provider_services);
+  let provider_services = await getProviderServices({ provider });
+  let services_with_promos = getServicesWithPromos({ provider_services });
 
   let galleryData = services_with_promos.map(
     toServicesGallery({ provider_id, provider_base_id })
@@ -75,7 +76,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-router.get('/', sendManufacturedPromotions);
+router.get('/', sendManufacturedServicesWithPromotions);
 router.get('/service', sendServicePromos);
 router.get('/service/create', createServicePromo);
 router.get('/service/create/confirm', confirmCreateServicePromo);
