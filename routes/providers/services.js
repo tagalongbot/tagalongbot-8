@@ -1,4 +1,4 @@
-let { createGallery } = require('../../libs/bots.js');
+let { createMultiGallery } = require('../../libs/bots.js');
 let { getProviderByID } = require('../../libs/providers.js');
 let { getServices, filterServicesFromProvider } = require('../../libs/services.js');
 let { toGalleryElement } = require('../../libs/providers/services.js');
@@ -22,9 +22,9 @@ let getProviderServices = async ({ query }, res) => {
     toGalleryElement({ messenger_user_id, first_name, last_name, gender, provider_id, provider_base_id, provider_name })
   );
 
-  let servicesGallery = createGallery(servicesGalleryData);
+  let servicesGallery = createMultiGallery(servicesGalleryData, 10, 'square');
   let text = `Here are the services provided by ${provider.fields['Practice Name']}`;
-  let messages = [{ text }, servicesGallery];
+  let messages = [{ text }, ...servicesGallery];
   res.send({ messages });
 }
 

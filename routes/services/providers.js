@@ -45,7 +45,7 @@ let getServiceProviders = async ({ query, params }, res) => {
   );
 
   let last_gallery_element = createLastGalleryElement();
-	let providersGallery = createGallery([...randomProviders, last_gallery_element]);
+	let providersGallery = createGallery([...randomProviders, last_gallery_element], 'square');
   let messages = [providersGallery];
   res.send({ messages });
 }

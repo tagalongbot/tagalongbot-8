@@ -46,7 +46,7 @@ let createGallery = (elements, image_aspect_ratio = 'horizontal') => {
 	return { attachment };
 }
 
-let createMultiGallery = (elements, split_count = 10) => {
+let createMultiGallery = (elements, split_count = 10, image_aspect_ratio = 'horizontal') => {
   let galleryArray = [];
 
   while (elements.length > 0) {

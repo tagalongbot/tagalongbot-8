@@ -33,7 +33,7 @@ let getProviders = async ({ query, params }, res) => {
 
   let last_gallery_element = createLastGalleryElement();
 
-	let providersGallery = createGallery([...randomProviders, last_gallery_element]);
+	let providersGallery = createGallery([...randomProviders, last_gallery_element], 'square');
   let textMsg = { text: `Here's are some providers I found ${first_name}` };
 	let messages = [textMsg, providersGallery];
 	res.send({ messages });
