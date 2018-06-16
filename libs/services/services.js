@@ -7,7 +7,9 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   let non_surgical_category = service[`${surgical_or_non_surgical} Category`];
 
   let title = service['Name'].slice(0, 80);
-  let subtitle = `${surgical_or_non_surgical} | ${non_surgical_category} | ${service[non_surgical_category]}`.slice(0, 80);
+  let subtitle = (surgical_or_non_surgical.toLowerCase() === 'non surgical') ? 
+      `Non Surgical | ${non_surgical_category} | ${service[non_surgical_category]}`.slice(0, 80) : 
+      `Surgical Service`;
   let image_url = service['Image URL'];
 
   let view_service_details_btn_url = createURL(

@@ -4,7 +4,7 @@
 - Delete "Terms" field in promotions bases
 - Restructure the way manufactured and custom promotions images and details are managed
 
-##
+### Important and Less Urgent
 
 # Code
 
@@ -14,7 +14,7 @@
 - Update the way manufactured and custom promotions are created
 - Create a logging system
 
-### Important But Not Urgent
+### Important and Less Urgent
 - Update ChatFuel Block Names
 - Create a middleware that checks for required `query` parameters
 - Pass `BASEURL` to all functions that use it without being passed to make those functions PURE
