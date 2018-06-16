@@ -1,6 +1,6 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 let { createURL, localizeDate } = require('../../../helpers.js');
-
+let { createBtn } = require('../../../bots.js');
 let { getTable, getAllDataFromTable, findTableData, createTableData } = require('../../../data.js');
 
 let getServicesTable = getTable('Services');
@@ -91,11 +91,7 @@ let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id
     { service_id, provider_id, provider_base_id }
   );
 
-  let btn = {
-    title: 'View Service Promos',
-    type: 'json_plugin_url',
-    url: view_service_promos_url
-  }
+  let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);
 
   let buttons = [btn];
 
@@ -115,12 +111,8 @@ let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fiel
     `${BASEURL}/admin/promos/create/manufactured/service/create`,
     { service_id, service_name, provider_id, provider_base_id, promo_type }
   );
-
-  let btn = {
-    title: 'Create Promo',
-    type: 'json_plugin_url',
-    url: create_promo_url
-  }
+  
+  let btn = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);
 
   let buttons = [btn];
 

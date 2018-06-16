@@ -5,14 +5,16 @@ let BUTTON_TYPES = {
 	phone_number: 'phone_number'
 }
 
+let createBtn = (button) => {
+  let [title, btnType, value] = button.split('|');
+  let type = btnType.toLowerCase();
+  let typeName = BUTTON_TYPES[type];
+  let btn = { title, type, [typeName]: value }
+  return btn;
+}
+
 let createButtonMessage = (text, ...btns) => {
-	let buttons = btns.map(function(button) {
-		let [title, btnType, value] = button.split('|');
-		let type = btnType.toLowerCase();
-		let typeName = BUTTON_TYPES[type];
-		let btn = { title, type, [typeName]: value }
-		return btn;
-	});
+	let buttons = btns.map(createBtn);
 
 	let payload = {
 		text,
@@ -70,6 +72,7 @@ let createTextMessage = (text) => {
 }
 
 module.exports = {
+  createBtn,
   createButtonMessage,
   createGallery,
   createMultiGallery,

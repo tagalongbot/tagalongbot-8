@@ -5,11 +5,6 @@
 # Code
 
 ## Important and Urgent
-- Finish passing `data` to different routes with explicitness
-- Check if `gender` query parameter error still occurs
-  - `/routes/promos/details.js`
-  - `/routes/promos/provider.js`
-  - `/routes/providers/promos.js`
 - Work on Error Handling
 - Update the way manufactured and custom promotions are created
 - Create a way to find promos based of `service_name`

@@ -1,5 +1,6 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../../../../libs/helpers.js');
+let { createBtn } = require('../../../../libs/bots.js');
 
 let isPromoExpired = (promo_expiration_date) => {
   let date = new Date();
@@ -20,24 +21,11 @@ let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) 
   let update_promo_url = createURL(`${BASEURL}/admin/promos/update`, { promo_id, provider_base_id });
   let toggle_promo_url = createURL(`${BASEURL}/admin/promos/toggle`, { promo_id, provider_base_id });
 
-  let btn1 = {
-    title: 'View Promo Details',
-    type: 'json_plugin_url',
-    url: view_promo_details_url
-  }
-
-  let btn2 = {
-    title: 'Update Promo',
-    type: 'json_plugin_url',
-    url: update_promo_url
-  }
-
-  let btn3 = {
-    title: promo['Active?'] ? 'Deactivate' : 'Reactivate',
-    type: 'json_plugin_url',
-    url: toggle_promo_url
-  }
-
+  
+  let btn1 = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);
+  let btn2 = createBtn(`Update Promo|json_plugin_url|${update_promo_url}`);
+  let btn3 = createBtn(`${promo['Active?'] ? 'Deactivate' : 'Reactivate}|json_plugin_url|${toggle_promo_url}`);
+  
   let buttons = [btn1, btn2, btn3];
 
   let element = { title, subtitle, image_url, buttons }
