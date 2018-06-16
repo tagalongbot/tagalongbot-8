@@ -1,8 +1,9 @@
 let { createGallery, createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/providers.js');
 let { findService } = require('../../../../libs/services.js');
+let { getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
-let { getProviderServices, getServiceManufacturedPromos, getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured.js');
+let { getProviderServices, getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured.js');
 
 let express = require('express');
 let router = express.Router();
@@ -30,7 +31,8 @@ let sendServiceManufacturedPromos = async ({ query }, res) => {
   let { service_id, provider_id, provider_base_id } = query;
 
   let service = await findService(service_id);
-  let promos = await getServiceManufacturedPromos(service);
+  let service_name = service.fields['Name'];
+  let promos = await getManufacturedPromosByService({ service_name });
 
   let galleryData = promos.map(
     toPromosGallery({ provider_id, provider_base_id }, service)
@@ -42,14 +44,17 @@ let sendServiceManufacturedPromos = async ({ query }, res) => {
 }
 
 let createServicePromo = async ({ query }, res) => {
-  let { service_id, service_name, provider_id, provider_base_id, promo_type } = query;
+  let { service_id, provider_id, provider_base_id, promo_type } = query;
+
+  let service = await findService(service_id);
+  let new_promo_service_name = service.fields['Name'];
+
   let new_promo_service_id = service_id;
-  let new_promo_service_name = service_name
   let new_promo_provider_id = provider_id;
   let new_promo_provider_base_id = provider_base_id;
   let new_promo_type = promo_type;
 
-  let set_attributes = { new_promo_service_id, new_promo_service_name, new_promo_provider_id, new_promo_provider_base_id, new_promo_type };
+  let set_attributes = { new_promo_service_id, new_promo_service_name, new_promo_type, new_promo_provider_id, new_promo_provider_base_id };
   let redirect_to_blocks = ['Create New Manufactured Promo'];
   res.send({ set_attributes, redirect_to_blocks });
 }

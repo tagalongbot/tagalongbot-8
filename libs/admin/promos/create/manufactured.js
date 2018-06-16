@@ -34,10 +34,6 @@ let getServicesWithPromos = async ({ services }) => {
   return services_with_promos;
 }
 
-let getServiceManufacturedPromos = async ({ service }) => {
-  
-}
-
 let createNewPromo = async (data) => {
   let { 
     new_promo_provider_base_id, 
@@ -80,8 +76,8 @@ let toServicesGallery = ({ provider_id, provider_base_id, total_service_promos_a
   let image_url = service['Image URL'];
 
   let view_service_promos_url = createURL(
-    `${BASEURL}/promo/new/manufactured/service`, 
-    { service_id, provider_id, provider_base_id }
+    `${BASEURL}/admin/promos/create/manufactured/service`,
+    { service_id, promo_type, provider_id, provider_base_id }
   );
 
   let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);
@@ -92,17 +88,13 @@ let toServicesGallery = ({ provider_id, provider_base_id, total_service_promos_a
   return element;
 }
 
-let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fields: service }) => ({ id: promo_id, fields: promo }) => {
-  let promo_name = promo['Promotion Name'];
-  let promo_type = promo_name.slice(6);
-  let title = promo_type;
-  let image_url = service[promo_name];
-
-  let service_name = service['Name'];
+let toPromosGallery = ({ provider_id, provider_base_id, service_id }) => ({ id: promo_id, fields: promo }) => {
+  let title = `${promo['Name']} on ${promo['Service Name']}`;
+  let image_url = promo['Image URL'];
 
   let create_promo_url = createURL(
     `${BASEURL}/admin/promos/create/manufactured/service/create`,
-    { service_id, service_name, provider_id, provider_base_id, promo_type }
+    { service_id, provider_id, provider_base_id }
   );
 
   let btn = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);
