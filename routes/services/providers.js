@@ -1,5 +1,6 @@
 let { shuffleArray } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
+let { findService } = require('../../libs/services.js');
 let { sortProviders, filterProvidersByService } = require('../../libs/providers.js');
 let { getProviders } = require('../../libs/services/providers.js');
 let { toGalleryElement, createLastGalleryElement } = require('../../libs/providers/providers.js');
@@ -18,10 +19,13 @@ let getServiceProviders = async ({ query, params }, res) => {
   let { search_type } = params;
 
   let { messenger_user_id, first_name, last_name, gender } = query;
-  let { service_name, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
+  let { service_id, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = query;
+
+  let service = await findService(service_id);
+  let service_name = service.fields['Name'];
 
   let providers = await getProviders(
-    { search_type, service_name, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code }
+    { search_type, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code }
   );
 
   if (!providers[0]) {

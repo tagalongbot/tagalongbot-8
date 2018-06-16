@@ -9,10 +9,15 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   let subtitle = `${surgical_or_non_surgical} | ${non_surgical_category} | ${service[non_surgical_category]}`.slice(0, 80);
   let image_url = service['Image URL'];
 
-  // Change routes to use `service_id` instead of `service_name`
-  let service_name = encodeURIComponent(service['Name']);
-  let view_service_details_btn_url = createURL(`${BASEURL}/service/description/yes`, { service_id, service_name});
-  let find_providers_btn_url = createURL(`${BASEURL}/service/providers`, { service_name });
+  let view_service_details_btn_url = createURL(
+    `${BASEURL}/service/description/yes`, 
+    { service_id }
+  );
+
+  let find_providers_btn_url = createURL(
+    `${BASEURL}/service/providers`, 
+    { service_id }
+  );
 
   let btn1 = {
     title: 'View Service Details',
@@ -60,7 +65,10 @@ let createLastGalleryElement = ({ service_type, index }) => {
   let title = 'More Options';
   let new_index = Number(index + 8);
 
-  let load_more_services_url = createURL(`${BASEURL}/services/search/${service_type}`, { index: new_index });
+  let load_more_services_url = createURL(
+    `${BASEURL}/services/search/${service_type}`, 
+    { index: new_index }
+  );
 
   let btn1 = {
     title: 'Load More Services',
