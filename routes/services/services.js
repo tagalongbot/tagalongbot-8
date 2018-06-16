@@ -7,9 +7,7 @@ let { toGalleryElement, createSurgicalCategoryElement, createLastGalleryElement 
 
 let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
-
   let { messenger_user_id, first_name, last_name, gender } = query;
-  let data = { messenger_user_id, first_name, last_name, gender };
 
   let index = Number(query['index']) || 0;
   let new_index = index + 8;
@@ -26,7 +24,9 @@ let getServices = async ({ query, params }, res) => {
     return;
   }
 
-  let surgical_category_gallery_element = createSurgicalCategoryElement(data);
+  let surgical_category_gallery_element = createSurgicalCategoryElement(
+    { messenger_user_id, first_name, last_name, gender }
+  );
 
   let non_surgical_services = await getNonSurgicalServices();
   let non_surgical_services_gallery_data = non_surgical_services.slice(index, new_index).map(toGalleryElement);

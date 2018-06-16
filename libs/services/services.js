@@ -33,13 +33,19 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 }
 
 let createSurgicalCategoryElement = (data) => {
+  let { messenger_user_id, first_name, last_name, gender } = data;
   let title = 'Surgical Procedures';
   let image_url = SURGICAL_SERVICES_IMAGE_URL;
-  let surgical_category_btn_url = createURL(`${BASEURL}/services/search/surgical`, data);
+
+  let surgical_category_btn_url = createURL(
+    `${BASEURL}/services/search/surgical`,
+    { messenger_user_id, first_name, last_name, gender }
+  );
+
   console.log('surgical_category_btn_url', surgical_category_btn_url);
   
   let btn = {
-    title: 'View services',
+    title: 'View Services',
     type: 'json_plugin_url',
     web: surgical_category_btn_url,
   }
