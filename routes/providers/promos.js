@@ -6,7 +6,7 @@ let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/providers/promos.js');
 
 let getProviderPromos = async ({ query }, res) => {
-  let { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id } = query;
+  let { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id, provider_name } = query;
 
   let promos = await getPracticePromos({ provider_base_id });  
 
