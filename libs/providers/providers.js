@@ -71,8 +71,8 @@ let createButtons = (provider, data) => {
   let is_provider_claimed = provider['Claimed?'];
 
   if (is_provider_active) {
-    let view_services_btn_url = createURL(`${BASEURL}/provider/services`, data);
-    let view_promos_btn_url = createURL(`${BASEURL}/provider/promos`, data);
+    let view_services_btn_url = createURL(`${BASEURL}/providers/services`, data);
+    let view_promos_btn_url = createURL(`${BASEURL}/providers/promos`, data);
 
     let btn1 = {
       title: 'View Services',
@@ -90,7 +90,7 @@ let createButtons = (provider, data) => {
   }
 
   if (!is_provider_claimed) {
-    let claim_practice_url = createURL(`${BASEURL}/provider/claim/email`, data);
+    let claim_practice_url = createURL(`${BASEURL}/providers/claim/email`, data);
 
     let btn = {
       title: 'Claim Practice',
@@ -103,7 +103,7 @@ let createButtons = (provider, data) => {
 
   if (is_provider_claimed && !is_provider_active) {
     let { messenger_user_id } = data;
-    let already_claimed_url = createURL(`${BASEURL}/provider/claimed`, { messenger_user_id });
+    let already_claimed_url = createURL(`${BASEURL}/providers/claimed`, { messenger_user_id });
 
     let btn = {
       title: 'Already Claimed',

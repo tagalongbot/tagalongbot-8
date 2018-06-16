@@ -6,7 +6,7 @@ let createFindProvidersMsg = (service) => {
   let service_name = service.fields['Name'];
 
   let find_providers_btn_url = createURL(
-    `${BASEURL}/service/providers`, 
+    `${BASEURL}/services/providers`, 
     { service_name }
   );
 
@@ -22,7 +22,7 @@ let createViewProviderPromosMsg = (service, data) => {
   let service_name = service.fields['Name'];
 
   let view_provider_promos = createURL(
-    `${BASEURL}/service/provider/promos`, 
+    `${BASEURL}/services/provider/promos`, 
     data
   );
 

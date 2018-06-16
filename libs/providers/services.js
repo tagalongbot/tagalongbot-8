@@ -7,7 +7,7 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   let image_url = service['Image URL'];
 
   let service_name = encodeURIComponent(service['Name']);
-  let read_description_btn_url = createURL(`${BASEURL}/service/description/no`, { service_id, service_name, ...data });
+  let read_description_btn_url = createURL(`${BASEURL}/services/description/no`, { service_id, service_name, ...data });
   let btn = {
     title: 'Read Description',
     type: 'json_plugin_url',
