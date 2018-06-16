@@ -14,8 +14,8 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
   let provider_id = provider.id;
   let provider_base_id = provider.fields['Practice Base ID'];
 
-  let provider_services = await getProviderServices({ provider });
-  let services_with_promos = getServicesWithPromos({ provider_services });
+  let services = await getProviderServices({ provider });
+  let services_with_promos = getServicesWithPromos({ services });
 
   let galleryData = services_with_promos.map(
     toServicesGallery({ provider_id, provider_base_id })

@@ -3,13 +3,14 @@ let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 let { getTable, createTableData } = require('../../../../libs/data.js');
 
-let { getAllServics, findService } = require('../../../../libs/services.js');
+let { getAllServices, findService } = require('../../../../libs/services.js');
 let { getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
 let getPromosTable = getTable('Promos');
 
 let getProviderServices = async ({ provider }) => {
-  let services = await getAllServics();
+  let services = await getAllServices();
+  console.log('services', services);
 
   let provider_services = provider.fields['Practice Services'].map(
     service => service.toLowerCase()

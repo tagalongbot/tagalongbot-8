@@ -26,4 +26,4 @@ app.get('/test', (req, res) => {
   res.send({ messages });
 });
 
-app.listen(000, () => console.log('Running on PORT 3000'));
+app.listen(5000, () => console.log('Running on PORT 3000'));
