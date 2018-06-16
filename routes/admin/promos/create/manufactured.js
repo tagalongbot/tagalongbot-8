@@ -15,10 +15,11 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let services = await getProviderServices({ provider });
-  let services_with_promos = getServicesWithPromos({ services });
-
+  let services_with_promos = await getServicesWithPromos({ services });
+  let total_service_promos_available = services_with_promos.length;
+  
   let galleryData = services_with_promos.map(
-    toServicesGallery({ provider_id, provider_base_id })
+    toServicesGallery({ provider_id, provider_base_id, total_service_promos_available })
   );
 
   let messages = createMultiGallery(galleryData);

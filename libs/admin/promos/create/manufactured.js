@@ -10,7 +10,6 @@ let getPromosTable = getTable('Promos');
 
 let getProviderServices = async ({ provider }) => {
   let services = await getAllServices();
-  console.log('services', services);
 
   let provider_services = provider.fields['Practice Services'].map(
     service => service.toLowerCase()
@@ -23,16 +22,6 @@ let getProviderServices = async ({ provider }) => {
   return matched_services;
 }
 
-let getServicePromos = ({ service }) => {
-  let service_keys = Object.keys(service.fields);
-
-  let promos = service_keys.filter(
-    (key) => key.toLowerCase().startsWith('promo-')
-  );
-
-  return promos;
-}
-
 let getServicesWithPromos = async ({ services }) => {
   let manufactured_promos = await getManufacturedPromos();
   let all_manufactured_service_name = manufactured_promos.map(promo => promo.fields['Service Name'].toUpperCase());
@@ -41,8 +30,12 @@ let getServicesWithPromos = async ({ services }) => {
   let services_with_promos = services.filter(
     service => manufacutred_promo_service_names.includes(service.fields['Name'].toUpperCase())
   );
-
+  
   return services_with_promos;
+}
+
+let getServicePromos = async ({ service }) => {
+  
 }
 
 let createNewPromo = async (data) => {
@@ -83,7 +76,6 @@ let createNewPromo = async (data) => {
 let toServicesGallery = ({ provider_id, provider_base_id, total_service_promos_available }) => ({ id: service_id, fields: service }) => {
   let title = service['Name'];
 
-  let total_service_promos_available = getServicePromos(service).length;
   let subtitle = `Promo Types Available: ${total_service_promos_available}`;
   let image_url = service['Image URL'];
 
@@ -123,7 +115,6 @@ let toPromosGallery = ({ provider_id, provider_base_id }, { id: service_id, fiel
 
 module.exports = {
   getProviderServices,
-  getServicePromos,
   getServicesWithPromos,
   createNewPromo,
   toServicesGallery,
