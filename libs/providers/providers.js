@@ -120,23 +120,11 @@ let createButtons2 = (provider, data) => {
 
   if (view_provider_site_url) {
     let btn = createBtn(`Visit Provider Site|web_url|${view_provider_site_url}`);
-
-    let btn = {
-      title: '',
-      type: '',
-      url: ,
-    }
-
     btns.push(btn);
   }
 
   if (view_provider_book_url) {
-    let btn = {
-      title: 'Visit Booking Site',
-      type: 'web_url',
-      url: view_provider_book_url,
-    }
-
+    let btn = createBtn(`Visit Booking Site|web_url|${view_provider_book_url}`);
     btns.push(btn);
   }
 
@@ -165,23 +153,9 @@ let createLastGalleryElement = () => {
   let image_url = SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL;
 
   // Buttons
-  let btn1 = {
-    title: 'List My Practice',
-    type: 'show_block',
-    block_name: 'List Practice',
-  }
-
-  let btn2 = {
-    title: 'Main Menu',
-    type: 'show_block',
-    block_name: 'Discover Main Menu',
-  }
-
-  let btn3 = {
-    title: 'About Bevl Beauty',
-    type: 'show_block',
-    block_name: 'About Bevl Beauty',
-  }
+  let btn1 = createBtn(`List My Practice|show_block|List Practice`);
+  let btn2 = createBtn(`Main Menu|show_block|Discover Main Menu`);
+  let btn3 = createBtn(`About Bevl Beauty|show_block|About Bevl Beauty`);
 
   let buttons = [btn1, btn2, btn3];
 

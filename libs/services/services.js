@@ -1,5 +1,6 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 let { createURL } = require('../../libs/helpers.js');
+let { createBtn } = require('../../libs/bots.js');
 
 let toGalleryElement = ({ id: service_id, fields: service }) => {
   let surgical_or_non_surgical = service['Surgical / Non Surgical'];
@@ -19,17 +20,8 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
     { service_id }
   );
 
-  let btn1 = {
-    title: 'View Service Details',
-    type: 'json_plugin_url',
-    url: view_service_details_btn_url,
-  }
-
-  let btn2 = {
-    title: 'Find Providers',
-    type: 'json_plugin_url',
-    url: find_providers_btn_url,
-  }
+  let btn1 = createBtn(`View Service Details|json_plugin_url|${view_service_details_btn_url}`);
+  let btn2 = createBtn(`Find Providers|json_plugin_url|${find_providers_btn_url}`);
 
   let buttons = [btn1, btn2];
 
@@ -46,12 +38,8 @@ let createSurgicalCategoryElement = (data) => {
     `${BASEURL}/services/search/surgical`,
     { messenger_user_id, first_name, last_name, gender }
   );
-
-  let btn = {
-    title: 'View Services',
-    type: 'json_plugin_url',
-    url: surgical_category_btn_url,
-  }
+  
+  let btn = createBtn(`View Services|json_plugin_url|${surgical_category_btn_url}`);
 
   let buttons = [btn];
 
@@ -67,24 +55,10 @@ let createLastGalleryElement = ({ service_type, index }) => {
     `${BASEURL}/services/search/${service_type}`, 
     { index: new_index }
   );
-
-  let btn1 = {
-    title: 'Load More Services',
-    type: 'json_plugin_url',
-    url: load_more_services_url,
-  }
-
-  let btn2 = {
-    title: 'Main Menu',
-    type: 'show_block',
-    block_name: 'Discover Main Menu',
-  }
-
-  let btn3 = {
-    title: 'About Bevl Beauty',
-    type: 'show_block',
-    block_name: 'About Bevl Beauty',
-  }
+  
+  let btn1 = createBtn(`Load More Services|json_plugin_url|${load_more_services_url}`);
+  let btn2 = createBtn(`Main Menu|show_block|Discover Main Menu`);
+  let btn3 = createBtn(`About Bevl Beauty|show_block|About Bevl Beauty`);
 
   let buttons = [btn1, btn2, btn3];
 
