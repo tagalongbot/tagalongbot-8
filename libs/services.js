@@ -6,6 +6,10 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServices = getAllDataFromTable(servicesTable);
 let findService = findTableData(servicesTable);
 
+let getAllServices = await () => {
+  
+}
+
 let getNonSurgicalServices = async () => {
   let filterByFormula = `{Surgical / Non Surgical} = 'Non Surgical'`;
   let services = await getServices({ filterByFormula });

@@ -1,18 +1,15 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
-let { createURL, localizeDate } = require('../../../helpers.js');
-let { createBtn } = require('../../../bots.js');
-let { getTable, getAllDataFromTable, findTableData, createTableData } = require('../../../data.js');
+let { createURL, localizeDate } = require('../../../../libshelpers.js');
+let { createBtn } = require('../../../../libs/bots.js');
+let { getTable, createTableData } = require('../../../../libs/data.js');
 
-let getServicesTable = getTable('Services');
-let servicesTable = getServicesTable(SERVICES_BASE_ID);
-let getServicesFromTable = getAllDataFromTable(servicesTable);
-let findService = findTableData(servicesTable);
+let { getAllServics, findService } = require('../../../../libs/services.js');
+let { getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
 let getPromosTable = getTable('Promos');
 
 let getProviderServices = async (provider) => {
-  let view = 'Main View';
-  let services = await getServicesFromTable({ view });
+  let services = await getAllServics();
 
   let provider_services = provider.fields['Practice Services'].map(
     service => service.toLowerCase()
@@ -35,7 +32,7 @@ let getServicePromos = (service) => {
   return promos;
 }
 
-let getServicesWithPromos = (s) => {
+let getServicesWithPromos = async (services) => {
   let services_with_promos = services.filter((service) => {
     let promos_count = getServicePromos(service).length;
     return promos_count > 0;
