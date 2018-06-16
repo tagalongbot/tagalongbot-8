@@ -19,4 +19,11 @@ app.use('/providers', providersRouter);
 app.use('/promos', promosRouter);
 app.use('/services', servicesRouter);
 
+app.get('/test', (req, res) => {
+  let msg = { text: 'Works' }
+  
+  let messages = [msg];
+  res.send({ messages });
+});
+
 app.listen(3000, () => console.log('Running on PORT 3000'));
