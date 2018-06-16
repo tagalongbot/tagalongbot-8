@@ -2,7 +2,9 @@ let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 
-let toGalleryElement = ({ id: service_id, fields: service }) => {
+let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
+  let { messenger_user_id, first_name, last_name, gender } = data;
+
   let surgical_or_non_surgical = service['Surgical / Non Surgical'];
   let non_surgical_category = service[`${surgical_or_non_surgical} Category`];
 
@@ -10,16 +12,17 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   let subtitle = (surgical_or_non_surgical.toLowerCase() === 'non surgical') ? 
       `Non Surgical | ${non_surgical_category} | ${service[non_surgical_category]}`.slice(0, 80) : 
       `Surgical Service`;
+
   let image_url = service['Image URL'];
 
   let view_service_details_btn_url = createURL(
-    `${BASEURL}/service/description/yes`, 
-    { service_id }
+    `${BASEURL}/service/description/yes`,
+    { service_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let find_providers_btn_url = createURL(
-    `${BASEURL}/service/providers`, 
-    { service_id }
+    `${BASEURL}/service/providers`,
+    { service_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let btn1 = createBtn(`View Service Details|json_plugin_url|${view_service_details_btn_url}`);
