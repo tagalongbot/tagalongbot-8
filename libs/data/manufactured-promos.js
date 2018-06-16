@@ -5,6 +5,7 @@ let { getTable, getAllDataFromTable, findTableData } = require('../../libs/data.
 let getPromosTable = getTable('Manufactured Promos');
 let promosTable = getPromosTable(SERVICES_BASE_ID);
 let getPromos = getAllDataFromTable(promosTable);
+let findPromo = findTableData(promosTable);
 
 let getManufacturedPromos = async () => {
   let promos = await getPromos();
@@ -17,7 +18,13 @@ let getManufacturedPromosByService = async ({ service_name }) => {
   return promos;
 }
 
+let getManufacturedPromoByID = async ({ promo_id }) => {
+  let promo = await findPromo(promo_id);
+  return promo;
+}
+
 module.exports = {
   getManufacturedPromos,
   getManufacturedPromosByService,
+  getManufacturedPromoByID,
 }

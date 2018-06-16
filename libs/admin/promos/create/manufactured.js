@@ -77,7 +77,7 @@ let toServicesGallery = ({ provider_id, provider_base_id, total_service_promos_a
 
   let view_service_promos_url = createURL(
     `${BASEURL}/admin/promos/create/manufactured/service`,
-    { service_id, promo_type, provider_id, provider_base_id }
+    { service_id, provider_id, provider_base_id }
   );
 
   let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);
@@ -94,7 +94,7 @@ let toPromosGallery = ({ provider_id, provider_base_id, service_id }) => ({ id: 
 
   let create_promo_url = createURL(
     `${BASEURL}/admin/promos/create/manufactured/service/create`,
-    { service_id, provider_id, provider_base_id }
+    { service_id, promo_id, provider_id, provider_base_id }
   );
 
   let btn = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);
