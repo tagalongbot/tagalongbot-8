@@ -1,3 +1,5 @@
+let { BASEURL } = process.env;
+let { createButtonMessage } = require('./libs/bots.js');
 let express = require('express');
 let app = express();
 
@@ -18,5 +20,16 @@ app.use('/admin', adminRouter);
 app.use('/providers', providersRouter);
 app.use('/promos', promosRouter);
 app.use('/services', servicesRouter);
+
+app.get('/test', (req, res) => {
+  console.log('test');
+  let msg = createButtonMessage(
+    `Testing`,
+    `Test JSON|json_plugin_url|${BASEURL}/test`,
+  );
+  
+  let messages = [msg];
+  res.send({ messages });
+});
 
 app.listen(3000, () => console.log('Running on PORT 3000'));
