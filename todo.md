@@ -19,3 +19,4 @@
 - Create a middleware that checks for required `query` parameters
 - Pass `BASEURL` to all functions that use it without being passed to make those functions PURE
 - Rename `providers` to `practices`
+- Figure out how to configure ESLint to ignore `new Set()`
