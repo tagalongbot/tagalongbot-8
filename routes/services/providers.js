@@ -10,7 +10,10 @@ let router = express.Router();
 
 let searchServiceProviders = async ({ query }, res) => {
   let { service_id } = query;
-  let set_attributes = { service_id };
+  let service = await findService(service_id);
+  let service_name = service.fields['Name'];
+  
+  let set_attributes = { service_id, service_name };
   let redirect_to_blocks = ['Search Service Providers'];
   res.send({ set_attributes, redirect_to_blocks });
 }
@@ -28,17 +31,12 @@ let getServiceProviders = async ({ query, params }, res) => {
     { search_type, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code }
   );
 
-  if (!providers[0]) {
-    let redirect_to_blocks = ['No Providers Found'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
-  let providersByService = filterProvidersByService(service_name, providers);
+  let providersByService = (providers[0]) ? filterProvidersByService(service_name, providers) : [];
 
   if (!providersByService[0]) {
-    let redirect_to_blocks = ['No Providers Found'];
-    res.send({ redirect_to_blocks });
+    let set_attributes = { service_name }
+    let redirect_to_blocks = ['No Service Providers Found'];
+    res.send({ set_attributes, redirect_to_blocks });
     return;
   }
 
