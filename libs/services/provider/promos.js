@@ -32,7 +32,9 @@ let createNoPromosMsg = (data) => {
 
   let msg = createButtonMessage(
     `Sorry ${first_name} looks like this provider does not have any promotions for this service at the moment`,
-    `View Services Again|json_plugin_url|${view_services_btn_url}`
+    `View All Services|json_plugin_url|${view_services_btn_url}`,
+    `Main Menu|show_block|Discover Main Menu`,
+    `About Bevl Beauty|show_block|About Bevl Beauty`
   );
 
   return [msg];
