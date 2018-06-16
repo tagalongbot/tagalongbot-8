@@ -16,7 +16,7 @@ let getServiceProviderPromos = async ({ query }, res) => {
   let promos = await getServicePromos({ service_name, provider_base_id });
 
   if (!promos[0]) {
-    let messages = createNoPromosMsg({ first_name, service_name, provider_id });
+    let messages = createNoPromosMsg({ first_name, service_name, provider_id, provider_name });
     res.send({ messages });
     return;
   }

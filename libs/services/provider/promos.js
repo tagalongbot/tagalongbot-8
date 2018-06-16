@@ -23,16 +23,16 @@ let getServicePromos = async ({ service_name, provider_base_id }) => {
 }
 
 let createNoPromosMsg = (data) => {
-  let { first_name, provider_id } = data;
+  let { first_name, service_name, provider_id, provider_name } = data;
 
   let view_services_btn_url = createURL(
-    `${BASEURL}/providers/services`, 
+    `${BASEURL}/providers/services`,
     { first_name, provider_id }
   );
 
   let msg = createButtonMessage(
-    `Sorry ${first_name} looks like this provider does not have any promotions for this service at the moment`,
-    `View All Services|json_plugin_url|${view_services_btn_url}`,
+    `Sorry ${first_name} looks like ${provider_name} does not have any promotions for ${service_name} at the moment`,
+    `View Services Again|json_plugin_url|${view_services_btn_url}`,
     `Main Menu|show_block|Discover Main Menu`,
     `About Bevl Beauty|show_block|About Bevl Beauty`
   );
