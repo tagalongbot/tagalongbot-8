@@ -2,11 +2,16 @@ let { BASEURL } = process.env;
 let { createURL } = require('../../libs/helpers.js');
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
+  let { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id } = data;
+
   let title = promo['Promotion Name'];
   let subtitle = promo['Terms'];
   let image_url = promo['Image URL'];
 
-  let promo_details_btn_url = createURL(`${BASEURL}/promos/details`, { promo_id, ...data });
+  let promo_details_btn_url = createURL(
+    `${BASEURL}/promos/details`, 
+    { promo_id, provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
+  );
 
   let btn = {
     title: 'View Promo Details',

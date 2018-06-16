@@ -23,8 +23,12 @@ let getServicePromos = async ({ service_name, provider_base_id }) => {
 }
 
 let createNoPromosMsg = (data) => {
-  let { first_name } = data;
-  let view_services_btn_url = createURL(`${BASEURL}/providers/services`, data);
+  let { first_name, provider_id } = data;
+
+  let view_services_btn_url = createURL(
+    `${BASEURL}/providers/services`, 
+    { first_name, provider_id }
+  );
 
   let msg = createButtonMessage(
     `Sorry ${first_name} looks like this provider does not have any promotions for this service at the moment`,

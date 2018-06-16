@@ -6,6 +6,8 @@ let getServiceDescription = async ({ query, params }, res) => {
   let { service_id, provider_id, provider_base_id } = query;
 
   let service = await findService(service_id);
+  
+  let view_provider_data = {  }
 
   let messages = (show_providers === 'no') ? createViewProviderPromosMsg(service, query) : createFindProvidersMsg(service);
   res.send({ messages });
