@@ -97,9 +97,15 @@ let toPromosGallery = ({ provider_id, provider_base_id, service_id }) => ({ id: 
     { service_id, promo_id, provider_id, provider_base_id }
   );
 
-  let btn = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);
+  let view_promo_details_url = createURL(
+    `${BASEURL}/admin/promos/view/manufactured/details`,
+    { service_id, promo_id, provider_id, provider_base_id }
+  );
 
-  let buttons = [btn];
+  let btn1 = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);
+  let btn2 = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);
+
+  let buttons = [btn1, btn2];
 
   let element = { title, image_url, buttons };
   return element;
