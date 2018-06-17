@@ -9,8 +9,8 @@
 # Code
 
 ### Important and Urgent
-- Update the way manufactured and custom promotions are created
-- Create a way to find promos based of `service_name`
+- Update the way manufactured and custom promotions are created using Airtable form setup to redirect to server endpoint and send user message
+- Create a way to find promos from `Services Carousel`
 - Update any files using `findService` to use `getServiceByID`
 - Work on Error Handling
 - Create a logging system
