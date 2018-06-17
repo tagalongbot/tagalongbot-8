@@ -9,12 +9,12 @@
 # Code
 
 ### Important and Urgent
-- Update code to generate `Terms` field instead of reading from airtable
-- Update any files using `findService` to use `getServiceByID`
 - Update the way manufactured and custom promotions are created
 - Create a way to find promos based of `service_name`
+- Update any files using `findService` to use `getServiceByID`
 - Work on Error Handling
 - Create a logging system
+- Create caching system for reading from Airtable
 
 ### Important and Less Urgent
 - Update ChatFuel Block Names

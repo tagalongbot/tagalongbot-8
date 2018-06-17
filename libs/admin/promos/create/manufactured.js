@@ -4,7 +4,7 @@ let { createBtn } = require('../../../../libs/bots.js');
 let { getTable, createTableData } = require('../../../../libs/data.js');
 
 let { getAllServices, findService } = require('../../../../libs/services.js');
-let { getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
+let { getManufacturedPromoByID, getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
 let getPromosTable = getTable('Promos');
 
@@ -35,12 +35,15 @@ let getServicesWithPromos = async ({ services }) => {
 }
 
 let createNewPromo = async (data) => {
-  let { new_promo_provider_base_id, new_promo_service_id, new_promo_type, new_promo_expiration_date, new_promo_claim_limit } = data;
+  let { new_promo_id, new_promo_provider_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
 
   let promosTable = getPromosTable(new_promo_provider_base_id);
   let createPromo = createTableData(promosTable);
 
   let service = await findService(new_promo_service_id);
+
+  let manufactured_promo = await getManufacturedPromoByID({ promo_id: new_promo_id });
+  let new_promo_type = manufactured_promo.fields['Name'];
 
   let new_promo_image = service.fields[`Promo-${new_promo_type}`];
   let expiration_date = new Date(new_promo_expiration_date);
@@ -49,6 +52,7 @@ let createNewPromo = async (data) => {
     ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
     ['Type']: `${service.fields['Name']}-${new_promo_type.trim().toLowerCase()}`,
     ['Active?']: true,
+    ['Details']: manufactured_promo.fields['Details'],
     ['Expiration Date']: expiration_date,
     ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),

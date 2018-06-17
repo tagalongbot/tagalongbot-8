@@ -51,12 +51,13 @@ let createServicePromo = async ({ query }, res) => {
 
   let promo = await getManufacturedPromoByID({ promo_id });
   let new_promo_type = promo.fields['Name'];
-  
+
+  let new_promo_id = promo_id;
   let new_promo_service_id = service_id;
   let new_promo_provider_id = provider_id;
   let new_promo_provider_base_id = provider_base_id;
 
-  let set_attributes = { new_promo_service_id, new_promo_service_name, new_promo_type, new_promo_provider_id, new_promo_provider_base_id };
+  let set_attributes = { new_promo_id, new_promo_service_id, new_promo_service_name, new_promo_type, new_promo_provider_id, new_promo_provider_base_id };
   let redirect_to_blocks = ['Create New Manufactured Promo'];
   res.send({ set_attributes, redirect_to_blocks });
 }
@@ -64,15 +65,15 @@ let createServicePromo = async ({ query }, res) => {
 let confirmCreateServicePromo = async ({ query }, res) => {
   let {
     // new_promo_provider_id,
+    new_promo_id,
     new_promo_provider_base_id,
     new_promo_service_id,
-    new_promo_type,
     new_promo_expiration_date,
     new_promo_claim_limit,
   } = query;
 
   let newPromo = await createNewPromo(
-    { new_promo_provider_base_id, new_promo_service_id, new_promo_type, new_promo_expiration_date, new_promo_claim_limit }
+    { new_promo_id, new_promo_provider_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit }
   );
 
   let redirect_to_blocks = ['New Manufactured Promo Created'];
