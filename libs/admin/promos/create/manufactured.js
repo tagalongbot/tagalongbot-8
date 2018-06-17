@@ -35,13 +35,7 @@ let getServicesWithPromos = async ({ services }) => {
 }
 
 let createNewPromo = async (data) => {
-  let { 
-    new_promo_provider_base_id, 
-    new_promo_service_id, 
-    new_promo_type, 
-    new_promo_expiration_date, 
-    new_promo_claim_limit 
-  } = data;
+  let { new_promo_provider_base_id, new_promo_service_id, new_promo_type, new_promo_expiration_date, new_promo_claim_limit } = data;
 
   let promosTable = getPromosTable(new_promo_provider_base_id);
   let createPromo = createTableData(promosTable);
@@ -55,7 +49,6 @@ let createNewPromo = async (data) => {
     ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
     ['Type']: `${service.fields['Name']}-${new_promo_type.trim().toLowerCase()}`,
     ['Active?']: true,
-    ['Terms']: `Valid Until ${localizeDate(expiration_date)}`,
     ['Expiration Date']: expiration_date,
     ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),

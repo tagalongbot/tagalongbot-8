@@ -3,7 +3,7 @@ let { createURL } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
 
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
-let { toGalleryElement } = require('../../libs/providers/promos.js');
+let { toGalleryElement } = require('../../libs/promos/promos.js');
 
 let getProviderPromos = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id, provider_name } = query;

@@ -65,21 +65,16 @@ let confirmCreateServicePromo = async ({ query }, res) => {
   let {
     // new_promo_provider_id, 
     new_promo_provider_base_id,
-    new_promo_service_id, 
+    new_promo_service_id,
     new_promo_type,
     new_promo_expiration_date,
     new_promo_claim_limit,
   } = query;
 
-  let data = { 
-    new_promo_provider_base_id, 
-    new_promo_service_id, 
-    new_promo_type, 
-    new_promo_expiration_date, 
-    new_promo_claim_limit 
-  };
-  
-  let newPromo = await createNewPromo(data);
+  let newPromo = await createNewPromo(
+    { new_promo_provider_base_id, new_promo_service_id, new_promo_type, new_promo_expiration_date, new_promo_claim_limit }
+  );
+
   let redirect_to_blocks = ['New Manufactured Promo Created'];
   res.send({ redirect_to_blocks });
 }
