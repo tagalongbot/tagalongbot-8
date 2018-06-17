@@ -63,7 +63,7 @@ let createServicePromo = async ({ query }, res) => {
 
 let confirmCreateServicePromo = async ({ query }, res) => {
   let {
-    // new_promo_provider_id, 
+    // new_promo_provider_id,
     new_promo_provider_base_id,
     new_promo_service_id,
     new_promo_type,
