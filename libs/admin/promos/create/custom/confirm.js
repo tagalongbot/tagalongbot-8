@@ -5,8 +5,10 @@ let { createPracticePromo, updatePracticePromo } = require('../../../../../libs/
 let getPromosTable = getTable('Promos');
 
 let createNewPromo = async (data) => {
-  let { provider_base_id, new_promo_expiration_date, new_promo_name, new_promo_image, new_promo_claim_limit } = data;
+  let { provider_base_id, new_promo_expiration_date, new_promo_name, new_promo_claim_limit, new_promo_image_id } = data;
 
+  let custom_promo_image = await ({ promo_id: new_promo_image_id })
+  
   let expiration_date = new Date(new_promo_expiration_date);
 
   let promoData = {

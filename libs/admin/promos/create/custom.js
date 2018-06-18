@@ -19,10 +19,23 @@ let toServicesGallery = ({ messenger_user_id, new_promo_name, new_promo_expirati
 }
 
 let toImagesGallery = (new_promo_name, new_promo_expiration_date, new_promo_claim_limit) => ({ id: promo_id, fields: promo }) => {
-  let title = n
-  
+  let title = new_promo_name;
+  let image_url = promo['Image URL'];
+  let new_promo_image_id = promo_id;
+
+  let select_image_url = createURL(
+    `${BASEURL}/admin/promos/create/custom/images/select`,
+    { new_promo_name, new_promo_expiration_date, new_promo_claim_limit, new_promo_image_id }
+  );
+
+  let btn1 = createBtn(`Use This Image|json_plugin_url|${select_image_url}`);
+
+  let buttons = [btn1];
+
+  return { title, image_url, buttons };
 }
 
 module.exports = {
   toServicesGallery,
+  toImagesGallery,
 }

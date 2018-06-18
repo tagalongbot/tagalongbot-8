@@ -2,7 +2,7 @@ let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
 let { findService, getAllServices, filterServicesFromProvider } = require('../../../../libs/data/services.js');
 let { toServicesGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
-let { getCustomPromosByService } = require('../../../../libs/data/custom-promos.js');
+let { getCustomPromosByService, getCustomPromoByID } = require('../../../../libs/data/custom-promos.js');
 let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/confirm.js');
 
 let express = require('express');
@@ -42,9 +42,8 @@ let sendCustomImages = async ({ query }, res) => {
 }
 
 let sendSelectedImage = async ({ query }, res) => {
-  let {} = query;
-
-  let set_attributes = {  };
+  let { new_promo_name, new_promo_expiration_date, new_promo_claim_limit, new_promo_image_id } = query;
+  let set_attributes = { new_promo_image_id };
   let redirect_to_blocks = ['New Custom Promotion Confirmation'];
   res.send({ set_attributes, redirect_to_blocks });
 }
@@ -53,7 +52,7 @@ let createCustomPromo = async ({ query }, res) => {
   let { 
     messenger_user_id,
     new_promo_name,
-    new_promo_image,
+    new_promo_image_id,
     new_promo_expiration_date,
     new_promo_claim_limit
   } = query;
@@ -62,7 +61,7 @@ let createCustomPromo = async ({ query }, res) => {
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let new_promo = await createNewPromo(
-    { provider_base_id, new_promo_name, new_promo_image, new_promo_expiration_date, new_promo_claim_limit }    
+    { provider_base_id, new_promo_name, new_promo_image_id, new_promo_expiration_date, new_promo_claim_limit }    
   );
 
   let redirect_to_blocks = ['New Custom Promo Created'];
