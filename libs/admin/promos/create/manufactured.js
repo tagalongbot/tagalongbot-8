@@ -34,6 +34,18 @@ let getServicesWithPromos = async ({ services }) => {
   return services_with_promos;
 }
 
+let createExpirationDate = (new_expiration_date_str) => {
+  let dateMap = {
+    '1 Weeks': 7,
+    '2 Weeks': 14
+  }
+  
+  let today = new Date();
+  let new_date = 
+  
+  let new_date = 
+}
+
 let createNewPromo = async (data) => {
   let { new_promo_id, new_promo_provider_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
 
