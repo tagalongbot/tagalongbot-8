@@ -1,8 +1,12 @@
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
-let { createNewPromo } = require('../../../../libs/admin/promos/create/custom.js');
+let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/confirm.js');
 
 let express = require('express');
 let router = express.Router();
+
+let getCustomPromoImages = async ({ query }, res) => {
+  
+}
 
 let createCustomPromo = async ({ query }, res) => {
   let { 
@@ -24,7 +28,7 @@ let createCustomPromo = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-router.get('/image', );
-router.get('/image', );
+router.get('/image', getCustomPromoImages);
+router.get('/confirm', createCustomPromo);
 
 module.exports = createCustomPromo;
