@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 
-let { getProviderByID } = require('../../libs/providers.js');
+let { getProviderByID } = require('../../libs/data/providers.js');
 let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 

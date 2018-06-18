@@ -2,7 +2,7 @@ let { BASEURL } = process.env;
 let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
-let { getUserByMessengerID, updateUser } = require('../../libs/users.js');
+let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { getPracticeUser, createPracticeUser, updatePracticeUser } = require('../../libs/data/practice/users.js');
 let { getTable, createTableData, updateTableData } = require('../../libs/data.js');
 

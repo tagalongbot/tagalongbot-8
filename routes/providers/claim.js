@@ -1,4 +1,4 @@
-let { getProviderByID } = require('../../libs/providers.js');
+let { getProviderByID } = require('../../libs/data/providers.js');
 let { updatePractice, createUpdateMsg } = require('../../libs/providers/claim.js');
 let express = require('express');
 let router = express.Router();

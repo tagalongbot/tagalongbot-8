@@ -1,6 +1,6 @@
 let { createGallery, createMultiGallery } = require('../../../../libs/bots.js');
-let { getProviderByUserID } = require('../../../../libs/providers.js');
-let { findService } = require('../../../../libs/services.js');
+let { getProviderByUserID } = require('../../../../libs/data/providers.js');
+let { findService } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
 let { getProviderServices, getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured.js');

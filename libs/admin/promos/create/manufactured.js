@@ -3,7 +3,7 @@ let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 let { getTable, createTableData } = require('../../../../libs/data.js');
 
-let { getAllServices, findService } = require('../../../../libs/services.js');
+let { getAllServices, findService } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
 let getPromosTable = getTable('Promos');

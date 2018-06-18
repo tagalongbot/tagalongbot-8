@@ -1,5 +1,5 @@
 let { USERS_BASE_ID } = process.env;
-let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../libs/data.js');
+let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../../libs/data.js');
 
 let getUsersTable = getTable('Users');
 let usersTable = getUsersTable(USERS_BASE_ID);

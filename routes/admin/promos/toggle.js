@@ -1,4 +1,4 @@
-let { getProviderByUserID } = require('../../../libs/providers.js');
+let { getProviderByUserID } = require('../../../libs/data/providers.js');
 let { getPromo, updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/toggle.js');
 
 let togglePromo = async ({ query }, res) => {

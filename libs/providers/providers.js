@@ -1,7 +1,7 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
 let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
-let { getUserByMessengerID, createUser, updateUser } = require('../../libs/users.js');
+let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
 
 let createNewUserData = (data) => {
   let { messenger_user_id, first_name, last_name, gender } = data;

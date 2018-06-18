@@ -1,4 +1,4 @@
-let { getProviderByUserID } = require('../../../../libs/providers.js');
+let { getProviderByUserID } = require('../../../../libs/data/providers.js');
 let { createNewPromo } = require('../../../../libs/admin/promos/create/custom.js');
 
 let createCustomPromo = async ({ query }, res) => {

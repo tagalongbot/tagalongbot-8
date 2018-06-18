@@ -1,11 +1,32 @@
 let { PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
-let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../libs/data');
+let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../libs/data.js');
 
 let getPracticeTable = getTable('Practices');
 let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
 let getPractices = getAllDataFromTable(practiceTable);
 let findPractice = findTableData(practiceTable);
 let updatePractice = updateTableData(practiceTable);
+
+let getAllProviders = async () => {
+  let providers = await getPractices();
+  return providers;
+}
+
+let getProviderByUserID = async (messenger_user_id, fields = []) => {
+  let filterByFormula = `{Claimed By Messenger User ID} = '${messenger_user_id}'`;
+  let [user] = await getPractices({ filterByFormula, fields });
+  return user;
+}
+
+let getProviderByID = async (provider_id) => {
+  let practice = await findPractice(provider_id);
+  return practice;
+}
+
+let updateProvider = async (updateData, provider) => {
+  let updatedProvider = updatePractice(updateData, provider);
+  return updatedProvider;
+}
 
 let searchProviders = async ({ search_type, active = false }, data) => {
 	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
@@ -28,22 +49,6 @@ let searchProviders = async ({ search_type, active = false }, data) => {
 	return providers;
 }
 
-let getProviderByUserID = async (messenger_user_id, fields = []) => {
-  let filterByFormula = `{Claimed By Messenger User ID} = '${messenger_user_id}'`;
-  let [user] = await getPractices({ filterByFormula, fields });
-  return user;
-}
-
-let getProviderByID = async (provider_id) => {
-  let practice = await findPractice(provider_id);
-  return practice;
-}
-
-let updateProvider = async (updateData, provider) => {
-  let updatedProvider = updatePractice(updateData, provider);
-  return updatedProvider;
-}
-
 let filterProvidersByService = (service_name, providers) => {
   let service_name_lowercased = service_name.trim().toLowerCase();
 
@@ -63,10 +68,11 @@ let sortProviders = (provider1, provider2) => {
 }
 
 module.exports = {
-  searchProviders,
+  getAllProviders,
   getProviderByUserID,
   getProviderByID,
   updateProvider,
+  searchProviders,
   filterProvidersByService,
   sortProviders,
 }

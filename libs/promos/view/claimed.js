@@ -1,7 +1,7 @@
 let { BASEURL } = process.env;
 let { createBtn } = require('../../../libs/bots.js');
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
-let { getProviderByID } = require('../../../libs/providers.js');
+let { getProviderByID } = require('../../../libs/data/providers.js');
 let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
 let { getUserPromos } = require('../../../libs/data/practice/users.js');
 

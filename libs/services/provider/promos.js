@@ -1,7 +1,7 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../libs/bots.js');
-let { getProviderByID } = require('../../../libs/providers.js');
+let { getProviderByID } = require('../../../libs/data/providers.js');
 
 let { getTable, getAllDataFromTable, findTableData } = require('../../../libs/data.js');
 

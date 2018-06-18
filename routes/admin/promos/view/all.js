@@ -1,5 +1,5 @@
 let { createMultiGallery } = require('../../../../libs/bots.js');
-let { getProviderByUserID } = require('../../../../libs/providers.js');
+let { getProviderByUserID } = require('../../../../libs/data/providers.js');
 let { toGalleryData } = require('../../../../libs/admin/promos/view/all.js');
 let { getPracticePromos } = require('../../../../libs/data/practice/promos.js');
 

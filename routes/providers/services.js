@@ -1,6 +1,6 @@
 let { createMultiGallery } = require('../../libs/bots.js');
-let { getProviderByID } = require('../../libs/providers.js');
-let { getServices, filterServicesFromProvider } = require('../../libs/services.js');
+let { getProviderByID } = require('../../libs/data/providers.js');
+let { getServices, filterServicesFromProvider } = require('../../libs/data/services.js');
 let { toGalleryElement } = require('../../libs/providers/services.js');
 
 let getProviderServices = async ({ query }, res) => {

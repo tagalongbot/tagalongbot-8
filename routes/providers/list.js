@@ -1,4 +1,4 @@
-let { getUserByMessengerID, updateUser, createUser } = require('../../libs/users.js');
+let { getUserByMessengerID, updateUser, createUser } = require('../../libs/data/users.js');
 
 let createNewUser = async ({ user_email }) => {
   let update_data = {

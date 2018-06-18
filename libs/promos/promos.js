@@ -2,7 +2,7 @@ let { BASEURL } = process.env;
 let { createURL, localizeDate } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 let { getTable, getAllDataFromTable } = require('../../libs/data.js');
-let { searchProviders } = require('../../libs/providers.js');
+let { searchProviders } = require('../../libs/data/providers.js');
 
 let getPromosTable = getTable('Promos');
 

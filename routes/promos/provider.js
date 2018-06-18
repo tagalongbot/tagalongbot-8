@@ -1,7 +1,7 @@
 let { BASEURL } = process.env;
 let { createGallery } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
-let { getProviderByID } = require('../../libs/providers.js');
+let { getProviderByID } = require('../../libs/data/providers.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/providers/providers.js');
 
