@@ -21,7 +21,7 @@ let getServiceDescription = async ({ query, params }, res) => {
     return;
   }
 
-  let messages = createFindProvidersMsg({ service, service_id });
+  let messages = createFindProvidersMsg({ service, service_id, messenger_user_id, first_name, last_name, gender });
   res.send({ messages });
 }
 
