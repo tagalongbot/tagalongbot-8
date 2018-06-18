@@ -8,7 +8,10 @@ let { createPracticePromo } = require('../../../../libs/data/practice/promos.js'
 
 let getServicesWithPromos = async ({ services }) => {
   let manufactured_promos = await getManufacturedPromos();
-  let all_manufactured_service_name = manufactured_promos.map(promo => promo.fields['Service Name'].toUpperCase());
+  let all_manufactured_service_name = manufactured_promos.map(
+    promo => promo.fields['Service Name'].toUpperCase()
+  );
+
   let manufacutred_promo_service_names = [...new Set(all_manufactured_service_name)];
 
   let services_with_promos = services.filter(
