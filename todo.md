@@ -1,9 +1,6 @@
 # Airtable
 
 ### Important and Urgent
-- Delete "Terms" field in promotions bases
-- Restructure the way manufactured and custom promotions images and details are managed
-
 ### Important and Less Urgent
 
 # Code
