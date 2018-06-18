@@ -17,10 +17,9 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
 
   let services = await getProviderServices({ provider });
   let services_with_promos = await getServicesWithPromos({ services });
-  let total_service_promos_available = services_with_promos.length;
 
   let galleryData = services_with_promos.map(
-    toServicesGallery({ provider_id, provider_base_id, total_service_promos_available })
+    toServicesGallery({ provider_id, provider_base_id })
   );
 
   let messages = createMultiGallery(galleryData);

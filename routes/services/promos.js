@@ -27,6 +27,8 @@ let getServicePromos = async ({ query }, res) => {
     await Promise.all(provider_promos)
   );
   
+  console.log('promos', promos);
+  
   let randomPromos = shuffleArray(promos).slice(0, 10);
   
   let gallery = createGallery(randomPromos, 10, 'square');

@@ -45,7 +45,7 @@ let createNewPromo = async (data) => {
   let manufactured_promo = await getManufacturedPromoByID({ promo_id: new_promo_id });
   let new_promo_type = manufactured_promo.fields['Name'];
 
-  let new_promo_image = service.fields[`Promo-${new_promo_type}`];
+  let new_promo_image = manufactured_promo.fields['Image URL'];
   let expiration_date = new Date(new_promo_expiration_date);
 
   let promoData = {
@@ -66,10 +66,8 @@ let createNewPromo = async (data) => {
 }
 
 // Mapping Functions
-let toServicesGallery = ({ provider_id, provider_base_id, total_service_promos_available }) => ({ id: service_id, fields: service }) => {
+let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id, fields: service }) => {
   let title = service['Name'];
-
-  let subtitle = `Promo Types Available: ${total_service_promos_available}`;
   let image_url = service['Image URL'];
 
   let view_service_promos_url = createURL(
@@ -81,7 +79,7 @@ let toServicesGallery = ({ provider_id, provider_base_id, total_service_promos_a
 
   let buttons = [btn];
 
-  let element = { title, subtitle, image_url, buttons };
+  let element = { title, image_url, buttons };
   return element;
 }
 
