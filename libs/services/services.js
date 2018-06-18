@@ -24,11 +24,17 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
     `${BASEURL}/services/providers`,
     { service_id, messenger_user_id, first_name, last_name, gender }
   );
+  
+  let find_promos_btn_url = createURL(
+    `${BASEURL}/services/promos`,
+    { service_id, messenger_user_id, first_name, last_name, gender }
+  );
 
   let btn1 = createBtn(`View Service Details|json_plugin_url|${view_service_details_btn_url}`);
   let btn2 = createBtn(`Find Providers|json_plugin_url|${find_providers_btn_url}`);
+  let btn3 = createBtn(`Find Promos|json_plugin_url|${find_promos_btn_url}`);
 
-  let buttons = [btn1, btn2];
+  let buttons = [btn1, btn2, btn3];
 
   let element = { title, subtitle, image_url, buttons};
   return element;
