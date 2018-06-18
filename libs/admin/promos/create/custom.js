@@ -1,6 +1,7 @@
-let {} = require
+let { createURL } = require('../../../../libs/helpers.js');
+let { createBtn } = require('../../../../libs/bots.js');
 
-let toServicesGallery = () => {
+let toServicesGallery = ({ id: service_id, fields: service }) => {
   
 }
 

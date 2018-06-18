@@ -18,7 +18,7 @@ router.get(
   '/menu', getAdminMenu
 );
 
-router.get(
+router.use(
   '/promos/create/custom', createCustomPromo
 );
 

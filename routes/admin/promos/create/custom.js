@@ -1,13 +1,15 @@
 let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
-let { getAllServices, filterServicesFromProvider } = require('../../../../libs/data/services.js');
-let { createNewPromo, toServicesGallery } = require('../../../../libs/admin/promos/create/custom/confirm.js');
+let { findService, getAllServices, filterServicesFromProvider } = require('../../../../libs/data/services.js');
+let { toServicesGallery, toImag } = require('../../../../libs/admin/promos/create/custom.js');
+let { getCustomPromosByService } = require('../../../../libs/data/custom-promos.js');
+let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/confirm.js');
 
 let express = require('express');
 let router = express.Router();
 
 let sendProviderServices = async ({ query }, res) => {
-  let { messenger_user_id } = query;
+  let { messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
 
   let provider = await getProviderByUserID(messenger_user_id);
   let provider_id = provider.id;
@@ -17,16 +19,21 @@ let sendProviderServices = async ({ query }, res) => {
   let provider_services = filterServicesFromProvider({ services, provider });
 
   let galleryData = provider_services.map(
-    toServicesGallery({ provider_id, provider_base_id })
+    toServicesGallery({ messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit })
   );
 
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
 }
 
+let sendCustomImages = async ({ query }, res) => {
+  let { messenger_user_id, service_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
 
-
-let getCustomPromoImages = async ({ query }, res) => {
+  let service = await findService(service_id);
+  let service_name = service.fields['Name'];
+  let custom_promos = await getCustomPromosByService({ service_name });
+  
+  
   
 }
 
@@ -50,7 +57,8 @@ let createCustomPromo = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-router.get('/image', getCustomPromoImages);
+router.get('/services', sendProviderServices);
+router.get('/images', sendCustomImages);
 router.get('/confirm', createCustomPromo);
 
-module.exports = createCustomPromo;
+module.exports = router;
