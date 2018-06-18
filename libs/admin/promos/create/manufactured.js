@@ -1,12 +1,10 @@
-let { BASEURL, SERVICES_BASE_ID } = process.env;
+let { BASEURL } = process.env;
 let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
-let { getTable, createTableData } = require('../../../../libs/data.js');
-
 let { findService } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
-
-let getPromosTable = getTable('Promos');
+let { createExpirationDate } = require('../../../../libs/admin/promos/create.js');
+let { createPracticePromo } = require('../../../../libs/data/practice/promos.js');
 
 let getServicesWithPromos = async ({ services }) => {
   let manufactured_promos = await getManufacturedPromos();
@@ -20,34 +18,8 @@ let getServicesWithPromos = async ({ services }) => {
   return services_with_promos;
 }
 
-let createExpirationDate = (new_expiration_date_str) => {
-  let dateMap = {
-    '1 Week': 7,
-    '2 Weeks': 14,
-    '3 Weeks': 21,
-    '4 Weeks': 28,
-    '5 Weeks': 35,
-    '6 Weeks': 42,
-    '7 Weeks': 49,
-    '8 Weeks': 56,
-    '9 Weeks': 63,
-    '10 Weeks': 70,
-  }
-
-  let today = new Date();
-
-  let new_date = (new Date()).setDate(
-    today.getDate() + dateMap[new_expiration_date_str]
-  );
-
-  return new_date;
-}
-
 let createNewPromo = async (data) => {
   let { new_promo_id, new_promo_provider_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
-
-  let promosTable = getPromosTable(new_promo_provider_base_id);
-  let createPromo = createTableData(promosTable);
 
   let service = await findService(new_promo_service_id);
 
@@ -69,7 +41,7 @@ let createNewPromo = async (data) => {
     ['Total Used']: 0,
   }
 
-  let newPromo = await createPromo(promoData);
+  let newPromo = await createPracticePromo(promoData);
 
   return newPromo;
 }

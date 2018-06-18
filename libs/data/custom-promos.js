@@ -12,7 +12,7 @@ let getCustomPromos = async () => {
   return promos;
 }
 
-let getCustomPromosByService = async ({ service_name }) => {
+let getCustomPromosByCategory = async ({ service_name }) => {
   let filterByFormula = `{Uppercase Service Name} = '${service_name.toUpperCase()}'`;
   let promos = await getPromos({ filterByFormula });
   return promos;
@@ -25,6 +25,6 @@ let getCustomPromoByID = async ({ promo_id }) => {
 
 module.exports = {
   getCustomPromos,
-  getCustomPromosByService,
+  getCustomPromosByCategory,
   getCustomPromoByID,
 }

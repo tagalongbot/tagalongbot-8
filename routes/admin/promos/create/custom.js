@@ -1,7 +1,7 @@
 let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
 let { findService, getAllServices, filterServicesFromProvider } = require('../../../../libs/data/services.js');
-let { toServicesGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
+let { toCategoryGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
 let { getCustomPromosByService, getCustomPromoByID } = require('../../../../libs/data/custom-promos.js');
 let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/confirm.js');
 
@@ -11,15 +11,11 @@ let router = express.Router();
 let sendProviderServices = async ({ query }, res) => {
   let { messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
 
-  let provider = await getProviderByUserID(messenger_user_id);
-  let provider_id = provider.id;
-  let provider_base_id = provider.fields['Practice Base ID'];
-
-  let services = await getAllServices();
-  let provider_services = filterServicesFromProvider({ services, provider });
-
-  let galleryData = provider_services.map(
-    toServicesGallery({ messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit })
+  let custom_promos = 
+  let custom_promo_categories
+  
+  let galleryData = custom_promo_categories.map(
+    toCategoryGallery({ messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit })
   );
 
   let messages = createMultiGallery(galleryData);
