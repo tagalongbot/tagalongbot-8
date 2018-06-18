@@ -25,7 +25,7 @@ router.use(
   '/providers', getServiceProviders
 );
 
-router.get(
+router.use(
   '/promos', getServicePromos
 );
 
