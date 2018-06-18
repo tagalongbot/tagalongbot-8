@@ -2,10 +2,15 @@ let { BASEURL } = process.env;
 let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
-let createFindProvidersMsg = ({ service, service_id }) => {
+let createFindProvidersMsg = ({ service, service_id, messenger_user_id, first_name, last_name, gender }) => {
   let find_providers_btn_url = createURL(
     `${BASEURL}/services/providers`, 
     { service_id }
+  );
+
+  let find_promos_btn_url = createURL(
+    `${BASEURL}/services/promos`,
+    { service_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let txtMsg = createButtonMessage(
