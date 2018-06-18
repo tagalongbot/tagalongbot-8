@@ -4,6 +4,26 @@ let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/co
 let express = require('express');
 let router = express.Router();
 
+let sendProvider = async ({ query }, res) => {
+  let { messenger_user_id } = query;
+
+  let provider = await getProviderByUserID(messenger_user_id);
+  let provider_id = provider.id;
+  let provider_base_id = provider.fields['Practice Base ID'];
+
+  let services = await getProviderServices({ provider });
+  let services_with_promos = await getServicesWithPromos({ services });
+
+  let galleryData = services_with_promos.map(
+    toServicesGallery({ provider_id, provider_base_id })
+  );
+
+  let messages = createMultiGallery(galleryData);
+  res.send({ messages });
+}
+
+
+
 let getCustomPromoImages = async ({ query }, res) => {
   
 }
