@@ -1,6 +1,9 @@
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
 let { createNewPromo } = require('../../../../libs/admin/promos/create/custom.js');
 
+let express = require('express');
+let router = express.Router();
+
 let createCustomPromo = async ({ query }, res) => {
   let { 
     messenger_user_id,
@@ -20,5 +23,8 @@ let createCustomPromo = async ({ query }, res) => {
   let redirect_to_blocks = ['New Custom Promo Created'];
   res.send({ redirect_to_blocks });
 }
+
+router.get('/image', );
+router.get('/image', );
 
 module.exports = createCustomPromo;

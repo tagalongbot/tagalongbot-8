@@ -1,6 +1,6 @@
-let { localizeDate } = require('../../../../libs/helpers.js');
-let { getTable, createTableData } = require('../../../../libs/data.js');
-let { createPracticePromo, updatePracticePromo } = require('../../../../libs/data/practice/promos.js');
+let { localizeDate } = require('../../../../../libs/helpers.js');
+let { getTable, createTableData } = require('../../../../../libs/data.js');
+let { createPracticePromo, updatePracticePromo } = require('../../../../../libs/data/practice/promos.js');
 
 let getPromosTable = getTable('Promos');
 
