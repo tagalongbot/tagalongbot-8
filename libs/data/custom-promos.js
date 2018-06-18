@@ -7,39 +7,41 @@ let categoriesTable = getCategoryTable(SERVICES_BASE_ID);
 let getCategories = getAllDataFromTable(categoriesTable);
 let findCategory = findTableData(categoriesTable);
 
-let getPromosTable = getTable('Custom Promos');
-let promosTable = getPromosTable(SERVICES_BASE_ID);
-let getPromos = getAllDataFromTable(promosTable);
-let findPromo = findTableData(promosTable);
+let getCustomPromoImagesTable = getTable('Custom Promo Images');
+let promoImagsTable = getCustomPromoImagesTable(SERVICES_BASE_ID);
+let getPromoImages = getAllDataFromTable(promoImagsTable);
+let findPromoImage = findTableData(promoImagsTable);
 
 let getCustomPromoCategories = async () => {
   let categories = await getCategories();
   return categories;
 }
 
-let getCustomPromoCategoryByID = async () => {
-  let category
+let getCustomPromoCategoryByID = async ({ category_id }) => {
+  let category = await findCategory(category_id);
+  return category;
 }
 
-let getCustomPromos = async () => {
-  let promos = await getPromos();
+let getCutomPromoImages = async () => {
+  let promos = await getPromoImages();
   return promos;
 }
 
-let getCustomPromosByCategory = async ({ service_name }) => {
-  let filterByFormula = `{Uppercase Service Name} = '${service_name.toUpperCase()}'`;
-  let promos = await getPromos({ filterByFormula });
-  return promos;
+let getCustomPromoImagesByCategory = async ({ category_name }) => {
+  let filterByFormula = `{Uppercase Category Name} = '${category_name.toUpperCase()}'`;
+  let promo_images = await getPromoImages({ filterByFormula });
+  return promo_images;
 }
 
 let getCustomPromoByID = async ({ promo_id }) => {
-  let promo = await findPromo(promo_id);
+  let promo = await findPromoImage(promo_id);
   return promo;
 }
 
 module.exports = {
   getCustomPromoCategories,
-  getCustomPromos,
-  getCustomPromosByCategory,
+  getCustomPromoCategoryByID,
+  getCutomPromoImages,
+  getCustomPromoImagesByCategory,
   getCustomPromoByID,
 }
