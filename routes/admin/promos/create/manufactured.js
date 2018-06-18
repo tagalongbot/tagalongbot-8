@@ -1,9 +1,9 @@
 let { createGallery, createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
-let { findService } = require('../../../../libs/data/services.js');
+let { findService, getAllServices, filterServicesFromProvider } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
-let { getProviderServices, getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured.js');
+let { getServicesWithPromos, createNewPromo, toServicesGallery, toPromosGallery } = require('../../../../libs/admin/promos/create/manufactured.js');
 
 let express = require('express');
 let router = express.Router();
@@ -15,8 +15,10 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
   let provider_id = provider.id;
   let provider_base_id = provider.fields['Practice Base ID'];
 
-  let services = await getProviderServices({ provider });
-  let services_with_promos = await getServicesWithPromos({ services });
+  let services = await getAllServices();
+  let provider_services = filterServicesFromProvider({ services, provider });
+
+  let services_with_promos = await getServicesWithPromos({ services: provider_services });
 
   let galleryData = services_with_promos.map(
     toServicesGallery({ provider_id, provider_base_id })

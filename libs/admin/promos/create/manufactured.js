@@ -1,26 +1,12 @@
-let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
+let { BASEURL, SERVICES_BASE_ID } = process.env;
 let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 let { getTable, createTableData } = require('../../../../libs/data.js');
 
-let { getAllServices, findService } = require('../../../../libs/data/services.js');
+let { findService } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
 let getPromosTable = getTable('Promos');
-
-let getProviderServices = async ({ provider }) => {
-  let services = await getAllServices();
-
-  let provider_services = provider.fields['Practice Services'].map(
-    service => service.toLowerCase()
-  );
-
-  let matched_services = services.filter(
-    (service) => provider_services.includes(service.fields['Name'].toLowerCase())
-  );
-
-  return matched_services;
-}
 
 let getServicesWithPromos = async ({ services }) => {
   let manufactured_promos = await getManufacturedPromos();
@@ -130,7 +116,6 @@ let toPromosGallery = ({ provider_id, provider_base_id, service_id }) => ({ id: 
 }
 
 module.exports = {
-  getProviderServices,
   getServicesWithPromos,
   createNewPromo,
   toServicesGallery,
