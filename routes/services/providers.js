@@ -1,3 +1,5 @@
+let handleRoute = require('../../middlewares/handleRoute.js');
+
 let { shuffleArray } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
 let { getServiceByID } = require('../../libs/data/services.js');
@@ -50,7 +52,14 @@ let getServiceProviders = async ({ query, params }, res) => {
   res.send({ messages });
 }
 
-router.get('/', searchServiceProviders);
-router.get('/:search_type', getServiceProviders);
+router.get(
+  '/', 
+  handleRoute(searchServiceProviders, '[Error] Searching Service Providers')
+);
+
+router.get(
+  '/:search_type', 
+  handleRoute(getServiceProviders, '[Error] Searching Service Providers')
+);
 
 module.exports = router;

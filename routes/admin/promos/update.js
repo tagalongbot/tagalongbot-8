@@ -1,3 +1,5 @@
+let handleRoute = require('../../../middlewares/handleRoute.js');
+
 let { updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
 let { getPracticePromo } = require('../../../libs/data/practice/promos.js');
 
@@ -36,7 +38,14 @@ let updatePromoInfo = async ({ query }, res) => {
   res.send({ messages });
 }
 
-router.get('/', getUpdateField);
-router.get('/field', updatePromoInfo);
+router.get(
+  '/', 
+  handleRoute(getUpdateField, '[Error] Updating Promo')
+);
+
+router.get(
+  '/field', 
+  handleRoute(updatePromoInfo, '[Error] Updating Promo')
+);
 
 module.exports = router;

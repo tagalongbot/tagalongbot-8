@@ -35,11 +35,12 @@ let claimProvider = async ({ query }, res) => {
 
 router.get(
   '/email', 
-  handleRoute(askForUserEmail, '[Claim Provider Promo] Error')
+  handleRoute(askForUserEmail, '[Error] Claiming Provider')
 );
 
 router.get(
-  '/', claimProvider
+  '/', 
+  handleRoute(claimProvider, '[Error] Claiming Provider')
 );
 
 module.exports = router;

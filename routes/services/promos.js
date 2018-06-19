@@ -1,3 +1,5 @@
+let handleRoute = require('../../middlewares/handleRoute.js');
+
 let { flattenArray, shuffleArray } = require('../../libs/helpers.js');
 let { getServiceByID } = require('../../libs/data/services.js');
 let { getProviders } = require('../../libs/services/promos.js');
@@ -61,7 +63,14 @@ let getServicePromos = async ({ query, params }, res) => {
   res.send({ messages });
 }
 
-router.get('/', searchServicePromos);
-router.get('/:search_type', getServicePromos);
+router.get(
+  '/', 
+  handleRoute(searchServicePromos, '[Error] Searching Service Promos')
+);
+
+router.get(
+  '/:search_type', 
+  handleRoute(getServicePromos, '[Error] Searching Service Promos')
+);
 
 module.exports = router;
