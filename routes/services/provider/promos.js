@@ -1,5 +1,5 @@
 let { getProviderByID } = require('../../../libs/data/providers.js');
-let { findService } = require('../../../libs/data/services.js');
+let { getServiceByID } = require('../../../libs/data/services.js');
 let { getServicePromos, createNoPromosMsg } = require('../../../libs/services/provider/promos.js');
 let { toGalleryElement } = require('../../../libs/promos/promos.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
@@ -10,7 +10,7 @@ let getServiceProviderPromos = async ({ query }, res) => {
   let provider = await getProviderByID(provider_id);
   let provider_name = provider.fields['Practice Name'];
   
-  let service = await findService(service_id);
+  let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
   let promos = await getServicePromos({ service_name, provider_base_id });

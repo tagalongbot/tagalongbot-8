@@ -1,5 +1,5 @@
 let { flattenArray, shuffleArray } = require('../../libs/helpers.js');
-let { findService } = require('../../libs/data/services.js');
+let { getServiceByID } = require('../../libs/data/services.js');
 let { getProviders } = require('../../libs/services/promos.js');
 let { filterProvidersByService } = require('../../libs/data/providers.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
@@ -11,7 +11,7 @@ let router = express.Router();
 
 let searchServicePromos = async ({ query }, res) => {
   let { service_id } = query;
-  let service = await findService(service_id);
+  let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
   let set_attributes = { service_id, service_name };
@@ -25,7 +25,7 @@ let getServicePromos = async ({ query, params }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
   let { service_id, search_service_promos_state, search_service_promos_city, search_service_promos_zip_code } = query;
 
-  let service = await findService(service_id);
+  let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
   let providers = await getProviders(

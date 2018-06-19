@@ -1,7 +1,7 @@
 let { BASEURL } = process.env;
 let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
-let { findService } = require('../../../../libs/data/services.js');
+let { getServiceByID } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 let { createExpirationDate } = require('../../../../libs/admin/promos/create.js');
 let { createPracticePromo } = require('../../../../libs/data/practice/promos.js');
@@ -24,7 +24,7 @@ let getServicesWithPromos = async ({ services }) => {
 let createNewPromo = async (data) => {
   let { new_promo_id, new_promo_provider_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
 
-  let service = await findService(new_promo_service_id);
+  let service = await getServiceByID({ service_id: new_promo_service_id });
 
   let manufactured_promo = await getManufacturedPromoByID({ promo_id: new_promo_id });
   let new_promo_type = manufactured_promo.fields['Name'];
