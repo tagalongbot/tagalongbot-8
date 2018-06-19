@@ -1,5 +1,6 @@
-let errorHandler = (block_name, res) => (error) => {
-  console.log('Error:', error);
+let { logToFile } = require('../libs/helpers.js');
+let errorHandler = (block_name, res) => async (error) => {
+  logToFile(`${block_name}`, 'errors.txt');
   let redirect_to_blocks = [block_name];
   res.send({ redirect_to_blocks });
 }
