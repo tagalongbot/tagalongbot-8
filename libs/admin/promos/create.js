@@ -13,8 +13,9 @@ let createExpirationDate = (new_expiration_date_str) => {
   }
 
   let today = new Date();
-
-  let new_date = (new Date()).setDate(
+  let new_date = new Date();
+  
+  new_date.setDate(
     today.getDate() + dateMap[new_expiration_date_str]
   );
 

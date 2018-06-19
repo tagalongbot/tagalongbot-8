@@ -9,7 +9,7 @@ let express = require('express');
 let router = express.Router();
 
 let sendCustomCategories = async ({ query }, res) => {
-  console.log('query', query);
+  // console.log('query', query);
   let { messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
 
   let custom_promo_categories = await getCustomPromoCategories();
@@ -17,8 +17,8 @@ let sendCustomCategories = async ({ query }, res) => {
   let galleryData = custom_promo_categories.map(
     toCategoryGallery({ messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit })
   );
-  
-  console.log('galleryData', galleryData[0].buttons[0]);
+
+  // console.log('Category Gallery Button', galleryData[0].buttons[0]);
 
   let messages = createMultiGallery(galleryData);
   res.send({ messages });
@@ -26,9 +26,9 @@ let sendCustomCategories = async ({ query }, res) => {
 
 let sendCustomImages = async ({ query, url }, res) => {
   let { messenger_user_id, category_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
-  console.log('query', query);
-  console.log('url', url);
-  console.log('new_promo_name', new_promo_name);
+  // console.log('query', query);
+  // console.log('url', url);
+  // console.log('new_promo_name', new_promo_name);
 
   let category = await getCustomPromoCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
@@ -38,7 +38,7 @@ let sendCustomImages = async ({ query, url }, res) => {
     toImagesGallery({ new_promo_name, new_promo_expiration_date, new_promo_claim_limit })
   );
 
-  console.log('galleryData', galleryData);
+  // console.log('Gallery Image Element', galleryData[0]);
 
   let messages = createMultiGallery(galleryData);
   res.send({ messages });

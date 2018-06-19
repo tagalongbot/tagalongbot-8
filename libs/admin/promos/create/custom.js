@@ -1,6 +1,7 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../../../../libs/helpers.js');
+let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
+let { createExpirationDate } = require('../../../../libs/admin/promos/create.js');
 
 let toCategoryGallery = ({ messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit }) => ({ id: category_id, fields: category }) => {
   let title = category['Category Name'];
@@ -19,8 +20,12 @@ let toCategoryGallery = ({ messenger_user_id, new_promo_name, new_promo_expirati
 }
 
 let toImagesGallery = ({ new_promo_name, new_promo_expiration_date, new_promo_claim_limit }) => ({ id: promo_id, fields: promo_image }) => {
-  console.log('
+  let expiration_date = localizeDate(
+    createExpirationDate(new_promo_expiration_date)
+  );
+
   let title = new_promo_name;
+  let subtitle = `Valid Until ${expiration_date}`;
   let image_url = promo_image['Image URL'];
   let new_promo_image_id = promo_id;
 
@@ -33,7 +38,7 @@ let toImagesGallery = ({ new_promo_name, new_promo_expiration_date, new_promo_cl
 
   let buttons = [btn1];
 
-  return { title, image_url, buttons };
+  return { title, subtitle, image_url, buttons };
 }
 
 module.exports = {
