@@ -10,27 +10,27 @@ let claimPromotion = require('../routes/promos/claim.js');
 let viewClaimedPromos = require('../routes/promos/view/claimed.js');
 
 router.get(
-  '/search/:search_type', 
+  '/search/:search_type',
   handleRoute(getPromos, '[Error] Searching Promos')
 );
 
 router.get(
-  '/details', 
+  '/details',
   handleRoute(getPromoDetails, '[Error] Viewing Promo Details')
 );
 
 router.get(
-  '/provider', 
+  '/provider',
   handleRoute(getPromoProvider, '[Error] Viewing Promo Provider')
 );
 
 router.use(
-  '/claim', 
+  '/claim',
   handleRoute(claimPromotion, '[Error] Claiming Promo')
 );
 
 router.get(
-  '/view/claimed', 
+  '/view/claimed',
   handleRoute(viewClaimedPromos, '[Error] Viewing Claimed Promos')
 );
 

@@ -31,7 +31,7 @@ router.use(
 
 router.use(
   '/promos', 
-  handleRoute(getServicePromos, '')
+  getServicePromos
 );
 
 module.exports = router;
