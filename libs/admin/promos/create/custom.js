@@ -9,7 +9,7 @@ let toCategoryGallery = ({ messenger_user_id, new_promo_name, new_promo_expirati
 
   let send_images_url = createURL(
     `${BASEURL}/admin/promos/create/custom/images`,
-    { messenger_user_id, category_id, new_promo_name, new_promo_expiration_date: encodeURIComponent(new_promo_expiration_date), new_promo_claim_limit }
+    { messenger_user_id, category_id }
   );
 
   let btn1 = createBtn(`View Category Images|json_plugin_url|${send_images_url}`);
