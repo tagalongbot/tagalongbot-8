@@ -16,12 +16,12 @@ let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
 router.get(
   '/menu', 
-  getAdminMenu
+  handleRoute(getAdminMenu, '[Error] Admin Menu')
 );
 
 router.use(
   '/promos/create/custom', 
-  createCustomPromo
+  handleRoute(createCustomPromo, '[Error] Create Custom Promo')
 );
 
 router.use(
