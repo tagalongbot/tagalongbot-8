@@ -3,7 +3,6 @@ let { createURL } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 
 let toCategoryGallery = ({ messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit }) => ({ id: category_id, fields: category }) => {
-  console.log('new_promo_name', new_promo_name);
   let title = category['Category Name'];
   let image_url = category['Image URL'];
 
@@ -20,7 +19,7 @@ let toCategoryGallery = ({ messenger_user_id, new_promo_name, new_promo_expirati
 }
 
 let toImagesGallery = ({ new_promo_name, new_promo_expiration_date, new_promo_claim_limit }) => ({ id: promo_id, fields: promo_image }) => {
-  console.log('new_promo_name', new_promo_name);
+  console.log('
   let title = new_promo_name;
   let image_url = promo_image['Image URL'];
   let new_promo_image_id = promo_id;
