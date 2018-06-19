@@ -36,7 +36,8 @@ router.get(
 );
 
 router.get(
-  '/list', handleRoute(listProvider, '[List Provider] Error')
+  '/list', 
+  handleRoute(listProvider, '[List Provider] Error')
 );
 
 module.exports = router;

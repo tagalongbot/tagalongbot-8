@@ -15,15 +15,18 @@ let togglePromo = require('../routes/admin/promos/toggle.js');
 let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
 router.get(
-  '/menu', getAdminMenu
+  '/menu', 
+  getAdminMenu
 );
 
 router.use(
-  '/promos/create/custom', createCustomPromo
+  '/promos/create/custom', 
+  createCustomPromo
 );
 
 router.use(
-  '/promos/create/manufactured', createManufacturedPromo
+  '/promos/create/manufactured', 
+  createManufacturedPromo
 );
 
 router.get(
@@ -32,27 +35,33 @@ router.get(
 );
 
 router.get(
-  '/promos/view/all', viewAllPromos
+  '/promos/view/all', 
+  viewAllPromos
 );
 
 router.get(
-  '/promos/view/user', viewUserPromos
+  '/promos/view/user', 
+  viewUserPromos
 );
 
 router.get(
-  '/promos/view/info', viewPromoInfo
+  '/promos/view/info', 
+  viewPromoInfo
 );
 
 router.use(
-  '/promos/update', updatePromoInfo
+  '/promos/update', 
+  updatePromoInfo
 );
 
 router.get(
-  '/promos/toggle', togglePromo
+  '/promos/toggle', 
+  togglePromo
 );
 
 router.get(
-  '/promos/user/update', updateUserPromo
+  '/promos/user/update', 
+  updateUserPromo
 );
 
 module.exports = router;
