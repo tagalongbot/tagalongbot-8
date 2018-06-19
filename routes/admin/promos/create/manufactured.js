@@ -1,3 +1,5 @@
+let handleRoute = require('../../../../middlewares/handleRoute.js');
+
 let { createGallery, createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
 let { getServiceByID, getAllServices, filterServicesFromProvider } = require('../../../../libs/data/services.js');
@@ -81,9 +83,24 @@ let confirmCreateServicePromo = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-router.get('/', sendManufacturedServicesWithPromotions);
-router.get('/service', sendServiceManufacturedPromos);
-router.get('/service/create', createServicePromo);
-router.get('/service/create/confirm', confirmCreateServicePromo);
+router.get(
+  '/',
+  handleRoute(sendManufacturedServicesWithPromotions, '[Error] Getting Manufactured Promo Services')
+);
+
+router.get(
+  '/service',
+  handleRoute(sendServiceManufacturedPromos, '[Error] Getting Manufactured Service Promos')
+);
+
+router.get(
+  '/service/create',
+  handleRoute(createServicePromo, '[Error] Selecting Manufactured Promo')
+);
+
+router.get(
+  '/service/create/confirm',
+  handleRoute(confirmCreateServicePromo, '[Error] Creating Manufactured Promo')
+);
 
 module.exports = router;

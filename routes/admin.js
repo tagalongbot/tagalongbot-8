@@ -26,7 +26,7 @@ router.use(
 
 router.use(
   '/promos/create/manufactured', 
-  handleRoute(createManufacturedPromo, '[Error] Create Manufactured Promo')
+  createManufacturedPromo,
 );
 
 router.get(
@@ -51,7 +51,7 @@ router.get(
 
 router.use(
   '/promos/update', 
-  handleRoute(updatePromoInfo, '[Error] Updating Promo')
+  updatePromoInfo
 );
 
 router.get(
