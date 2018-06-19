@@ -24,7 +24,7 @@ let sendCustomCategories = async ({ query }, res) => {
 let sendCustomImages = async ({ query }, res) => {
   let { messenger_user_id, category_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
 
-  let category = await getCustomPromoCategoryByID(category_id);
+  let category = await getCustomPromoCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
   let custom_promo_images = await getCustomPromoImagesByCategory({ category_name });
 
