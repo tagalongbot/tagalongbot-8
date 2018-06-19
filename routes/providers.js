@@ -32,7 +32,7 @@ router.use(
 
 router.get(
   '/claimed', 
-  handleRoute(providerClaimed, '[Error] Viewing Claimed Providers')
+  handleRoute(providerClaimed, '[Error] Checking Claimed Provider')
 );
 
 router.get(

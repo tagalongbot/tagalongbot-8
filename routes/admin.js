@@ -21,7 +21,7 @@ router.get(
 
 router.use(
   '/promos/create/custom', 
-  handleRoute(createCustomPromo, '[Error] Create Custom Promo')
+  createCustomPromo,
 );
 
 router.use(

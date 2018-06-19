@@ -1,3 +1,5 @@
+let handleRoute = require('../../../../middlewares/handleRoute.js');
+
 let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
 let { getCustomPromoCategoryByID } = require('../../../../libs/data/custom-promos.js');
@@ -72,9 +74,24 @@ let createCustomPromo = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-router.get('/categories', sendCustomCategories);
-router.get('/images', sendCustomImages);
-router.get('/images/select', sendSelectedImage);
-router.get('/confirm', createCustomPromo);
+router.get(
+  '/categories',
+  handleRoute(sendCustomCategories, '')
+);
+
+router.get(
+  '/images',
+  handleRoute(sendCustomImages, '')
+);
+
+router.get(
+  '/images/select',
+  handleRoute(sendSelectedImage, '')
+);
+
+router.get(
+  '/confirm',
+  handleRoute(createCustomPromo, '')
+);
 
 module.exports = router;
