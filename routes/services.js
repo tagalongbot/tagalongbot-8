@@ -11,17 +11,17 @@ let getServicePromos = require('../routes/services/promos.js');
 
 router.get(
   '/search/:service_type', 
-  getServices
+  handleRoute(getServices, '[Error] Searching Services')
 );
 
 router.get(
   '/description/:show_providers', 
-  getServiceDescription
+  handleRoute(getServiceDescription, '[Error] Viewing Service Description')
 );
 
 router.get(
   '/provider/promos', 
-  getServiceProviderPromos
+  handleRoute(getServiceProviderPromos, '[Error] Viewing Service Provider Promos')
 );
 
 router.use(
@@ -31,7 +31,7 @@ router.use(
 
 router.use(
   '/promos', 
-  getServicePromos
+  handleRoute(getServicePromos, '')
 );
 
 module.exports = router;

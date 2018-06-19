@@ -12,17 +12,17 @@ let listProvider = require('../routes/providers/list.js');
 
 router.get(
   '/search/:search_type',
-  handleRoute(getProviders, '[Search Providers] Error')
+  handleRoute(getProviders, '[Error] Searching Providers')
 );
 
 router.get(
   '/services', 
-  handleRoute(getProviderServices, '[Provider Services] Error')
+  handleRoute(getProviderServices, '[Error] Viewing Provider Services')
 );
 
 router.get(
   '/promos', 
-  handleRoute(getProviderPromos, '[Provider Promos] Error')
+  handleRoute(getProviderPromos, '[Error] Viewing Provider Promos')
 );
 
 router.use(
@@ -32,12 +32,12 @@ router.use(
 
 router.get(
   '/claimed', 
-  handleRoute(providerClaimed, '[Provider Promo Claimed] Error')
+  handleRoute(providerClaimed, '[Error] Viewing Claimed Providers')
 );
 
 router.get(
-  '/list', 
-  handleRoute(listProvider, '[List Provider] Error')
+  '/list',
+  handleRoute(listProvider, '[Error] Listing Provider')
 );
 
 module.exports = router;

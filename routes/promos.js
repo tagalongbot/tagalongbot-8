@@ -11,27 +11,27 @@ let viewClaimedPromos = require('../routes/promos/view/claimed.js');
 
 router.get(
   '/search/:search_type', 
-  getPromos
+  handleRoute(getPromos, '[Error] Searching Promos')
 );
 
 router.get(
   '/details', 
-  getPromoDetails
+  handleRoute(getPromoDetails, '[Error] Viewing Promo Details')
 );
 
 router.get(
   '/provider', 
-  getPromoProvider
+  handleRoute(getPromoProvider, '[Error] Viewing Promo Provider')
 );
 
 router.use(
   '/claim', 
-  claimPromotion
+  handleRoute(claimPromotion, '[Error] Claiming Promo')
 );
 
 router.get(
   '/view/claimed', 
-  viewClaimedPromos
+  handleRoute(viewClaimedPromos, '[Error] Viewing Claimed Promos')
 );
 
 module.exports = router;
