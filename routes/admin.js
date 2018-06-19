@@ -26,42 +26,42 @@ router.use(
 
 router.use(
   '/promos/create/manufactured', 
-  createManufacturedPromo
+  handleRoute(createManufacturedPromo, '[Error] Create Manufactured Promo')
 );
 
 router.get(
   '/promos/view/manufactured/details',
-  viewManufacturedPromoDetails
+  handleRoute(viewManufacturedPromoDetails, '[Error] Viewing Manufactured Promo Details')
 );
 
 router.get(
-  '/promos/view/all', 
-  viewAllPromos
+  '/promos/view/all',
+  handleRoute(viewAllPromos, '[Error] Viewing All Promos')
 );
 
 router.get(
-  '/promos/view/user', 
-  viewUserPromos
+  '/promos/view/user',
+  handleRoute(viewUserPromos, '[Error] Viewing User Promos')
 );
 
 router.get(
-  '/promos/view/info', 
-  viewPromoInfo
+  '/promos/view/info',
+  handleRoute(viewPromoInfo, '[Error] Viewing Promo Info')
 );
 
 router.use(
   '/promos/update', 
-  updatePromoInfo
+  handleRoute(updatePromoInfo, '[Error] Updating Promo')
 );
 
 router.get(
   '/promos/toggle', 
-  togglePromo
+  handleRoute(togglePromo, '[Error] Toggling Promos')
 );
 
 router.get(
   '/promos/user/update', 
-  updateUserPromo
+  handleRoute(updateUserPromo, '[Error] Updating User Promo')
 );
 
 module.exports = router;
