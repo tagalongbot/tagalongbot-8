@@ -45,14 +45,14 @@ let sendCustomImages = async ({ query, url }, res) => {
 }
 
 let sendSelectedImage = async ({ query }, res) => {
-  let { new_promo_name, new_promo_expiration_date, new_promo_claim_limit, new_promo_image_id } = query;
+  let { new_promo_image_id } = query;
   let set_attributes = { new_promo_image_id };
   let redirect_to_blocks = ['New Custom Promotion Confirmation'];
   res.send({ set_attributes, redirect_to_blocks });
 }
 
 let createCustomPromo = async ({ query }, res) => {
-  let { 
+  let {
     messenger_user_id,
     new_promo_name,
     new_promo_image_id,
@@ -66,6 +66,8 @@ let createCustomPromo = async ({ query }, res) => {
   let new_promo = await createNewPromo(
     { provider_base_id, new_promo_name, new_promo_image_id, new_promo_expiration_date, new_promo_claim_limit }    
   );
+  
+  console.log('new_promo', new_promo);
 
   let redirect_to_blocks = ['New Custom Promo Created'];
   res.send({ redirect_to_blocks });
