@@ -26,7 +26,7 @@ router.get(
 
 router.use(
   '/claim',
-  handleRoute(claimPromotion, '[Error] Claiming Promo')
+  claimPromotion
 );
 
 router.get(

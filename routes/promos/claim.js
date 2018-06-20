@@ -1,3 +1,5 @@
+let handleRoute = require('../../middlewares/handleRoute.js');
+
 let express = require('express');
 let router = express.Router();
 
@@ -42,13 +44,22 @@ let claimPromotion = async ({ query }, res) => {
 
   let updated_promo = await updatePromo({ provider_base_id, promo, user, claimed_by_users });
 
-  let claimedMsg = createClaimedMsg({ query, user_data, updated_promo, provider_phone_number, provider_booking_url });
+  let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
+
+  let claimedMsg = createClaimedMsg({ data, updated_promo, provider_phone_number, provider_booking_url });
 
   let messages = [claimedMsg];
   res.send({ messages });
 }
 
-router.get('/email', askForUserEmail);
-router.get('/', claimPromotion);
+router.get(
+  '/email', 
+  handleRoute(askForUserEmail, '[Error] Claiming Promo')
+);
+
+router.get(
+  '/', 
+  handleRoute(claimPromotion, '[Error] Claiming Promo')
+);
 
 module.exports = router;

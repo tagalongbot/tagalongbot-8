@@ -83,14 +83,12 @@ let createOrUpdateUser = async (data, { id: provider_id, fields: provider }) => 
   return updated_practice_user;
 }
 
-let createClaimedMsg = ({ data, user_data, updated_promo, provider_phone_number, provider_booking_url }) => {
-  let {} = data;
-
-  let { first_name } = user_data;
+let createClaimedMsg = ({ data, updated_promo, provider_phone_number, provider_booking_url }) => {
+  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
 
   let view_provider_url = createURL(
     `${BASEURL}/promos/provider`, 
-    { ...data, ...user_data }
+    { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
   let btns = [
