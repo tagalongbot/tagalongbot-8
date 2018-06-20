@@ -93,10 +93,9 @@ let createClaimedMsg = ({ data, updated_promo, provider_phone_number, provider_b
 
   let btns = [
     `View Provider|json_plugin_url|${view_provider_url}`,
-    `Call Provider|phone_number|${provider_phone_number}`,
-  ]
-  
-  if (provider_booking_url) btns.push(`View Booking Site|web_url|${provider_booking_url}`);
+    (provider_booking_url) ? `View Booking Site|web_url|${provider_booking_url}` : `Call Provider|phone_number|${provider_phone_number}`,
+    `Main Menu|show_block|Discover Main Menu`    
+  ];
   
   let msg = createButtonMessage(
     `Congrats ${first_name} your promotion "${updated_promo.fields['Promotion Name']}" has been claimed!`,
