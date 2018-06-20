@@ -7,7 +7,7 @@ let getServices = getAllDataFromTable(servicesTable);
 let findService = findTableData(servicesTable);
 
 let getServiceByID = async ({ service_id }) => {
-  let service = await findService({ service_id });
+  let service = await findService(service_id);
   return service;
 }
 

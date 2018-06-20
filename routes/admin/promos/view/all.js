@@ -5,9 +5,10 @@ let { createMultiGallery } = require('../../../../libs/bots.js');
 
 let viewAllPromos = async ({ query }, res) => {
   let { messenger_user_id } = query;
-  let provider = await getProviderByUserID(messenger_user_id);
 
+  let provider = await getProviderByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];
+
   let promos = await getPracticePromos({ provider_base_id });
 
   if (!promos[0]) {
