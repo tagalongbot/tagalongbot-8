@@ -1,5 +1,5 @@
 let { getProviderByID } = require('../../libs/data/providers.js');
-let { getServices, filterServicesFromProvider } = require('../../libs/data/services.js');
+let { getAllServices, filterServicesFromProvider } = require('../../libs/data/services.js');
 let { toGalleryElement } = require('../../libs/providers/services.js');
 let { createMultiGallery } = require('../../libs/bots.js');
 
@@ -8,7 +8,7 @@ let getProviderServices = async ({ query }, res) => {
 
   let provider = await getProviderByID(provider_id);
   let provider_name = provider.fields['Practice Name'];
-  let services = await getServices();
+  let services = await getAllServices();
 
   let services_from_provider = filterServicesFromProvider({ services, provider });
 
