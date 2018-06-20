@@ -33,7 +33,7 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
 let sendServiceManufacturedPromos = async ({ query }, res) => {
   let { service_id, provider_id, provider_base_id } = query;
 
-  let service = await getServiceByID(service_id);
+  let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
   let promos = await getManufacturedPromosByService({ service_name });
 

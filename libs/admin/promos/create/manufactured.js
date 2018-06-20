@@ -32,19 +32,19 @@ let createNewPromo = async (data) => {
   let new_promo_image = manufactured_promo.fields['Image URL'];
   let expiration_date = createExpirationDate(new_promo_expiration_date);
 
-  let promoData = {
+  let promo_data = {
     ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
     ['Type']: `${service.fields['Name']}-${new_promo_type.trim().toLowerCase()}`,
     ['Active?']: true,
     ['Details']: manufactured_promo.fields['Details'],
-    ['Expiration Date']: expiration_date,
+    ['Expiration Date']: localizeDate(expiration_date),
     ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(new_promo_claim_limit.trim()),
     ['Total Claim Count']: 0,
     ['Total Used']: 0,
   }
 
-  let newPromo = await createPracticePromo(promoData);
+  let newPromo = await createPracticePromo({ provider_base_id: new_promo_provider_base_id, promo_data });
 
   return newPromo;
 }
