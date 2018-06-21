@@ -1,5 +1,5 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../../../../libs/helpers.js');
+let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 
 let isPromoExpired = (promo_expiration_date) => {
@@ -11,15 +11,19 @@ let isPromoExpired = (promo_expiration_date) => {
 }
 
 // Mapping Functions
-let toGalleryData = ({ provider_base_id }) => ({ id: promo_id, fields: promo }) => {
+let toGalleryData = ({ messenger_user_id, provider_base_id }) => ({ id: promo_id, fields: promo }) => {
   let expiredText = isPromoExpired(promo['Expiration Date']) ? 'EXPIRED' : 'NOT EXPIRED';
+  let localized_date = localizeDate(
+    new Date(promo['Expiration Date'])
+  );
+
   let title = promo['Promotion Name'];
-  let subtitle = `${expiredText} - ${promo['Terms']}`;
+  let subtitle = `${expiredText} - Valid Until ${localized_date}`;
   let image_url = promo['Image URL'];
 
   let view_promo_details_url = createURL(
     `${BASEURL}/admin/promos/view/info`,
-    { promo_id, provider_base_id }
+    { messenger_user_id, promo_id, provider_base_id }
   );
 
   let update_promo_url = createURL(

@@ -18,7 +18,7 @@ let viewAllPromos = async ({ query }, res) => {
   }
 
   let galleryData = promos.map(
-    toGalleryData({ provider_base_id })
+    toGalleryData({ messenger_user_id, provider_base_id })
   );
 
   let messages = createMultiGallery(galleryData);
