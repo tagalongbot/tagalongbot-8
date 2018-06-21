@@ -37,13 +37,9 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'].slice(0, 80);
   let subtitle = `Valid Until ${localizeDate(promo_expiration_date)}`;
   let image_url = promo['Image URL'];
-
-  let claimed_users = promo['Claimed By Users'] || [];
-  
-  let url_path = (claimed_users.includes(user_id)) ? `${BASEURL}/promos/details/claimed` : `${BASEURL}/promos/details/unclaimed`;
                   
   let view_promo_details_url = createURL(
-    url_path,
+    `${BASEURL}/promos/details/unclaimed`,
     { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 

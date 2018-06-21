@@ -2,19 +2,13 @@ let { BASEURL } = process.env;
 let { createURL } = require('../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../libs/bots.js');
 let { getProviderByID } = require('../../../libs/data/providers.js');
-
-let { getTable, getAllDataFromTable, findTableData } = require('../../../libs/data.js');
-
-let getPromosTable = getTable('Promos');
+let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
 
 let getServicePromos = async ({ service_name, provider_base_id }) => {
-  let lower_cased_service_name = service_name.toLowerCase();
-
-  let promosTable = getPromosTable(provider_base_id);
-  let getPromosFromTable = getAllDataFromTable(promosTable);
   let view = 'Active Promos';
-  let promos = await getPromosFromTable({ view });
+  let promos = await getPracticePromos({ provider_base_id, view });
 
+  let lower_cased_service_name = service_name.toLowerCase();
   let matched_promos = promos.filter(
     promo => promo.fields['Type'].toLowerCase().includes(lower_cased_service_name)
   );
@@ -37,7 +31,7 @@ let createNoPromosMsg = (data) => {
     `About Bevl Beauty|show_block|About Bevl Beauty`
   );
 
-  return [msg];
+  return msg;
 }
 
 module.exports = {

@@ -44,20 +44,20 @@ let getServicePromos = async ({ query, params }, res) => {
       toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id })
     );
   });
-  
+
   let promos = flattenArray(
     await Promise.all(provider_promos)
   );
-  
+
   if (!promos[0]) {
     let set_attributes = { service_name }
     let redirect_to_blocks = ['No Service Promos Found'];
     res.send({ set_attributes, redirect_to_blocks });
     return;
   }
-  
+
   let randomPromos = shuffleArray(promos).slice(0, 10);
-  
+
   let gallery = createGallery(randomPromos, 'square');
   let messages = [gallery];
   res.send({ messages });
