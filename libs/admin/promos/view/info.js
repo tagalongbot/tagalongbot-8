@@ -10,7 +10,6 @@ let createPromoMsg = ({ id: promo_id, fields: promo }, { provider_base_id, messe
     `Type: ${promo['Type']}`,
     `Active: ${promo['Active?'] ? 'TRUE' : 'FALSE'}`,
     `Expiration Date: ${localizeDate(expiration_date)}`,
-    `Terms: ${promo['Terms']}`,
     `Claim Limit: ${promo['Claim Limit']}`,
     `Total Claim Count: ${promo['Total Claim Count']}`,
     `Total Used: ${promo['Total Used']}`,

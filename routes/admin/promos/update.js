@@ -32,7 +32,9 @@ let updatePromoInfo = async ({ query }, res) => {
   let promo = await getPracticePromo({ provider_base_id, promo_id });
   let updatedPromo = await updatePromo({ provider_base_id, promo, update_promo_field_name, update_promo_field_value });
 
-  let updateMsg = createUpdateMsg({ promo_id, provider_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value });
+  let updateMsg = createUpdateMsg(
+    { messenger_user_id, promo_id, provider_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
+  );
   
   let messages = [updateMsg];
   res.send({ messages });
