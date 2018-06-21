@@ -12,24 +12,20 @@ let viewClaimedPromos = async ({ query }, res) => {
   let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',').filter(Boolean);
 
   let practice_promos = practice_ids.map(
-    getUserClaimedPromos({ messenger_user_id })
+    getUserClaimedPromos({ messenger_user_id, first_name, last_name, gender })
   );
 
   let promos = flattenArray(
     await Promise.all(practice_promos)
   );
 
-  let galleryData = promos.map(
-    toGalleryElement({ messenger_user_id, first_name, last_name, gender })
-  );
-
-  if (!galleryData[0]) {
+  if (!promos[0]) {
     let redirect_to_blocks = ['No Claimed Promos'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let messages = createMultiGallery(galleryData);
+  let messages = createMultiGallery(promos);
   res.send({ messages });
 }
 

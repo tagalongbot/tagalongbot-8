@@ -4,18 +4,21 @@ let { createURL, localizeDate } = require('../../../libs/helpers.js');
 let { getProviderByID } = require('../../../libs/data/providers.js');
 let { getPracticeUser, getUserPromos } = require('../../../libs/data/practice/users.js');
 
-let getUserClaimedPromos = ({ messenger_user_id }) => async (provider_id) => {
+let getUserClaimedPromos = (data) => async (provider_id) => {
+  let { messenger_user_id, first_name, last_name, gender } = data;
   let provider = await getProviderByID(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let user = await getPracticeUser({ provider_base_id, user_messenger_id: messenger_user_id });
   let user_promos = await getUserPromos({ provider_base_id, user_id: user.id });
 
-  return user_promos;
+  return user_promos.map(
+    toGalleryElement({ provider_id, provider_base_id, messenger_user_id, first_name, last_name, gender })
+  );
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
-  let { messenger_user_id, first_name, last_name, gender } = data;
+  let { provider_id, provider_base_id, messenger_user_id, first_name, last_name, gender } = data;
 
   let promo_expiration_date = new Date(promo['Expiration Date']);
 
@@ -24,13 +27,13 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let image_url = promo['Image URL'];
 
   let view_promo_details_url = createURL(
-    `${BASEURL}/promos/details`, 
-    { promo_id, messenger_user_id, first_name, last_name, gender }
+    `${BASEURL}/promos/details`,
+    { provider_id, provider_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let view_promo_provider_url = createURL(
-    `${BASEURL}/promos/provider`, 
-    { promo_id, messenger_user_id, first_name, last_name, gender }
+    `${BASEURL}/promos/provider`,
+    { provider_id, provider_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let btn1 = createBtn(`View Promo Info|json_plugin_url|${view_promo_details_url}`);
