@@ -19,7 +19,7 @@ let viewUserPromos = async ({ query }, res) => {
 
   if (!promos[0]) {
     let redirect_to_blocks = ['[Admin Verify Promo] No User Promos Found'];
-    let user_name = user.fields['First Name'];
+    let user_name = `${user.fields['First Name']} ${user.fields['Last Name']}`;
     let set_attributes = { user_name };
     res.send({ redirect_to_blocks, set_attributes });
     return;

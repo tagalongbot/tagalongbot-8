@@ -37,7 +37,7 @@ let getUserPromos = async ({ provider_base_id, user_id }) => {
   let promos = await getPromos({ view });
 
   let matched_promos = promos.filter(
-    promo => promo.fields['Claimed By Users'].includes(user_id)
+    promo => (promo.fields['Claimed By Users'] || []).includes(user_id)
   );
 
   return matched_promos;
