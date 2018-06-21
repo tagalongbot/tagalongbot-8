@@ -5,16 +5,14 @@ let { getUserByMessengerID } = require('../../../libs/data/users.js');
 let { getUserClaimedPromos, toGalleryElement } = require('../../../libs/promos/view/claimed.js');
 
 let viewClaimedPromos = async ({ query }, res) => {
-  // Need to check if gender problem still exists
   let { messenger_user_id, first_name, last_name, gender } = query;
 
   let user = await getUserByMessengerID(messenger_user_id);
-  let user_id = user.id;
   
   let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',').filter(Boolean);
 
   let practice_promos = practice_ids.map(
-    getUserClaimedPromos({ messenger_user_id, user_id })
+    getUserClaimedPromos({ messenger_user_id })
   );
 
   let promos = flattenArray(

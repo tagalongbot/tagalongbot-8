@@ -2,21 +2,14 @@ let { BASEURL } = process.env;
 let { createBtn } = require('../../../libs/bots.js');
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
 let { getProviderByID } = require('../../../libs/data/providers.js');
-let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
-let { getUserPromos } = require('../../../libs/data/practice/users.js');
+let { getPracticeUser, getUserPromos } = require('../../../libs/data/practice/users.js');
 
-let getUserClaimedPromos = ({ messenger_user_id, user_id }) => async (provider_id) => {
+let getUserClaimedPromos = ({ messenger_user_id }) => async (provider_id) => {
   let provider = await getProviderByID(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
-  let user = await getUserPromos({ provider_base_id, user_id });
-  let promos = await getPracticePromos({ provider_base_id });
-
-  let promo_ids = user.fields['Promos Claimed'] || [];
-
-  let user_promos = promos.filter(
-    promo => promo_ids.includes(promo.id)
-  );
+  let user = await getPracticeUser({ provider_base_id, user_messenger_id: messenger_user_id });
+  let user_promos = await getUserPromos({ provider_base_id, user_id: user.id });
 
   return user_promos;
 }
