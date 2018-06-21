@@ -4,7 +4,7 @@ let { getTable, getAllDataFromTable, createTableData, updateTableData } = requir
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
 
-let getPracticeUser = async ({ user_messenger_id, provider_base_id }) => {
+let getPracticeUser = async ({ provider_base_id, user_messenger_id }) => {
   let usersTable = getUsersTable(provider_base_id);
   let getUsers = getAllDataFromTable(usersTable);
 

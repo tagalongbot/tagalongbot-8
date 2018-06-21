@@ -8,7 +8,7 @@ let createUpdateBtn = (data) => {
   if (user_ids.includes(user_record_id)) return null;
 
   let update_promo_url = createURL(
-    `${BASEURL}/admin/promos/user/update`, 
+    `${BASEURL}/admin/promos/user/update`,
     { provider_base_id, promo_id, user_messenger_id }
   );
 
@@ -23,15 +23,19 @@ let toGalleryElement = ({ provider_base_id, messenger_user_id, user_messenger_id
   let image_url = promo['Image URL'];
   let user_ids = promo['Promo Used By Users'] || [];
 
-  let data = { provider_base_id, promo_id, user_messenger_id };
-
-  let view_promo_info_url = createURL(`${BASEURL}/admin/promos/info`, data);
+  let view_promo_info_url = createURL(
+    `${BASEURL}/admin/promos/view/info`,
+    { provider_base_id, promo_id, messenger_user_id }
+  );
 
   let btn1 = createBtn(`View Promo Details|json_plugin_url|${view_promo_info_url}`);
 
   let buttons = [btn1];
 
-  let btn2 = createUpdateBtn({ user_record_id, user_ids, ...data });
+  let btn2 = createUpdateBtn(
+    { provider_base_id, promo_id, user_messenger_id, user_record_id, user_ids }
+  );
+
   if (btn2) buttons = [btn1, btn2];
 
   return { title, subtitle, image_url, buttons };

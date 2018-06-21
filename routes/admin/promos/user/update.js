@@ -4,6 +4,7 @@ let { getPracticeUser } = require('../../../../libs/data/practice/users.js');
 
 let updateUserPromo = async ({ query }, res) => {
   let { provider_base_id, promo_id, user_messenger_id } = query;
+  console.log('user_messenger_id', user_messenger_id);
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
   let user = await getPracticeUser({ provider_base_id, user_messenger_id });
