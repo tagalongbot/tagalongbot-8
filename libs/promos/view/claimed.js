@@ -15,6 +15,8 @@ let getUserClaimedPromos = ({ messenger_user_id }) => async (provider_id) => {
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
+  let { messenger_user_id, first_name, last_name, gender } = data;
+
   let promo_expiration_date = new Date(promo['Expiration Date']);
 
   let title = promo['Promotion Name'];
@@ -23,12 +25,12 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   let view_promo_details_url = createURL(
     `${BASEURL}/promos/details`, 
-    { promo_id, ...data }
+    { promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let view_promo_provider_url = createURL(
     `${BASEURL}/promos/provider`, 
-    { promo_id, ...data }
+    { promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let btn1 = createBtn(`View Promo Info|json_plugin_url|${view_promo_details_url}`);

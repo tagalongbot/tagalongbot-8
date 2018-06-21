@@ -16,15 +16,15 @@ let viewClaimedPromos = async ({ query }, res) => {
   );
 
   let promos = flattenArray(
-    await Promise.all(promos)
+    await Promise.all(practice_promos)
   );
 
   let galleryData = promos.map(
-    toGalleryElement({ messenger_user_id, first_name, last_name, gender1: gender })
+    toGalleryElement({ messenger_user_id, first_name, last_name, gender })
   );
 
   if (!galleryData[0]) {
-    let redirect_to_blocks = ['[User] No Claimed Promos'];
+    let redirect_to_blocks = ['No Claimed Promos'];
     res.send({ redirect_to_blocks });
     return;
   }
