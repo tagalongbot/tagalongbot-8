@@ -27,7 +27,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let image_url = promo['Image URL'];
 
   let view_promo_details_url = createURL(
-    `${BASEURL}/promos/details`,
+    `${BASEURL}/promos/details/claimed`,
     { provider_id, provider_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
