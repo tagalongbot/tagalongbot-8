@@ -9,7 +9,7 @@ let createUpdateBtn = (data) => {
 
   let update_promo_url = createURL(
     `${BASEURL}/admin/promos/user/update`,
-    { provider_base_id, promo_id, user_messenger_id }
+    { provider_base_id, promo_id }
   );
 
   let btn = createBtn(`Mark Promo As Used|json_plugin_url|${update_promo_url}`);

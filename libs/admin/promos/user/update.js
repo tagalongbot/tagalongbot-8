@@ -7,7 +7,7 @@ let updatePromo = async ({ provider_base_id, promo, user_record_id }) => {
   let promosTable = getPromosTable(provider_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
 
-  let already_used_user_ids = promo.fields['Promo Used By Users'];
+  let already_used_user_ids = promo.fields['Promo Used By Users'] || [];
   let total_used = Number(promo.fields['Total Used']);
 
   let new_used_user_ids = [
@@ -23,13 +23,13 @@ let updatePromo = async ({ provider_base_id, promo, user_record_id }) => {
   return updatedPromo;
 }
 
-let createUpdateMsg = async () => {
+let createUpdateMsg = () => {
   let msg = createButtonMessage(
     `Promo Claimed Successfully`,
     `Admin Menu|show_block|Get Admin Menu`,
   );
-
-  return [msg];
+  
+  return msg;
 }
 
 module.exports = {
