@@ -7,7 +7,7 @@ let createDetailsMsg = (promo, data, { is_claimed }) => {
 
   let btns = [];
 
-  if (!is_claimed) {
+  if (is_claimed.toLowerCase() != 'claimed') {
     let claim_promo_url = createURL(
       `${BASEURL}/promos/claim/email`, 
       { provider_id, promo_id }
