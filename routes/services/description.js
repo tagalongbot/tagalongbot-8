@@ -12,6 +12,7 @@ let getServiceDescription = async ({ query, params }, res) => {
   if (show_providers === 'no') {
     let provider = await getProviderByID(provider_id);
     let provider_name = provider.fields['Practice Name'];    
+
     let messages = createViewProviderPromosMsg(
       service,
       { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id, provider_name }
@@ -21,7 +22,10 @@ let getServiceDescription = async ({ query, params }, res) => {
     return;
   }
 
-  let messages = createFindProvidersMsg({ service, service_id, messenger_user_id, first_name, last_name, gender });
+  let messages = createFindProvidersMsg(
+    { service, service_id, messenger_user_id, first_name, last_name, gender }
+  );
+
   res.send({ messages });
 }
 

@@ -15,7 +15,7 @@ router.get(
 );
 
 router.get(
-  '/details',
+  '/details/:is_claimed',
   handleRoute(getPromoDetails, '[Error] Viewing Promo Details')
 );
 
