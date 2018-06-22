@@ -35,7 +35,7 @@ let updatePromoInfo = async ({ query }, res) => {
   let updateMsg = createUpdateMsg(
     { messenger_user_id, promo_id, provider_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
   );
-  
+
   let messages = [updateMsg];
   res.send({ messages });
 }
