@@ -43,7 +43,7 @@ let createUpdateMsg = ({ messenger_user_id, promo_id, provider_base_id, promo, u
   );
 
   let txtMsg = createButtonMessage(
-    `${promo.fields['Promotion Name']} is now ${updatedPromo.fields['Active?'] ? 'Active' : 'Deactivated'}`,
+    `The promo "${promo.fields['Promotion Name']}" is now "${updatedPromo.fields['Active?'] ? 'Active' : 'Deactivated'}"`,
     `${updatedPromo.fields['Active?'] ? 'Deactivate' : 'Reactivate'}|json_plugin_url|${toggle_promo_url}`,
     `View Promo Details|json_plugin_url|${view_promo_details_url}`,
     `View All Promotions|json_plugin_url|${view_all_promos_url}`

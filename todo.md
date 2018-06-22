@@ -1,12 +1,9 @@
-# Airtable
-
-### Important and Urgent
-### Important and Less Urgent
-
 # Code
 
 ### Important and Urgent
 - Create caching system for reading from Airtable
+- Implement RateLimiter
+- Update `/admin/promos/update` routes to work with numbers for claim limit, and image gallery for images
 
 ### Important and Less Urgent
 - Update ChatFuel Block Names
