@@ -21,14 +21,11 @@ let getUpdateField = async ({ query }, res) => {
 
 let updateExpirationDate = async ({ query }, res) => {
   let { update_promo_field_value } = query;
-  console.log('update_promo_field_value', update_promo_field_value);
 
   let new_value = localizeDate(
     createExpirationDate(update_promo_field_value)
   );
   
-  console.log('new_value', new_value);
-
   let set_attributes = { update_promo_field_value: new_value }
   res.send({ set_attributes });
 }
