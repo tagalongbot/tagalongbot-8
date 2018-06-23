@@ -1,14 +1,27 @@
 let { BASEURL } = process.env;
-let { createURL } = require('../../../libs/helpers.js');
+let { createURL, localizeDate } = require('../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../libs/bots.js');
-let { createExpirationDate } = require('../../../libs/admin/');
+let { createExpirationDate } = require('../../../libs/admin/promos/create.js');
 let { updatePracticePromo } = require('../../../libs/data/practice/promos.js');
 
+let createPromoFieldValue = ({ update_promo_field_name, update_promo_field_value }) => {  
+  if (update_promo_field_name == 'Promotion Name' || update_promo_field_name == 'Image URL') {
+    return update_promo_field_value;
+  }
+  
+  if (update_promo_field_name == 'Claim Limit') {
+    return Number(update_promo_field_value);
+  }
+
+  if (update_promo_field_name == 'Expiration Date') {
+    let new_expiration_date = createExpirationDate(update_promo_field_value);
+    return localizeDate(new_expiration_date);
+  }
+}
+
 let updatePromo = async ({ provider_base_id, promo, update_promo_field_name, update_promo_field_value }) => {
-  
-  
   let promo_data = {
-    [update_promo_field_name]: update_promo_field_value
+    [update_promo_field_name]: createPromoFieldValue({ update_promo_field_name, update_promo_field_value })
   }
 
   let updatedPromo = await updatePracticePromo({ provider_base_id, promo_data, promo });
