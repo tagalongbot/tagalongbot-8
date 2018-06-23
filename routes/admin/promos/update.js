@@ -8,7 +8,7 @@ let { updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/updat
 let express = require('express');
 let router = express.Router();
 
-let getUpdateField = ({ query }, res) => {
+let getUpdateField = async ({ query }, res) => {
   let { promo_id, provider_base_id } = query;
 
   let updating_promo_id = promo_id;
@@ -19,12 +19,15 @@ let getUpdateField = ({ query }, res) => {
   res.send({ set_attributes, redirect_to_blocks });
 }
 
-let updateExpirationDate = ({ query }, res) => {
+let updateExpirationDate = async ({ query }, res) => {
   let { update_promo_field_value } = query;
+  console.log('update_promo_field_value', update_promo_field_value);
 
   let new_value = localizeDate(
     createExpirationDate(update_promo_field_value)
   );
+  
+  console.log('new_value', new_value);
 
   let set_attributes = { update_promo_field_value: new_value }
   res.send({ set_attributes });
