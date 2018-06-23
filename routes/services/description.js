@@ -8,7 +8,7 @@ let getServiceDescription = async ({ query, params }, res) => {
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
-  
+
   if (show_providers === 'no') {
     let provider = await getProviderByID(provider_id);
     let provider_name = provider.fields['Practice Name'];    
