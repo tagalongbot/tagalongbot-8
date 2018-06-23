@@ -1,7 +1,9 @@
 let handleRoute = require('../../../middlewares/handleRoute.js');
 
-let { updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
 let { getPracticePromo } = require('../../../libs/data/practice/promos.js');
+let { createExpirationDate } = require('../../../libs/admin/promos/create.js');
+let { localizeDate } = require('../../../libs/helpers.js');
+let { updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
 
 let express = require('express');
 let router = express.Router();
@@ -15,6 +17,17 @@ let getUpdateField = ({ query }, res) => {
   let set_attributes = { updating_promo_id, updating_provider_base_id };
   let redirect_to_blocks = ['Update Promo'];
   res.send({ set_attributes, redirect_to_blocks });
+}
+
+let updateExpirationDate = ({ query }, res) => {
+  let { update_promo_field_value } = query;
+
+  let new_value = localizeDate(
+    createExpirationDate(update_promo_field_value)
+  );
+
+  let set_attributes = { update_promo_field_value: new_value }
+  res.send({ set_attributes });
 }
 
 let updatePromoInfo = async ({ query }, res) => {
@@ -43,6 +56,11 @@ let updatePromoInfo = async ({ query }, res) => {
 router.get(
   '/', 
   handleRoute(getUpdateField, '[Error] Updating Promo')
+);
+
+router.get(
+  '/expiration_date',
+  handleRoute(updateExpirationDate, '[Error] Updating Promo')
 );
 
 router.get(
