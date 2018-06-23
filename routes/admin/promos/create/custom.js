@@ -22,7 +22,8 @@ let sendCustomCategories = async ({ query }, res) => {
 
   // console.log('Category Gallery Button', galleryData[0].buttons[0]);
 
-  let messages = createMultiGallery(galleryData);
+  let txtMsg = { text: `Please choose an image category from below` };
+  let messages = [txtMsg, ...createMultiGallery(galleryData)];
   res.send({ messages });
 }
 

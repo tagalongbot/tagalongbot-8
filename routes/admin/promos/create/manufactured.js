@@ -26,7 +26,8 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
     toServicesGallery({ provider_id, provider_base_id })
   );
 
-  let messages = createMultiGallery(galleryData);
+  let txtMsg = { text: `Please pick a service to create a manufactured promo from?` };
+  let messages = [txtMsg, ...createMultiGallery(galleryData)];
   res.send({ messages });
 }
 
@@ -41,8 +42,9 @@ let sendServiceManufacturedPromos = async ({ query }, res) => {
     toPromosGallery({ service_id, provider_id, provider_base_id }, service)
   );
 
+  let txtMsg = { text: `Which promo would you like to create for ${service_name}?` };
   let gallery = createGallery(galleryData);
-  let messages = [gallery];
+  let messages = [txtMsg, gallery];
   res.send({ messages });
 }
 

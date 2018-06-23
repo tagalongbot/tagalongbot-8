@@ -14,6 +14,7 @@ let viewUserPromos = async ({ query }, res) => {
 
   let user = await getPracticeUser({ provider_base_id, user_messenger_id });
   let user_record_id = user.id;
+  let user_name = `${user.fields['First Name']} ${user.fields['Last Name']}`;
 
   let promos = await getUserPromos({ provider_base_id, user_id: user_record_id });
 
@@ -29,7 +30,8 @@ let viewUserPromos = async ({ query }, res) => {
     toGalleryElement({ provider_base_id, messenger_user_id, user_messenger_id, user_record_id })
   );
 
-  let messages = createMultiGallery(galleryData);
+  let txtMsg = { text: `Here are the promos claimed by ${user_name} from your practice` };
+  let messages = [txtMsg, ...createMultiGallery(galleryData)];
   res.send({ messages });
 }
 

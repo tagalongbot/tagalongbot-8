@@ -19,7 +19,7 @@ let getProviders = async (data) => {
 }
 
 let toGalleryElement = (data) => ({ id: provider_id, fields: provider }) => {
-  let { first_name, last_name, gender, messenger_user_id } = data;
+  let { first_name, last_name, gender, messenger_user_id, service_id } = data;
 
   let title = provider['Practice Name'].slice(0, 80);
   let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
@@ -29,7 +29,7 @@ let toGalleryElement = (data) => ({ id: provider_id, fields: provider }) => {
 
   let view_service_promos_url = createURL(
     `${BASEURL}/services/provider/promos`,
-    { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
+    { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id }
   );
 
   let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);
