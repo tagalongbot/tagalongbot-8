@@ -43,7 +43,8 @@ let sendCustomImages = async ({ query, url }, res) => {
 
   // console.log('Gallery Image Element', galleryData[0]);
 
-  let messages = createMultiGallery(galleryData);
+  let txtMsg = { text: `Please choose an image below from ${category_name} to use for your new custom promo` };
+  let messages = [txtMsg, ...createMultiGallery(galleryData)];
   res.send({ messages });
 }
 

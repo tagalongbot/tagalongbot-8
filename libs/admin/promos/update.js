@@ -1,21 +1,17 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../libs/bots.js');
-
-let { getTable, getAllDataFromTable, updateTableData } = require('../../../libs/data.js');
-
-let getPromosTable = getTable('Promos');
-let getUsersTable = getTable('Users');
+let { createExpirationDate } = require('../../../libs/admin/');
+let { updatePracticePromo } = require('../../../libs/data/practice/promos.js');
 
 let updatePromo = async ({ provider_base_id, promo, update_promo_field_name, update_promo_field_value }) => {
-  let promosTable = getPromosTable(provider_base_id);
-  let updatePromoFromTable = updateTableData(promosTable);
-
-  let updateData = {
+  
+  
+  let promo_data = {
     [update_promo_field_name]: update_promo_field_value
   }
 
-  let updatedPromo = await updatePromoFromTable(updateData, promo);
+  let updatedPromo = await updatePracticePromo({ provider_base_id, promo_data, promo });
   return updatedPromo;
 }
 
