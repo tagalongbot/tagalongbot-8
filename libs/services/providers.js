@@ -42,4 +42,5 @@ let toGalleryElement = (data) => ({ id: provider_id, fields: provider }) => {
 
 module.exports = {
   getProviders,
+  toGalleryElement,
 }

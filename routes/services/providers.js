@@ -4,8 +4,8 @@ let { shuffleArray } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
 let { getServiceByID } = require('../../libs/data/services.js');
 let { sortProviders, filterProvidersByService } = require('../../libs/data/providers.js');
-let { getProviders } = require('../../libs/services/providers.js');
-let { toGalleryElement, createLastGalleryElement } = require('../../libs/providers/providers.js');
+let { getProviders, toGalleryElement } = require('../../libs/services/providers.js');
+let { createLastGalleryElement } = require('../../libs/providers/providers.js');
 
 let express = require('express');
 let router = express.Router();
@@ -48,7 +48,8 @@ let getServiceProviders = async ({ query, params }, res) => {
 
   let last_gallery_element = createLastGalleryElement();
 	let providersGallery = createGallery([...randomProviders, last_gallery_element], 'square');
-  let messages = [providersGallery];
+  let txtMsg = { text: `Here are some providers I found in Pennsylvania for Facelift` };
+  let messages = [txtMsg, providersGallery];
   res.send({ messages });
 }
 

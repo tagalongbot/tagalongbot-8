@@ -58,8 +58,9 @@ let getServicePromos = async ({ query, params }, res) => {
 
   let randomPromos = shuffleArray(promos).slice(0, 10);
 
+  let txtMsg = { text: `Here are some promos I found in Pennsylvania for Facelift` };
   let gallery = createGallery(randomPromos, 'square');
-  let messages = [gallery];
+  let messages = [txtMsg, gallery];
   res.send({ messages });
 }
 
