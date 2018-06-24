@@ -36,7 +36,7 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimProvider = async ({ query }, res) => {
-  let { messenger_user_id, provider_id, first_name, user_email } = query;
+  let { messenger_user_id, provider_id, first_name, user_email, user_phone_number } = query;
 
   let provider = await getProviderByID(provider_id);
 
@@ -46,7 +46,7 @@ let claimProvider = async ({ query }, res) => {
     return;
   }
 
-  let updatedPractice = await updatePractice({ messenger_user_id, user_email, practice: provider });
+  let updatedPractice = await updatePractice({ messenger_user_id, user_email, user_phone_number, practice: provider });
 
   let msg = createUpdateMsg({ practice: provider, first_name });
 

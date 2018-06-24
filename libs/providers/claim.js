@@ -9,11 +9,12 @@ let practicesTable = getPracticesTable(PRACTICE_DATABASE_BASE_ID);
 let findPractice = findTableData(practicesTable);
 let updatePracticeTable = updateTableData(practicesTable);
 
-let updatePractice = async ({ messenger_user_id, user_email, practice }) => {
+let updatePractice = async ({ messenger_user_id, user_email, user_phone_number, practice }) => {
   let update_practice_data = {
     'Claimed?': true,
     'Claimed By Messenger User ID': messenger_user_id,
     'Claimed By Email': user_email,
+    'Claimed By Phone Number': user_phone_number
   }
 
   let updated_practice = await updatePracticeTable(update_practice_data, practice);
