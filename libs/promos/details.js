@@ -9,7 +9,7 @@ let createDetailsMsg = (promo, data, { is_claimed }) => {
 
   if (is_claimed.toLowerCase() != 'claimed') {
     let claim_promo_url = createURL(
-      `${BASEURL}/promos/claim/email`, 
+      `${BASEURL}/promos/claim/user_info`, 
       { provider_id, promo_id }
     );
 
