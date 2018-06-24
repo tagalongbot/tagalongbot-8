@@ -7,10 +7,10 @@ let { getProviderByID } = require('../../libs/data/providers.js');
 let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 
-let askForUserEmail = async ({ query }, res) => {
+let askForUserInfo = async ({ query }, res) => {
   let { promo_id, provider_id } = query;
 
-  let redirect_to_blocks = ['Ask For Email (Promo)'];
+  let redirect_to_blocks = ['Ask For User Info (Promo)'];
   let set_attributes = { promo_id, provider_id };
   res.send({ redirect_to_blocks, set_attributes });
 }
@@ -53,8 +53,8 @@ let claimPromotion = async ({ query }, res) => {
 }
 
 router.get(
-  '/email', 
-  handleRoute(askForUserEmail, '[Error] Claiming Promo')
+  '/user_info', 
+  handleRoute(askForUserInfo, '[Error] Claiming Promo')
 );
 
 router.get(
