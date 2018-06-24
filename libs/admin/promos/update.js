@@ -61,18 +61,20 @@ let updatePromo = async ({ provider_base_id, promo, update_promo_field_name, upd
 }
 
 let createUpdateMsg = ({ messenger_user_id, promo_id, provider_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }) => {
-  let text = `Updated ${update_promo_field_name} to "${update_promo_field_value}" for ${promo.fields['Promotion Name']} `;
+  let text = (update_promo_field_name != 'Image URL') ?
+    `Updated ${update_promo_field_name} to "${update_promo_field_value}" for ${promo.fields['Promotion Name']} ` : 
+    `Image Updated Successfully for ${promo.fields['Promotion Name']}`;
 
   let view_promo_details_url = createURL(
     `${BASEURL}/admin/promos/view/info`, 
     { messenger_user_id, promo_id, provider_base_id }
   );
-  
+
   let update_promo_url = createURL(
     `${BASEURL}/admin/promos/update`, 
     { messenger_user_id, promo_id, provider_base_id }
   );
-  
+
   let toggle_promo_url = createURL(
     `${BASEURL}/admin/promos/toggle`, 
     { messenger_user_id, promo_id, provider_base_id }
@@ -84,7 +86,7 @@ let createUpdateMsg = ({ messenger_user_id, promo_id, provider_base_id, promo, u
     `Update Promo|json_plugin_url|${update_promo_url}`,
     `${updatedPromo.fields['Active?'] ? 'Deactivate' : 'Activate'}|json_plugin_url|${toggle_promo_url}`,
   );
-  
+
   return msg;
 }
 
