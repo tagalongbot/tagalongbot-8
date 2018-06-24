@@ -15,6 +15,26 @@ let askForUserInfo = async ({ query }, res) => {
   res.send({ redirect_to_blocks, set_attributes });
 }
 
+let verifyPhoneNumber = async ({ query }, res) => {
+  let { user_phone_number: phone_number } = query;
+
+  let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
+
+  let block_name = (sent_verification_code.success) ? 'Verify Phone Number (Claim Practice)' : '[Error] Verifying Practice';
+  let redirect_to_blocks = [block_name];
+  res.send({ redirect_to_blocks });
+}
+
+let verifyVerificationCode = async ({ query }, res) => {
+  let { user_phone_number: phone_number, verification_code } = query;
+
+  let sent_verification_code = await checkVerificationCode({ phone_number, verification_code });
+
+  let block_name = (sent_verification_code.success) ? 'Correct Verification Code (Claim Practice)' : 'Incorrect Verification Code (Claim Practice)';
+  let redirect_to_blocks = [block_name];
+  res.send({ redirect_to_blocks });
+}
+
 let claimProvider = async ({ query }, res) => {
   let { messenger_user_id, provider_id, first_name, user_email } = query;
 
@@ -35,8 +55,18 @@ let claimProvider = async ({ query }, res) => {
 }
 
 router.get(
-  '/email', 
+  '/user_info', 
   handleRoute(askForUserInfo, '[Error] Claiming Provider')
+);
+
+router.get(
+  '/verify',
+  handleRoute(verifyPhoneNumber, '[Error] Verifying Practice')
+);
+
+router.get(
+  '/verify/code',
+  handleRoute(verifyVerificationCode, '[Error] Verifying Practice')
 );
 
 router.get(

@@ -1,4 +1,5 @@
 let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
+
 let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
@@ -85,7 +86,7 @@ let createButtons = (provider, data) => {
 
   if (!is_provider_claimed) {
     let claim_practice_url = createURL(
-      `${BASEURL}/providers/claim/email`,
+      `${BASEURL}/providers/claim/user_info`,
       { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
     );
 
