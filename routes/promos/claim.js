@@ -28,12 +28,12 @@ let verifyPhoneNumber = async ({ query }, res) => {
 }
 
 let verifyVerificationCode = async ({ query }, res) => {
-  let { verification_code } = query;
+  let { user_phone_number: phone_number, verification_code } = query;
 
-  let sent_verification_code = await checkVerificationCode({ verification_code });
-  console.log('sent_verification_code', sent_verification_code);
+  let sent_verification_code = await checkVerificationCode({ phone_number, verification_code });
 
-  let redirect_to_blocks = ['Correct Verification Code (Claim Promo)'];
+  let block_name = (sent_verification_code.success) ? 'Correct Verification Code (Claim Promo)' : 'Incorrect Verification Code (Claim Promo)';
+  let redirect_to_blocks = [block_name];
   res.send({ redirect_to_blocks });
 }
 
