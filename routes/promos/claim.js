@@ -20,7 +20,18 @@ let askForUserInfo = async ({ query }, res) => {
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
-  
+
+  let redirect_to_blocks = ['Verify Phone Number (Claim Promo)'];
+  res.send({ redirect_to_blocks });
+}
+
+let verifyVerificationCode = async ({ query }, res) => {
+  let { verification_code } = query;
+  let sent_verification_code = await checkVerificationCode({ verification_code });
+  console.log('sent_verification_code', sent_verification_code);
+
+  let redirect_to_blocks = ['Verify Phone Number (Claim Promo)'];
+  res.send({ redirect_to_blocks });
 }
 
 let claimPromotion = async ({ query }, res) => {
