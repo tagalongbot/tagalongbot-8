@@ -35,9 +35,13 @@ let updateExpirationDate = async ({ query }, res) => {
 }
 
 let getImageCategories = async ({ query }, res) => {
+  let { promo_id, provider_base_id } = query;
   let categories = await getCustomCategories();
 
-  let gallery_data = categories.map(toCategoriesGallery);
+  let gallery_data = categories.map(
+    toCategoriesGallery({ promo_id, provider_base_id })
+  );
+
   let galleries = createMultiGallery(gallery_data);
 
   let messages = [...galleries];
@@ -45,14 +49,18 @@ let getImageCategories = async ({ query }, res) => {
 }
 
 let getImagesFromCategory = async ({ query }, res) => {
-  let { category_id } = query;
+  let { promo_id, provider_base_id, category_id } = query;
+
+  let promo = await getPracticePromo({ promo_id, provider_base_id });
 
   let category = await getCustomCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
 
   let images = await getCustomImagesByCategory({ category_name });
-  
-  let gallery_data = images.map(toImagesGallery);
+
+  let gallery_data = images.map(
+    toImagesGallery(promo)
+  );
 
   let galleries = createMultiGallery(gallery_data);
 
@@ -72,7 +80,7 @@ let selectUpdateImage = async ({ query }, res) => {
 }
 
 let updatePromoInfo = async ({ query }, res) => {
-  let { 
+  let {
     messenger_user_id,
     updating_promo_id,
     updating_provider_base_id,
@@ -84,7 +92,10 @@ let updatePromoInfo = async ({ query }, res) => {
   let provider_base_id = updating_provider_base_id;
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
-  let updatedPromo = await updatePromo({ provider_base_id, promo, update_promo_field_name, update_promo_field_value });
+
+  let updatedPromo = await updatePromo(
+    { provider_base_id, promo, update_promo_field_name, update_promo_field_value }
+  );
 
   let updateMsg = createUpdateMsg(
     { messenger_user_id, promo_id, provider_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
