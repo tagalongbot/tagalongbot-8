@@ -1,15 +1,16 @@
-let { getProviderByID } = require('../../libs/data/providers.js');
-let { updatePractice, createUpdateMsg } = require('../../libs/providers/claim.js');
+let handleRoute = require('../../middlewares/handleRoute.js');
 
 let express = require('express');
 let router = express.Router();
 
-let handleRoute = require('../../middlewares/handleRoute.js');
+let { sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
+let { getProviderByID } = require('../../libs/data/providers.js');
+let { updatePractice, createUpdateMsg } = require('../../libs/providers/claim.js');
 
-let askForUserEmail = async ({ query }, res) => {
+let askForUserInfo = async ({ query }, res) => {
   let { provider_id } = query;
 
-  let redirect_to_blocks = ['Ask For Email (Practice)'];
+  let redirect_to_blocks = ['Ask For User Info (Practice)'];
   let set_attributes = { provider_id };
   res.send({ redirect_to_blocks, set_attributes });
 }
@@ -35,7 +36,7 @@ let claimProvider = async ({ query }, res) => {
 
 router.get(
   '/email', 
-  handleRoute(askForUserEmail, '[Error] Claiming Provider')
+  handleRoute(askForUserInfo, '[Error] Claiming Provider')
 );
 
 router.get(
