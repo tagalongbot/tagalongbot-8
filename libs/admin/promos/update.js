@@ -23,7 +23,7 @@ let toCategoriesGallery = ({ promo_id, provider_base_id }) => ({ id: category_id
 
 let toImagesGallery = ({ id: promo_id, fields: promo }) => ({ id: custom_image_id, fields: custom_image }) => {
   let expiration_date = localizeDate(
-    createExpirationDate(promo['Expiration Date'])
+    new Date(promo['Expiration Date'])
   );
 
   let title = promo['Promotion Name'];

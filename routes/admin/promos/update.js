@@ -66,7 +66,7 @@ let getImagesFromCategory = async ({ query }, res) => {
 
   let galleries = createMultiGallery(gallery_data);
 
-  let txtMsg = { text: `Please choose an image below to use for your new custom promo` };
+  let txtMsg = { text: `Please choose an image below to use` };
   let messages = [txtMsg, ...galleries];
   res.send({ messages });
 }
