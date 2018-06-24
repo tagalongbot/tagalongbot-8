@@ -7,7 +7,7 @@ let categoriesTable = getCategoryTable(SERVICES_BASE_ID);
 let getCategories = getAllDataFromTable(categoriesTable);
 let findCategory = findTableData(categoriesTable);
 
-let getCustomImagesTable = getTable('Custom Images');
+let getCustomImagesTable = getTable('Custom Category Images');
 let customImagesTable = getCustomImagesTable(SERVICES_BASE_ID);
 let getImages = getAllDataFromTable(customImagesTable);
 let findImage = findTableData(customImagesTable);
