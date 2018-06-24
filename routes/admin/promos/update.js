@@ -49,10 +49,8 @@ let getImagesFromCategory = async ({ query }, res) => {
 
   let category = await getCustomCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
-  console.log('category_name', category_name);
 
   let images = await getCustomImagesByCategory({ category_name });
-  console.log('
   
   let gallery_data = images.map(toImagesGallery);
 
