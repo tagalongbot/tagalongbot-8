@@ -58,8 +58,9 @@ let updatePromo = async ({ provider_base_id, promo, user, claimed_by_users }) =>
   return updatedPromo;
 }
 
+// Refactor Data Clump
 let createOrUpdateUser = async (data, { id: provider_id, fields: provider }) => {
-  let { messenger_user_id, first_name, last_name, gender, user_email } = data;
+  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
 
   let provider_base_id = provider['Practice Base ID'];
   let provider_state = provider['Practice State'];
@@ -70,7 +71,9 @@ let createOrUpdateUser = async (data, { id: provider_id, fields: provider }) => 
   let user = await getUserByMessengerID(messenger_user_id);
   let practice_user = await getPracticeUser({ user_messenger_id, provider_base_id });
 
-  let user_data = createUserData({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code });
+  let user_data = createUserData(
+    { messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code }
+  );
 
   let updated_user = await updateUserFromAllUsersBase({ user, user_email, user_data, provider_id });
 
@@ -91,17 +94,15 @@ let createClaimedMsg = ({ data, updated_promo, provider_phone_number, provider_b
     { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
-  let btns = [
-    `View Provider|json_plugin_url|${view_provider_url}`,
-    (provider_booking_url) ? `View Booking Site|web_url|${provider_booking_url}` : `Call Provider|phone_number|${provider_phone_number}`,
-    `Main Menu|show_block|Discover Main Menu`    
-  ];
+  let btn1 = `View Provider|json_plugin_url|${view_provider_url}`;
+  let btn2 = (provider_booking_url) ? `View Booking Site|web_url|${provider_booking_url}` : `Call Provider|phone_number|${provider_phone_number}`;
+  let btn3 = `Main Menu|show_block|Discover Main Menu`;
   
   let msg = createButtonMessage(
     `Congrats ${first_name} your promotion "${updated_promo.fields['Promotion Name']}" has been claimed!`,
-    ...btns
+    ...[btn1, btn2, btn3]
   );
-  
+
   return msg;
 }
 

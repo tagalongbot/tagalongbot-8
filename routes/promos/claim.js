@@ -38,7 +38,7 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, promo_id,  provider_id, gender, user_email } = query;
+  let { messenger_user_id, first_name, last_name, promo_id,  provider_id, gender, user_email, user_phone_number } = query;
 
   let provider = await getProviderByID(provider_id);
   let provider_base_id = provider.fields['Practice Base ID'];
@@ -53,8 +53,10 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let user_data = { messenger_user_id, first_name, last_name, gender, user_email };
-  let user = await createOrUpdateUser(user_data, provider);
+  let user = await createOrUpdateUser(
+    { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number },
+    provider
+  );
 
   let claimed_by_users = promo.fields['Claimed By Users'] || [];
 

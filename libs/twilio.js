@@ -5,10 +5,10 @@ let { Client, enums } = authyClient;
 
 let authy = new Client({ key: AUTHY_API_KEY });
 
-let sendPhoneVerificationCode = async ({ phone_number = '3475419673', code_length: codeLe = 6 }) => {
+let sendPhoneVerificationCode = async ({ phone_number = '3475419673', code_length = 6 }) => {
   let result = await authy.startPhoneVerification(
     { countryCode: 'US', locale: 'en', phone: phone_number, via: enums.verificationVia.SMS },
-    { codeLength }
+    { codeLength: code_length }
   );
 
   return result;
