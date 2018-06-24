@@ -33,8 +33,8 @@ let getCustomImagesByCategory = async ({ category_name }) => {
   return images;
 }
 
-let getCustomPromoByID = async ({ promo_id }) => {
-  let image = await findImage(promo_id);
+let getCustomImageByID = async ({ custom_image_id }) => {
+  let image = await findImage(custom_image_id);
   return image;
 }
 
@@ -43,5 +43,5 @@ module.exports = {
   getCustomCategoryByID,
   getCutomImages,
   getCustomImagesByCategory,
-  getCustomPromoByID,
+  getCustomImageByID,
 }

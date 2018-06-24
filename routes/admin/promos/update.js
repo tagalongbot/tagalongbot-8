@@ -61,9 +61,9 @@ let getImagesFromCategory = async ({ query }, res) => {
 }
 
 let selectUpdateImage = async ({ query }, res) => {
-  let { category_image_id } = query;
+  let { custom_image_id } = query;
 
-  let image_promo = await getCustomByID({ category_image_id });
+  let image_promo = await getCustomByID({ custom_image_id });
   let image_url = image_promo.fields['Image URL'];
 
   let set_attributes = { update_promo_field_value: image_url }

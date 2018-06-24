@@ -2,7 +2,7 @@ let handleRoute = require('../../../../middlewares/handleRoute.js');
 
 let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
-let { getCustomPromoCategoryByID } = require('../../../../libs/data/custom-images.js');
+let { getCustomCategoryByID } = require('../../../../libs/data/custom-images.js');
 let { toCategoryGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
 let { getCustomCategories, getCustomImagesByCategory } = require('../../../../libs/data/custom-images.js');
 let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/confirm.js');
@@ -33,7 +33,7 @@ let sendCustomImages = async ({ query, url }, res) => {
   // console.log('url', url);
   // console.log('new_promo_name', new_promo_name);
 
-  let category = await getCustomPromoCategoryByID({ category_id });
+  let category = await getCustomCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
   let custom_promo_images = await getCustomImagesByCategory({ category_name });
 

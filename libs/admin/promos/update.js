@@ -21,19 +21,19 @@ let toCategoriesGallery = ({ id: category_id, fields: category }) => {
   return { title, image_url, buttons };
 }
 
-let toImagesGallery = ({ id: promo_id, fields: promo }) => ({ id: category_image_id, fields: category_image }) => {
+let toImagesGallery = ({ id: promo_id, fields: promo }) => ({ id: custom_image_id, fields: custom_image }) => {
   let expiration_date = localizeDate(
     createExpirationDate(promo['Expiration Date'])
   );
 
   let title = promo['Promotion Name'];
   let subtitle = `Valid Until ${expiration_date}`;
-  let image_url = category_image['Image URL'];
+  let image_url = custom_image['Image URL'];
   let new_promo_image_id = promo_id;
 
   let select_image_url = createURL(
     `${BASEURL}/admin/promos/update/image/select`,
-    { category_image_id }
+    { custom_image_id }
   );
 
   let btn1 = createBtn(`Use This Image|json_plugin_url|${select_image_url}`);
