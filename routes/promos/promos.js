@@ -12,7 +12,6 @@ let getPromos = async ({ query, params }, res) => {
   let { service_name, search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = query;
 
   // Handle searching by `promo_code`
-  
   let providers = await getProviders(
     { search_promos_state, search_promos_city, search_promos_zip_code, search_type }
   );
@@ -47,8 +46,8 @@ let getPromos = async ({ query, params }, res) => {
 
 	let promotionsGallery = createGallery(randomPromotions);
 
-  let textMsg = { text: `Here's are some promotions I found ${first_name}` };
-	let messages = [textMsg, promotionsGallery];
+  let txtMsg = { text: `Here's are some promotions I found ${first_name}` };
+	let messages = [txtMsg, promotionsGallery];
 	res.send({ messages });
 }
 

@@ -27,10 +27,11 @@ let verifyPhoneNumber = async ({ query }, res) => {
 
 let verifyVerificationCode = async ({ query }, res) => {
   let { verification_code } = query;
+
   let sent_verification_code = await checkVerificationCode({ verification_code });
   console.log('sent_verification_code', sent_verification_code);
 
-  let redirect_to_blocks = ['Verify Phone Number (Claim Promo)'];
+  let redirect_to_blocks = ['Correct Verification Code (Claim Promo)'];
   res.send({ redirect_to_blocks });
 }
 
@@ -79,6 +80,11 @@ router.get(
 router.get(
   '/verify',
   handleRoute(verifyPhoneNumber, '[Error] Verifying Promo')
+);
+
+router.get(
+  '/verify/code',
+  handleRoute(verifyVerificationCode, '[Error] Verifying Promo')
 );
 
 router.get(
