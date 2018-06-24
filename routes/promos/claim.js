@@ -4,8 +4,10 @@ let express = require('express');
 let router = express.Router();
 
 let { getProviderByID } = require('../../libs/data/providers.js');
-let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
+let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
+
+let { sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
 
 let askForUserInfo = async ({ query }, res) => {
   let { promo_id, provider_id } = query;
@@ -13,6 +15,12 @@ let askForUserInfo = async ({ query }, res) => {
   let redirect_to_blocks = ['Ask For User Info (Promo)'];
   let set_attributes = { promo_id, provider_id };
   res.send({ redirect_to_blocks, set_attributes });
+}
+
+let verifyPhoneNumber = async ({ query }, res) => {
+  let { user_phone_number: phone_number } = query;
+  let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
+  
 }
 
 let claimPromotion = async ({ query }, res) => {
@@ -53,12 +61,17 @@ let claimPromotion = async ({ query }, res) => {
 }
 
 router.get(
-  '/user_info', 
+  '/user_info',
   handleRoute(askForUserInfo, '[Error] Claiming Promo')
 );
 
 router.get(
-  '/', 
+  '/verify',
+  handleRoute(verifyPhoneNumber, '[Error] Verifying Promo')
+);
+
+router.get(
+  '/',
   handleRoute(claimPromotion, '[Error] Claiming Promo')
 );
 
