@@ -1,15 +1,46 @@
 let { BASEURL } = process.env;
 
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
-let { createButtonMessage } = require('../../../libs/bots.js');
+let { createExpirationDate } = require('../../../libs/admin/promos/create.js');
+let { createBtn, createButtonMessage } = require('../../../libs/bots.js');
 let { updatePracticePromo } = require('../../../libs/data/practice/promos.js');
 
-let toCategoriesGallery = ({ id: category_id, fields: c }) => {
-  
+let toCategoriesGallery = ({ id: category_id, fields: category }) => {
+  let title = category['Category Name'];
+  let image_url = category['Image URL'];
+
+  let send_images_url = createURL(
+    `${BASEURL}/admin/promos/update/images`,
+    { category_id }
+  );
+
+  let btn1 = createBtn(`View Category Images|json_plugin_url|${send_images_url}`);
+
+  let buttons = [btn1];
+
+  return { title, image_url, buttons };
 }
 
-let toImagesGallery = () => {
-  
+let toImagesGallery = ({ id: promo_id, fields: promo }) => ({ id: category_image_id, fields: category_image }) => {
+  let expiration_date = localizeDate(
+    createExpirationDate(promo['Expiration Date'])
+  );
+
+  let title = promo['Promotion Name'];
+  let subtitle = `Valid Until ${expiration_date}`;
+  let image_url = category_image['Image URL'];
+  let new_promo_image_id = promo_id;
+
+  let select_image_url = createURL(
+    `${BASEURL}/admin/promos/update/image/select`,
+    { category_image_id }
+  );
+
+  let btn1 = createBtn(`Use This Image|json_plugin_url|${select_image_url}`);
+
+  let buttons = [btn1];
+
+  return { title, subtitle, image_url, buttons };
 }
 
 let createPromoFieldValue = ({ update_promo_field_name, update_promo_field_value }) => {  

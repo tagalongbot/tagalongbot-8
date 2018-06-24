@@ -61,9 +61,9 @@ let getImagesFromCategory = async ({ query }, res) => {
 }
 
 let selectUpdateImage = async ({ query }, res) => {
-  let { promo_id } = query;
+  let { category_image_id } = query;
 
-  let image_promo = await getCustomPromoByID({ promo_id });
+  let image_promo = await getCustomPromoByID({ category_image_id });
   let image_url = image_promo.fields['Image URL'];
 
   let set_attributes = { update_promo_field_value: image_url }
@@ -105,12 +105,17 @@ router.get(
 
 router.get(
   '/image_categories',
-  handleRoute()
+  handleRoute(getImageCategories, '[Error] Updating Promo')
 );
 
 router.get(
-  '/image',
-  handleRoute()
+  '/images',
+  handleRoute(getImagesFromCategory, '[Error] Updating Promo')
+);
+
+router.get(
+  '/image/select',
+  handleRoute(selectUpdateImage, '[Error] Updating Promo')
 );
 
 router.get(
