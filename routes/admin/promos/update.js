@@ -3,7 +3,11 @@ let handleRoute = require('../../../middlewares/handleRoute.js');
 let { getPracticePromo } = require('../../../libs/data/practice/promos.js');
 let { createExpirationDate } = require('../../../libs/admin/promos/create.js');
 let { localizeDate } = require('../../../libs/helpers.js');
-let { updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
+let { createMultiGallery } = require('../../../libs/bots.js');
+
+let { getCustomPromoCategories, getCustomPromoImagesByCategory, getCustomPromoByID } = require('../../../libs/data/manufactured-promos.js');
+
+let { toCategoriesGallery, toImagesGallery, updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
 
 let express = require('express');
 let router = express.Router();
@@ -31,7 +35,17 @@ let updateExpirationDate = async ({ query }, res) => {
 }
 
 let getImageCategories = async ({ query }, res) => {
-  
+  let categories = await getCustomPromoCategories();
+
+  let galleryData = categories.map(toCategoriesGallery);
+  let galleries = createMultiGallery(galleryData);
+
+  let messages = [...galleries];
+  res.send({ messages });
+}
+
+let getImagesFromCategory = async ({ query }, res) => {
+  let { category_id }
 }
 
 let selectUpdateImage = async ({ query }, res) => {
