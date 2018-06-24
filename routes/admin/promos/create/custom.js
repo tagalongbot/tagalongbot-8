@@ -2,9 +2,9 @@ let handleRoute = require('../../../../middlewares/handleRoute.js');
 
 let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getProviderByUserID } = require('../../../../libs/data/providers.js');
-let { getCustomPromoCategoryByID } = require('../../../../libs/data/custom-promos.js');
+let { getCustomPromoCategoryByID } = require('../../../../libs/data/custom-images.js');
 let { toCategoryGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
-let { getCustomPromos, getCustomPromoCategories, getCustomPromoImagesByCategory, getCustomPromoByID } = require('../../../../libs/data/custom-promos.js');
+let { getCustomCategories, getCustomImagesByCategory } = require('../../../../libs/data/custom-images.js');
 let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/confirm.js');
 
 let express = require('express');
@@ -14,7 +14,7 @@ let sendCustomCategories = async ({ query }, res) => {
   // console.log('query', query);
   let { messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
 
-  let custom_promo_categories = await getCustomPromoCategories();
+  let custom_promo_categories = await getCustomCategories();
 
   let galleryData = custom_promo_categories.map(
     toCategoryGallery({ messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit })
@@ -35,7 +35,7 @@ let sendCustomImages = async ({ query, url }, res) => {
 
   let category = await getCustomPromoCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
-  let custom_promo_images = await getCustomPromoImagesByCategory({ category_name });
+  let custom_promo_images = await getCustomImagesByCategory({ category_name });
 
   let galleryData = custom_promo_images.map(
     toImagesGallery({ new_promo_name, new_promo_expiration_date, new_promo_claim_limit })

@@ -5,7 +5,7 @@ let { createExpirationDate } = require('../../../libs/admin/promos/create.js');
 let { localizeDate } = require('../../../libs/helpers.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
 
-let { getCustomPromoCategories, getCustomPromoCategoryByID, getCustomPromoImagesByCategory, getCustomPromoByID } = require('../../../libs/data/manufactured-promos.js');
+let { getCustomCategories, getCustomCategoryByID, getCustomImagesByCategory, getCustomByID } = require('../../../libs/data/custom-images.js');
 
 let { toCategoriesGallery, toImagesGallery, updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/update.js');
 
@@ -35,7 +35,7 @@ let updateExpirationDate = async ({ query }, res) => {
 }
 
 let getImageCategories = async ({ query }, res) => {
-  let categories = await getCustomPromoCategories();
+  let categories = await getCustomCategories();
 
   let gallery_data = categories.map(toCategoriesGallery);
   let galleries = createMultiGallery(gallery_data);
@@ -47,10 +47,10 @@ let getImageCategories = async ({ query }, res) => {
 let getImagesFromCategory = async ({ query }, res) => {
   let { category_id } = query;
 
-  let category = await getCustomPromoCategoryByID({ category_id });
+  let category = await getCustomCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
 
-  let images = await getCustomPromoImagesByCategory({ category_name });
+  let images = await getCustomImagesByCategory({ category_name });
   
   let gallery_data = images.map(toImagesGallery);
 
@@ -63,7 +63,7 @@ let getImagesFromCategory = async ({ query }, res) => {
 let selectUpdateImage = async ({ query }, res) => {
   let { category_image_id } = query;
 
-  let image_promo = await getCustomPromoByID({ category_image_id });
+  let image_promo = await getCustomByID({ category_image_id });
   let image_url = image_promo.fields['Image URL'];
 
   let set_attributes = { update_promo_field_value: image_url }
