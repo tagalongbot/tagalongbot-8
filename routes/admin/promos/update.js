@@ -30,6 +30,14 @@ let updateExpirationDate = async ({ query }, res) => {
   res.send({ set_attributes });
 }
 
+let getImageCategories = async ({ query }, res) => {
+  
+}
+
+let selectUpdateImage = async ({ query }, res) => {
+  
+}
+
 let updatePromoInfo = async ({ query }, res) => {
   let { 
     messenger_user_id,
@@ -54,7 +62,7 @@ let updatePromoInfo = async ({ query }, res) => {
 }
 
 router.get(
-  '/', 
+  '/field',
   handleRoute(getUpdateField, '[Error] Updating Promo')
 );
 
@@ -64,7 +72,17 @@ router.get(
 );
 
 router.get(
-  '/field', 
+  '/image_categories',
+  handleRoute()
+);
+
+router.get(
+  '/image',
+  handleRoute()
+);
+
+router.get(
+  '/',
   handleRoute(updatePromoInfo, '[Error] Updating Promo')
 );
 
