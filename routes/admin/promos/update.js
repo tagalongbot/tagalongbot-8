@@ -49,8 +49,10 @@ let getImagesFromCategory = async ({ query }, res) => {
 
   let category = await getCustomCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
+  console.log('category_name', category_name);
 
   let images = await getCustomImagesByCategory({ category_name });
+  console.log('
   
   let gallery_data = images.map(toImagesGallery);
 
@@ -67,7 +69,8 @@ let selectUpdateImage = async ({ query }, res) => {
   let image_url = image_promo.fields['Image URL'];
 
   let set_attributes = { update_promo_field_value: image_url }
-  res.send({ set_attributes });
+  let redirect_to_blocks = ['Update Promo (JSON)'];
+  res.send({ set_attributes, redirect_to_blocks });
 }
 
 let updatePromoInfo = async ({ query }, res) => {
@@ -94,7 +97,7 @@ let updatePromoInfo = async ({ query }, res) => {
 }
 
 router.get(
-  '/field',
+  '/', // Gets field to update from user
   handleRoute(getUpdateField, '[Error] Updating Promo')
 );
 
@@ -119,7 +122,7 @@ router.get(
 );
 
 router.get(
-  '/',
+  '/field', // Updates the promo field
   handleRoute(updatePromoInfo, '[Error] Updating Promo')
 );
 
