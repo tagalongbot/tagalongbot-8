@@ -1,7 +1,16 @@
 let { BASEURL } = process.env;
+
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../libs/bots.js');
 let { updatePracticePromo } = require('../../../libs/data/practice/promos.js');
+
+let toCategoriesGallery = ({ id: category_id, fields: c }) => {
+  
+}
+
+let toImagesGallery = () => {
+  
+}
 
 let createPromoFieldValue = ({ update_promo_field_name, update_promo_field_value }) => {  
   if (update_promo_field_name == 'Claim Limit') {
@@ -49,6 +58,8 @@ let createUpdateMsg = ({ messenger_user_id, promo_id, provider_base_id, promo, u
 }
 
 module.exports = {
+  toCategoriesGallery,
+  toImagesGallery,
   updatePromo,
   createUpdateMsg,
 }
