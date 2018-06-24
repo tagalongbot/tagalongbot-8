@@ -5,13 +5,13 @@ let { createExpirationDate } = require('../../../libs/admin/promos/create.js');
 let { createBtn, createButtonMessage } = require('../../../libs/bots.js');
 let { updatePracticePromo } = require('../../../libs/data/practice/promos.js');
 
-let toCategoriesGallery = ({ id: category_id, fields: category }) => {
+let toCategoriesGallery = ({ promo_id, provider_base_id }) => ({ id: category_id, fields: category }) => {
   let title = category['Category Name'];
   let image_url = category['Image URL'];
 
   let send_images_url = createURL(
     `${BASEURL}/admin/promos/update/images`,
-    { category_id }
+    { promo_id, provider_base_id, category_id }
   );
 
   let btn1 = createBtn(`View Category Images|json_plugin_url|${send_images_url}`);
