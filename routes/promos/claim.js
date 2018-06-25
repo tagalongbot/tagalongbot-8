@@ -1,14 +1,15 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
-let { 
 
-let express = require('express');
-let router = express.Router();
+let { isValidPhoneNumber } = require('../../libs/helpers.js');
 
 let { getProviderByID } = require('../../libs/data/providers.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 
 let { sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
+
+let express = require('express');
+let router = express.Router();
 
 let askForUserInfo = async ({ query }, res) => {
   let { promo_id, provider_id } = query;
@@ -21,12 +22,12 @@ let askForUserInfo = async ({ query }, res) => {
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
-  if (isValidPhoneNumber(phone_number)) {
-    let redirect_to_blocks = [];
+  if (!isValidPhoneNumber(phone_number)) {
+    let redirect_to_blocks = ['Invalid Phone Number (Claim Promo)'];
     res.send({ redirect_to_blocks });
     return;
   }
-  
+
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
 
   let block_name = (sent_verification_code.success) ? 'Verify Phone Number (Claim Promo)' : '[Error] Verifying Promo';

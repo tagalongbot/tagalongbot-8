@@ -1,11 +1,13 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
 
-let express = require('express');
-let router = express.Router();
+let { isValidPhoneNumber } = require('../../libs/helpers.js');
 
 let { sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
 let { getProviderByID } = require('../../libs/data/providers.js');
 let { updatePractice, createUpdateMsg } = require('../../libs/providers/claim.js');
+
+let express = require('express');
+let router = express.Router();
 
 let askForUserInfo = async ({ query }, res) => {
   let { provider_id } = query;
@@ -17,6 +19,12 @@ let askForUserInfo = async ({ query }, res) => {
 
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
+  
+  if (!isValidPhoneNumber(phone_number)) {
+    let redirect_to_blocks = ['Invalid Phone Number (Claim Practice)'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
 
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
 
