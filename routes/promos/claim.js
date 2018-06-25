@@ -1,4 +1,5 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
+let { 
 
 let express = require('express');
 let router = express.Router();
@@ -20,6 +21,12 @@ let askForUserInfo = async ({ query }, res) => {
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
+  if (isValidPhoneNumber(phone_number)) {
+    let redirect_to_blocks = [];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+  
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
 
   let block_name = (sent_verification_code.success) ? 'Verify Phone Number (Claim Promo)' : '[Error] Verifying Promo';
