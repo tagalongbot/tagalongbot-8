@@ -1,24 +1,10 @@
 let express_expeditious = require('express-expeditious');
-let expeditious = require('expeditious');
 
 // Our cache instance
-let cache = expeditious({
-  // Namespace for this cache
+let cache = express_expeditious({
   namespace: 'express',
-  // Default expiry
-  defaultTtl: (120 * 1000),
-  // Where items are stored
+  defaultTtl: '1 hour',
   engine: require('expeditious-engine-memory')()
 });
 
-// Middleware instance
-let expressCache = require('express-expeditious')({
-  expeditious: cache,
-  statusCodeExpires: {
-    // We don't want to cache these for the 2 minute default
-    500: (30 * 1000),
-    502: (60 * 1000)
-  }
-});
-
-module.exports = expressCache;
+module.exports = cache;
