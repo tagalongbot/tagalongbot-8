@@ -1,4 +1,10 @@
+let Bottleneck = require('bottleneck');
 let Airtable = require('airtable');
+
+let limiter = new Bottleneck({
+  maxConcurrent: 1,
+  minTime: 250
+});
 
 // Lib Helper Methods
 let errorHandler = (error) => {
@@ -23,31 +29,43 @@ let getTable = (tableName) => (baseID) => {
 	return table;
 }
 
-let getDataFromTable = (table) => (filterQuery = {}) => {
-  return table.select(filterQuery).firstPage().catch(errorHandler);
-}
+let getDataFromTable = (table) => limiter.wrap(
+  (filterQuery = {}) => {
+    return table.select(filterQuery).firstPage().catch(errorHandler);
+  }
+);
 
-let getAllDataFromTable = (table) => (filterQuery = {}) => {
-  return table.select(filterQuery).all().catch(errorHandler);
-}
+let getAllDataFromTable = (table) => limiter.wrap(
+  (filterQuery = {}) => {
+    return table.select(filterQuery).all().catch(errorHandler);
+  }
+);
 
-let findTableData = (table) => (data_ID) => {
-	return table.find(data_ID).catch(errorHandler);
-}
+let findTableData = (table) => limiter.wrap(
+  (data_ID) => {
+    return table.find(data_ID).catch(errorHandler);
+  }
+);
 
-let createTableData = (table) => (data) => {
-	let newData = getOnlyValuesFromData(data);
-	return table.create(newData).catch(errorHandler);
-}
+let createTableData = (table) => limiter.wrap(
+  (data) => {
+    let newData = getOnlyValuesFromData(data);
+    return table.create(newData).catch(errorHandler);
+  }
+);
 
-let updateTableData = (table) => (updateData, dataRecord) => {
-	let newData = getOnlyValuesFromData(updateData);
-	return table.update(dataRecord.id, newData).catch(errorHandler);
-}
+let updateTableData = (table) => limiter.wrap(
+  (updateData, dataRecord) => {
+    let newData = getOnlyValuesFromData(updateData);
+    return table.update(dataRecord.id, newData).catch(errorHandler);
+  }
+);
 
-let destroyTableData = (table) => (data_ID) => {
-	return table.destroy(data_ID).catch(errorHandler);
-}
+let destroyTableData = (table) => limiter.wrap(
+  (data_ID) => {
+    return table.destroy(data_ID).catch(errorHandler);
+  }
+);
 
 module.exports = {
 	getTable,

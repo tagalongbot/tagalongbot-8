@@ -1,11 +1,11 @@
 # Code
 
 ### Important and Urgent
-- Update `/admin/promos/update` routes to work with numbers for claim limit, and image gallery for images
 - Implement RateLimiter
 - Create caching system for reading from Airtable
 
 ### Important and Less Urgent
+- Use ES6 Import Modules
 - Update ChatFuel Block Names
 - Update code to use ChatFuel blocks for responses by setting attributes, and linking button names to blocks that call JSON plugins instead of using `json_plugin_url`
 - Create a middleware that checks for required `query` parameters

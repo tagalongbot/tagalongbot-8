@@ -2,6 +2,7 @@ dependencies:
   airtable: 0.5.6
   apiai: 4.0.3
   authy-client: 1.1.1
+  bottleneck: 2.5.0
   express: 4.16.3
   node-fetch: 2.1.2
   request: 2.87.0
@@ -168,6 +169,10 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-Z5BTk6ZRe4tXXQlkqftmsAUANpXmuwlsF5Oov8ThoMbQRzdGTA1ngYRW160GexgOgjsFOKJz0LYhoNi+2AMBUw==
+  /bottleneck/2.5.0:
+    dev: false
+    resolution:
+      integrity: sha512-j19zrMCIe0LmTfCjIDNk4V40z0Plc8ZfjBsfWGOdJhJAAKXqwCOoY2k85N5rUmFerrT9lr6oQWiIIb771je03g==
   /brace-expansion/1.1.11:
     dependencies:
       balanced-match: 1.0.0
@@ -1413,6 +1418,7 @@ specifiers:
   airtable: ^0.5.6
   apiai: ^4.0.3
   authy-client: ^1.1.1
+  bottleneck: ^2.5.0
   express: ^4.16.3
   node-fetch: ^2.1.2
   request: ^2.87.0
