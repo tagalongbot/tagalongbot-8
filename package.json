@@ -15,7 +15,8 @@
     "bottleneck": "^2.5.0",
     "expeditious": "^1.0.1",
     "express-expeditious": "^3.3.0",
-    "expeditious-engine-redis": "^0.1.1"
+    "expeditious-engine-redis": "^0.1.1",
+    "express-redis-cache": "^1.1.1"
   },
   "engines": {
     "node": "9.x"
