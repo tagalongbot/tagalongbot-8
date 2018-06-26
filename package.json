@@ -12,7 +12,9 @@
     "node-fetch": "^2.1.2",
     "request": "^2.87.0",
     "authy-client": "^1.1.1",
-    "bottleneck": "^2.5.0"
+    "bottleneck": "^2.5.0",
+    "expeditious": "^1.0.1",
+    "express-expeditious": "^3.3.0"
   },
   "engines": {
     "node": "9.x"
