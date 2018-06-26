@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 let handleRoute = require('../middlewares/handleRoute.js');
+let cache = require('../middlewares/cache.js');
 
 let getAdminMenu = require('../routes/admin/menu.js');
 let createCustomPromo = require('../routes/admin/promos/create/custom.js');
@@ -15,7 +16,8 @@ let togglePromo = require('../routes/admin/promos/toggle.js');
 let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
 router.get(
-  '/menu', 
+  '/menu',
+  cache.withTtl('3 hours'),
   handleRoute(getAdminMenu, '[Error] Admin Menu')
 );
 

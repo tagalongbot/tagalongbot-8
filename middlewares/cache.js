@@ -1,10 +1,11 @@
 let express_expeditious = require('express-expeditious');
+let expeditious_redis = require('expeditious-engine-redis');
 
 // Our cache instance
 let cache = express_expeditious({
   namespace: 'express',
   defaultTtl: '1 hour',
-  engine: require('expeditious-engine-memory')()
+  engine: expeditious_redis({})
 });
 
 module.exports = cache;
