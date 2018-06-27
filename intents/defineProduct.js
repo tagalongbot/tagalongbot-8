@@ -1,19 +1,12 @@
-let { BASEURL, SERVICES_BASE_ID } = process.env;
-let { createButtonMessage } = require('../libs/bots.js');
-let { createURL } = require('../libs/helpers.js');
-
-let { getTable, getAllDataFromTable } = require('../libs/data.js');
-
-let getServicesTable = getTable('Services');
-let servicesTable = getServicesTable(SERVICES_BASE_ID);
-let getServices = getAllDataFromTable(servicesTable);
+let { getService } = require('../libs/intents/defineProduct.js');
+let { createFindProvidersMsg } = require('../libs/services/description.js');
 
 let defineProduct = async({ res, parameters, user }) => {
   let { brand_name, procedure } = parameters;
 
-  let filterByFormula = `OR({Capitalized Name} = '${brand_name.trim().toUpperCase()}', {Capitalized Name} = '${procedure.trim().toUpperCase()}')`;
-  
-  let [service] = await getServices({ filterByFormula });
+  let { messenger_user_id, first_name, last_name, gender } = user;
+
+  let service = await getService({ brand_name, procedure });
 
   if (!service) {
     let redirect_to_blocks = ['No Service Found'];
@@ -21,15 +14,11 @@ let defineProduct = async({ res, parameters, user }) => {
     return;
   }
 
-  let service_name = service.fields['Name'];
-  let find_providers_url = createURL(`${BASEURL}/service/providers`, { service_name });
+  let service_id = service.id;
 
-  let txtMsg = createButtonMessage(
-    service.fields['Long Description'],
-    `Find Providers|json_plugin_url|${find_providers_url}`
-  );
+  let msg = createFindProvidersMsg({ service, service_id, messenger_user_id, first_name, last_name, gender });
 
-  let messages = [txtMsg];
+  let messages = [msg];
   res.send({ messages });
 }
 

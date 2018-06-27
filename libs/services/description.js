@@ -19,7 +19,7 @@ let createFindProvidersMsg = ({ service, service_id, messenger_user_id, first_na
     `Find Promos|json_plugin_url|${find_promos_btn_url}`,
   );
 
-  return [txtMsg];
+  return txtMsg;
 }
 
 let createViewProviderPromosMsg = (service, data) => {
@@ -37,7 +37,7 @@ let createViewProviderPromosMsg = (service, data) => {
     `View Promos|json_plugin_url|${view_provider_promos}`
   );
 
-  return [txtMsg];
+  return txtMsg;
 }
 
 module.exports = {
