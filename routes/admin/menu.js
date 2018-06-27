@@ -1,7 +1,6 @@
 let { getProviderByUserID } = require('../../libs/data/providers.js');
 
 let getAdminMenu = async ({ query }, res) => {
-  console.log('here');
   let { messenger_user_id } = query;
 
   let provider = await getProviderByUserID(messenger_user_id);
