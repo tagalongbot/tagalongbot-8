@@ -5,28 +5,48 @@ let getPracticeTable = getTable('Practices');
 let practiceTable = getPracticeTable(PRACTICE_DATABASE_BASE_ID);
 let getPractices = getAllDataFromTable(practiceTable);
 let findPractice = findTableData(practiceTable);
-let updatePractice = updateTableData(practiceTable);
+let updatePracticeFromTable = updateTableData(practiceTable);
 
-let getAllProviders = async () => {
-  let providers = await getPractices();
-  return providers;
+let getAllPractices = async () => {
+  let practices = await getPractices();
+  return practices;
 }
 
-let getProviderByUserID = async (messenger_user_id, fields = []) => {
+let getPracticeByUserID = async (messenger_user_id, fields = []) => {
   let filterByFormula = `{Claimed By Messenger User ID} = '${messenger_user_id}'`;
   let [user] = await getPractices({ filterByFormula, fields });
   return user;
 }
 
-let getProviderByID = async (provider_id) => {
+let getPracticeByID = async (provider_id) => {
   let practice = await findPractice(provider_id);
   return practice;
 }
 
-let updateProvider = async (updateData, provider) => {
-  let updatedProvider = updatePractice(updateData, provider);
+let updatePractice = async (updateData, provider) => {
+  let updatedProvider = updatePracticeFromTable(updateData, provider);
   return updatedProvider;
 }
+
+let getPracticeByState = async ({ state_name, active }) => {
+  let filterByFormula = `{All Uppercase Practice State} = '${state_name.trim().toUpperCase()}'`;
+
+  if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
+	let providers = await getPractices({ filterByFormula });
+
+	return providers;
+}
+
+let getPracticeByCity = async ({ city_name, active }) => {
+  let filterByFormula = `{All Uppercase Practice State} = '${city_name.trim().toUpperCase()}'`;
+
+  if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
+	let providers = await getPractices({ filterByFormula });
+
+	return providers;
+}
+
+
 
 let searchProviders = async ({ search_type, active = false }, data) => {
 	let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = data;
@@ -49,7 +69,7 @@ let searchProviders = async ({ search_type, active = false }, data) => {
 	return providers;
 }
 
-let filterProvidersByService = (service_name, providers) => {
+let filterPracticessByService = (service_name, providers) => {
   let service_name_lowercased = service_name.trim().toLowerCase();
 
   let serviceToLowerCase = service => service.toLowerCase();
@@ -61,18 +81,18 @@ let filterProvidersByService = (service_name, providers) => {
   return providersByService;
 }
 
-let sortProviders = (provider1, provider2) => {
+let sortPractices = (provider1, provider2) => {
   if (provider1.fields['Active?'] && !provider2.fields['Active?']) return -1;
   if (provider1.fields['Active?'] && provider2.fields['Active?']) return 0;
   if (!provider1.fields['Active?']) return 1;
 }
 
 module.exports = {
-  getAllProviders,
-  getProviderByUserID,
-  getProviderByID,
-  updateProvider,
+  getAllPractices,
+  getPracticeByUserID,
+  getPracticeByID,
+  updatePractice,
   searchProviders,
-  filterProvidersByService,
-  sortProviders,
+  filterPracticessByService,
+  sortPractices,
 }
