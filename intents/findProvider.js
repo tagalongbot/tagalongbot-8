@@ -18,9 +18,9 @@ let findProvider = async ({ res, parameters, user }) => {
   }
 
   if ( !search_type && (brand_name || procedure) ) {
-    let redirect_to_blocks = ['Search Providers NLP (By Service)'];
     let service_name = (brand_name || procedure).trim();
     let set_attributes = { service_name };
+    let redirect_to_blocks = ['Search Providers NLP (By Service)'];
     res.send({ set_attributes, redirect_to_blocks });
     return;
   }
