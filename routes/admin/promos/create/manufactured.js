@@ -18,7 +18,7 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
   let practice_base_id = practice.fields['Practice Base ID'];
 
   let services = await getAllServices();
-  let provider_services = filterServicesFromProvider({ services, practice });
+  let practice_services = filterServicesFromProvider({ services, practice });
 
   let services_with_promos = await getServicesWithPromos({ services: provider_services });
 
