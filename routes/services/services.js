@@ -1,10 +1,12 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
+
 let { shuffleArray } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
 let { getProviderByID } = require('../../libs/data/providers.js');
 let { getNonSurgicalServices, getSurgicalServices } = require('../../libs/data/services.js');
 let { toGalleryElement, createSurgicalCategoryElement, createLastGalleryElement } = require('../../libs/services/services.js');
 
+// Refactor code to be more declarative
 let getServices = async ({ query, params }, res) => {
   let { service_type } = params;
   let { messenger_user_id, first_name, last_name, gender } = query;
