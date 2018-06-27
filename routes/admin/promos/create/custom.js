@@ -1,7 +1,7 @@
 let handleRoute = require('../../../../middlewares/handleRoute.js');
 
 let { createMultiGallery } = require('../../../../libs/bots.js');
-let { getProviderByUserID } = require('../../../../libs/data/providers.js');
+let { getPracticeByUserID } = require('../../../../libs/data/practices.js');
 let { getCustomCategoryByID } = require('../../../../libs/data/custom-images.js');
 let { toCategoryGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
 let { getCustomCategories, getCustomImagesByCategory } = require('../../../../libs/data/custom-images.js');
@@ -65,7 +65,7 @@ let createCustomPromo = async ({ query }, res) => {
     new_promo_image_id,
   } = query;
 
-  let provider = await getProviderByUserID(messenger_user_id);
+  let provider = await getPracticeByUserID(messenger_user_id);
   let provider_base_id = provider.fields['Practice Base ID'];
 
   let new_promo = await createNewPromo(
