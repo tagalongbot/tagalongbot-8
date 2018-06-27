@@ -18,13 +18,13 @@ let getPracticeByUserID = async (messenger_user_id, fields = []) => {
   return user;
 }
 
-let getPracticeByID = async (provider_id) => {
+let getPracticeByID = async (practice_id) => {
   let practice = await findPractice(provider_id);
   return practice;
 }
 
-let updatePractice = async (updateData, provider) => {
-  let updatedProvider = updatePracticeFromTable(updateData, provider);
+let updatePractice = async (updateData, practice) => {
+  let updatedProvider = updatePracticeFromTable(updateData, practice);
   return updatedProvider;
 }
 
@@ -32,39 +32,39 @@ let getPracticesByState = async ({ state_name, active }) => {
   let filterByFormula = `{All Uppercase Practice State} = '${state_name.trim().toUpperCase()}'`;
 
   if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
-	let providers = await getPractices({ filterByFormula });
+	let practices = await getPractices({ filterByFormula });
 
-	return providers;
+	return practices;
 }
 
 let getPracticesByCity = async ({ city_name, active }) => {
   let filterByFormula = `{All Uppercase Practice City} = '${city_name.trim().toUpperCase()}'`;
 
   if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
-	let providers = await getPractices({ filterByFormula });
+	let practices = await getPractices({ filterByFormula });
 
-	return providers;
+	return practices;
 }
 
 let getPracticesByZipCode = async ({ zip_code, active }) => {
   let filterByFormula = `{Practice Zip Code} = '${zip_code.trim().toUpperCase()}'`;
 
   if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
-	let providers = await getPractices({ filterByFormula });
+	let practices = await getPractices({ filterByFormula });
 
-	return providers;
+	return practices;
 }
 
-let filterPracticessByService = (service_name, providers) => {
+let filterPracticessByService = (service_name, practices) => {
   let service_name_lowercased = service_name.trim().toLowerCase();
 
   let serviceToLowerCase = service => service.toLowerCase();
 
-  let providersByService = providers.filter(
-    (provider) => provider.fields['Practice Services'].map(serviceToLowerCase).includes(service_name_lowercased)
+  let practicesByService = practices.filter(
+    (practice) => practice.fields['Practice Services'].map(serviceToLowerCase).includes(service_name_lowercased)
   );
 
-  return providersByService;
+  return practicesByService;
 }
 
 let sortPractices = (provider1, provider2) => {

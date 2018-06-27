@@ -11,12 +11,12 @@ let getProviders = async ({ search_promos_state, search_promos_city, search_prom
   let search_providers_city = search_promos_city;
   let search_providers_zip_code = search_promos_zip_code;
 
-  let providers = await searchProviders(
+  let practices = await searchProviders(
     { search_type, active: true },
     { search_providers_state, search_providers_city, search_providers_zip_code }
   );
 
-  return providers;
+  return practices;
 }
 
 let filterPromosByService = ({ service_name, promos }) => {
@@ -30,7 +30,7 @@ let filterPromosByService = ({ service_name, promos }) => {
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
-  let { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id } = data;
+  let { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id } = data;
 
   let promo_expiration_date = new Date(promo['Expiration Date']);
 
@@ -40,7 +40,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   let view_promo_details_url = createURL(
     `${BASEURL}/promos/details/unclaimed`,
-    { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
+    { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
   let btn = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);

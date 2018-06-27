@@ -7,15 +7,15 @@ let { getTable, getAllDataFromTable, findTableData, updateTableData } = require(
 let getPromosTable = getTable('Promos');
 let getUsersTable = getTable('Users');
 
-let getPromo = async ({ provider_base_id, promo_id }) => {
-  let promosTable = getPromosTable(provider_base_id);
+let getPromo = async ({ practice_base_id, promo_id }) => {
+  let promosTable = getPromosTable(practice_base_id);
   let findPromo = findTableData(promosTable);
   let promo = await findPromo(promo_id);
   return promo;
 }
 
-let updatePromo = async ({ provider_base_id, promo }) => {
-  let promosTable = getPromosTable(provider_base_id);
+let updatePromo = async ({ practice_base_id, promo }) => {
+  let promosTable = getPromosTable(practice_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
 
   let updateData = {
@@ -26,15 +26,15 @@ let updatePromo = async ({ provider_base_id, promo }) => {
   return updatedPromo;
 }
 
-let createUpdateMsg = ({ messenger_user_id, promo_id, provider_base_id, promo, updatedPromo }) => {
+let createUpdateMsg = ({ messenger_user_id, promo_id, practice_base_id, promo, updatedPromo }) => {
   let toggle_promo_url = createURL(
     `${BASEURL}/admin/promos/toggle`,
-    { promo_id, provider_base_id }
+    { promo_id, practice_base_id }
   );
 
   let view_promo_details_url = createURL(
     `${BASEURL}/admin/promos/view/info`,
-    { messenger_user_id, promo_id, provider_base_id }
+    { messenger_user_id, promo_id, practice_base_id }
   );
 
   let view_all_promos_url = createURL(

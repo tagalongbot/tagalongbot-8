@@ -10,26 +10,26 @@ let getProviders = async (data) => {
   let search_providers_city = search_service_providers_city;
   let search_providers_zip_code = search_service_providers_zip_code;
   
-  let providers = await searchProviders(
+  let practices = await searchProviders(
     { search_type },
     { search_providers_state, search_providers_city, search_providers_zip_code }
   );
   
-  return providers;
+  return practices;
 }
 
-let toGalleryElement = (data) => ({ id: provider_id, fields: provider }) => {
+let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
   let { first_name, last_name, gender, messenger_user_id, service_id } = data;
 
-  let title = provider['Practice Name'].slice(0, 80);
-  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
-  let image_url = provider['Main Provider Image'] ? provider['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
+  let title = practice['Practice Name'].slice(0, 80);
+  let subtitle = `${practice['Main Provider']} | ${practice['Practice Address']}`;
+  let image_url = practice['Main Provider Image'] ? practice['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
 
-  let provider_base_id = provider['Practice Base ID'];
+  let practice_base_id = practice['Practice Base ID'];
 
   let view_service_promos_url = createURL(
     `${BASEURL}/services/provider/promos`,
-    { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id }
+    { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id }
   );
 
   let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);

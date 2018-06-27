@@ -11,7 +11,7 @@ let isPromoExpired = (promo_expiration_date) => {
 }
 
 // Mapping Functions
-let toGalleryData = ({ messenger_user_id, provider_base_id }) => ({ id: promo_id, fields: promo }) => {
+let toGalleryData = ({ messenger_user_id, practice_base_id }) => ({ id: promo_id, fields: promo }) => {
   let expiredText = isPromoExpired(promo['Expiration Date']) ? 'EXPIRED' : 'NOT EXPIRED';
   let localized_date = localizeDate(
     new Date(promo['Expiration Date'])
@@ -23,17 +23,17 @@ let toGalleryData = ({ messenger_user_id, provider_base_id }) => ({ id: promo_id
 
   let view_promo_details_url = createURL(
     `${BASEURL}/admin/promos/view/info`,
-    { messenger_user_id, promo_id, provider_base_id }
+    { messenger_user_id, promo_id, practice_base_id }
   );
 
   let update_promo_url = createURL(
     `${BASEURL}/admin/promos/update`,
-    { promo_id, provider_base_id }
+    { promo_id, practice_base_id }
   );
 
   let toggle_promo_url = createURL(
     `${BASEURL}/admin/promos/toggle`,
-    { promo_id, provider_base_id }
+    { promo_id, practice_base_id }
   );
   
   let btn1 = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);

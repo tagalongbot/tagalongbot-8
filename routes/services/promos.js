@@ -30,18 +30,18 @@ let getServicePromos = async ({ query, params }, res) => {
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
-  let providers = await getProviders(
+  let practices = await getProviders(
     { search_type, search_service_promos_state, search_service_promos_city, search_service_promos_zip_code }
   );
 
-  let providers_with_service = (providers[0]) ? filterProvidersByService(service_name, providers) : [];
+  let providers_with_service = (practices[0]) ? filterProvidersByService(service_name, practices) : [];
 
-  let provider_promos = providers_with_service.map(async provider => {
-    let provider_id = provider.id;
-    let provider_base_id = provider.fields['Practice Base ID'];
+  let provider_promos = providers_with_service.map(async practice => {
+    let practice_id = practice.id;
+    let practice_base_id = practice.fields['Practice Base ID'];
     let promos = await getPracticePromos({ provider_base_id });
     return promos.map(
-      toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id })
+      toGalleryElement({ practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id })
     );
   });
 

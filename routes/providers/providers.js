@@ -14,20 +14,20 @@ let getProviders = async ({ query, params }, res) => {
 	let user = await getUserByMessengerID(messenger_user_id);
 	let new_updated_user = await createOrUpdateUser(user, query);
 
-	let providers = await searchProviders(
+	let practices = await searchProviders(
     { search_type }, 
     { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code }
   );
 
-  if (!providers[0]) {
+  if (!practices[0]) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  if (service_name) providers = filterProvidersByService(service_name, providers);
+  if (service_name) practices = filterProvidersByService(service_name, practices);
 
-  let randomProviders = shuffleArray(providers).slice(0, 9).sort(sortProviders).map(
+  let randomProviders = shuffleArray(practices).slice(0, 9).sort(sortProviders).map(
     toGalleryElement({ first_name, last_name, gender, messenger_user_id })
   );
 

@@ -12,11 +12,11 @@ let getPromos = async ({ query, params }, res) => {
   let { service_name, search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = query;
 
   // Handle searching by `promo_code`
-  let providers = await getProviders(
+  let practices = await getProviders(
     { search_promos_state, search_promos_city, search_promos_zip_code, search_type }
   );
 
-  let providers_by_service = (service_name) ? filterProvidersByService(service_name, providers) : null;
+  let providers_by_service = (service_name) ? filterProvidersByService(service_name, practices) : null;
 
   // Study transducers to improve code
   let provider_promos = await Promise.all(

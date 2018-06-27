@@ -9,8 +9,8 @@ let viewUserPromos = async ({ query }, res) => {
     user_messenger_id, // messenger id of the consumer
   } = query;
 
-  let provider = await getProviderByUserID(messenger_user_id);
-  let provider_base_id = provider.fields['Practice Base ID'];
+  let practice = await getProviderByUserID(messenger_user_id);
+  let practice_base_id = practice.fields['Practice Base ID'];
 
   let user = await getPracticeUser({ provider_base_id, user_messenger_id });
   let user_record_id = user.id;
@@ -27,7 +27,7 @@ let viewUserPromos = async ({ query }, res) => {
   }
 
   let galleryData = promos.map(
-    toGalleryElement({ provider_base_id, messenger_user_id, user_messenger_id, user_record_id })
+    toGalleryElement({ practice_base_id, messenger_user_id, user_messenger_id, user_record_id })
   );
 
   let txtMsg = { text: `Here are the promos claimed by ${user_name} from your practice` };

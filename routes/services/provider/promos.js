@@ -5,10 +5,10 @@ let { toGalleryElement } = require('../../../libs/promos/promos.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
 
 let getServiceProviderPromos = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id } = query;
+  let { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id } = query;
 
-  let provider = await getProviderByID(provider_id);
-  let provider_name = provider.fields['Practice Name'];
+  let practice = await getProviderByID(provider_id);
+  let practice_name = practice.fields['Practice Name'];
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
@@ -16,17 +16,17 @@ let getServiceProviderPromos = async ({ query }, res) => {
   let promos = await getServicePromos({ service_name, provider_base_id });
 
   if (!promos[0]) {
-    let msg = createNoPromosMsg({ first_name, service_name, provider_id, provider_name });
+    let msg = createNoPromosMsg({ first_name, service_name, practice_id, practice_name });
     let messages = [msg];
     res.send({ messages });
     return;
   }
 
   let galleryData = promos.map(
-    toGalleryElement({ provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id })
+    toGalleryElement({ practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id })
   );
 
-  let text = `Here are some ${service_name} promos by ${provider_name}`;
+  let text = `Here are some ${service_name} promos by ${practice_name}`;
   let messages = [
     { text },
     ...createMultiGallery(galleryData)

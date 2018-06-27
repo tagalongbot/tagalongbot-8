@@ -28,11 +28,11 @@ let getSurgicalServices = async () => {
   return services;
 }
 
-let filterServicesFromProvider = ({ services, provider }) => {
+let filterServicesFromProvider = ({ services, practice }) => {
   let toLowerCase = data => data.toLowerCase();
 
   let services_from_provider = services.filter(
-    (service) => provider.fields['Practice Services'].map(toLowerCase).includes(service.fields['Name'].toLowerCase())
+    (service) => practice.fields['Practice Services'].map(toLowerCase).includes(service.fields['Name'].toLowerCase())
   );
 
   return services_from_provider;

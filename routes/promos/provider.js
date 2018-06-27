@@ -6,7 +6,7 @@ let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/providers/providers.js');
 
 let getPromoProvider = async ({ query }, res) => {
-  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
+  let { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
 
@@ -16,15 +16,15 @@ let getPromoProvider = async ({ query }, res) => {
     return;
   }
 
-  let provider = await getProviderByID(provider_id);
+  let practice = await getProviderByID(provider_id);
 
-  if (!provider) {
+  if (!practice) {
     let redirect_to_blocks = ['No Providers Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let providersGalleryData = [provider].map(
+  let providersGalleryData = [practice].map(
     toGalleryElement({ first_name, last_name, gender, messenger_user_id })
   );
 

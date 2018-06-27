@@ -10,10 +10,10 @@ let express = require('express');
 let router = express.Router();
 
 let askForUserInfo = async ({ query }, res) => {
-  let { provider_id } = query;
+  let { practice_id } = query;
 
   let redirect_to_blocks = ['Ask For User Info (Practice)'];
-  let set_attributes = { provider_id };
+  let set_attributes = { practice_id };
   res.send({ redirect_to_blocks, set_attributes });
 }
 
@@ -44,11 +44,11 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimProvider = async ({ query }, res) => {
-  let { messenger_user_id, provider_id, first_name, user_email, user_phone_number } = query;
+  let { messenger_user_id, practice_id, first_name, user_email, user_phone_number } = query;
 
-  let provider = await getProviderByID(provider_id);
+  let practice = await getProviderByID(provider_id);
 
-  if (!provider) {
+  if (!practice) {
     let redirect_to_blocks = ['(Claim) Provider Not Available'];
     res.send({ redirect_to_blocks });
     return;
@@ -56,7 +56,7 @@ let claimProvider = async ({ query }, res) => {
 
   let updatedPractice = await updatePractice({ messenger_user_id, user_email, user_phone_number, practice: provider });
 
-  let msg = createUpdateMsg({ practice: provider, first_name });
+  let msg = createUpdateMsg({ practice: practice, first_name });
 
   let messages = [msg];
   res.send({ messages });

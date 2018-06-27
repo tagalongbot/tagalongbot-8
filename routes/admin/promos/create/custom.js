@@ -65,8 +65,8 @@ let createCustomPromo = async ({ query }, res) => {
     new_promo_image_id,
   } = query;
 
-  let provider = await getPracticeByUserID(messenger_user_id);
-  let provider_base_id = provider.fields['Practice Base ID'];
+  let practice = await getPracticeByUserID(messenger_user_id);
+  let practice_base_id = practice.fields['Practice Base ID'];
 
   let new_promo = await createNewPromo(
     { provider_base_id, new_promo_name, new_promo_details, new_promo_expiration_date, new_promo_claim_limit, new_promo_image_id }

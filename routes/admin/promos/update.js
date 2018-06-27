@@ -13,10 +13,10 @@ let express = require('express');
 let router = express.Router();
 
 let getUpdateField = async ({ query }, res) => {
-  let { promo_id, provider_base_id } = query;
+  let { promo_id, practice_base_id } = query;
 
   let updating_promo_id = promo_id;
-  let updating_provider_base_id = provider_base_id;
+  let updating_provider_base_id = practice_base_id;
 
   let set_attributes = { updating_promo_id, updating_provider_base_id };
   let redirect_to_blocks = ['Update Promo'];
@@ -35,11 +35,11 @@ let updateExpirationDate = async ({ query }, res) => {
 }
 
 let getImageCategories = async ({ query }, res) => {
-  let { promo_id, provider_base_id } = query;
+  let { promo_id, practice_base_id } = query;
   let categories = await getCustomCategories();
 
   let gallery_data = categories.map(
-    toCategoriesGallery({ promo_id, provider_base_id })
+    toCategoriesGallery({ promo_id, practice_base_id })
   );
 
   let galleries = createMultiGallery(gallery_data);
@@ -51,7 +51,7 @@ let getImageCategories = async ({ query }, res) => {
 }
 
 let getImagesFromCategory = async ({ query }, res) => {
-  let { promo_id, provider_base_id, category_id } = query;
+  let { promo_id, practice_base_id, category_id } = query;
 
   let promo = await getPracticePromo({ promo_id, provider_base_id });
 
@@ -92,7 +92,7 @@ let updatePromoInfo = async ({ query }, res) => {
   } = query;
 
   let promo_id = updating_promo_id;
-  let provider_base_id = updating_provider_base_id;
+  let practice_base_id = updating_provider_base_id;
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
 
@@ -101,7 +101,7 @@ let updatePromoInfo = async ({ query }, res) => {
   );
 
   let updateMsg = createUpdateMsg(
-    { messenger_user_id, promo_id, provider_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
+    { messenger_user_id, promo_id, practice_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
   );
 
   let messages = [updateMsg];

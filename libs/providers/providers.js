@@ -61,21 +61,21 @@ let createOrUpdateUser = async (user, query) => {
   return updatedUser;
 }
 
-let createButtons = (provider, data) => {
-  let { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id } = data;
+let createButtons = (practice, data) => {
+  let { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id } = data;
 
-  let is_provider_active = provider['Active?'];
-  let is_provider_claimed = provider['Claimed?'];
+  let is_provider_active = practice['Active?'];
+  let is_provider_claimed = practice['Claimed?'];
 
   if (is_provider_active) {
     let view_services_btn_url = createURL(
       `${BASEURL}/providers/services`,
-      { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
+      { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
     );
 
     let view_promos_btn_url = createURL(
       `${BASEURL}/providers/promos`,
-      { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }  
+      { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }  
     );
 
     let btn1 = createBtn(`View Services|json_plugin_url|${view_services_btn_url}`);
@@ -87,7 +87,7 @@ let createButtons = (provider, data) => {
   if (!is_provider_claimed) {
     let claim_practice_url = createURL(
       `${BASEURL}/providers/claim/user_info`,
-      { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
+      { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
     );
 
     let btn = createBtn(`Claim Practice|json_plugin_url|${claim_practice_url}`);
@@ -110,12 +110,12 @@ let createButtons = (provider, data) => {
 }
 
 // Booking Site and Site URL Only
-let createButtons2 = (provider, data) => {
-  let is_provider_active = provider['Active?'];
-  let is_provider_claimed = provider['Claimed?'];
+let createButtons2 = (practice, data) => {
+  let is_provider_active = practice['Active?'];
+  let is_provider_claimed = practice['Claimed?'];
 
-  let view_provider_site_url = provider['Practice Website'];
-  let view_provider_book_url = provider['Practice Booking URL'];
+  let view_provider_site_url = practice['Practice Website'];
+  let view_provider_book_url = practice['Practice Booking URL'];
 
   let btns = [];
 
@@ -132,17 +132,17 @@ let createButtons2 = (provider, data) => {
   return btns;
 }
 
-let toGalleryElement = (data) => ({ id: provider_id, fields: provider }) => {
+let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
   let { first_name, last_name, gender, messenger_user_id } = data;
 
-  let title = provider['Practice Name'].slice(0, 80);
-  let subtitle = `${provider['Main Provider']} | ${provider['Practice Address']}`;
-  let image_url = provider['Main Provider Image'] ? provider['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
+  let title = practice['Practice Name'].slice(0, 80);
+  let subtitle = `${practice['Main Provider']} | ${practice['Practice Address']}`;
+  let image_url = practice['Main Provider Image'] ? practice['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
 
-  let provider_base_id = provider['Practice Base ID'];
+  let practice_base_id = practice['Practice Base ID'];
   let buttons = createButtons(
-    provider,
-    { provider_id, provider_base_id, first_name, last_name, gender, messenger_user_id }
+    practice,
+    { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
   );
 
   let element = { title, subtitle, image_url, buttons };

@@ -50,13 +50,13 @@ let createNewPromo = async (data) => {
 }
 
 // Mapping Functions
-let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id, fields: service }) => {
+let toServicesGallery = ({ practice_id, practice_base_id }) => ({ id: service_id, fields: service }) => {
   let title = service['Name'];
   let image_url = service['Image URL'];
 
   let view_service_promos_url = createURL(
     `${BASEURL}/admin/promos/create/manufactured/service`,
-    { service_id, provider_id, provider_base_id }
+    { service_id, practice_id, practice_base_id }
   );
 
   let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);
@@ -67,18 +67,18 @@ let toServicesGallery = ({ provider_id, provider_base_id }) => ({ id: service_id
   return element;
 }
 
-let toPromosGallery = ({ provider_id, provider_base_id, service_id }) => ({ id: promo_id, fields: promo }) => {
+let toPromosGallery = ({ practice_id, practice_base_id, service_id }) => ({ id: promo_id, fields: promo }) => {
   let title = `${promo['Name']} on ${promo['Service Name']}`;
   let image_url = promo['Image URL'];
 
   let create_promo_url = createURL(
     `${BASEURL}/admin/promos/create/manufactured/service/create`,
-    { service_id, promo_id, provider_id, provider_base_id }
+    { service_id, promo_id, practice_id, practice_base_id }
   );
 
   let view_promo_details_url = createURL(
     `${BASEURL}/admin/promos/view/manufactured/details`,
-    { service_id, promo_id, provider_id, provider_base_id }
+    { service_id, promo_id, practice_id, practice_base_id }
   );
 
   let btn1 = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);

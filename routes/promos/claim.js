@@ -12,10 +12,10 @@ let express = require('express');
 let router = express.Router();
 
 let askForUserInfo = async ({ query }, res) => {
-  let { promo_id, provider_id } = query;
+  let { promo_id, practice_id } = query;
 
   let redirect_to_blocks = ['Ask For User Info (Promo)'];
-  let set_attributes = { promo_id, provider_id };
+  let set_attributes = { promo_id, practice_id };
   res.send({ redirect_to_blocks, set_attributes });
 }
 
@@ -46,12 +46,12 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, promo_id,  provider_id, gender, user_email, user_phone_number } = query;
+  let { messenger_user_id, first_name, last_name, promo_id,  practice_id, gender, user_email, user_phone_number } = query;
 
-  let provider = await getProviderByID(provider_id);
-  let provider_base_id = provider.fields['Practice Base ID'];
-  let provider_phone_number = provider.fields['Practice Phone #'];
-  let provider_booking_url = provider.fields['Practice Booking URL'];
+  let practice = await getProviderByID(provider_id);
+  let practice_base_id = practice.fields['Practice Base ID'];
+  let provider_phone_number = practice.fields['Practice Phone #'];
+  let provider_booking_url = practice.fields['Practice Booking URL'];
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
 
@@ -76,7 +76,7 @@ let claimPromotion = async ({ query }, res) => {
 
   let updated_promo = await updatePromo({ provider_base_id, promo, user, claimed_by_users });
 
-  let data = { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
+  let data = { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
 
   let claimedMsg = createClaimedMsg({ data, updated_promo, provider_phone_number, provider_booking_url });
 

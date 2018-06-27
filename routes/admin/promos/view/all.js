@@ -6,8 +6,8 @@ let { createMultiGallery } = require('../../../../libs/bots.js');
 let viewAllPromos = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
-  let provider = await getProviderByUserID(messenger_user_id);
-  let provider_base_id = provider.fields['Practice Base ID'];
+  let practice = await getProviderByUserID(messenger_user_id);
+  let practice_base_id = practice.fields['Practice Base ID'];
 
   let promos = await getPracticePromos({ provider_base_id });
 
@@ -18,7 +18,7 @@ let viewAllPromos = async ({ query }, res) => {
   }
 
   let galleryData = promos.map(
-    toGalleryData({ messenger_user_id, provider_base_id })
+    toGalleryData({ messenger_user_id, practice_base_id })
   );
 
   let messages = createMultiGallery(galleryData);

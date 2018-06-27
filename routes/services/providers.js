@@ -29,20 +29,20 @@ let getServiceProviders = async ({ query, params }, res) => {
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
-  let providers = await getProviders(
+  let practices = await getProviders(
     { search_type, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code }
   );
 
-  let providersByService = (providers[0]) ? filterProvidersByService(service_name, providers) : [];
+  let practicesByService = (practices[0]) ? filterProvidersByService(service_name, practices) : [];
 
-  if (!providersByService[0]) {
+  if (!practicesByService[0]) {
     let set_attributes = { service_name }
     let redirect_to_blocks = ['No Service Providers Found'];
     res.send({ set_attributes, redirect_to_blocks });
     return;
   }
 
-  let randomProviders = shuffleArray(providersByService).slice(0, 9).sort(sortProviders).map(
+  let randomProviders = shuffleArray(practicesByService).slice(0, 9).sort(sortProviders).map(
     toGalleryElement({ first_name, last_name, gender, messenger_user_id, service_id })
   );
 

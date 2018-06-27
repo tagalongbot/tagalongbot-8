@@ -23,13 +23,13 @@ let createFindProvidersMsg = ({ service, service_id, messenger_user_id, first_na
 }
 
 let createViewProviderPromosMsg = (service, data) => {
-  let { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id, provider_name } = data;
+  let { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id, practice_name } = data;
 
   let service_name = service.fields['Name'];
 
   let view_provider_promos = createURL(
     `${BASEURL}/services/provider/promos`, 
-    { messenger_user_id, first_name, last_name, gender, service_id, provider_id, provider_base_id }
+    { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id }
   );
 
   let txtMsg = createButtonMessage(

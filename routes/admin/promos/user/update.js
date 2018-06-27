@@ -3,7 +3,7 @@ let { getPracticePromo } = require('../../../../libs/data/practice/promos.js');
 let { getPracticeUser } = require('../../../../libs/data/practice/users.js');
 
 let updateUserPromo = async ({ query }, res) => {
-  let { provider_base_id, promo_id, user_messenger_id } = query;
+  let { practice_base_id, promo_id, user_messenger_id } = query;
   // console.log('user_messenger_id', user_messenger_id); // Added twice to url
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
