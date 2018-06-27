@@ -17,7 +17,7 @@ let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
 router.get(
   '/menu',
-  cache.route(),
+  cache.withTtl('1 hour'),
   handleRoute(getAdminMenu, '[Error] Admin Menu')
 );
 
@@ -33,6 +33,7 @@ router.use(
 
 router.get(
   '/promos/view/manufactured/details',
+  cache.withTtl('1 day'),
   handleRoute(viewManufacturedPromoDetails, '[Error] Viewing Manufactured Promo Details')
 );
 

@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 let handleRoute = require('../middlewares/handleRoute.js');
+let cache = require('../middlewares/cache.js');
 
 let getProviders = require('../routes/providers/providers.js');
 let getProviderServices = require('../routes/providers/services.js');
@@ -16,12 +17,13 @@ router.get(
 );
 
 router.get(
-  '/services', 
+  '/services',
+  cache.withTtl('1 day'),
   handleRoute(getProviderServices, '[Error] Viewing Provider Services')
 );
 
 router.get(
-  '/promos', 
+  '/promos',
   handleRoute(getProviderPromos, '[Error] Viewing Provider Promos')
 );
 
@@ -31,7 +33,7 @@ router.use(
 );
 
 router.get(
-  '/claimed', 
+  '/claimed',
   handleRoute(providerClaimed, '[Error] Checking Claimed Provider')
 );
 

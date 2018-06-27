@@ -18,9 +18,9 @@ let updateExistingUser = async ({ user_email, first_name, last_name, gender, mes
     ['Gender']: gender,
     ['messenger user id']: messenger_user_id,
   }
-  
+
   let updated_user = await updateUser(update_data, user);
-  
+
   return updated_user;
 }
 
