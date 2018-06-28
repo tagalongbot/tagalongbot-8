@@ -1,4 +1,5 @@
-let { PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
+let { PRACTICE_DATABASE_BASE_ID } = process.env;
+
 let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../libs/data.js');
 
 let getPracticeTable = getTable('Practices');
@@ -19,7 +20,7 @@ let getPracticeByUserID = async (messenger_user_id, fields = []) => {
 }
 
 let getPracticeByID = async (practice_id) => {
-  let practice = await findPractice(provider_id);
+  let practice = await findPractice(practice_id);
   return practice;
 }
 
@@ -67,10 +68,10 @@ let filterPracticessByService = (service_name, practices) => {
   return practicesByService;
 }
 
-let sortPractices = (provider1, provider2) => {
-  if (provider1.fields['Active?'] && !provider2.fields['Active?']) return -1;
-  if (provider1.fields['Active?'] && provider2.fields['Active?']) return 0;
-  if (!provider1.fields['Active?']) return 1;
+let sortPractices = (practice1, practice2) => {
+  if (practice1.fields['Active?'] && !practice2.fields['Active?']) return -1;
+  if (practice1.fields['Active?'] && practice2.fields['Active?']) return 0;
+  if (!practice1.fields['Active?']) return 1;
 }
 
 module.exports = {
