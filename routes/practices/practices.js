@@ -14,13 +14,13 @@ let getPractices = async ({ query, params }, res) => {
 	let user = await getUserByMessengerID(messenger_user_id);
 	let new_updated_user = await createOrUpdateUser(user, query);
 
-	let practices = await searchProviders(
+	let practices = await searchPractices(
     { search_type }, 
-    { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code }
+    { search_practices_state, search_practices_city, search_practices_zip_code, search_practice_code }
   );
 
   if (!practices[0]) {
-    let redirect_to_blocks = ['No Providers Found'];
+    let redirect_to_blocks = ['No Practices Found'];
     res.send({ redirect_to_blocks });
     return;
   }

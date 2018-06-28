@@ -29,8 +29,8 @@ let getServicePractices = async ({ query, params }, res) => {
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
-  let practices = await getProviders(
-    { search_type, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code }
+  let practices = await getPractices(
+    { search_type, search_service_practices_state, search_service_practices_city, search_service_practices_zip_code }
   );
 
   let practicesByService = (practices[0]) ? filterPracticesByService(service_name, practices) : [];

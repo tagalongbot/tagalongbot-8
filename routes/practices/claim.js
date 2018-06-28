@@ -46,15 +46,15 @@ let verifyVerificationCode = async ({ query }, res) => {
 let claimPractice = async ({ query }, res) => {
   let { messenger_user_id, practice_id, first_name, user_email, user_phone_number } = query;
 
-  let practice = await getProviderByID(provider_id);
+  let practice = await getPracticeByID(practice_id);
 
   if (!practice) {
-    let redirect_to_blocks = ['(Claim) Provider Not Available'];
+    let redirect_to_blocks = ['(Claim) Practice Not Available'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let updatedPractice = await updatePractice({ messenger_user_id, user_email, user_phone_number, practice: provider });
+  let updatedPractice = await updatePractice({ messenger_user_id, user_email, user_phone_number, practice });
 
   let msg = createUpdateMsg({ practice: practice, first_name });
 
@@ -64,7 +64,7 @@ let claimPractice = async ({ query }, res) => {
 
 router.get(
   '/user_info', 
-  handleRoute(askForUserInfo, '[Error] Claiming Provider')
+  handleRoute(askForUserInfo, '[Error] Claiming Practice')
 );
 
 router.get(
@@ -79,7 +79,7 @@ router.get(
 
 router.get(
   '/', 
-  handleRoute(claimPractice, '[Error] Claiming Provider')
+  handleRoute(claimPractice, '[Error] Claiming Practice')
 );
 
 module.exports = router;

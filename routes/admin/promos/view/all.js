@@ -6,10 +6,10 @@ let { createMultiGallery } = require('../../../../libs/bots.js');
 let viewAllPromos = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
-  let practice = await getProviderByUserID(messenger_user_id);
+  let practice = await getPracticeByUserID(messenger_user_id);
   let practice_base_id = practice.fields['Practice Base ID'];
 
-  let promos = await getPracticePromos({ provider_base_id });
+  let promos = await getPracticePromos({ practice_base_id });
 
   if (!promos[0]) {
     let redirect_to_blocks = ['No Promotions Setup'];

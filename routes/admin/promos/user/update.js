@@ -6,8 +6,8 @@ let updateUserPromo = async ({ query }, res) => {
   let { practice_base_id, promo_id, user_messenger_id } = query;
   // console.log('user_messenger_id', user_messenger_id); // Added twice to url
 
-  let promo = await getPracticePromo({ provider_base_id, promo_id });
-  let user = await getPracticeUser({ provider_base_id, user_messenger_id });
+  let promo = await getPracticePromo({ practice_base_id, promo_id });
+  let user = await getPracticeUser({ practice_base_id, user_messenger_id });
 
   if (!user) {
     let redirect_to_blocks = ['[Admin Verify Promo] User Does Not Exist'];
@@ -26,7 +26,7 @@ let updateUserPromo = async ({ query }, res) => {
     return;
   }
 
-  let updatedPromo = await updatePromo({ provider_base_id, promo, user_record_id });
+  let updatedPromo = await updatePromo({ practice_base_id, promo, user_record_id });
 
   let msg = createUpdateMsg();
   let messages = [msg];

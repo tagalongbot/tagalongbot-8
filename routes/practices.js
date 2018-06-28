@@ -13,18 +13,18 @@ let listPractice = require('../routes/practices/list.js');
 
 router.get(
   '/search/:search_type',
-  handleRoute(getPractices, '[Error] Searching Providers')
+  handleRoute(getPractices, '[Error] Searching Practices')
 );
 
 router.get(
   '/services',
   cache.withTtl('1 day'),
-  handleRoute(getPracticeServices, '[Error] Viewing Provider Services')
+  handleRoute(getPracticeServices, '[Error] Viewing Practice Services')
 );
 
 router.get(
   '/promos',
-  handleRoute(getPracticePromos, '[Error] Viewing Provider Promos')
+  handleRoute(getPracticePromos, '[Error] Viewing Practice Promos')
 );
 
 router.use(
@@ -34,12 +34,12 @@ router.use(
 
 router.get(
   '/claimed',
-  handleRoute(practiceClaimed, '[Error] Checking Claimed Provider')
+  handleRoute(practiceClaimed, '[Error] Checking Claimed Practice')
 );
 
 router.get(
   '/list',
-  handleRoute(listPractice, '[Error] Listing Provider')
+  handleRoute(listPractice, '[Error] Listing Practice')
 );
 
 module.exports = router;

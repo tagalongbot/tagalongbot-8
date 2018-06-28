@@ -9,14 +9,14 @@ let viewUserPromos = async ({ query }, res) => {
     user_messenger_id, // messenger id of the consumer
   } = query;
 
-  let practice = await getProviderByUserID(messenger_user_id);
+  let practice = await getPracticeByUserID(messenger_user_id);
   let practice_base_id = practice.fields['Practice Base ID'];
 
-  let user = await getPracticeUser({ provider_base_id, user_messenger_id });
+  let user = await getPracticeUser({ practice_base_id, user_messenger_id });
   let user_record_id = user.id;
   let user_name = `${user.fields['First Name']} ${user.fields['Last Name']}`;
 
-  let promos = await getUserPromos({ provider_base_id, user_id: user_record_id });
+  let promos = await getUserPromos({ practice_base_id, user_id: user_record_id });
 
   if (!promos[0]) {
     let redirect_to_blocks = ['[Admin Verify Promo] No User Promos Found'];

@@ -4,9 +4,9 @@ let { getPromo, updatePromo, createUpdateMsg } = require('../../../libs/admin/pr
 let togglePromo = async ({ query }, res) => {
   let { messenger_user_id, promo_id, practice_base_id } = query;
 
-  let practice = await getProviderByUserID(messenger_user_id);
-  let promo = await getPromo({ provider_base_id, promo_id });
-  let updatedPromo = await updatePromo({ provider_base_id, promo });
+  let practice = await getPracticeByUserID(messenger_user_id);
+  let promo = await getPromo({ practice_base_id, promo_id });
+  let updatedPromo = await updatePromo({ practice_base_id, promo });
   
   let updateMsg = createUpdateMsg({ messenger_user_id, promo_id, practice_base_id, promo, updatedPromo });
 

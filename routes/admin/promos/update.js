@@ -53,7 +53,7 @@ let getImageCategories = async ({ query }, res) => {
 let getImagesFromCategory = async ({ query }, res) => {
   let { promo_id, practice_base_id, category_id } = query;
 
-  let promo = await getPracticePromo({ promo_id, provider_base_id });
+  let promo = await getPracticePromo({ promo_id, practice_base_id });
 
   let category = await getCustomCategoryByID({ category_id });
   let category_name = category.fields['Category Name'];
@@ -94,10 +94,10 @@ let updatePromoInfo = async ({ query }, res) => {
   let promo_id = updating_promo_id;
   let practice_base_id = updating_practice_base_id;
 
-  let promo = await getPracticePromo({ provider_base_id, promo_id });
+  let promo = await getPracticePromo({ practice_base_id, promo_id });
 
   let updatedPromo = await updatePromo(
-    { provider_base_id, promo, update_promo_field_name, update_promo_field_value }
+    { practice_base_id, promo, update_promo_field_name, update_promo_field_value }
   );
 
   let updateMsg = createUpdateMsg(

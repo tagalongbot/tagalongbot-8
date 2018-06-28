@@ -8,10 +8,10 @@ let { toGalleryElement } = require('../../libs/promos/promos.js');
 let getPracticesPromos = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id, practice_name } = query;
 
-  let promos = await getPracticePromos({ provider_base_id });  
+  let promos = await getPracticePromos({ practice_base_id });  
 
   if (!promos[0]) {
-    let redirect_to_blocks = ['No Provider Promos Found'];
+    let redirect_to_blocks = ['No Practice Promos Found'];
     res.send({ redirect_to_blocks });
     return;
   }

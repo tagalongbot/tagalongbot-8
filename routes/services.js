@@ -22,7 +22,7 @@ router.get(
 
 router.get(
   '/practice/promos',
-  handleRoute(getServicePracticePromos, '[Error] Viewing Service Provider Promos')
+  handleRoute(getServicePracticePromos, '[Error] Viewing Service Practice Promos')
 );
 
 router.use(

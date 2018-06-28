@@ -24,7 +24,7 @@ router.get(
 router.get(
   '/practice',
   cache.withTtl('1 day'),
-  handleRoute(getPromoPractice, '[Error] Viewing Promo Provider')
+  handleRoute(getPromoPractice, '[Error] Viewing Promo Practice')
 );
 
 router.use(

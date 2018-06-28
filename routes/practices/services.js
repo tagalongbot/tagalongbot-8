@@ -6,14 +6,14 @@ let { createMultiGallery } = require('../../libs/bots.js');
 let getPracticeServices = async ({ query }, res) => {
   let { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id } = query;
 
-  let practice = await getProviderByID(provider_id);
+  let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
   let services = await getAllServices();
 
   let services_from_practice = filterServicesFromPractice({ services, practice });
 
   if (!services_from_practice[0]) {
-    let redirect_to_blocks = ['No Provider Services Found'];
+    let redirect_to_blocks = ['No Practice Services Found'];
     res.send({ redirect_to_blocks });
     return;
   }

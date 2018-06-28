@@ -20,9 +20,9 @@ let getPromos = async ({ query, params }, res) => {
 
   // Study transducers to improve code
   let practice_promos = await Promise.all(
-    (practices_by_service || practices).map(async (provider) => {
-      let practice_id = provider.id;
-      let practice_base_id = provider.fields['Practice Base ID'];
+    (practices_by_service || practices).map(async (practice) => {
+      let practice_id = practice.id;
+      let practice_base_id = practice.fields['Practice Base ID'];
       let view = 'Active Promos';
       let promos = await getPracticePromos({ practice_base_id, view });
 

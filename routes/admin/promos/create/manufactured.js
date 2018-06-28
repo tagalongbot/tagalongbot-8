@@ -78,7 +78,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
   } = query;
 
   let newPromo = await createNewPromo(
-    { new_promo_id, new_promo_provider_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit }
+    { new_promo_id, new_promo_practice_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit }
   );
 
   let redirect_to_blocks = ['New Manufactured Promo Created'];

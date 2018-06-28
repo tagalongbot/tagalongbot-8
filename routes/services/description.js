@@ -10,7 +10,7 @@ let getServiceDescription = async ({ query, params }, res) => {
   let service_name = service.fields['Name'];
 
   if (show_practices === 'no') {
-    let practice = await getProviderByID(provider_id);
+    let practice = await getPracticeByID(practice_id);
     let practice_name = practice.fields['Practice Name'];    
 
     let msg = createViewPracticePromosMsg(
