@@ -1,7 +1,7 @@
 let { BASEURL, DEFAULT_PROVIDER_IMAGE } = process.env;
 let { createBtn } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
-let { searchProviders } = require('../../libs/data/practices.js);
+let { searchProviders } = require('../../libs/data/providers.js');
 
 let getProviders = async (data) => {
   let { search_type, search_service_providers_state, search_service_providers_city, search_service_providers_zip_code } = data;

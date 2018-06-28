@@ -8,7 +8,7 @@ let getServices = require('../routes/services/services.js');
 let getServiceDescription = require('../routes/services/description.js');
 let getServiceProviderPromos = require('../routes/services/provider/promos.js');
 let getServicePromos = require('../routes/services/promos.js');
-let getServiceProviders = require('../routes/services/practices.js);
+let getServiceProviders = require('../routes/services/providers.js');
 
 router.get(
   '/search/:service_type',

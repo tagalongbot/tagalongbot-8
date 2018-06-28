@@ -2,7 +2,7 @@ let handleRoute = require('../../middlewares/handleRoute.js');
 
 let { isValidPhoneNumber } = require('../../libs/helpers.js');
 
-let { getProviderByID } = require('../../libs/data/practices.js);
+let { getProviderByID } = require('../../libs/data/providers.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 

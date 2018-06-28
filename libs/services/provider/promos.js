@@ -1,7 +1,7 @@
 let { BASEURL } = process.env;
 let { createURL } = require('../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../libs/bots.js');
-let { getProviderByID } = require('../../../libs/data/practices.js);
+let { getProviderByID } = require('../../../libs/data/providers.js');
 let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
 
 let getServicePromos = async ({ service_name, practice_base_id }) => {

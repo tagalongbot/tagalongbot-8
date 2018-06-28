@@ -1,4 +1,4 @@
-let { getPracticeByUserID } = require('../../../../libs/data/practices.js);
+let { getPracticeByUserID } = require('../../../../libs/data/providers.js');
 let { getPracticePromos } = require('../../../../libs/data/practice/promos.js');
 let { toGalleryData } = require('../../../../libs/admin/promos/view/all.js');
 let { createMultiGallery } = require('../../../../libs/bots.js');

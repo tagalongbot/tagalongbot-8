@@ -2,9 +2,9 @@ let { BASEURL, USERS_BASE_ID } = process.env;
 let { createGallery } = require('../../libs/bots.js');
 let { createURL, shuffleArray } = require('../../libs/helpers.js');
 
-let { searchProviders, filterProvidersByService, sortProviders } = require('../../libs/data/practices.js);
+let { searchProviders, filterProvidersByService, sortProviders } = require('../../libs/data/providers.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
-let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/providers/practices.js);
+let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/providers/providers.js');
 
 let getProviders = async ({ query, params }, res) => {
   let { search_type } = params;

@@ -3,9 +3,9 @@ let handleRoute = require('../../middlewares/handleRoute.js');
 let { shuffleArray } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
 let { getServiceByID } = require('../../libs/data/services.js');
-let { sortProviders, filterProvidersByService } = require('../../libs/data/practices.js);
-let { getProviders, toGalleryElement } = require('../../libs/services/practices.js);
-let { createLastGalleryElement } = require('../../libs/providers/practices.js);
+let { sortProviders, filterProvidersByService } = require('../../libs/data/providers.js');
+let { getProviders, toGalleryElement } = require('../../libs/services/providers.js');
+let { createLastGalleryElement } = require('../../libs/providers/providers.js');
 
 let express = require('express');
 let router = express.Router();

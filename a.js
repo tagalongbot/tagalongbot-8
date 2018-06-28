@@ -1,4 +1,3 @@
-let { getPracticeByID } = require('../../libs/data/practices.js);
-let { getPracticeByID } = require('../../../libs/data/practices.js);
+let { getPracticeByID } = require('../../libs/data/providers.js');
 
-console.log('practices.js);
+console.log('providers.js');
