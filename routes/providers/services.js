@@ -1,4 +1,4 @@
-let { getProviderByID } = require('../../libs/data/providers.js');
+let { getProviderByID } = require('../../libs/data/practices.js);
 let { getAllServices, filterServicesFromProvider } = require('../../libs/data/services.js');
 let { toGalleryElement } = require('../../libs/providers/services.js');
 let { createMultiGallery } = require('../../libs/bots.js');

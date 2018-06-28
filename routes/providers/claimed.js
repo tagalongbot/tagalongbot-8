@@ -1,4 +1,4 @@
-let { getPracticeByUserID } = require('../../libs/data/providers.js');
+let { getPracticeByUserID } = require('../../libs/data/practices.js);
 
 let sendProviderClaimedMsg = async ({ query }, res) => {
   let { messenger_user_id } = query;
