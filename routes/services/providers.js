@@ -3,9 +3,9 @@ let handleRoute = require('../../middlewares/handleRoute.js');
 let { shuffleArray } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
 let { getServiceByID } = require('../../libs/data/services.js');
-let { sortProviders, filterProvidersByService } = require('../../libs/data/providers.js');
-let { getProviders, toGalleryElement } = require('../../libs/services/providers.js');
-let { createLastGalleryElement } = require('../../libs/providers/providers.js');
+let { sortPractices, filterProvidersByService } = require('../../libs/data/practices.js');
+let { getPractices, toGalleryElement } = require('../../libs/services/practices.js');
+let { createLastGalleryElement } = require('../../libs/providers/practices.js');
 
 let express = require('express');
 let router = express.Router();
@@ -20,7 +20,7 @@ let searchServiceProviders = async ({ query }, res) => {
   res.send({ set_attributes, redirect_to_blocks });
 }
 
-let getServiceProviders = async ({ query, params }, res) => {
+let getServicePractices = async ({ query, params }, res) => {
   let { search_type } = params;
 
   let { messenger_user_id, first_name, last_name, gender } = query;
@@ -42,7 +42,7 @@ let getServiceProviders = async ({ query, params }, res) => {
     return;
   }
 
-  let randomProviders = shuffleArray(practicesByService).slice(0, 9).sort(sortProviders).map(
+  let randomProviders = shuffleArray(practicesByService).slice(0, 9).sort(sortPractices).map(
     toGalleryElement({ first_name, last_name, gender, messenger_user_id, service_id })
   );
 
@@ -60,7 +60,7 @@ router.get(
 
 router.get(
   '/:search_type', 
-  handleRoute(getServiceProviders, '[Error] Searching Service Providers')
+  handleRoute(getServicePractices, '[Error] Searching Service Providers')
 );
 
 module.exports = router;

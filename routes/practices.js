@@ -4,7 +4,7 @@ let router = express.Router();
 let handleRoute = require('../middlewares/handleRoute.js');
 let cache = require('../middlewares/cache.js');
 
-let getProviders = require('../routes/providers/providers.js');
+let getPractices = require('../routes/providers/practices.js');
 let getProviderServices = require('../routes/providers/services.js');
 let getProviderPromos = require('../routes/providers/promos.js');
 let claimProvider = require('../routes/providers/claim.js');
@@ -13,7 +13,7 @@ let listProvider = require('../routes/providers/list.js');
 
 router.get(
   '/search/:search_type',
-  handleRoute(getProviders, '[Error] Searching Providers')
+  handleRoute(getPractices, '[Error] Searching Providers')
 );
 
 router.get(

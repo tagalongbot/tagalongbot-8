@@ -2,8 +2,8 @@ let handleRoute = require('../../middlewares/handleRoute.js');
 
 let { flattenArray, shuffleArray } = require('../../libs/helpers.js');
 let { getServiceByID } = require('../../libs/data/services.js');
-let { getProviders } = require('../../libs/services/promos.js');
-let { filterProvidersByService } = require('../../libs/data/providers.js');
+let { getPractices } = require('../../libs/services/promos.js');
+let { filterProvidersByService } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/promos/promos.js');
 let { createGallery } = require('../../libs/bots.js');

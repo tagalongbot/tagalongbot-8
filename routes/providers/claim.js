@@ -3,7 +3,7 @@ let handleRoute = require('../../middlewares/handleRoute.js');
 let { isValidPhoneNumber } = require('../../libs/helpers.js');
 
 let { sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
-let { getProviderByID } = require('../../libs/data/providers.js');
+let { getPracticeByID } = require('../../libs/data/practices.js');
 let { updatePractice, createUpdateMsg } = require('../../libs/providers/claim.js');
 
 let express = require('express');

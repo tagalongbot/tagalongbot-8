@@ -2,11 +2,11 @@ let { BASEURL } = process.env;
 let { createURL, localizeDate } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 let { getTable, getAllDataFromTable } = require('../../libs/data.js');
-let { searchProviders } = require('../../libs/data/providers.js');
+let { searchProviders } = require('../../libs/data/practices.js');
 
 let getPromosTable = getTable('Promos');
 
-let getProviders = async ({ search_promos_state, search_promos_city, search_promos_zip_code, search_type }) => {
+let getPractices = async ({ search_promos_state, search_promos_city, search_promos_zip_code, search_type }) => {
   let search_providers_state = search_promos_state;
   let search_providers_city = search_promos_city;
   let search_providers_zip_code = search_promos_zip_code;
@@ -52,7 +52,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 }
 
 module.exports = {
-  getProviders,
+  getPractices,
   filterPromosByService,
   toGalleryElement,
 }

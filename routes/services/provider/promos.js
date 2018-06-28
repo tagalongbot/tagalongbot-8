@@ -1,4 +1,4 @@
-let { getProviderByID } = require('../../../libs/data/providers.js');
+let { getPracticeByID } = require('../../../libs/data/practices.js');
 let { getServiceByID } = require('../../../libs/data/services.js');
 let { getServicePromos, createNoPromosMsg } = require('../../../libs/services/provider/promos.js');
 let { toGalleryElement } = require('../../../libs/promos/promos.js');

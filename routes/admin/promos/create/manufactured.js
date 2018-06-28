@@ -1,7 +1,7 @@
 let handleRoute = require('../../../../middlewares/handleRoute.js');
 
 let { createGallery, createMultiGallery } = require('../../../../libs/bots.js');
-let { getPracticeByUserID } = require('../../../../libs/data/providers.js');
+let { getPracticeByUserID } = require('../../../../libs/data/practices.js');
 let { getServiceByID, getAllServices, filterServicesFromProvider } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 

@@ -1,4 +1,4 @@
-let { getPracticeByUserID } = require('../../../libs/data/providers.js');
+let { getPracticeByUserID } = require('../../../libs/data/practices.js');
 let { getPromo, updatePromo, createUpdateMsg } = require('../../../libs/admin/promos/toggle.js');
 
 let togglePromo = async ({ query }, res) => {

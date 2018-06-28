@@ -1,9 +1,9 @@
 let { createGallery } = require('../../libs/bots.js');
 let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 
-let { filterProvidersByService } = require('../../libs/data/providers.js');
+let { filterProvidersByService } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
-let { getProviders, filterPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
+let { getPractices, filterPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
 
 let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;

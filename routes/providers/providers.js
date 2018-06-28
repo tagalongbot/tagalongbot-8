@@ -2,11 +2,11 @@ let { BASEURL, USERS_BASE_ID } = process.env;
 let { createGallery } = require('../../libs/bots.js');
 let { createURL, shuffleArray } = require('../../libs/helpers.js');
 
-let { searchProviders, filterProvidersByService, sortProviders } = require('../../libs/data/providers.js');
+let { searchProviders, filterProvidersByService, sortPractices } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
-let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/providers/providers.js');
+let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/providers/practices.js');
 
-let getProviders = async ({ query, params }, res) => {
+let getPractices = async ({ query, params }, res) => {
   let { search_type } = params;
   let { messenger_user_id, first_name, last_name, gender, service_name } = query;
   let { search_providers_state, search_providers_city, search_providers_zip_code, search_provider_code } = query;
@@ -27,7 +27,7 @@ let getProviders = async ({ query, params }, res) => {
 
   if (service_name) practices = filterProvidersByService(service_name, practices);
 
-  let randomProviders = shuffleArray(practices).slice(0, 9).sort(sortProviders).map(
+  let randomProviders = shuffleArray(practices).slice(0, 9).sort(sortPractices).map(
     toGalleryElement({ first_name, last_name, gender, messenger_user_id })
   );
 
@@ -39,4 +39,4 @@ let getProviders = async ({ query, params }, res) => {
 	res.send({ messages });
 }
 
-module.exports = getProviders;
+module.exports = getPractices;
