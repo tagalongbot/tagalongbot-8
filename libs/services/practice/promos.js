@@ -6,7 +6,7 @@ let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
 
 let getServicePromos = async ({ service_name, practice_base_id }) => {
   let view = 'Active Promos';
-  let promos = await getPracticePromos({ provider_base_id, view });
+  let promos = await getPracticePromos({ practice_base_id, view });
 
   let lower_cased_service_name = service_name.toLowerCase();
   let matched_promos = promos.filter(

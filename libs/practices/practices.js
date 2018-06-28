@@ -1,4 +1,4 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PROVIDER_IMAGE, SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL } = process.env;
+let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PRACTICE_IMAGE, SEARCH_PRACTICES_MORE_OPTIONS_IMAGE_URL } = process.env;
 
 let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
@@ -69,12 +69,12 @@ let createButtons = (practice, data) => {
 
   if (is_practice_active) {
     let view_services_btn_url = createURL(
-      `${BASEURL}/providers/services`,
+      `${BASEURL}/practices/services`,
       { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
     );
 
     let view_promos_btn_url = createURL(
-      `${BASEURL}/providers/promos`,
+      `${BASEURL}/practices/promos`,
       { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }  
     );
 
@@ -86,7 +86,7 @@ let createButtons = (practice, data) => {
 
   if (!is_practice_claimed) {
     let claim_practice_url = createURL(
-      `${BASEURL}/providers/claim/user_info`,
+      `${BASEURL}/practices/claim/user_info`,
       { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
     );
 
@@ -99,7 +99,7 @@ let createButtons = (practice, data) => {
     let { messenger_user_id } = data;
 
     let already_claimed_url = createURL(
-      `${BASEURL}/providers/claimed`,
+      `${BASEURL}/practices/claimed`,
       { messenger_user_id }
     );
 
@@ -137,7 +137,7 @@ let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
 
   let title = practice['Practice Name'].slice(0, 80);
   let subtitle = `${practice['Main Provider']} | ${practice['Practice Address']}`;
-  let image_url = practice['Main Provider Image'] ? practice['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
+  let image_url = practice['Main Provider Image'] ? practice['Main Provider Image'][0].url : DEFAULT_PRACTICE_IMAGE;
 
   let practice_base_id = practice['Practice Base ID'];
   let buttons = createButtons(
@@ -151,7 +151,7 @@ let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
 
 let createLastGalleryElement = () => {
   let title = 'More Options';
-  let image_url = SEARCH_PROVIDERS_MORE_OPTIONS_IMAGE_URL;
+  let image_url = SEARCH_PRACTICES_MORE_OPTIONS_IMAGE_URL;
 
   // Buttons
   let btn1 = createBtn(`List My Practice|show_block|List Practice`);

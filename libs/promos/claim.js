@@ -8,29 +8,29 @@ let { getTable, createTableData, updateTableData } = require('../../libs/data.js
 
 let getPromosTable = getTable('Promos');
 
-let createUserData = ({ messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code }) => {
+let createUserData = ({ messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }) => {
   let user_data = {
     'messenger user id': messenger_user_id,
     'First Name': first_name,
     'Last Name': last_name,
     'Gender': gender.toLowerCase(),
-    'State': provider_state.toLowerCase(),
-    'City': provider_city.toLowerCase(),
-    'Zip Code': Number(provider_zip_code),
+    'State': practice_state.toLowerCase(),
+    'City': practice_city.toLowerCase(),
+    'Zip Code': Number(practice_zip_code),
   }
 
   return user_data;
 }
 
-let updateUserFromAllUsersBase = async ({ user, user_email, user_data, provider_id }) => {
-  let provider_ids = (user.fields['Practices Claimed Promos From'] || '').split(',');
+let updateUserFromAllUsersBase = async ({ user, user_email, user_data, practice_id }) => {
+  let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',');
 
-  let new_provider_ids = [
-    ...new Set([provider_id, ...provider_ids])
+  let new_practice_ids = [
+    ...new Set([practice_id, ...practice_ids])
   ];
 
   let updateUserData = { 
-    ['Practices Claimed Promos From']: new_provider_ids.join(','),
+    ['Practices Claimed Promos From']: new_practice_ids.join(','),
     ['Email Address']: user_email, 
     ...user_data 
   }
@@ -41,8 +41,8 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_data, provider_
 }
 
 // Exposed Functions
-let updatePromo = async ({ provider_base_id, promo, user, claimed_by_users }) => {
-  let promosTable = getPromosTable(provider_base_id);
+let updatePromo = async ({ practice_base_id, promo, user, claimed_by_users }) => {
+  let promosTable = getPromosTable(practice_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
 
   let new_claimed_users = [
@@ -59,43 +59,43 @@ let updatePromo = async ({ provider_base_id, promo, user, claimed_by_users }) =>
 }
 
 // Refactor Data Clump
-let createOrUpdateUser = async (data, { id: provider_id, fields: provider }) => {
+let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => {
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
 
-  let provider_base_id = provider['Practice Base ID'];
-  let provider_state = provider['Practice State'];
-  let provider_city = provider['Practice City'];
-  let provider_zip_code = provider['Practice Zip Code'];
+  let practice_base_id = practice['Practice Base ID'];
+  let practice_state = practice['Practice State'];
+  let practice_city = practice['Practice City'];
+  let practice_zip_code = practice['Practice Zip Code'];
 
   let user_messenger_id = messenger_user_id;
   let user = await getUserByMessengerID(messenger_user_id);
-  let practice_user = await getPracticeUser({ user_messenger_id, provider_base_id });
+  let practice_user = await getPracticeUser({ user_messenger_id, practice_base_id });
 
   let user_data = createUserData(
-    { messenger_user_id, first_name, last_name, gender, provider_state, provider_city, provider_zip_code }
+    { messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }
   );
 
-  let updated_user = await updateUserFromAllUsersBase({ user, user_email, user_data, provider_id });
+  let updated_user = await updateUserFromAllUsersBase({ user, user_email, user_data, practice_id });
 
   if (!practice_user) {
-    let newUser = await createPracticeUser({ provider_base_id, user_data });
+    let newUser = await createPracticeUser({ practice_base_id, user_data });
     return newUser;
   }
 
-  let updated_practice_user = await updatePracticeUser({ provider_base_id, user_data, practice_user });
+  let updated_practice_user = await updatePracticeUser({ practice_base_id, user_data, practice_user });
   return updated_practice_user;
 }
 
-let createClaimedMsg = ({ data, updated_promo, provider_phone_number, provider_booking_url }) => {
-  let { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
+let createClaimedMsg = ({ data, updated_promo, practice_phone_number, practice_booking_url }) => {
+  let { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
 
-  let view_provider_url = createURL(
-    `${BASEURL}/promos/provider`, 
-    { provider_id, provider_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
+  let view_practice_url = createURL(
+    `${BASEURL}/promos/practice`, 
+    { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
-  let btn1 = `View Provider|json_plugin_url|${view_provider_url}`;
-  let btn2 = (provider_booking_url) ? `View Booking Site|web_url|${provider_booking_url}` : `Call Provider|phone_number|${provider_phone_number}`;
+  let btn1 = `View Provider|json_plugin_url|${view_practice_url}`;
+  let btn2 = (practice_booking_url) ? `View Booking Site|web_url|${practice_booking_url}` : `Call Provider|phone_number|${practice_phone_number}`;
   let btn3 = `Main Menu|show_block|Discover Main Menu`;
   
   let msg = createButtonMessage(

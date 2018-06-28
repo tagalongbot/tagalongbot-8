@@ -17,7 +17,7 @@ let createDetailsMsg = (promo, data, { is_claimed }) => {
   }
 
   let view_practice_url = createURL(
-    `${BASEURL}/promos/provider`, 
+    `${BASEURL}/promos/practice`, 
     { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 

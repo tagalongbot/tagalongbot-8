@@ -10,9 +10,9 @@ let getPractices = async (data) => {
   let search_practices_city = search_service_practices_city;
   let search_practices_zip_code = search_service_practices_zip_code;
   
-  let practices = await searchProviders(
+  let practices = await searchPractices(
     { search_type },
-    { search_providers_state, search_providers_city, search_providers_zip_code }
+    { search_practices_state, search_practices_city, search_practices_zip_code }
   );
   
   return practices;
@@ -28,7 +28,7 @@ let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
   let practice_base_id = practice['Practice Base ID'];
 
   let view_service_promos_url = createURL(
-    `${BASEURL}/services/provider/promos`,
+    `${BASEURL}/services/practice/promos`,
     { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id }
   );
 

@@ -13,14 +13,14 @@ let router = express.Router();
 let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
-  let practice = await getProviderByUserID(messenger_user_id);
+  let practice = await getPracticeByUserID(messenger_user_id);
   let practice_id = practice.id;
   let practice_base_id = practice.fields['Practice Base ID'];
 
   let services = await getAllServices();
   let practice_services = filterServicesFromPractice({ services, practice });
 
-  let services_with_promos = await getServicesWithPromos({ services: provider_services });
+  let services_with_promos = await getServicesWithPromos({ services: practice_services });
 
   let galleryData = services_with_promos.map(
     toServicesGallery({ practice_id, practice_base_id })

@@ -44,7 +44,7 @@ let createNewPromo = async (data) => {
     ['Total Used']: 0,
   }
 
-  let newPromo = await createPracticePromo({ provider_base_id: new_promo_provider_base_id, promo_data });
+  let newPromo = await createPracticePromo({ practice_base_id: new_promo_practice_base_id, promo_data });
 
   return newPromo;
 }

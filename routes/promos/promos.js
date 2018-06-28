@@ -21,15 +21,15 @@ let getPromos = async ({ query, params }, res) => {
   // Study transducers to improve code
   let practice_promos = await Promise.all(
     (practices_by_service || practices).map(async (provider) => {
-      let practic = provider.id;
-      let provider_base_id = provider.fields['Practice Base ID'];
+      let practice_id = provider.id;
+      let practice_base_id = provider.fields['Practice Base ID'];
       let view = 'Active Promos';
-      let promos = await getPracticePromos({ provider_base_id, view });
+      let promos = await getPracticePromos({ practice_base_id, view });
 
       let matching_promos = (service_name) ? filterPromosByService({ service_name, promos }) : promos;
 
       return matching_promos.map(
-        toGalleryElement({ messenger_user_id, practic, provider_base_id, first_name, last_name, gender })
+        toGalleryElement({ messenger_user_id, practice_id, practice_base_id, first_name, last_name, gender })
       );
     })
   );

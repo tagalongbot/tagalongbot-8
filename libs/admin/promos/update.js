@@ -56,7 +56,7 @@ let updatePromo = async ({ practice_base_id, promo, update_promo_field_name, upd
     [update_promo_field_name]: createPromoFieldValue({ update_promo_field_name, update_promo_field_value })
   }
 
-  let updatedPromo = await updatePracticePromo({ provider_base_id, promo_data, promo });
+  let updatedPromo = await updatePracticePromo({ practice_base_id, promo_data, promo });
   return updatedPromo;
 }
 
