@@ -6,11 +6,11 @@ let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/
 
 let createNewUserData = (data) => {
   let { messenger_user_id, first_name, last_name, gender } = data;
-  let { search_providers_state, search_providers_city, search_providers_zip_code } = data;
+  let { search_practices_state, search_practices_city, search_practices_zip_code } = data;
 
-  let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;
-  let last_city_searched = search_providers_city ? search_providers_city.trim().toLowerCase() : null;
-  let last_zip_code_searched = search_providers_zip_code ? Number(search_providers_zip_code.trim()) : null;
+  let last_state_searched = search_practices_state ? search_practices_state.trim().toLowerCase() : null;
+  let last_city_searched = search_practices_city ? search_practices_city.trim().toLowerCase() : null;
+  let last_zip_code_searched = search_practices_zip_code ? Number(search_practices_zip_code.trim()) : null;
 
   let new_user_data = {
     'messenger user id': messenger_user_id,
@@ -26,12 +26,12 @@ let createNewUserData = (data) => {
   return new_user_data;
 }
 
-let createUpdateUserData = ({ search_providers_state, search_providers_city, search_providers_zip_code }) => {
+let createUpdateUserData = ({ search_practices_state, search_practices_city, search_practices_zip_code }) => {
   let update_user_data = {};
 
-  let last_state_searched = search_providers_state ? search_providers_state.trim().toLowerCase() : null;
-  let last_city_searched = search_providers_city ? search_providers_city.trim().toLowerCase() : null;
-  let last_zip_code_searched = search_providers_zip_code ? Number(search_providers_zip_code.trim()) : null;
+  let last_state_searched = search_practices_state ? search_practices_state.trim().toLowerCase() : null;
+  let last_city_searched = search_practices_city ? search_practices_city.trim().toLowerCase() : null;
+  let last_zip_code_searched = search_practices_zip_code ? Number(search_practices_zip_code.trim()) : null;
 
   if (last_state_searched) update_user_data['Last State Searched'] = last_state_searched;
   if (last_city_searched) update_user_data['Last City Searched'] = last_city_searched;
@@ -42,11 +42,11 @@ let createUpdateUserData = ({ search_providers_state, search_providers_city, sea
 
 let createOrUpdateUser = async (user, query) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
-  let { search_providers_state, search_providers_city, search_providers_zip_code } = query;
+  let { search_practices_state, search_practices_city, search_practices_zip_code } = query;
 
   if (!user) {
     let new_user_data = createNewUserData(
-      { search_providers_state, search_providers_city, search_providers_zip_code, messenger_user_id, first_name, last_name, gender }
+      { search_practices_state, search_practices_city, search_practices_zip_code, messenger_user_id, first_name, last_name, gender }
     );
 
 		let newUser = await createUser(new_user_data);
@@ -54,7 +54,7 @@ let createOrUpdateUser = async (user, query) => {
 	}
 
   let update_user_data = createUpdateUserData(
-    { search_providers_state, search_providers_city, search_providers_zip_code }
+    { search_practices_state, search_practices_city, search_practices_zip_code }
   );
 
   let updatedUser = await updateUser(update_user_data, user);
@@ -64,10 +64,10 @@ let createOrUpdateUser = async (user, query) => {
 let createButtons = (practice, data) => {
   let { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id } = data;
 
-  let is_provider_active = practice['Active?'];
-  let is_provider_claimed = practice['Claimed?'];
+  let is_practice_active = practice['Active?'];
+  let is_practice_claimed = practice['Claimed?'];
 
-  if (is_provider_active) {
+  if (is_practice_active) {
     let view_services_btn_url = createURL(
       `${BASEURL}/providers/services`,
       { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
@@ -84,7 +84,7 @@ let createButtons = (practice, data) => {
     return [btn1, btn2];
   }
 
-  if (!is_provider_claimed) {
+  if (!is_practice_claimed) {
     let claim_practice_url = createURL(
       `${BASEURL}/providers/claim/user_info`,
       { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
@@ -95,7 +95,7 @@ let createButtons = (practice, data) => {
     return [btn];
   }
 
-  if (is_provider_claimed && !is_provider_active) {
+  if (is_practice_claimed && !is_practice_active) {
     let { messenger_user_id } = data;
 
     let already_claimed_url = createURL(
@@ -111,21 +111,21 @@ let createButtons = (practice, data) => {
 
 // Booking Site and Site URL Only
 let createButtons2 = (practice, data) => {
-  let is_provider_active = practice['Active?'];
-  let is_provider_claimed = practice['Claimed?'];
+  let is_practice_active = practice['Active?'];
+  let is_practice_claimed = practice['Claimed?'];
 
-  let view_provider_site_url = practice['Practice Website'];
-  let view_provider_book_url = practice['Practice Booking URL'];
+  let view_practice_site_url = practice['Practice Website'];
+  let view_practice_book_url = practice['Practice Booking URL'];
 
   let btns = [];
 
-  if (view_provider_site_url) {
-    let btn = createBtn(`Visit Provider Site|web_url|${view_provider_site_url}`);
+  if (view_practice_site_url) {
+    let btn = createBtn(`Visit Provider Site|web_url|${view_practice_site_url}`);
     btns.push(btn);
   }
 
-  if (view_provider_book_url) {
-    let btn = createBtn(`Visit Booking Site|web_url|${view_provider_book_url}`);
+  if (view_practice_book_url) {
+    let btn = createBtn(`Visit Booking Site|web_url|${view_practice_book_url}`);
     btns.push(btn);
   }
 

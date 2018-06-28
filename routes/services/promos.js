@@ -3,7 +3,7 @@ let handleRoute = require('../../middlewares/handleRoute.js');
 let { flattenArray, shuffleArray } = require('../../libs/helpers.js');
 let { getServiceByID } = require('../../libs/data/services.js');
 let { getPractices } = require('../../libs/services/promos.js');
-let { filterProvidersByService } = require('../../libs/data/practices.js');
+let { filterPracticesByService } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/promos/promos.js');
 let { createGallery } = require('../../libs/bots.js');
@@ -34,7 +34,7 @@ let getServicePromos = async ({ query, params }, res) => {
     { search_type, search_service_promos_state, search_service_promos_city, search_service_promos_zip_code }
   );
 
-  let practices_with_service = (practices[0]) ? filterProvidersByService(service_name, practices) : [];
+  let practices_with_service = (practices[0]) ? filterPracticesByService(service_name, practices) : [];
 
   let practice_promos = practices_with_service.map(async practice => {
     let practice_id = practice.id;

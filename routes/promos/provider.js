@@ -5,7 +5,7 @@ let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/providers/practices.js');
 
-let getPromoProvider = async ({ query }, res) => {
+let getPromoPractice = async ({ query }, res) => {
   let { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
 
   let promo = await getPracticePromo({ practice_base_id, promo_id });
@@ -33,4 +33,4 @@ let getPromoProvider = async ({ query }, res) => {
   res.send({ messages });
 }
 
-module.exports = getPromoProvider;
+module.exports = getPromoPractice;

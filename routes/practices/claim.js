@@ -43,7 +43,7 @@ let verifyVerificationCode = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-let claimProvider = async ({ query }, res) => {
+let claimPractice = async ({ query }, res) => {
   let { messenger_user_id, practice_id, first_name, user_email, user_phone_number } = query;
 
   let practice = await getProviderByID(provider_id);
@@ -79,7 +79,7 @@ router.get(
 
 router.get(
   '/', 
-  handleRoute(claimProvider, '[Error] Claiming Provider')
+  handleRoute(claimPractice, '[Error] Claiming Provider')
 );
 
 module.exports = router;

@@ -31,13 +31,13 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
     { practice_id, practice_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
-  let view_promo_provider_url = createURL(
+  let view_promo_practice_url = createURL(
     `${BASEURL}/promos/provider`,
     { practice_id, practice_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let btn1 = createBtn(`View Promo Info|json_plugin_url|${view_promo_details_url}`);
-  let btn2 = createBtn(`View Promo Provider|json_plugin_url|${view_promo_provider_url}`);
+  let btn2 = createBtn(`View Promo Provider|json_plugin_url|${view_promo_practice_url}`);
   let btn3 = createBtn(`Get My User ID|show_block|Get User ID`);
 
   let buttons = [btn1, btn2, btn3];

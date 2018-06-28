@@ -1,7 +1,7 @@
 let { createGallery } = require('../../libs/bots.js');
 let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 
-let { filterProvidersByService } = require('../../libs/data/practices.js');
+let { filterPracticesByService } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 let { getPractices, filterPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
 
@@ -16,7 +16,7 @@ let getPromos = async ({ query, params }, res) => {
     { search_promos_state, search_promos_city, search_promos_zip_code, search_type }
   );
 
-  let practices_by_service = (service_name) ? filterProvidersByService(service_name, practices) : null;
+  let practices_by_service = (service_name) ? filterPracticesByService(service_name, practices) : null;
 
   // Study transducers to improve code
   let practice_promos = await Promise.all(

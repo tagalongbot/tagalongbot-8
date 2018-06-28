@@ -25,8 +25,8 @@ let getPracticeByID = async (practice_id) => {
 }
 
 let updatePractice = async (updateData, practice) => {
-  let updatedProvider = updatePracticeFromTable(updateData, practice);
-  return updatedProvider;
+  let updatedPractice = updatePracticeFromTable(updateData, practice);
+  return updatedPractice;
 }
 
 let getPracticesByState = async ({ state_name, active }) => {

@@ -2,14 +2,14 @@ let { BASEURL } = process.env;
 let { createURL, localizeDate } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 let { getTable, getAllDataFromTable } = require('../../libs/data.js');
-let { searchProviders } = require('../../libs/data/practices.js');
+let { searchPractices } = require('../../libs/data/practices.js');
 
 let getPromosTable = getTable('Promos');
 
 let getPractices = async ({ search_promos_state, search_promos_city, search_promos_zip_code, search_type }) => {
-  let search_providers_state = search_promos_state;
-  let search_providers_city = search_promos_city;
-  let search_providers_zip_code = search_promos_zip_code;
+  let search_practices_state = search_promos_state;
+  let search_practices_city = search_promos_city;
+  let search_practices_zip_code = search_promos_zip_code;
 
   let practices = await searchProviders(
     { search_type, active: true },

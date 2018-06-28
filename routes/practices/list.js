@@ -24,7 +24,7 @@ let updateExistingUser = async ({ user_email, first_name, last_name, gender, mes
   return updated_user;
 }
 
-let listProvider = async({ query }, res) => {
+let listPractice = async({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, user_email } = query;
 
   let user = await getUserByMessengerID(messenger_user_id);
@@ -40,4 +40,4 @@ let listProvider = async({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-module.exports = listProvider;
+module.exports = listPractice;

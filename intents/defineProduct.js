@@ -1,5 +1,5 @@
 let { getService } = require('../libs/intents/defineProduct.js');
-let { createFindProvidersMsg } = require('../libs/services/description.js');
+let { createFindPracticesMsg } = require('../libs/services/description.js');
 
 let defineProduct = async({ res, parameters, user }) => {
   let { brand_name, procedure } = parameters;
@@ -16,7 +16,7 @@ let defineProduct = async({ res, parameters, user }) => {
 
   let service_id = service.id;
 
-  let msg = createFindProvidersMsg({ service, service_id, messenger_user_id, first_name, last_name, gender });
+  let msg = createFindPracticesMsg({ service, service_id, messenger_user_id, first_name, last_name, gender });
 
   let messages = [msg];
   res.send({ messages });

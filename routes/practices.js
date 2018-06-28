@@ -5,11 +5,11 @@ let handleRoute = require('../middlewares/handleRoute.js');
 let cache = require('../middlewares/cache.js');
 
 let getPractices = require('../routes/providers/practices.js');
-let getProviderServices = require('../routes/providers/services.js');
-let getProviderPromos = require('../routes/providers/promos.js');
-let claimProvider = require('../routes/providers/claim.js');
+let getPracticeServices = require('../routes/providers/services.js');
+let getPracticePromos = require('../routes/providers/promos.js');
+let claimPractice = require('../routes/providers/claim.js');
 let practiceClaimed = require('../routes/providers/claimed.js');
-let listProvider = require('../routes/providers/list.js');
+let listPractice = require('../routes/providers/list.js');
 
 router.get(
   '/search/:search_type',
@@ -19,17 +19,17 @@ router.get(
 router.get(
   '/services',
   cache.withTtl('1 day'),
-  handleRoute(getProviderServices, '[Error] Viewing Provider Services')
+  handleRoute(getPracticeServices, '[Error] Viewing Provider Services')
 );
 
 router.get(
   '/promos',
-  handleRoute(getProviderPromos, '[Error] Viewing Provider Promos')
+  handleRoute(getPracticePromos, '[Error] Viewing Provider Promos')
 );
 
 router.use(
   '/claim',
-  claimProvider,
+  claimPractice,
 );
 
 router.get(
@@ -39,7 +39,7 @@ router.get(
 
 router.get(
   '/list',
-  handleRoute(listProvider, '[Error] Listing Provider')
+  handleRoute(listPractice, '[Error] Listing Provider')
 );
 
 module.exports = router;

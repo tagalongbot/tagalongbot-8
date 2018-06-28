@@ -1,24 +1,24 @@
 let { getPracticeByID } = require('../../libs/data/practices.js');
-let { getAllServices, filterServicesFromProvider } = require('../../libs/data/services.js');
+let { getAllServices, filterServicesFromPractice } = require('../../libs/data/services.js');
 let { toGalleryElement } = require('../../libs/providers/services.js');
 let { createMultiGallery } = require('../../libs/bots.js');
 
-let getProviderServices = async ({ query }, res) => {
+let getPracticeServices = async ({ query }, res) => {
   let { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id } = query;
 
   let practice = await getProviderByID(provider_id);
   let practice_name = practice.fields['Practice Name'];
   let services = await getAllServices();
 
-  let services_from_provider = filterServicesFromProvider({ services, practice });
+  let services_from_practice = filterServicesFromPractice({ services, practice });
 
-  if (!services_from_provider[0]) {
+  if (!services_from_practice[0]) {
     let redirect_to_blocks = ['No Provider Services Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let servicesGalleryData = services_from_provider.slice(0, 9).map(
+  let servicesGalleryData = services_from_practice.slice(0, 9).map(
     toGalleryElement({ messenger_user_id, first_name, last_name, gender, practice_id, practice_base_id, practice_name })
   );
 
@@ -28,4 +28,4 @@ let getProviderServices = async ({ query }, res) => {
   res.send({ messages });
 }
 
-module.exports = getProviderServices;
+module.exports = getPracticeServices;

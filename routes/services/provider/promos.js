@@ -4,7 +4,7 @@ let { getServicePromos, createNoPromosMsg } = require('../../../libs/services/pr
 let { toGalleryElement } = require('../../../libs/promos/promos.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
 
-let getServiceProviderPromos = async ({ query }, res) => {
+let getServicePracticePromos = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id } = query;
 
   let practice = await getProviderByID(provider_id);
@@ -35,4 +35,4 @@ let getServiceProviderPromos = async ({ query }, res) => {
   res.send({ messages });
 }
 
-module.exports = getServiceProviderPromos;
+module.exports = getServicePracticePromos;

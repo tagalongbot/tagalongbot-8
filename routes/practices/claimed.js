@@ -1,6 +1,6 @@
 let { getPracticeByUserID } = require('../../libs/data/practices.js');
 
-let sendProviderClaimedMsg = async ({ query }, res) => {
+let sendPracticeClaimedMsg = async ({ query }, res) => {
   let { messenger_user_id } = query;
   let practice = getPracticeByUserID(messenger_user_id);
 
@@ -9,4 +9,4 @@ let sendProviderClaimedMsg = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-module.exports = sendProviderClaimedMsg;
+module.exports = sendPracticeClaimedMsg;

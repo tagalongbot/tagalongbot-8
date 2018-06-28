@@ -22,7 +22,7 @@ let getServicesWithPromos = async ({ services }) => {
 }
 
 let createNewPromo = async (data) => {
-  let { new_promo_id, new_promo_provider_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
+  let { new_promo_id, new_promo_practice_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
 
   let service = await getServiceByID({ service_id: new_promo_service_id });
 
