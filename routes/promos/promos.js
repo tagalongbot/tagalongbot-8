@@ -12,7 +12,7 @@ let getPromos = async ({ query, params }, res) => {
   let { service_name, search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = query;
 
   // Handle searching by `promo_code`
-  let practices = await getProviders(
+  let practices = await getPractices(
     { search_promos_state, search_promos_city, search_promos_zip_code, search_type }
   );
 
@@ -20,8 +20,8 @@ let getPromos = async ({ query, params }, res) => {
 
   // Study transducers to improve code
   let practice_promos = await Promise.all(
-    (providers_by_service || providers).map(async (provider) => {
-      let provider_id = provider.id;
+    (practices_by_service || practices).map(async (provider) => {
+      let practic = provider.id;
       let provider_base_id = provider.fields['Practice Base ID'];
       let view = 'Active Promos';
       let promos = await getPracticePromos({ provider_base_id, view });
@@ -29,7 +29,7 @@ let getPromos = async ({ query, params }, res) => {
       let matching_promos = (service_name) ? filterPromosByService({ service_name, promos }) : promos;
 
       return matching_promos.map(
-        toGalleryElement({ messenger_user_id, provider_id, provider_base_id, first_name, last_name, gender })
+        toGalleryElement({ messenger_user_id, practic, provider_base_id, first_name, last_name, gender })
       );
     })
   );
