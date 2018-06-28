@@ -4,7 +4,7 @@ let { createURL, shuffleArray } = require('../../libs/helpers.js');
 
 let { searchPractices, filterPracticesByService, sortPractices } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
-let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/providers/practices.js');
+let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let getPractices = async ({ query, params }, res) => {
   let { search_type } = params;

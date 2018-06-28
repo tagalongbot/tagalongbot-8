@@ -6,7 +6,7 @@ let cache = require('../middlewares/cache.js');
 
 let getPromos = require('../routes/promos/promos.js');
 let getPromoDetails = require('../routes/promos/details.js');
-let getPromoPractice = require('../routes/promos/provider.js');
+let getPromoPractice = require('../routes/promos/practice.js');
 let claimPromotion = require('../routes/promos/claim.js');
 let viewClaimedPromos = require('../routes/promos/view/claimed.js');
 
@@ -22,7 +22,7 @@ router.get(
 );
 
 router.get(
-  '/provider',
+  '/practice',
   cache.withTtl('1 day'),
   handleRoute(getPromoPractice, '[Error] Viewing Promo Provider')
 );

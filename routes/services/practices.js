@@ -5,7 +5,7 @@ let { createGallery } = require('../../libs/bots.js');
 let { getServiceByID } = require('../../libs/data/services.js');
 let { sortPractices, filterPracticesByService } = require('../../libs/data/practices.js');
 let { getPractices, toGalleryElement } = require('../../libs/services/practices.js');
-let { createLastGalleryElement } = require('../../libs/providers/practices.js');
+let { createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let express = require('express');
 let router = express.Router();

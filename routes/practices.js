@@ -4,12 +4,12 @@ let router = express.Router();
 let handleRoute = require('../middlewares/handleRoute.js');
 let cache = require('../middlewares/cache.js');
 
-let getPractices = require('../routes/providers/practices.js');
-let getPracticeServices = require('../routes/providers/services.js');
-let getPracticePromos = require('../routes/providers/promos.js');
-let claimPractice = require('../routes/providers/claim.js');
-let practiceClaimed = require('../routes/providers/claimed.js');
-let listPractice = require('../routes/providers/list.js');
+let getPractices = require('../routes/practices/practices.js');
+let getPracticeServices = require('../routes/practices/services.js');
+let getPracticePromos = require('../routes/practices/promos.js');
+let claimPractice = require('../routes/practices/claim.js');
+let practiceClaimed = require('../routes/practices/claimed.js');
+let listPractice = require('../routes/practices/list.js');
 
 router.get(
   '/search/:search_type',

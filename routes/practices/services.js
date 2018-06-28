@@ -1,6 +1,6 @@
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getAllServices, filterServicesFromPractice } = require('../../libs/data/services.js');
-let { toGalleryElement } = require('../../libs/providers/services.js');
+let { toGalleryElement } = require('../../libs/practices/services.js');
 let { createMultiGallery } = require('../../libs/bots.js');
 
 let getPracticeServices = async ({ query }, res) => {

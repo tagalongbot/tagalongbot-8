@@ -4,7 +4,7 @@ let { isValidPhoneNumber } = require('../../libs/helpers.js');
 
 let { sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
 let { getPracticeByID } = require('../../libs/data/practices.js');
-let { updatePractice, createUpdateMsg } = require('../../libs/providers/claim.js');
+let { updatePractice, createUpdateMsg } = require('../../libs/practices/claim.js');
 
 let express = require('express');
 let router = express.Router();

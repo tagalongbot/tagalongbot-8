@@ -6,7 +6,7 @@ let cache = require('../middlewares/cache.js');
 
 let getServices = require('../routes/services/services.js');
 let getServiceDescription = require('../routes/services/description.js');
-let getServicePracticePromos = require('../routes/services/provider/promos.js');
+let getServicePracticePromos = require('../routes/services/practice/promos.js');
 let getServicePromos = require('../routes/services/promos.js');
 let getServicePractices = require('../routes/services/practices.js');
 
@@ -16,12 +16,12 @@ router.get(
 );
 
 router.get(
-  '/description/:show_providers',
+  '/description/:show_practices',
   handleRoute(getServiceDescription, '[Error] Viewing Service Description')
 );
 
 router.get(
-  '/provider/promos',
+  '/practice/promos',
   handleRoute(getServicePracticePromos, '[Error] Viewing Service Provider Promos')
 );
 
@@ -31,7 +31,7 @@ router.use(
 );
 
 router.use(
-  '/providers',
+  '/practices',
   getServicePractices
 );
 

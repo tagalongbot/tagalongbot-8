@@ -1,6 +1,6 @@
 let { getPracticeByID } = require('../../../libs/data/practices.js');
 let { getServiceByID } = require('../../../libs/data/services.js');
-let { getServicePromos, createNoPromosMsg } = require('../../../libs/services/provider/promos.js');
+let { getServicePromos, createNoPromosMsg } = require('../../../libs/services/practice/promos.js');
 let { toGalleryElement } = require('../../../libs/promos/promos.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
 
