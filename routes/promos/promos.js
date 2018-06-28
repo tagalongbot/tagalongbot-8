@@ -16,10 +16,10 @@ let getPromos = async ({ query, params }, res) => {
     { search_promos_state, search_promos_city, search_promos_zip_code, search_type }
   );
 
-  let providers_by_service = (service_name) ? filterProvidersByService(service_name, practices) : null;
+  let practices_by_service = (service_name) ? filterProvidersByService(service_name, practices) : null;
 
   // Study transducers to improve code
-  let provider_promos = await Promise.all(
+  let practice_promos = await Promise.all(
     (providers_by_service || providers).map(async (provider) => {
       let provider_id = provider.id;
       let provider_base_id = provider.fields['Practice Base ID'];
@@ -35,7 +35,7 @@ let getPromos = async ({ query, params }, res) => {
   );
 
   let randomPromotions = shuffleArray(
-    flattenArray(provider_promos)
+    flattenArray(practice_promos)
   ).slice(0, 10);
 
   if (!randomPromotions[0]) {

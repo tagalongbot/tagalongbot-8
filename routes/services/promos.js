@@ -34,9 +34,9 @@ let getServicePromos = async ({ query, params }, res) => {
     { search_type, search_service_promos_state, search_service_promos_city, search_service_promos_zip_code }
   );
 
-  let providers_with_service = (practices[0]) ? filterProvidersByService(service_name, practices) : [];
+  let practices_with_service = (practices[0]) ? filterProvidersByService(service_name, practices) : [];
 
-  let provider_promos = providers_with_service.map(async practice => {
+  let practice_promos = practices_with_service.map(async practice => {
     let practice_id = practice.id;
     let practice_base_id = practice.fields['Practice Base ID'];
     let promos = await getPracticePromos({ provider_base_id });

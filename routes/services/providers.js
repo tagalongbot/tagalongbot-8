@@ -47,9 +47,9 @@ let getServiceProviders = async ({ query, params }, res) => {
   );
 
   let last_gallery_element = createLastGalleryElement();
-	let providersGallery = createGallery([...randomProviders, last_gallery_element], 'square');
+	let practices_gallery = createGallery([...randomProviders, last_gallery_element], 'square');
   let txtMsg = { text: `Here are some providers I found in Pennsylvania for Facelift` };
-  let messages = [txtMsg, providersGallery];
+  let messages = [txtMsg, practices_gallery];
   res.send({ messages });
 }
 

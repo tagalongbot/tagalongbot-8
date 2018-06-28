@@ -8,7 +8,7 @@ let getProviders = require('../routes/providers/providers.js');
 let getProviderServices = require('../routes/providers/services.js');
 let getProviderPromos = require('../routes/providers/promos.js');
 let claimProvider = require('../routes/providers/claim.js');
-let providerClaimed = require('../routes/providers/claimed.js');
+let practiceClaimed = require('../routes/providers/claimed.js');
 let listProvider = require('../routes/providers/list.js');
 
 router.get(
@@ -34,7 +34,7 @@ router.use(
 
 router.get(
   '/claimed',
-  handleRoute(providerClaimed, '[Error] Checking Claimed Provider')
+  handleRoute(practiceClaimed, '[Error] Checking Claimed Provider')
 );
 
 router.get(

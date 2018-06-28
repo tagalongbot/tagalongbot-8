@@ -28,8 +28,8 @@ let getPromoProvider = async ({ query }, res) => {
     toGalleryElement({ first_name, last_name, gender, messenger_user_id })
   );
 
-  let providersGallery = createGallery(providersGalleryData, 'square');
-  let messages = [providersGallery];
+  let practices_gallery = createGallery(providersGalleryData, 'square');
+  let messages = [practices_gallery];
   res.send({ messages });
 }
 

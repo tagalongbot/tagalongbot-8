@@ -50,8 +50,8 @@ let claimPromotion = async ({ query }, res) => {
 
   let practice = await getProviderByID(provider_id);
   let practice_base_id = practice.fields['Practice Base ID'];
-  let provider_phone_number = practice.fields['Practice Phone #'];
-  let provider_booking_url = practice.fields['Practice Booking URL'];
+  let practice_phone_number = practice.fields['Practice Phone #'];
+  let practice_booking_url = practice.fields['Practice Booking URL'];
 
   let promo = await getPracticePromo({ provider_base_id, promo_id });
 
@@ -78,7 +78,7 @@ let claimPromotion = async ({ query }, res) => {
 
   let data = { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
 
-  let claimedMsg = createClaimedMsg({ data, updated_promo, provider_phone_number, provider_booking_url });
+  let claimedMsg = createClaimedMsg({ data, updated_promo, practice_phone_number, practice_booking_url });
 
   let messages = [claimedMsg];
   res.send({ messages });
