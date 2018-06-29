@@ -37,7 +37,7 @@ router.get(
   handleRoute(practiceClaimed, '[Error] Checking Claimed Practice')
 );
 
-router.get(
+router.use(
   '/list',
   listPractice
 );

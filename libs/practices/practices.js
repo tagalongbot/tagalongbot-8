@@ -157,8 +157,7 @@ let createLastGalleryElement = () => {
   let title = 'More Options';
   let image_url = SEARCH_PRACTICES_MORE_OPTIONS_IMAGE_URL;
 
-  // Buttons
-  let btn1 = createBtn(`List My Practice|show_block|List Practice`);
+  let btn1 = createBtn(`List My Practice|show_block|Ask For User Info (List Practice)`);
   let btn2 = createBtn(`Main Menu|show_block|Discover Main Menu`);
   let btn3 = createBtn(`About Bevl Beauty|show_block|About Bevl Beauty`);
 

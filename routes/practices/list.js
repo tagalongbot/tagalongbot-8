@@ -41,6 +41,7 @@ let verifyPhoneNumber = async ({ query }, res) => {
   }
 
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
+  console.log('sent_verification_code', sent_verification_code);
 
   let block_name = (sent_verification_code.success) ? 'Verify Phone Number (List Practice)' : '[Error] Listing Practice';
   let redirect_to_blocks = [block_name];
