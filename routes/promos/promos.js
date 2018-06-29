@@ -9,11 +9,11 @@ let getPromos = async ({ query, params }, res) => {
   let { search_type } = params;
 
   let { messenger_user_id, first_name, last_name, gender } = query;
-  let { service_name, search_promos_state, search_promos_city, search_promos_zip_code, search_promo_code } = query;
+  let { search_promos_state, search_promos_city, service_name } = query;
 
   // Handle searching by `promo_code`
   let practices = await getPractices(
-    { search_promos_state, search_promos_city, search_promos_zip_code, search_type }
+    { search_promos_state, search_promos_city }
   );
 
   let practices_by_service = (service_name) ? filterPracticesByService(service_name, practices) : null;
