@@ -1,4 +1,5 @@
 let { BASEURL, DEFAULT_PROVIDER_IMAGE } = process.env;
+
 let { createBtn } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
@@ -25,6 +26,5 @@ let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
 }
 
 module.exports = {
-  getPractices,
   toGalleryElement,
 }
