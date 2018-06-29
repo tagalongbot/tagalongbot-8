@@ -1,21 +1,6 @@
 let { BASEURL, DEFAULT_PROVIDER_IMAGE } = process.env;
 let { createBtn } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
-let { getPracticesByState, getPracticesByCity } = require('../../libs/data/practices.js');
-
-let getPractices = async (data) => {
-  let { search_service_practices_state: state_name, search_service_practices_city: city_name } = data;
-
-  if (state_name) {
-    let practices = await getPracticesByState({ state_name, active: true });
-    return practices;
-  }
-  
-  if (city_name) {
-    let practices = await getPracticesByCity({ city_name, active: true });
-    return practices;
-  }
-}
 
 let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
   let { first_name, last_name, gender, messenger_user_id, service_id } = data;

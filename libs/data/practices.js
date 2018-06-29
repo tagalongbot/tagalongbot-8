@@ -56,6 +56,18 @@ let getPracticesByZipCode = async ({ zip_code, active }) => {
 	return practices;
 }
 
+let searchPractices = async ({ state_name, city_name }) => {
+  if (state_name) {
+    let practices = await getPracticesByState({ state_name, active: true });
+    return practices;
+  }
+
+  if (city_name) {
+    let practices = await getPracticesByCity({ city_name, active: true });
+    return practices;
+  }
+}
+
 let filterPracticessByService = (service_name, practices) => {
   let service_name_lowercased = service_name.trim().toLowerCase();
 
@@ -82,6 +94,7 @@ module.exports = {
   getPracticesByState,
   getPracticesByCity,
   getPracticesByZipCode,
+  searchPractices,
   filterPracticessByService,
   sortPractices,
 }

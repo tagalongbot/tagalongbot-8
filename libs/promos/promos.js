@@ -2,23 +2,8 @@ let { BASEURL } = process.env;
 let { createURL, localizeDate } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 let { getTable, getAllDataFromTable } = require('../../libs/data.js');
-let { getPracticesByState, getPracticesByCity } = require('../../libs/data/practices.js');
 
 let getPromosTable = getTable('Promos');
-
-let getPractices = async (data) => {
-  let { search_promos_state: state_name, search_promos_city: city_name } = data;
-
-  if (state_name) {
-    let practices = await getPracticesByState({ state_name, active: true });
-    return practices;
-  }
-  
-  if (city_name) {
-    let practices = await getPracticesByCity({ city_name, active: true });
-    return practices;
-  }
-}
 
 let filterPromosByService = ({ service_name, promos }) => {
   let service_name_lowercased = service_name.toLowerCase();
@@ -53,7 +38,6 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 }
 
 module.exports = {
-  getPractices,
   filterPromosByService,
   toGalleryElement,
 }

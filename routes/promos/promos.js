@@ -1,20 +1,15 @@
 let { createGallery } = require('../../libs/bots.js');
 let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 
-let { filterPracticesByService } = require('../../libs/data/practices.js');
+let { searchPractices, filterPracticesByService } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 let { getPractices, filterPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
 
-let getPromos = async ({ query, params }, res) => {
-  let { search_type } = params;
+let getPromos = async ({ query }, res) => {
+  let { messenger_user_id, first_name, last_name, gender, service_name } = query;
+  let { search_promos_state: state_name, search_promos_city: city_name } = query;
 
-  let { messenger_user_id, first_name, last_name, gender } = query;
-  let { search_promos_state, search_promos_city, service_name } = query;
-
-  // Handle searching by `promo_code`
-  let practices = await getPractices(
-    { search_promos_state, search_promos_city }
-  );
+  let practices = await searchPractices({ state_name, city_name });
 
   let practices_by_service = (service_name) ? filterPracticesByService(service_name, practices) : null;
 

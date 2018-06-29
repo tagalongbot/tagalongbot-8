@@ -2,10 +2,13 @@ let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PRACTICE_IMAGE, SEARCH_PRACTIC
 
 let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
+
 let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
+let { getPracticesByState, getPracticesByCity } = require('../../libs/data/practices.js');
 
 let createNewUserData = (data) => {
   let { messenger_user_id, first_name, last_name, gender } = data;
+
   let { search_practices_state, search_practices_city, search_practices_zip_code } = data;
 
   let last_state_searched = search_practices_state ? search_practices_state.trim().toLowerCase() : null;
@@ -22,7 +25,7 @@ let createNewUserData = (data) => {
     'Last City Searched': last_city_searched,
     'Last Zip Code Searched': last_zip_code_searched,
   }
-  
+
   return new_user_data;
 }
 
@@ -59,7 +62,7 @@ let createButtons = (practice, data) => {
 
     let btn1 = createBtn(`View Services|json_plugin_url|${view_services_btn_url}`);
     let btn2 = createBtn(`View Promos|json_plugin_url|${view_promos_btn_url}`);
-  
+
     return [btn1, btn2];
   }
 
@@ -112,18 +115,6 @@ let createButtons2 = (practice, data) => {
 }
 
 // Exported Functions
-let searchPractices = async ({ state_name, c }) => {
-  if (state_name) {
-    let practices = await getPracticesByState({ state_name, active: true });
-    return practices;
-  }
-  
-  if (city_name) {
-    let practices = await getPracticesByCity({ city_name, active: true });
-    return practices;
-  }
-}
-
 let createOrUpdateUser = async (user, query) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
   let { search_practices_state, search_practices_city, search_practices_zip_code } = query;
