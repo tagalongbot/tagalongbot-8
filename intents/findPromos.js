@@ -1,6 +1,7 @@
 let { BASEURL } = process.env;
 
 let { createURL } = require('../libs/helpers.js');
+let { getServiceByName } = require('../libs/data/services.js');
 
 let findPromos = async ({ res, parameters, user }) => {
   let { messenger_user_id, first_name, last_name, gender } = user;
@@ -36,9 +37,12 @@ let findPromos = async ({ res, parameters, user }) => {
   if ( search_type && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).toLowerCase();
   
+    let service = await getServiceByName({ service_name });
+    let service_id = service.id;
+    
     let redirect_url = createURL(
-      `${BASEURL}/promos/search/${search_type}`, 
-      { service_name, ...user, ...data }
+      `${BASEURL}/services/promos`, 
+      { service_id, ...user, ...data }
     );
 
     res.redirect(redirect_url);

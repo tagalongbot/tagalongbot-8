@@ -1,4 +1,6 @@
 # Code
+- Refactor Intents and `ai.js` to be more declarative
+- Refactor `/libs/practices/practices.js` to be more declarative
 
 - Create a middleware that checks for required `query` parameters
 

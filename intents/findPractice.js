@@ -36,11 +36,12 @@ let findPractice = async ({ res, parameters, user }) => {
   if ( search_type && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).toLowerCase();
   
-    let service = await getServiceByName();
-    
+    let service = await getServiceByName({ service_name });
+    let service_id = service.id;
+
     let redirect_url = createURL(
-      `${BASEURL}/practices/search/${search_type}`, 
-      { service_name, ...user, ...data }
+      `${BASEURL}/services/practices`, 
+      { service_id, ...user, ...data }
     );
 
     res.redirect(redirect_url);

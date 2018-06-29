@@ -3,10 +3,11 @@ let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 
 let { searchPractices, filterPracticesByService } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
+
 let { filterPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
 
 let getPromos = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, service_name } = query;
+  let { messenger_user_id, first_name, last_name, gender } = query;
   let {
     search_promos_state: state_name, 
     search_promos_city: city_name,
@@ -15,11 +16,9 @@ let getPromos = async ({ query }, res) => {
 
   let practices = await searchPractices({ state_name, city_name, zip_code });
 
-  let practices_by_service = (service_name) ? filterPracticesByService(service_name, practices) : null;
-
   // Study transducers to improve code
   let practice_promos = await Promise.all(
-    (practices_by_service || practices).map(async (practice) => {
+    practices.map(async (practice) => {
       let practice_id = practice.id;
       let practice_base_id = practice.fields['Practice Base ID'];
       let view = 'Active Promos';
