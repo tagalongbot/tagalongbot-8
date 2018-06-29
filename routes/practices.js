@@ -39,7 +39,7 @@ router.get(
 
 router.get(
   '/list',
-  handleRoute(listPractice, '[Error] Listing Practice')
+  listPractice
 );
 
 module.exports = router;

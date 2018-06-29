@@ -1,9 +1,6 @@
 # Code
 
 ### Important and Urgent
-- Update ChatFuel block and attribute names from "Provider" to "Practice"
-- Update code to use separate functions for searching by state and city
-  -- I got rid of `searchProviders` / `searchPractices` function
 - Use ES6 Import Modules
 
 ### Important and Less Urgent
