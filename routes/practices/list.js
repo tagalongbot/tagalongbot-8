@@ -79,7 +79,7 @@ router.get(
 
 router.get(
   '/verify/code',
-  handleRoute(verifyPhoneNumber, '[Error] Listing Practice')
+  handleRoute(verifyVerificationCode, '[Error] Listing Practice')
 );
 
 router.get(
