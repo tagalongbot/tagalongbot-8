@@ -68,7 +68,7 @@ let searchPractices = async ({ state_name, city_name }) => {
   }
 }
 
-let filterPracticessByService = (service_name, practices) => {
+let filterPracticesByService = (service_name, practices) => {
   let service_name_lowercased = service_name.trim().toLowerCase();
 
   let serviceToLowerCase = service => service.toLowerCase();
@@ -95,6 +95,6 @@ module.exports = {
   getPracticesByCity,
   getPracticesByZipCode,
   searchPractices,
-  filterPracticessByService,
+  filterPracticesByService,
   sortPractices,
 }
