@@ -56,7 +56,7 @@ let getPracticesByZipCode = async ({ zip_code, active }) => {
 	return practices;
 }
 
-let searchPractices = async ({ state_name, city_name }) => {
+let searchPractices = async ({ state_name, city_name, zip_code }) => {
   if (state_name) {
     let practices = await getPracticesByState({ state_name, active: true });
     return practices;
@@ -64,6 +64,11 @@ let searchPractices = async ({ state_name, city_name }) => {
 
   if (city_name) {
     let practices = await getPracticesByCity({ city_name, active: true });
+    return practices;
+  }
+
+  if (zip_code) {
+    let practices = await getPracticesByZipCode({ zip_code, active: true });
     return practices;
   }
 }
