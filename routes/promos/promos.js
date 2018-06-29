@@ -24,9 +24,7 @@ let getPromos = async ({ query }, res) => {
       let view = 'Active Promos';
       let promos = await getPracticePromos({ practice_base_id, view });
 
-      let matching_promos = (service_name) ? filterPromosByService({ service_name, promos }) : promos;
-
-      return matching_promos.map(
+      return promos.map(
         toGalleryElement({ messenger_user_id, practice_id, practice_base_id, first_name, last_name, gender })
       );
     })
