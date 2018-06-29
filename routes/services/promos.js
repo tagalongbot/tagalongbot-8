@@ -57,7 +57,9 @@ let getServicePromos = async ({ query }, res) => {
 
   let txtMsg = { text: `Here are some promos I found in ${state_name} for ${service_name}` };
   let gallery = createGallery(randomPromos, 'square');
+
   let messages = [txtMsg, gallery];
+
   res.send({ messages });
 }
 

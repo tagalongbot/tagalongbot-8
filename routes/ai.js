@@ -1,9 +1,12 @@
+// Refactor one day to be easily readable
 let { API_AI_KEY } = process.env;
-let API_AI = require('apiai');
-let API_AI_APP = API_AI(API_AI_KEY);
+
 let request = require('request');
 
-let { randomize } = require('../libs/helpers');
+let { randomize } = require('../libs/helpers.js');
+
+let API_AI = require('apiai');
+let API_AI_APP = API_AI(API_AI_KEY);
 
 let intents = ['findPractice', 'findPromos', 'defineProduct'];
 
@@ -34,8 +37,7 @@ let handleResponse = (res, user) => ({ result, sessionId }) => {
 }
 
 let handleError = (res) => (error) => {
-	let message = { error };
-	res.send(message);
+	res.send({ error });
 }
 
 let handleAI = ({ query }, res) => {
@@ -52,6 +54,7 @@ let handleAI = ({ query }, res) => {
   let request = API_AI_APP.textRequest(queryString, { sessionId, contexts });
 
   let user = { first_name, last_name, gender, messenger_user_id }; 
+
 	request.on('response', handleResponse(res, user));
 	request.on('error', handleError(res));
 	request.end();

@@ -1,10 +1,11 @@
 let { BASEURL, USERS_BASE_ID } = process.env;
+
 let { createGallery } = require('../../libs/bots.js');
 let { createURL, shuffleArray } = require('../../libs/helpers.js');
 
-let { filterPracticesByService, sortPractices } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
-let { searchPractices, createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
+let { searchPractices, filterPracticesByService, sortPractices } = require('../../libs/data/practices.js');
+let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let getPractices = async ({ query, params }, res) => {
   let { search_type } = params;

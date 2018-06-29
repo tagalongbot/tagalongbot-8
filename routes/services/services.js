@@ -2,8 +2,10 @@ let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 
 let { shuffleArray } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
+
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getNonSurgicalServices, getSurgicalServices } = require('../../libs/data/services.js');
+
 let { toGalleryElement, createSurgicalCategoryElement, createLastGalleryElement } = require('../../libs/services/services.js');
 
 // Refactor code to be more declarative
@@ -45,7 +47,9 @@ let getServices = async ({ query, params }, res) => {
 
   let textMsg = { text: `Here's are some services you can search for ${first_name}` };
 	let gallery = createGallery(gallery_array);
+  
 	let messages = [textMsg, gallery];
+
 	res.send({ messages });
 }
 

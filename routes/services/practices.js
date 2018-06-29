@@ -2,9 +2,11 @@ let handleRoute = require('../../middlewares/handleRoute.js');
 
 let { shuffleArray } = require('../../libs/helpers.js');
 let { createGallery } = require('../../libs/bots.js');
+
 let { getServiceByID } = require('../../libs/data/services.js');
-let { sortPractices, filterPracticesByService } = require('../../libs/data/practices.js');
-let { getPractices, toGalleryElement } = require('../../libs/services/practices.js');
+let { searchPractices, sortPractices, filterPracticesByService } = require('../../libs/data/practices.js');
+
+let { toGalleryElement } = require('../../libs/services/practices.js');
 let { createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let express = require('express');
@@ -20,18 +22,14 @@ let searchServicePractices = async ({ query }, res) => {
   res.send({ set_attributes, redirect_to_blocks });
 }
 
-let getServicePractices = async ({ query, params }, res) => {
-  let { search_type } = params;
-
-  let { messenger_user_id, first_name, last_name, gender } = query;
-  let { service_id, search_service_practices_state, search_service_practices_city, search_service_practices_zip_code } = query;
+let getServicePractices = async ({ query }, res) => {
+  let { messenger_user_id, first_name, last_name, gender, service_id } = query;
+  let { search_service_practices_state: state_name, search_service_practices_city: city_name } = query;
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
-  let practices = await getPractices(
-    { search_service_practices_state, search_service_practices_city }
-  );
+  let practices = await searchPractices({ state_name, city_name });
 
   let practicesByService = (practices[0]) ? filterPracticesByService(service_name, practices) : [];
 
@@ -48,8 +46,10 @@ let getServicePractices = async ({ query, params }, res) => {
 
   let last_gallery_element = createLastGalleryElement();
 	let practices_gallery = createGallery([...randomPractices, last_gallery_element], 'square');
+
   let txtMsg = { text: `Here are some providers I found in Pennsylvania for Facelift` };
   let messages = [txtMsg, practices_gallery];
+
   res.send({ messages });
 }
 
