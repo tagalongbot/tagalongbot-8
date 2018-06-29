@@ -7,19 +7,21 @@ let { getUserByMessengerID, updateUser, createUser } = require('../../libs/data/
 let express = require('express');
 let router = express.Router();
 
-let createNewUser = async ({ user_email }) => {
+let createNewUser = async ({ user_email, user_phone_number }) => {
   let update_data = {
     ['Email Address']: user_email,
+    ['Phone Number']: user_phone_number
   }
-  
+
   let new_user = await createUser(update_data);
 
   return new_user;
 }
 
-let updateExistingUser = async ({ user_email, first_name, last_name, gender, messenger_user_id, user }) => {
+let updateExistingUser = async ({ user_email, user_phone_number, first_name, last_name, gender, messenger_user_id, user }) => {
   let update_data = {
     ['Email Address']: user_email,
+    ['Phone Number']: user_phone_number,
     ['First Name']: first_name,
     ['Last Name']: last_name,
     ['Gender']: gender,
@@ -41,7 +43,6 @@ let verifyPhoneNumber = async ({ query }, res) => {
   }
 
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
-  console.log('sent_verification_code', sent_verification_code);
 
   let block_name = (sent_verification_code.success) ? 'Verify Phone Number (List Practice)' : '[Error] Listing Practice';
   let redirect_to_blocks = [block_name];
@@ -59,16 +60,16 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let listPractice = async({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, user_email } = query;
+  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = query;
 
   let user = await getUserByMessengerID(messenger_user_id);
 
-  if (user) {
-    let new_user = createNewUser({ user_email });
+  if (!user) {
+    let new_user = createNewUser({ user_email, user_phone_number });
     return;
   }
 
-  let updated_user = updateExistingUser({ user_email, first_name, last_name, gender, messenger_user_id, user });
+  let updated_user = updateExistingUser({ user_email, user_phone_number, first_name, last_name, gender, messenger_user_id, user });
 
   res.sendStatus(200);
 }
