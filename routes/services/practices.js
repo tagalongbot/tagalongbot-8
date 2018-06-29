@@ -24,7 +24,10 @@ let searchServicePractices = async ({ query }, res) => {
 
 let getServicePractices = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_id } = query;
-  let { search_service_practices_state: state_name, search_service_practices_city: city_name } = query;
+  let {
+    search_service_practices_state: state_name, 
+    search_service_practices_city: city_name 
+  } = query;
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];

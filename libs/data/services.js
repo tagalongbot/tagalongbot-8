@@ -6,14 +6,20 @@ let servicesTable = getServicesTable(SERVICES_BASE_ID);
 let getServices = getAllDataFromTable(servicesTable);
 let findService = findTableData(servicesTable);
 
+let getAllServices = async () => {
+  let services = await getServices();
+  return services;  
+}
+
 let getServiceByID = async ({ service_id }) => {
   let service = await findService(service_id);
   return service;
 }
 
-let getAllServices = async () => {
-  let services = await getServices();
-  return services;  
+let getServiceByName = async ({ service_name }) => {
+  let filterByFormula = `{Name} = '${service_name}'`;
+  let [service] = await getServices({ filterByFormula });
+  return service;
 }
 
 let getNonSurgicalServices = async () => {
@@ -40,6 +46,7 @@ let filterServicesFromPractice = ({ services, practice }) => {
 
 module.exports = {
   getServiceByID,
+  getServiceByName,
   getAllServices,
   getNonSurgicalServices,
   getSurgicalServices,

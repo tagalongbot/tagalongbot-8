@@ -4,25 +4,29 @@ let { createGallery } = require('../../libs/bots.js');
 let { createURL, shuffleArray } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID } = require('../../libs/data/users.js');
-let { searchPractices, filterPracticesByService, sortPractices } = require('../../libs/data/practices.js');
+let { searchPractices, sortPractices } = require('../../libs/data/practices.js');
 let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let getPractices = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, service_name } = query;
-  let { search_practices_state: state_name, search_practices_city: city_name, search_practice_code } = query;
+  let { messenger_user_id, first_name, last_name, gender } = query;
+
+  let { 
+    search_practices_state: state_name,
+    search_practices_city: city_name,
+    search_practices_zip_code: zip_code,
+    search_practice_code
+  } = query;
 
 	let user = await getUserByMessengerID(messenger_user_id);
 	let new_updated_user = await createOrUpdateUser(user, query);
 
-  let practices = await searchPractices({ state_name, city_name });
+  let practices = await searchPractices({ state_name, city_name, zip_code });
 
   if (!practices[0]) {
     let redirect_to_blocks = ['No Practices Found'];
     res.send({ redirect_to_blocks });
     return;
   }
-
-  if (service_name) practices = filterPracticesByService(service_name, practices);
 
   let randomPractices = shuffleArray(practices).slice(0, 9).sort(sortPractices).map(
     toGalleryElement({ first_name, last_name, gender, messenger_user_id })
@@ -32,7 +36,7 @@ let getPractices = async ({ query }, res) => {
 
 	let practices_gallery = createGallery([...randomPractices, last_gallery_element], 'square');
   let textMsg = { text: `Here's are some providers I found ${first_name}` };
-  
+
 	let messages = [textMsg, practices_gallery];
 
 	res.send({ messages });

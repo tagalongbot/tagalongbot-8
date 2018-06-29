@@ -1,6 +1,7 @@
 let { BASEURL } = process.env;
 
 let { createURL } = require('../libs/helpers.js');
+let { getServiceByName } = require('../libs/data/services.js');
 
 let findPractice = async ({ res, parameters, user }) => {
   let { first_name, last_name, gender, messenger_user_id } = user;
@@ -34,7 +35,9 @@ let findPractice = async ({ res, parameters, user }) => {
 
   if ( search_type && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).toLowerCase();
-
+  
+    let service = await getServiceByName();
+    
     let redirect_url = createURL(
       `${BASEURL}/practices/search/${search_type}`, 
       { service_name, ...user, ...data }

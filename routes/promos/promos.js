@@ -7,9 +7,13 @@ let { filterPromosByService, toGalleryElement } = require('../../libs/promos/pro
 
 let getPromos = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_name } = query;
-  let { search_promos_state: state_name, search_promos_city: city_name } = query;
+  let {
+    search_promos_state: state_name, 
+    search_promos_city: city_name,
+    search_promos_zip_code: zip_code
+  } = query;
 
-  let practices = await searchPractices({ state_name, city_name });
+  let practices = await searchPractices({ state_name, city_name, zip_code });
 
   let practices_by_service = (service_name) ? filterPracticesByService(service_name, practices) : null;
 
