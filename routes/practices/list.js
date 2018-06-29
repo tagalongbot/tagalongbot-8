@@ -1,8 +1,11 @@
+let handleRoute = require('../../middlewares/handleRoute.js');
+
+let { isValidPhoneNumber } = require('../../libs/helpers.js');
+let { sendPhoneVerificationCode } = require('../../libs/twilio.js');
 let { getUserByMessengerID, updateUser, createUser } = require('../../libs/data/users.js');
 
 let express = require('express');
-let router = express.R
-
+let router = express.Router();
 
 let createNewUser = async ({ user_email }) => {
   let update_data = {
@@ -28,6 +31,32 @@ let updateExistingUser = async ({ user_email, first_name, last_name, gender, mes
   return updated_user;
 }
 
+let verifyPhoneNumber = async ({ query }, res) => {
+  let { user_phone_number: phone_number } = query;
+
+  if (!isValidPhoneNumber(phone_number)) {
+    let redirect_to_blocks = ['Invalid Phone Number (List Practice)'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
+
+  let block_name = (sent_verification_code.success) ? 'Verify Phone Number (List Practice)' : '[Error] Listing Practice';
+  let redirect_to_blocks = [block_name];
+  res.send({ redirect_to_blocks });
+}
+
+let verifyVerificationCode = async ({ query }, res) => {
+  let { user_phone_number: phone_number, verification_code } = query;
+
+  let sent_verification_code = await checkVerificationCode({ phone_number, verification_code });
+
+  let block_name = (sent_verification_code.success) ? 'Correct Verification Code (Claim Promo)' : 'Incorrect Verification Code (Claim Promo)';
+  let redirect_to_blocks = [block_name];
+  res.send({ redirect_to_blocks });
+}
+
 let listPractice = async({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, user_email } = query;
 
@@ -44,4 +73,14 @@ let listPractice = async({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-module.exports = listPractice;
+router.get(
+  '/verify',
+  handleRoute(verifyPhoneNumber, '[Error] Listing Practice')
+);
+
+router.get(
+  '/',
+  handleRoute(listPractice, '[Error] Listing Practice')
+);
+
+module.exports = router;
