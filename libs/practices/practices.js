@@ -40,27 +40,6 @@ let createUpdateUserData = ({ search_practices_state, search_practices_city, sea
   return update_user_data;  
 }
 
-let createOrUpdateUser = async (user, query) => {
-  let { messenger_user_id, first_name, last_name, gender } = query;
-  let { search_practices_state, search_practices_city, search_practices_zip_code } = query;
-
-  if (!user) {
-    let new_user_data = createNewUserData(
-      { search_practices_state, search_practices_city, search_practices_zip_code, messenger_user_id, first_name, last_name, gender }
-    );
-
-		let newUser = await createUser(new_user_data);
-    return newUser;
-	}
-
-  let update_user_data = createUpdateUserData(
-    { search_practices_state, search_practices_city, search_practices_zip_code }
-  );
-
-  let updatedUser = await updateUser(update_user_data, user);
-  return updatedUser;
-}
-
 let createButtons = (practice, data) => {
   let { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id } = data;
 
@@ -130,6 +109,40 @@ let createButtons2 = (practice, data) => {
   }
 
   return btns;
+}
+
+// Exported Functions
+let searchPractices = async ({ state_name, c }) => {
+  if (state_name) {
+    let practices = await getPracticesByState({ state_name, active: true });
+    return practices;
+  }
+  
+  if (city_name) {
+    let practices = await getPracticesByCity({ city_name, active: true });
+    return practices;
+  }
+}
+
+let createOrUpdateUser = async (user, query) => {
+  let { messenger_user_id, first_name, last_name, gender } = query;
+  let { search_practices_state, search_practices_city, search_practices_zip_code } = query;
+
+  if (!user) {
+    let new_user_data = createNewUserData(
+      { search_practices_state, search_practices_city, search_practices_zip_code, messenger_user_id, first_name, last_name, gender }
+    );
+
+		let newUser = await createUser(new_user_data);
+    return newUser;
+	}
+
+  let update_user_data = createUpdateUserData(
+    { search_practices_state, search_practices_city, search_practices_zip_code }
+  );
+
+  let updatedUser = await updateUser(update_user_data, user);
+  return updatedUser;
 }
 
 let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {

@@ -2,22 +2,20 @@ let { BASEURL, USERS_BASE_ID } = process.env;
 let { createGallery } = require('../../libs/bots.js');
 let { createURL, shuffleArray } = require('../../libs/helpers.js');
 
-let { searchPractices, filterPracticesByService, sortPractices } = require('../../libs/data/practices.js');
+let { filterPracticesByService, sortPractices } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
-let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
+let { searchPractices, createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let getPractices = async ({ query, params }, res) => {
   let { search_type } = params;
+
   let { messenger_user_id, first_name, last_name, gender, service_name } = query;
-  let { search_practices_state, search_practices_city, search_practices_zip_code, search_practice_code } = query;
+  let { search_practices_state: state_name, search_practices_city: city_name, search_practice_code } = query;
 
 	let user = await getUserByMessengerID(messenger_user_id);
 	let new_updated_user = await createOrUpdateUser(user, query);
 
-	let practices = await searchPractices(
-    { search_type }, 
-    { search_practices_state, search_practices_city, search_practices_zip_code, search_practice_code }
-  );
+  let practices = await searchPractices({ state_name, city_name });
 
   if (!practices[0]) {
     let redirect_to_blocks = ['No Practices Found'];

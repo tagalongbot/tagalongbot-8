@@ -1,18 +1,17 @@
-let { searchPractices } = require('../../libs/data/practices.js');
+let { getPracticesByState, getPracticesByCity } = require('../../libs/data/practices.js');
 
 let getPractices = async (data) => {
-  let { search_type, search_service_promos_state, search_service_promos_city, search_service_promos_zip_code } = data;
+  let { search_service_promos_state: state_name, search_service_promos_city: city_name } = data;
 
-  let search_practices_state = search_service_promos_state;
-  let search_practices_city = search_service_promos_city;
-  let search_practices_zip_code = search_service_promos_zip_code;
+  if (state_name) {
+    let practices = await getPracticesByState({ state_name, active: true });
+    return practices;
+  }
   
-  let practices = await searchPractices(
-    { search_type },
-    { search_practices_state, search_practices_city, search_practices_zip_code }
-  );
-  
-  return practices;
+  if (city_name) {
+    let practices = await getPracticesByCity({ city_name, active: true });
+    return practices;
+  }
 }
 
 module.exports = {
