@@ -7,9 +7,7 @@ let { getUserByMessengerID } = require('../../libs/data/users.js');
 let { searchPractices, filterPracticesByService, sortPractices } = require('../../libs/data/practices.js');
 let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
-let getPractices = async ({ query, params }, res) => {
-  let { search_type } = params;
-
+let getPractices = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_name } = query;
   let { search_practices_state: state_name, search_practices_city: city_name, search_practice_code } = query;
 
@@ -34,7 +32,9 @@ let getPractices = async ({ query, params }, res) => {
 
 	let practices_gallery = createGallery([...randomPractices, last_gallery_element], 'square');
   let textMsg = { text: `Here's are some providers I found ${first_name}` };
+  
 	let messages = [textMsg, practices_gallery];
+
 	res.send({ messages });
 }
 
