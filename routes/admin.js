@@ -17,7 +17,7 @@ let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
 router.get(
   '/menu',
-  cache.withTtl('1 hour'),
+  // cache.withTtl('1 hour'),
   handleRoute(getAdminMenu, '[Error] Admin Menu')
 );
 
