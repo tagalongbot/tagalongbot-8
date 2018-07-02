@@ -123,6 +123,7 @@ packages:
     dev: false
     engines:
       node: '>=4'
+    hasBin: true
     resolution:
       integrity: sha512-HQJXt/6JwGgfvavjnUAuyX4WuwTeafbSRjsanvY6R4mJUtboVLtn59cQVF+7YJfE3B8+gLbJDaQr7U4kPI9uEw==
   /aws-sign2/0.7.0:
@@ -200,6 +201,7 @@ packages:
     dev: false
     engines:
       '0': node >=0.10.0
+    hasBin: true
     optionalDependencies:
       dtrace-provider: 0.8.7
       moment: 2.22.2
@@ -534,6 +536,7 @@ packages:
       colors: 1.3.0
       redis: 2.8.0
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-7e9SwwGIv+bH0uc0Sy3KPCyYEGoGpwaBro+cLU8hVln1YbQIWoW8fOyv6/JRdaUmaBqATftdqm75OAIaBLmnjg==
   /express/4.16.3:
@@ -750,6 +753,7 @@ packages:
     dev: false
     engines:
       node: '>= 0.8.0'
+    hasBin: true
     resolution:
       integrity: sha1-fs8eJkectN7ImbiYqK/fi32D/FM=
   /har-schema/2.0.0:
@@ -1004,6 +1008,7 @@ packages:
       integrity: sha512-lc/aahn+t4/SWV/qcmumYjymLsWfN3ELhpmVuUFjgsORruuZPVSwAQryq+HHGvO/SI2KVX26bx+En+zhM8g8hQ==
   /mime/1.4.1:
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-KI1+qOZu5DcW6wayYHSzR/tXKCDC5Om4s1z2QJjDULzLcmf3DvzS7oluY4HCTrc+9FiKmWUgeNLg7W3uIQvxtQ==
   /mimic-fn/1.2.0:
@@ -1037,6 +1042,7 @@ packages:
     dependencies:
       minimist: 0.0.8
     dev: false
+    hasBin: true
     optional: true
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
@@ -1067,6 +1073,7 @@ packages:
       integrity: sha512-bAdJv7fBLhWC+/Bls0Oza+mvTaNQtP+1RyhhhvD95pgUJz6XM5IzgmxOkItJ9tkoCiplvAnXI1tNmmUD/eScyA==
   /ncp/2.0.0:
     dev: false
+    hasBin: true
     optional: true
     resolution:
       integrity: sha1-GVoh1sRuNh0vsSgbo4uR6d9727M=
@@ -1221,6 +1228,7 @@ packages:
       colors: 1.3.0
       minimist: 1.2.0
     dev: false
+    hasBin: true
     resolution:
       integrity: sha1-/P+rQdGcq0365eV15kJGYZsS0ok=
   /process/0.5.2:
@@ -1375,6 +1383,7 @@ packages:
     dependencies:
       glob: 6.0.4
     dev: false
+    hasBin: true
     optional: true
     resolution:
       integrity: sha1-7nEM5dk6j9uFb7Xqj/Di11k0sto=
@@ -1479,6 +1488,7 @@ packages:
     dev: false
     engines:
       node: '>=0.10.0'
+    hasBin: true
     optionalDependencies:
       bcrypt-pbkdf: 1.0.1
       ecc-jsbn: 0.1.1
@@ -1624,6 +1634,7 @@ packages:
       integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
   /uuid/3.2.1:
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-jZnMwlb9Iku/O3smGWvZhauCf6cvvpKi4BKRiliS3cxnI+Gz9j5MEpTz2UFuXiKPJocb7gnsLHwiS05ige5BEA==
   /validator.js-asserts/3.1.0:
@@ -1688,6 +1699,7 @@ packages:
     dependencies:
       isexe: 2.0.0
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
   /wordwrap/1.0.0:
@@ -1755,7 +1767,7 @@ packages:
     resolution:
       integrity: sha512-ivSoxqBGYOqQVruxD35+EyCFDYNEFL/Uo6FcOnz+9xZdZzK0Zzw4r4KhbrME1Oo2gOggwJod2MnsdamSG7H9ig==
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 7
+shrinkwrapMinorVersion: 8
 shrinkwrapVersion: 3
 specifiers:
   airtable: ^0.5.6
