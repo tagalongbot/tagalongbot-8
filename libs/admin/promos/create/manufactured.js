@@ -6,7 +6,6 @@ let { createBtn } = require('../../../../libs/bots.js');
 let { getServiceByID } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
 
-let { createExpirationDate } = require('../../../../libs/admin/promos/create.js');
 let { createPracticePromo } = require('../../../../libs/data/practice/promos.js');
 
 let getServicesWithPromos = async ({ services }) => {
@@ -25,15 +24,15 @@ let getServicesWithPromos = async ({ services }) => {
 }
 
 let createNewPromo = async (data) => {
-  let { new_promo_id, new_promo_practice_promos_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
+  let { promo_id, practice_promos_base_id, service_id, expiration_date: expiration_date_text, claim_limit } = data;
 
-  let service = await getServiceByID({ service_id: new_promo_service_id });
+  let service = await getServiceByID({ service_id });
 
-  let manufactured_promo = await getManufacturedPromoByID({ promo_id: new_promo_id });
+  let manufactured_promo = await getManufacturedPromoByID({ promo_id });
   let new_promo_type = manufactured_promo.fields['Name'];
 
   let new_promo_image = manufactured_promo.fields['Image URL'];
-  let expiration_date = createExpirationDate(new_promo_expiration_date);
+  let expiration_date = new Date(expiration_date_text);
 
   let promo_data = {
     ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
@@ -47,8 +46,7 @@ let createNewPromo = async (data) => {
     ['Total Used']: 0,
   }
 
-  console.log('new_promo_practice_promos_base_id', new_promo_practice_promos_base_id);
-  let newPromo = await createPracticePromo({ practice_promos_base_id: new_promo_practice_promos_base_id, promo_data });
+  let newPromo = await createPracticePromo({ practice_promos_base_id, promo_data });
 
   return newPromo;
 }
