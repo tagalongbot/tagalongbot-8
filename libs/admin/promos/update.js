@@ -5,13 +5,13 @@ let { createExpirationDate } = require('../../../libs/admin/promos/create.js');
 let { createBtn, createButtonMessage } = require('../../../libs/bots.js');
 let { updatePracticePromo } = require('../../../libs/data/practice/promos.js');
 
-let toCategoriesGallery = ({ promo_id, practice_base_id }) => ({ id: category_id, fields: category }) => {
+let toCategoriesGallery = ({ promo_id, practice_promos_base_id }) => ({ id: category_id, fields: category }) => {
   let title = category['Category Name'];
   let image_url = category['Image URL'];
 
   let send_images_url = createURL(
     `${BASEURL}/admin/promos/update/images`,
-    { promo_id, practice_base_id, category_id }
+    { promo_id, practice_promos_base_id, category_id }
   );
 
   let btn1 = createBtn(`View Category Images|json_plugin_url|${send_images_url}`);
@@ -51,33 +51,33 @@ let createPromoFieldValue = ({ update_promo_field_name, update_promo_field_value
   return update_promo_field_value;
 }
 
-let updatePromo = async ({ practice_base_id, promo, update_promo_field_name, update_promo_field_value }) => {
+let updatePromo = async ({ practice_promos_base_id, promo, update_promo_field_name, update_promo_field_value }) => {
   let promo_data = {
     [update_promo_field_name]: createPromoFieldValue({ update_promo_field_name, update_promo_field_value })
   }
 
-  let updatedPromo = await updatePracticePromo({ practice_base_id, promo_data, promo });
+  let updatedPromo = await updatePracticePromo({ practice_promos_base_id, promo_data, promo });
   return updatedPromo;
 }
 
-let createUpdateMsg = ({ messenger_user_id, promo_id, practice_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }) => {
+let createUpdateMsg = ({ messenger_user_id, promo_id, practice_promos_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }) => {
   let text = (update_promo_field_name != 'Image URL') ?
     `Updated ${update_promo_field_name} to "${update_promo_field_value}" for ${promo.fields['Promotion Name']} ` : 
     `Image Updated Successfully for ${promo.fields['Promotion Name']}`;
 
   let view_promo_details_url = createURL(
     `${BASEURL}/admin/promos/view/info`, 
-    { messenger_user_id, promo_id, practice_base_id }
+    { messenger_user_id, promo_id, practice_promos_base_id }
   );
 
   let update_promo_url = createURL(
     `${BASEURL}/admin/promos/update`, 
-    { messenger_user_id, promo_id, practice_base_id }
+    { messenger_user_id, promo_id, practice_promos_base_id }
   );
 
   let toggle_promo_url = createURL(
     `${BASEURL}/admin/promos/toggle`, 
-    { messenger_user_id, promo_id, practice_base_id }
+    { messenger_user_id, promo_id, practice_promos_base_id }
   );
 
   let msg = createButtonMessage(
