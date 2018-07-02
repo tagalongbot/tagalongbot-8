@@ -1,6 +1,7 @@
 let handleRoute = require('../../../../middlewares/handleRoute.js');
 
 let { createGallery, createMultiGallery } = require('../../../../libs/bots.js');
+
 let { getPracticeByUserID } = require('../../../../libs/data/practices.js');
 let { getServiceByID, getAllServices, filterServicesFromPractice } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
@@ -15,7 +16,7 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
 
   let practice = await getPracticeByUserID(messenger_user_id);
   let practice_id = practice.id;
-  let practice_promos_base_id = practice.fields['Practice Base ID'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let services = await getAllServices();
   let practice_services = filterServicesFromPractice({ services, practice });

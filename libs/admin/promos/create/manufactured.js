@@ -47,6 +47,7 @@ let createNewPromo = async (data) => {
     ['Total Used']: 0,
   }
 
+  console.log('new_promo_practice_promos_base_id', new_promo_practice_promos_base_id);
   let newPromo = await createPracticePromo({ practice_promos_base_id: new_promo_practice_promos_base_id, promo_data });
 
   return newPromo;

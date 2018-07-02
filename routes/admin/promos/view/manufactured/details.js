@@ -2,12 +2,12 @@ let { getManufacturedPromoByID } = require('../../../../../libs/data/manufacture
 let { createDetailsMsg } = require('../../../../../libs/admin/promos/view/manufactured/details.js');
 
 let viewManufacturedPromoDetails = async ({ query }, res) => {
-  let { service_id, promo_id, practice_id, practice_base_id } = query;
+  let { service_id, promo_id, practice_id, practice_promos_base_id } = query;
 
   let promo = await getManufacturedPromoByID({ promo_id });
 
   let msg = createDetailsMsg(
-    { service_id, promo_id, promo, practice_id, practice_base_id }
+    { service_id, promo_id, promo, practice_id, practice_promos_base_id }
   );
 
   let messages = [msg];
