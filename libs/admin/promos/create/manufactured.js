@@ -41,7 +41,7 @@ let createNewPromo = async (data) => {
     ['Details']: manufactured_promo.fields['Details'],
     ['Expiration Date']: localizeDate(expiration_date),
     ['Image URL']: new_promo_image,
-    ['Claim Limit']: Number(new_promo_claim_limit.trim()),
+    ['Claim Limit']: Number(claim_limit.trim()),
     ['Total Claim Count']: 0,
     ['Total Used']: 0,
   }

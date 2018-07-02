@@ -1,23 +1,27 @@
 let handleRoute = require('../../../../middlewares/handleRoute.js');
 
-let { createMultiGallery } = require('../../../../libs/bots.js');
 let { getPracticeByUserID } = require('../../../../libs/data/practices.js');
 let { getCustomCategoryByID } = require('../../../../libs/data/custom-images.js');
-let { toCategoryGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
 let { getCustomCategories, getCustomImagesByCategory } = require('../../../../libs/data/custom-images.js');
+
 let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/confirm.js');
+
+let { toCategoryGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
+let { createMultiGallery } = require('../../../../libs/bots.js');
 
 let express = require('express');
 let router = express.Router();
 
 let sendCustomCategories = async ({ query }, res) => {
   // console.log('query', query);
-  let { messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
+  let { messenger_user_id } = query;
+
+  let { new_promo_name: promo_name, new_promo_expiration_date: expiration_date, new_promo_claim_limit: claim_limit } = query;
 
   let custom_promo_categories = await getCustomCategories();
 
   let galleryData = custom_promo_categories.map(
-    toCategoryGallery({ messenger_user_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit })
+    toCategoryGallery({ messenger_user_id, promo_name, expiration_date, claim_limit })
   );
 
   // console.log('Category Gallery Button', galleryData[0].buttons[0]);
@@ -28,7 +32,7 @@ let sendCustomCategories = async ({ query }, res) => {
 }
 
 let sendCustomImages = async ({ query, url }, res) => {
-  let { messenger_user_id, category_id, new_promo_name, new_promo_expiration_date, new_promo_claim_limit } = query;
+  let { messenger_user_id, category_id, new_promo_name: promo_name, new_promo_expiration_date: promo_expiration_date, new_promo_claim_limit: promo_claim_limit } = query;
   // console.log('query', query);
   // console.log('url', url);
   // console.log('new_promo_name', new_promo_name);
@@ -38,7 +42,7 @@ let sendCustomImages = async ({ query, url }, res) => {
   let custom_promo_images = await getCustomImagesByCategory({ category_name });
 
   let galleryData = custom_promo_images.map(
-    toImagesGallery({ new_promo_name, new_promo_expiration_date, new_promo_claim_limit })
+    toImagesGallery({ promo_name, promo_expiration_date, promo_claim_limit })
   );
 
   // console.log('Gallery Image Element', galleryData[0]);
@@ -50,26 +54,28 @@ let sendCustomImages = async ({ query, url }, res) => {
 
 let sendSelectedImage = async ({ query }, res) => {
   let { new_promo_image_id } = query;
+
   let set_attributes = { new_promo_image_id };
   let redirect_to_blocks = ['New Custom Promotion Confirmation'];
+
   res.send({ set_attributes, redirect_to_blocks });
 }
 
 let createCustomPromo = async ({ query }, res) => {
   let {
     messenger_user_id,
-    new_promo_name,
-    new_promo_details,
-    new_promo_expiration_date,
-    new_promo_claim_limit,
-    new_promo_image_id,
+    new_promo_name: promo_name,
+    new_promo_details: promo_details,
+    new_promo_expiration_date: promo_expiration_date,
+    new_promo_claim_limit: promo_claim_limit,
+    new_promo_image_id: promo_image_id,
   } = query;
 
   let practice = await getPracticeByUserID(messenger_user_id);
   let practice_base_id = practice.fields['Practice Base ID'];
 
   let new_promo = await createNewPromo(
-    { practice_base_id, new_promo_name, new_promo_details, new_promo_expiration_date, new_promo_claim_limit, new_promo_image_id }
+    { practice_base_id, promo_name, promo_details, promo_expiration_date, promo_claim_limit, promo_image_id }
   );
 
   let redirect_to_blocks = ['New Custom Promo Created'];
