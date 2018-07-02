@@ -1,4 +1,5 @@
 let { BASEURL } = process.env;
+
 let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
@@ -68,6 +69,7 @@ let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => 
   let practice_zip_code = practice['Practice Zip Code'];
 
   let user_messenger_id = messenger_user_id;
+
   let user = await getUserByMessengerID(messenger_user_id);
   let practice_user = await getPracticeUser({ user_messenger_id, practice_users_base_id });
 
