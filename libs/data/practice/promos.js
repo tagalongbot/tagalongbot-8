@@ -30,8 +30,8 @@ let updatePracticePromo = async ({ practice_base_id, promo_data, promo }) => {
   let promosTable = getPromosTable(practice_base_id);
   let updatePromo = updateTableData(promosTable);
   
-  let new_promo = await updatePromo(promo_data, promo);
-  return new_promo;
+  let updated_promo = await updatePromo(promo_data, promo);
+  return updated_promo;
 }
 
 module.exports = {
