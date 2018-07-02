@@ -1,4 +1,4 @@
-let someFunction () => {
+let getPromos = async ({ query }) => {
 
 let practices = await searchPractices({ state_name, city_name, zip_code });
 
