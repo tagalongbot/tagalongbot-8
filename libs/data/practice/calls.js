@@ -1,9 +1,9 @@
-// This library is used for managing a practice's calls
+// This library is used for managing calls for each practice
 let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../../../libs/data.js');
 
 let getCallsTable = getTable('Calls');
 
-let getPracticeCallByID = async ({ practice_calls_base_id, call_id }) => {
+let getPracticeCall = async ({ practice_calls_base_id, call_id }) => {
   let callsTable = getCallsTable(practice_calls_base_id);
   let findCall = findTableData(callsTable);
   let call = await findCall(call_id);
@@ -35,7 +35,7 @@ let updatePracticeCall = async ({ practice_calls_base_id, call_data, promo }) =>
 }
 
 module.exports = {
-  getPracticeCallByID,
+  getPracticeCall,
   getPracticeCalls,
   createPracticeCall,
   updatePracticeCall,

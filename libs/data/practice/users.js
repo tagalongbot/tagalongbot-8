@@ -1,11 +1,11 @@
-// This library is used for users inside a practice base
+// This library is used for managing users for each practice
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../../../libs/data.js');
 
 let getUsersTable = getTable('Users');
 let getPromosTable = getTable('Promos');
 
-let getPracticeUser = async ({ practice_base_id, user_messenger_id }) => {
-  let usersTable = getUsersTable(practice_base_id);
+let getPracticeUser = async ({ practice_users_base_id, user_messenger_id }) => {
+  let usersTable = getUsersTable(practice_users_base_id);
   let getUsers = getAllDataFromTable(usersTable);
 
   let filterByFormula = `{messenger user id} = '${user_messenger_id}'`;
@@ -13,24 +13,33 @@ let getPracticeUser = async ({ practice_base_id, user_messenger_id }) => {
   return user;
 }
 
-let createPracticeUser = async ({ practice_base_id, user_data }) => {
-  let usersTable = getUsersTable(practice_base_id);
+let getPracticeUsers = async ({ practice_users_base_id, user_messenger_id }) => {
+  let usersTable = getUsersTable(practice_users_base_id);
+  let getUsers = getAllDataFromTable(usersTable);
+
+  let filterByFormula = `{messenger user id} = '${user_messenger_id}'`;
+  let [user] = await getUsers({ filterByFormula });
+  return user;
+}
+
+let createPracticeUser = async ({ practice_users_base_id, user_data }) => {
+  let usersTable = getUsersTable(practice_users_base_id);
   let createUser = createTableData(usersTable);
 
   let new_user = await createUser(user_data);
   return new_user;
 }
 
-let updatePracticeUser = async ({ practice_base_id, user_data, practice_user }) => {
-  let usersTable = getUsersTable(practice_base_id);
+let updatePracticeUser = async ({ practice_users_base_id, user_data, practice_user }) => {
+  let usersTable = getUsersTable(practice_users_base_id);
   let updateUser = updateTableData(usersTable);
   
   let updated_user = await updateUser(user_data, practice_user);
   return updated_user;
 }
 
-let getUserPromos = async ({ practice_base_id, user_id }) => {
-  let promosTable = getPromosTable(practice_base_id);
+let getUserPromos = async ({ practice_users_base_id, user_id }) => {
+  let promosTable = getPromosTable(practice_users_base_id);
   let getPromos = getAllDataFromTable(promosTable);
 
   let view = 'Active Promos';
@@ -45,6 +54,7 @@ let getUserPromos = async ({ practice_base_id, user_id }) => {
 
 module.exports = {
   getPracticeUser,
+  getPracticeUsers,
   createPracticeUser,
   updatePracticeUser,
   getUserPromos,
