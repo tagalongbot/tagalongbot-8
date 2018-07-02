@@ -1,4 +1,8 @@
+let someFunction () => {
+
 let practices = await searchPractices({ state_name, city_name, zip_code });
+
+}
 
 let a = await func({ x });
 
