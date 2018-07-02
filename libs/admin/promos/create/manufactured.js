@@ -1,8 +1,11 @@
 let { BASEURL } = process.env;
+
 let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
+
 let { getServiceByID } = require('../../../../libs/data/services.js');
 let { getManufacturedPromoByID, getManufacturedPromos, getManufacturedPromosByService } = require('../../../../libs/data/manufactured-promos.js');
+
 let { createExpirationDate } = require('../../../../libs/admin/promos/create.js');
 let { createPracticePromo } = require('../../../../libs/data/practice/promos.js');
 
@@ -22,7 +25,7 @@ let getServicesWithPromos = async ({ services }) => {
 }
 
 let createNewPromo = async (data) => {
-  let { new_promo_id, new_promo_practice_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
+  let { new_promo_id, new_promo_practice_promos_base_id, new_promo_service_id, new_promo_expiration_date, new_promo_claim_limit } = data;
 
   let service = await getServiceByID({ service_id: new_promo_service_id });
 
@@ -44,19 +47,19 @@ let createNewPromo = async (data) => {
     ['Total Used']: 0,
   }
 
-  let newPromo = await createPracticePromo({ practice_base_id: new_promo_practice_base_id, promo_data });
+  let newPromo = await createPracticePromo({ practice_promos_base_id: new_promo_practice_promos_base_id, promo_data });
 
   return newPromo;
 }
 
 // Mapping Functions
-let toServicesGallery = ({ practice_id, practice_base_id }) => ({ id: service_id, fields: service }) => {
+let toServicesGallery = ({ practice_id, practice_promos_base_id }) => ({ id: service_id, fields: service }) => {
   let title = service['Name'];
   let image_url = service['Image URL'];
 
   let view_service_promos_url = createURL(
     `${BASEURL}/admin/promos/create/manufactured/service`,
-    { service_id, practice_id, practice_base_id }
+    { service_id, practice_id, practice_promos_base_id }
   );
 
   let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);
@@ -67,18 +70,18 @@ let toServicesGallery = ({ practice_id, practice_base_id }) => ({ id: service_id
   return element;
 }
 
-let toPromosGallery = ({ practice_id, practice_base_id, service_id }) => ({ id: promo_id, fields: promo }) => {
+let toPromosGallery = ({ practice_id, practice_promos_base_id, service_id }) => ({ id: promo_id, fields: promo }) => {
   let title = `${promo['Name']} on ${promo['Service Name']}`;
   let image_url = promo['Image URL'];
 
   let create_promo_url = createURL(
     `${BASEURL}/admin/promos/create/manufactured/service/create`,
-    { service_id, promo_id, practice_id, practice_base_id }
+    { service_id, promo_id, practice_id, practice_promos_base_id }
   );
 
   let view_promo_details_url = createURL(
     `${BASEURL}/admin/promos/view/manufactured/details`,
-    { service_id, promo_id, practice_id, practice_base_id }
+    { service_id, promo_id, practice_id, practice_promos_base_id }
   );
 
   let btn1 = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);

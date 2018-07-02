@@ -35,10 +35,10 @@ let getServicePromos = async ({ query }, res) => {
 
   let practice_promos = practices_with_service.map(async practice => {
     let practice_id = practice.id;
-    let practice_base_id = practice.fields['Practice Base ID'];
-    let promos = await getPracticePromos({ practice_base_id });
+    let practice_promos_base_id = practice.fields['Practice Base ID'];
+    let promos = await getPracticePromos({ practice_promos_base_id });
     return promos.map(
-      toGalleryElement({ practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id })
+      toGalleryElement({ practice_id, practice_promos_base_id, first_name, last_name, gender, messenger_user_id })
     );
   });
 

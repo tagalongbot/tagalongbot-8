@@ -20,12 +20,12 @@ let getPromos = async ({ query }, res) => {
   let practice_promos = await Promise.all(
     practices.map(async (practice) => {
       let practice_id = practice.id;
-      let practice_base_id = practice.fields['Practice Base ID'];
+      let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
       let view = 'Active Promos';
-      let promos = await getPracticePromos({ practice_base_id, view });
+      let promos = await getPracticePromos({ practice_promos_base_id, view });
 
       return promos.map(
-        toGalleryElement({ messenger_user_id, practice_id, practice_base_id, first_name, last_name, gender })
+        toGalleryElement({ messenger_user_id, practice_id, practice_promos_base_id, first_name, last_name, gender })
       );
     })
   );
