@@ -1,4 +1,4 @@
-let { BASEURL, PRACTICE_DATABASE_BASE_ID, DEFAULT_PRACTICE_IMAGE, SEARCH_PRACTICES_MORE_OPTIONS_IMAGE_URL } = process.env;
+let { BASEURL, DEFAULT_PRACTICE_IMAGE, SEARCH_PRACTICES_MORE_OPTIONS_IMAGE_URL } = process.env;
 
 let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
@@ -44,7 +44,7 @@ let createUpdateUserData = ({ search_practices_state, search_practices_city, sea
 }
 
 let createButtons = (practice, data) => {
-  let { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id } = data;
+  let { practice_id, first_name, last_name, gender, messenger_user_id } = data;
 
   let is_practice_active = practice['Active?'];
   let is_practice_claimed = practice['Claimed?'];
@@ -52,12 +52,12 @@ let createButtons = (practice, data) => {
   if (is_practice_active) {
     let view_services_btn_url = createURL(
       `${BASEURL}/practices/services`,
-      { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
+      { practice_id, first_name, last_name, gender, messenger_user_id }
     );
 
     let view_promos_btn_url = createURL(
       `${BASEURL}/practices/promos`,
-      { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }  
+      { practice_id, first_name, last_name, gender, messenger_user_id }  
     );
 
     let btn1 = createBtn(`View Services|json_plugin_url|${view_services_btn_url}`);
@@ -69,7 +69,7 @@ let createButtons = (practice, data) => {
   if (!is_practice_claimed) {
     let claim_practice_url = createURL(
       `${BASEURL}/practices/claim/user_info`,
-      { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
+      { practice_id, first_name, last_name, gender, messenger_user_id }
     );
 
     let btn = createBtn(`Claim Practice|json_plugin_url|${claim_practice_url}`);
@@ -143,10 +143,9 @@ let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
   let subtitle = `${practice['Main Provider']} | ${practice['Practice Address']}`;
   let image_url = practice['Main Provider Image'] ? practice['Main Provider Image'][0].url : DEFAULT_PRACTICE_IMAGE;
 
-  let practice_base_id = practice['Practice Base ID'];
   let buttons = createButtons(
     practice,
-    { practice_id, practice_base_id, first_name, last_name, gender, messenger_user_id }
+    { practice_id, first_name, last_name, gender, messenger_user_id }
   );
 
   let element = { title, subtitle, image_url, buttons };

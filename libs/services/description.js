@@ -1,4 +1,5 @@
 let { BASEURL } = process.env;
+
 let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
@@ -23,13 +24,13 @@ let createFindPracticesMsg = ({ service, service_id, messenger_user_id, first_na
 }
 
 let createViewPracticePromosMsg = (service, data) => {
-  let { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id, practice_name } = data;
+  let { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_name } = data;
 
   let service_name = service.fields['Name'];
 
   let view_practice_promos = createURL(
-    `${BASEURL}/services/provider/promos`, 
-    { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id }
+    `${BASEURL}/services/practice/promos`, 
+    { messenger_user_id, first_name, last_name, gender, service_id, practice_id }
   );
 
   let txtMsg = createButtonMessage(

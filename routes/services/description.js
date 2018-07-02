@@ -4,7 +4,7 @@ let { createFindPracticesMsg, createViewPracticePromosMsg } = require('../../lib
 
 let getServiceDescription = async ({ query, params }, res) => {
   let { show_practices } = params;
-  let { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id } = query;
+  let { messenger_user_id, first_name, last_name, gender, service_id, practice_id } = query;
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
@@ -15,7 +15,7 @@ let getServiceDescription = async ({ query, params }, res) => {
 
     let msg = createViewPracticePromosMsg(
       service,
-      { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_base_id, practice_name }
+      { messenger_user_id, first_name, last_name, gender, service_id, practice_id, practice_name }
     );
 
     let messages = [msg];
