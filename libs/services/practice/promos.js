@@ -1,12 +1,14 @@
 let { BASEURL } = process.env;
+
 let { createURL } = require('../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../libs/bots.js');
+
 let { getPracticeByID } = require('../../../libs/data/practices.js');
 let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
 
-let getServicePromos = async ({ service_name, practice_base_id }) => {
+let getServicePromos = async ({ service_name, practice_promos_base_id }) => {
   let view = 'Active Promos';
-  let promos = await getPracticePromos({ practice_base_id, view });
+  let promos = await getPracticePromos({ practice_promos_base_id, view });
 
   let lower_cased_service_name = service_name.toLowerCase();
   let matched_promos = promos.filter(

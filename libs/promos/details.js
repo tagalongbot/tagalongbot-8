@@ -3,7 +3,7 @@ let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
 let createDetailsMsg = (promo, data, { is_claimed }) => {
-  let { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
+  let { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
 
   let btns = [];
 
@@ -18,7 +18,7 @@ let createDetailsMsg = (promo, data, { is_claimed }) => {
 
   let view_practice_url = createURL(
     `${BASEURL}/promos/practice`, 
-    { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
+    { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
   btns.push(`View Promo Provider|json_plugin_url|${view_practice_url}`);
