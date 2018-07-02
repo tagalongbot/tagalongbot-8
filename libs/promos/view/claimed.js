@@ -1,24 +1,27 @@
 let { BASEURL } = process.env;
+
 let { createBtn } = require('../../../libs/bots.js');
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
+
 let { getPracticeByID } = require('../../../libs/data/practices.js');
 let { getPracticeUser, getUserPromos } = require('../../../libs/data/practice/users.js');
 
 let getUserClaimedPromos = (data) => async (practice_id) => {
   let { messenger_user_id, first_name, last_name, gender } = data;
-  let practice = await getPracticeByID(practice_id);
-  let practice_base_id = practice.fields['Practice Base ID'];
 
-  let user = await getPracticeUser({ practice_base_id, user_messenger_id: messenger_user_id });
-  let user_promos = await getUserPromos({ practice_base_id, user_id: user.id });
+  let practice = await getPracticeByID(practice_id);
+  let practice_promos_base_id = practice.fields['Practice Base ID'];
+
+  let user = await getPracticeUser({ practice_promos_base_id, user_messenger_id: messenger_user_id });
+  let user_promos = await getUserPromos({ practice_promos_base_id, user_id: user.id });
 
   return user_promos.map(
-    toGalleryElement({ practice_id, practice_base_id, messenger_user_id, first_name, last_name, gender })
+    toGalleryElement({ practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender })
   );
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
-  let { practice_id, practice_base_id, messenger_user_id, first_name, last_name, gender } = data;
+  let { practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender } = data;
 
   let promo_expiration_date = new Date(promo['Expiration Date']);
 
@@ -28,12 +31,12 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   let view_promo_details_url = createURL(
     `${BASEURL}/promos/details/claimed`,
-    { practice_id, practice_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
+    { practice_id, practice_promos_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let view_promo_practice_url = createURL(
     `${BASEURL}/promos/provider`,
-    { practice_id, practice_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
+    { practice_id, practice_promos_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let btn1 = createBtn(`View Promo Info|json_plugin_url|${view_promo_details_url}`);
