@@ -11,6 +11,8 @@ let b = 10;
 
 let a = await func({ x });
 
+(x, y) => x * y
+
 describe('outer', function() {
 
   it('first', function() {
