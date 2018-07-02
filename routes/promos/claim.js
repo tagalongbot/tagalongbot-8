@@ -46,14 +46,15 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, promo_id,  practice_id, gender, user_email, user_phone_number } = query;
+  let { promo_id, practice_id } = query;
+  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = query;
 
   let practice = await getPracticeByID(practice_id);
-  let practice_base_id = practice.fields['Practice Base ID'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
   let practice_phone_number = practice.fields['Practice Phone #'];
   let practice_booking_url = practice.fields['Practice Booking URL'];
 
-  let promo = await getPracticePromo({ practice_base_id, promo_id });
+  let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
 
   if (!promo || promo.fields['Claim Limit Reached'] === '1') {
     let redirect_to_blocks = ['Promo No Longer Valid'];
@@ -74,9 +75,9 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let updated_promo = await updatePromo({ practice_base_id, promo, user, claimed_by_users });
+  let updated_promo = await updatePromo({ practice_promos_base_id, promo, user, claimed_by_users });
 
-  let data = { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
+  let data = { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
 
   let claimedMsg = createClaimedMsg({ data, updated_promo, practice_phone_number, practice_booking_url });
 

@@ -3,8 +3,8 @@ let { getTable, updateTableData } = require('../../../../libs/data.js');
 
 let getPromosTable = getTable('Promos');
 
-let updatePromo = async ({ practice_base_id, promo, user_record_id }) => {
-  let promosTable = getPromosTable(practice_base_id);
+let updatePromo = async ({ practice_promos_base_id, promo, user_record_id }) => {
+  let promosTable = getPromosTable(practice_promos_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
 
   let already_used_user_ids = promo.fields['Promo Used By Users'] || [];

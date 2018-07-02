@@ -41,8 +41,8 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_data, practice_
 }
 
 // Exposed Functions
-let updatePromo = async ({ practice_base_id, promo, user, claimed_by_users }) => {
-  let promosTable = getPromosTable(practice_base_id);
+let updatePromo = async ({ practice_promos_base_id, promo, user, claimed_by_users }) => {
+  let promosTable = getPromosTable(practice_promos_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
 
   let new_claimed_users = [
@@ -62,14 +62,14 @@ let updatePromo = async ({ practice_base_id, promo, user, claimed_by_users }) =>
 let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => {
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
 
-  let practice_base_id = practice['Practice Base ID'];
+  let practice_users_base_id = practice['Practice Users Base ID'];
   let practice_state = practice['Practice State'];
   let practice_city = practice['Practice City'];
   let practice_zip_code = practice['Practice Zip Code'];
 
   let user_messenger_id = messenger_user_id;
   let user = await getUserByMessengerID(messenger_user_id);
-  let practice_user = await getPracticeUser({ user_messenger_id, practice_base_id });
+  let practice_user = await getPracticeUser({ user_messenger_id, practice_users_base_id });
 
   let user_data = createUserData(
     { messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }
@@ -78,20 +78,20 @@ let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => 
   let updated_user = await updateUserFromAllUsersBase({ user, user_email, user_data, practice_id });
 
   if (!practice_user) {
-    let newUser = await createPracticeUser({ practice_base_id, user_data });
+    let newUser = await createPracticeUser({ practice_users_base_id, user_data });
     return newUser;
   }
 
-  let updated_practice_user = await updatePracticeUser({ practice_base_id, user_data, practice_user });
+  let updated_practice_user = await updatePracticeUser({ practice_users_base_id, user_data, practice_user });
   return updated_practice_user;
 }
 
 let createClaimedMsg = ({ data, updated_promo, practice_phone_number, practice_booking_url }) => {
-  let { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
+  let { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
 
   let view_practice_url = createURL(
     `${BASEURL}/promos/practice`, 
-    { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
+    { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
   let btn1 = `View Provider|json_plugin_url|${view_practice_url}`;

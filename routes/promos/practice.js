@@ -5,9 +5,9 @@ let { toGalleryElement } = require('../../libs/practices/practices.js');
 let { createGallery } = require('../../libs/bots.js');
 
 let getPromoPractice = async ({ query }, res) => {
-  let { practice_id, practice_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
+  let { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
 
-  let promo = await getPracticePromo({ practice_base_id, promo_id });
+  let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
 
   if (!promo) {
     let redirect_to_blocks = ['Promo No Longer Active'];
