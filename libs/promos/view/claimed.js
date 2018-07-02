@@ -10,10 +10,12 @@ let getUserClaimedPromos = (data) => async (practice_id) => {
   let { messenger_user_id, first_name, last_name, gender } = data;
 
   let practice = await getPracticeByID(practice_id);
-  let practice_promos_base_id = practice.fields['Practice Base ID'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let user = await getPracticeUser({ practice_promos_base_id, user_messenger_id: messenger_user_id });
-  let user_promos = await getUserPromos({ practice_promos_base_id, user_id: user.id });
+  let user_id = user.id;
+  
+  let user_promos = await getUserPromos({ practice_promos_base_id, user_id });
 
   return user_promos.map(
     toGalleryElement({ practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender })

@@ -3,9 +3,9 @@ let { createBtn, createMultiGallery } = require('../../../../libs/bots.js');
 let { createURL } = require('../../../../libs/helpers.js');
 
 let createUpdateBtn = (data) => {
-  let { practice_base_id, promo_id, user_messenger_id, user_record_id, user_ids } = data;
+  let { practice_base_id, promo_id, user_messenger_id, user_id, user_ids } = data;
 
-  if (user_ids.includes(user_record_id)) return null;
+  if (user_ids.includes(user_id)) return null;
 
   let update_promo_url = createURL(
     `${BASEURL}/admin/promos/user/update`,
@@ -17,7 +17,7 @@ let createUpdateBtn = (data) => {
   return btn;
 }
 
-let toGalleryElement = ({ practice_base_id, messenger_user_id, user_messenger_id, user_record_id }) => ({ id: promo_id, fields: promo }) => {
+let toGalleryElement = ({ practice_base_id, messenger_user_id, user_messenger_id, user_id }) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
   let subtitle = promo['Terms'];
   let image_url = promo['Image URL'];
@@ -33,7 +33,7 @@ let toGalleryElement = ({ practice_base_id, messenger_user_id, user_messenger_id
   let buttons = [btn1];
 
   let btn2 = createUpdateBtn(
-    { practice_base_id, promo_id, user_messenger_id, user_record_id, user_ids }
+    { practice_base_id, promo_id, user_messenger_id, user_id, user_ids }
   );
 
   if (btn2) buttons = [btn1, btn2];

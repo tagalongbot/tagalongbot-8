@@ -14,10 +14,11 @@ let viewUserPromos = async ({ query }, res) => {
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let user = await getPracticeUser({ practice_promos_base_id, user_messenger_id });
-  let user_record_id = user.id;
+  let user_id = user.id;
+
   let user_name = `${user.fields['First Name']} ${user.fields['Last Name']}`;
 
-  let promos = await getUserPromos({ practice_promos_base_id, user_id: user_record_id });
+  let promos = await getUserPromos({ practice_promos_base_id, user_id });
 
   if (!promos[0]) {
     let redirect_to_blocks = ['[Admin Verify Promo] No User Promos Found'];
@@ -28,7 +29,7 @@ let viewUserPromos = async ({ query }, res) => {
   }
 
   let galleryData = promos.map(
-    toGalleryElement({ practice_promos_base_id, messenger_user_id, user_messenger_id, user_record_id })
+    toGalleryElement({ practice_promos_base_id, messenger_user_id, user_messenger_id, user_id })
   );
 
   let txtMsg = { text: `Here are the promos claimed by ${user_name} from your practice` };
