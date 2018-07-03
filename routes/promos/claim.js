@@ -63,21 +63,21 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let user = await createOrUpdateUser(
+  let practice_user = await createOrUpdateUser(
     { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number },
     practice
   );
 
   let claimed_by_users = convertLongTextToArray(promo.fields['Claimed By Users']);
 
-  if (claimed_by_users.includes(user.id)) {
+  if (claimed_by_users.includes(practice_user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];
     res.send({ redirect_to_blocks });
     return;
   }
 
   let updated_promo = await updatePromo(
-    { practice_promos_base_id, practice_users_base_id, promo, user, claimed_by_users }
+    { practice_promos_base_id, practice_users_base_id, promo, practice_user, claimed_by_users }
   );
 
   let data = { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
