@@ -23,5 +23,6 @@ app.use('/services', servicesRouter);
 
 // Get Files
 app.get('/files', getFile);
+app.post('/files', getFile);
 
 app.listen(3000, () => console.log('Running on PORT 3000'));
