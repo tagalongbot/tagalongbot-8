@@ -8,7 +8,15 @@ let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 let { getPracticeUser, createPracticeUser, updatePracticeUser } = require('../../libs/data/practice/users.js');
 
 let createUserData = (data) => {
-  let { messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code } = data;
+  let { 
+    messenger_user_id = null, 
+    first_name = null, 
+    last_name = null, 
+    gender = null, 
+    practice_state = null, 
+    practice_city = null, 
+    practice_zip_code = null 
+  } = data;
 
   let user_data = {
     'messenger user id': messenger_user_id,
@@ -23,7 +31,7 @@ let createUserData = (data) => {
   return user_data;
 }
 
-let updateUserFromAllUsersBase = async ({ user, user_email, user_data, practice_id }) => {
+let updateUserFromAllUsersBase = async ({ practice_id, user, user_email, user_phone_number, user_data }) => {
   let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split('\n');
 
   let new_practice_ids = [
@@ -32,7 +40,8 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_data, practice_
 
   let updateUserData = { 
     ['Practices Claimed Promos From']: new_practice_ids.join('\n'),
-    ['Email Address']: user_email, 
+    ['Email Address']: user_email,
+    ['Phone Number']: user_phone_number,
     ...user_data 
   }
 
@@ -42,7 +51,6 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_data, practice_
 
 // Exposed Functions
 let updatePromo = async ({ practice_promos_base_id, practice_users_base_id, promo, practice_user, claimed_by_users }) => {
-  // Update User Data
   let practice_user_claimed_promos = convertLongTextToArray(practice_user.fields['Promos Claimed']);
 
   let new_claimed_promos = [
@@ -53,7 +61,9 @@ let updatePromo = async ({ practice_promos_base_id, practice_users_base_id, prom
     ['Promos Claimed']: new_claimed_promos.join('\n'),
   }
 
-  let updated_user = await updatePracticeUser({ practice_users_base_id, user_data, practice_user });
+  let updated_user = await updatePracticeUser(
+    { practice_users_base_id, user_data, practice_user }
+  );
 
   // Update Promo Data
   let new_claimed_users = [
@@ -65,7 +75,10 @@ let updatePromo = async ({ practice_promos_base_id, practice_users_base_id, prom
     ['Claimed By Users']: new_claimed_users.join('\n'),
   }
 
-  let updated_promo = await updatePracticePromo({ practice_promos_base_id, promo_data, promo });
+  let updated_promo = await updatePracticePromo(
+    { practice_promos_base_id, promo_data, promo }
+  );
+
   return updated_promo;
 }
 
@@ -81,20 +94,31 @@ let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => 
   let user_messenger_id = messenger_user_id;
 
   let user = await getUserByMessengerID(messenger_user_id);
-  let practice_user = await getPracticeUser({ user_messenger_id, practice_users_base_id });
+
+  let practice_user = await getPracticeUser(
+    { user_messenger_id, practice_users_base_id }
+  );
 
   let user_data = createUserData(
     { messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }
   );
 
-  let updated_user = await updateUserFromAllUsersBase({ user, user_email, user_data, practice_id });
+  let updated_user = await updateUserFromAllUsersBase(
+    { practice_id, user, user_email, user_phone_number, user_data, practice_id }
+  );
 
   if (!practice_user) {
-    let newUser = await createPracticeUser({ practice_users_base_id, user_data });
+    let newUser = await createPracticeUser(
+      { practice_users_base_id, user_data }
+    );
+
     return newUser;
   }
 
-  let updated_practice_user = await updatePracticeUser({ practice_users_base_id, user_data, practice_user });
+  let updated_practice_user = await updatePracticeUser(
+    { practice_users_base_id, user_data, practice_user }
+  );
+
   return updated_practice_user;
 }
 

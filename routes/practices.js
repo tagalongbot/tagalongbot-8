@@ -10,6 +10,7 @@ let getPracticePromos = require('../routes/practices/promos.js');
 let claimPractice = require('../routes/practices/claim.js');
 let practiceClaimed = require('../routes/practices/claimed.js');
 let listPractice = require('../routes/practices/list.js');
+let callPractice = require('../routes/practices/call.js');
 
 router.get(
   '/search/:search_type',
@@ -40,6 +41,11 @@ router.get(
 router.use(
   '/list',
   listPractice
+);
+
+router.get(
+  '/call',
+  callPractice
 );
 
 module.exports = router;

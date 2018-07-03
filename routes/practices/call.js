@@ -5,8 +5,14 @@ let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 let { VoiceResponse } = twilio.twiml;
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
-let { getPracticeUser } = require('../../libs/data/practice/users.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
+
+let callCustomer = () => {
+  let customer_xml_doc_url = `http://demo.twilio.com/docs/voice.xml`;
+  let call_options = {}
+
+  client.calls.create(call_options);
+}
 
 let callPractice = async ({ query }, res) => {
   // This happens after customer claims promotions
@@ -17,13 +23,12 @@ let callPractice = async ({ query }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_users_base_id = practice.fields['Practice Users Base ID'];
-  
-  let practice_user = await getPracticeUser({ practice_users_base_id, user_messenger_id });
+
   let user = await getUserByMessengerID(user_messenger_id);
-  
-  let new_voice_response = new VoiceResponse();
-  
-  
+  console.log('user phone number', user.fields['Phone Number']);
+
+  // let call_created = callCustomer();
+  res.send('TEST');
 }
 
 module.exports = callPractice;
