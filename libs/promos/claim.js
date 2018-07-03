@@ -46,7 +46,7 @@ let updatePromo = async ({ practice_promos_base_id, practice_users_base_id, prom
   let practice_user_claimed_promos = convertLongTextToArray(practice_user.fields['Promos Claimed']);
 
   let new_claimed_promos = [
-    new Set([...promo.id, ...practice_user_claimed_promos])
+    ...new Set([promo.id, ...practice_user_claimed_promos])
   ];
 
   let user_data = {
