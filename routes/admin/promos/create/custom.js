@@ -14,9 +14,12 @@ let router = express.Router();
 
 let sendCustomCategories = async ({ query }, res) => {
   // console.log('query', query);
-  let { messenger_user_id } = query;
-
-  let { new_promo_name: promo_name, new_promo_expiration_date: expiration_date, new_promo_claim_limit: claim_limit } = query;
+  let { 
+    messenger_user_id,
+    new_promo_name: promo_name,
+    new_promo_expiration_date: expiration_date,
+    new_promo_claim_limit: claim_limit,
+  } = query;
 
   let custom_promo_categories = await getCustomCategories();
 
@@ -32,7 +35,14 @@ let sendCustomCategories = async ({ query }, res) => {
 }
 
 let sendCustomImages = async ({ query, url }, res) => {
-  let { messenger_user_id, category_id, new_promo_name: promo_name, new_promo_expiration_date: promo_expiration_date, new_promo_claim_limit: promo_claim_limit } = query;
+  let { 
+    messenger_user_id, 
+    category_id, new_promo_name: 
+    promo_name, new_promo_expiration_date: 
+    promo_expiration_date, new_promo_claim_limit: 
+    promo_claim_limit
+  } = query;
+
   // console.log('query', query);
   // console.log('url', url);
   // console.log('new_promo_name', new_promo_name);
