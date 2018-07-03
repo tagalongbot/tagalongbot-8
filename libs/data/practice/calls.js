@@ -26,11 +26,11 @@ let createPracticeCall = async ({ practice_calls_base_id, call_data }) => {
   return new_call;
 }
 
-let updatePracticeCall = async ({ practice_calls_base_id, call_data, promo }) => {
+let updatePracticeCall = async ({ practice_calls_base_id, call_data, call }) => {
   let callsTable = getCallsTable(practice_calls_base_id);
   let updateCall = updateTableData(callsTable);
 
-  let updated_call = await updateCall(call_data, promo);
+  let updated_call = await updateCall(call_data, call);
   return updated_call;
 }
 

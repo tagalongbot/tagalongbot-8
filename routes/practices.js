@@ -43,7 +43,7 @@ router.use(
   listPractice
 );
 
-router.get(
+router.use(
   '/call',
   callPractice
 );
