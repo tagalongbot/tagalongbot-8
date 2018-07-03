@@ -36,7 +36,6 @@ let callPractice = async ({ query }, res) => {
   let { practice_id, messenger_user_id: user_messenger_id } = query;
 
   let practice = await getPracticeByID(practice_id);
-  console.log('practice', practice);
   let practice_name = practice.fields['Practice Name'];
 
   let user = await getUserByMessengerID(user_messenger_id);
