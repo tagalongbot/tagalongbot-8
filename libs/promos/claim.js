@@ -105,9 +105,14 @@ let createClaimedMsg = ({ data, updated_promo, practice_phone_number, practice_b
     `${BASEURL}/promos/practice`, 
     { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
+  
+  let call_practice_url = createURL(
+    `${BASEURL}/practices/call`,
+    { practice_id, messenger_user_id }
+  );
 
   let btn1 = `View Provider|json_plugin_url|${view_practice_url}`;
-  let btn2 = (practice_booking_url) ? `View Booking Site|web_url|${practice_booking_url}` : `Call Provider|phone_number|${practice_phone_number}`;
+  let btn2 = (practice_booking_url) ? `View Booking Site|web_url|${practice_booking_url}` : `Call Provider|json_plugin_url|${call_practice_url}`;
   let btn3 = `Main Menu|show_block|Discover Main Menu`;
 
   let msg = createButtonMessage(
