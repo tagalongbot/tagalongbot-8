@@ -6,7 +6,7 @@ let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 let { VoiceResponse } = twilio.twiml;
 
 let { createButtonMessage } = require('../../libs/bots.js');
-let { getNumbersOnly } = require('../../libs/helpers.js');
+let { getNumbersOnly, timeout } = require('../../libs/helpers.js');
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
@@ -44,6 +44,8 @@ let callPractice = async ({ query }, res) => {
   let msg = createCustomerMsg({ user_name, practice_name });
   let messages = [msg];
   res.send({ messages });
+  
+  await timeout(5000);
 
   let call_created = await createCustomerCall(user);
 }
