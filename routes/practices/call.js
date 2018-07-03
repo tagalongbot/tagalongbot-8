@@ -1,17 +1,21 @@
-let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } = process.env;
+let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER } = process.env;
 
 let twilio = require('twilio');
 let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 let { VoiceResponse } = twilio.twiml;
 
+let { getNumbersOnly } = require('../../libs/helpers.js');
+
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
 
-let callCustomer = () => {
+let createCustomerCall = async ({ id: user_id, fields: user }) => {
   let customer_xml_doc_url = `http://demo.twilio.com/docs/voice.xml`;
-  let call_options = {}
+  let customer_phone_number = getNumbersOnly(user['Phone Number'].match(/\d/g));
 
-  client.calls.create(call_options);
+  return client.calls.create(
+    { url: customer_xml_doc_url, to: customer_phone_number, from: TWILIO_PHONE_NUMBER }
+  );
 }
 
 let callPractice = async ({ query }, res) => {
@@ -25,9 +29,7 @@ let callPractice = async ({ query }, res) => {
   let practice_users_base_id = practice.fields['Practice Users Base ID'];
 
   let user = await getUserByMessengerID(user_messenger_id);
-  console.log('user phone number', user.fields['Phone Number']);
-
-  // let call_created = callCustomer();
+  let call_created = await createCustomerCall(user);
   res.send('TEST');
 }
 

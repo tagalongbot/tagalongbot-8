@@ -35,6 +35,10 @@ let getKeysStartingWith = (obj, startingWith) => {
 	return Object.keys(obj).filter(key => key.startsWith(startingWith));
 }
 
+let getNumbersOnly = (phone_number) => {
+  return phone_number.match(/\d/g).join('');
+}
+
 let isValidPhoneNumber = (phone_number) => {
   let regex = /[^+1?]\d/g;
   let numbers_only = phone_number.match(regex).join('');
@@ -94,6 +98,7 @@ module.exports = {
 	randomize,
 	shuffleArray,
 	getKeysStartingWith,
+  getNumbersOnly,
   isValidPhoneNumber,
 	formatPhoneNumber,
   toUniqueArray,

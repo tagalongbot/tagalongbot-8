@@ -82,7 +82,6 @@ let updatePromo = async ({ practice_promos_base_id, practice_users_base_id, prom
   return updated_promo;
 }
 
-// Refactor Code:
 let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => {
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
 
@@ -129,7 +128,7 @@ let createClaimedMsg = ({ data, updated_promo, practice_phone_number, practice_b
     `${BASEURL}/promos/practice`, 
     { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
-  
+
   let call_practice_url = createURL(
     `${BASEURL}/practices/call`,
     { practice_id, messenger_user_id }
