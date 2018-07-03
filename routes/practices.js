@@ -45,7 +45,7 @@ router.use(
 
 router.get(
   '/call',
-  callPractice
+  handleRoute(callPractice, '[Error] Calling Customer')
 );
 
 module.exports = router;

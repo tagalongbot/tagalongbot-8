@@ -1,20 +1,29 @@
-let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER } = process.env;
+let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, CUSTOMER_XML_DOC_URL } = process.env;
 
 let twilio = require('twilio');
 let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 let { VoiceResponse } = twilio.twiml;
 
+let { createButtonMessage } = require('../../libs/bots.js');
 let { getNumbersOnly } = require('../../libs/helpers.js');
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
 
+let createCustomerMsg = ({ user_name, practice_name }) => {
+  let msg = createButtonMessage(
+    `Hey ${user_name} you'll receive a call right now connecting you to ${practice_name} practice`,
+    `Main Menu|show_block|Discover Main Menu`,
+  );
+  
+  return msg;
+}
+
 let createCustomerCall = async ({ id: user_id, fields: user }) => {
-  let customer_xml_doc_url = `http://demo.twilio.com/docs/voice.xml`;
-  let customer_phone_number = getNumbersOnly(user['Phone Number'].match(/\d/g));
+  let customer_phone_number = getNumbersOnly(user['Phone Number']);
 
   return client.calls.create(
-    { url: customer_xml_doc_url, to: customer_phone_number, from: TWILIO_PHONE_NUMBER }
+    { url: CUSTOMER_XML_DOC_URL, to: customer_phone_number, from: TWILIO_PHONE_NUMBER }
   );
 }
 
@@ -26,11 +35,16 @@ let callPractice = async ({ query }, res) => {
   let { practice_id, messenger_user_id: user_messenger_id } = query;
 
   let practice = await getPracticeByID(practice_id);
-  let practice_users_base_id = practice.fields['Practice Users Base ID'];
+  let practice_name = practice.fields['Practice Name'];
 
   let user = await getUserByMessengerID(user_messenger_id);
+  let user_name = user.fields['First Name'];
+
+  let msg = createCustomerMsg({ user_name, practice_name });
+  let messages = [msg];
+  res.send({ messages });
+
   let call_created = await createCustomerCall(user);
-  res.send('TEST');
 }
 
 module.exports = callPractice;
