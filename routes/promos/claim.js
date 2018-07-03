@@ -51,6 +51,7 @@ let claimPromotion = async ({ query }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+  let practice_users_base_id = practice.fields['Practice Users Base ID'];
   let practice_phone_number = practice.fields['Practice Phone #'];
   let practice_booking_url = practice.fields['Practice Booking URL'];
 
@@ -75,7 +76,9 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let updated_promo = await updatePromo({ practice_promos_base_id, promo, user, claimed_by_users });
+  let updated_promo = await updatePromo(
+    { practice_promos_base_id, practice_users_base_id, promo, user, claimed_by_users }
+  );
 
   let data = { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
 

@@ -4,10 +4,12 @@ let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
-let { updatePracticePromo } = require('../../libs/data/promos.js');
+let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 let { getPracticeUser, createPracticeUser, updatePracticeUser } = require('../../libs/data/practice/users.js');
 
-let createUserData = ({ messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }) => {
+let createUserData = (data) => {
+  let { messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code } = data;
+
   let user_data = {
     'messenger user id': messenger_user_id,
     'First Name': first_name,
@@ -35,7 +37,6 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_data, practice_
   }
 
   let updated_user = await updateUser(updateUserData, user);
-
   return updated_user;
 }
 
@@ -96,7 +97,7 @@ let createClaimedMsg = ({ data, updated_promo, practice_phone_number, practice_b
   let btn1 = `View Provider|json_plugin_url|${view_practice_url}`;
   let btn2 = (practice_booking_url) ? `View Booking Site|web_url|${practice_booking_url}` : `Call Provider|phone_number|${practice_phone_number}`;
   let btn3 = `Main Menu|show_block|Discover Main Menu`;
-  
+
   let msg = createButtonMessage(
     `Congrats ${first_name} your promotion "${updated_promo.fields['Promotion Name']}" has been claimed!`,
     ...[btn1, btn2, btn3]
