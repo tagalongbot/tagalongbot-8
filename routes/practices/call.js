@@ -1,7 +1,12 @@
-let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, CUSTOMER_XML_DOC_URL } = process.env;
+let { handleRoute } = require('../../middlewares/handleRoute.js');
+
+let { BASEURL, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, CUSTOMER_XML_DOC_URL } = process.env;
 
 let twilio = require('twilio');
 let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
+let express = require('express');
+let router = express.Router();
 
 let { VoiceResponse } = twilio.twiml;
 
@@ -37,14 +42,14 @@ let callPractice = async ({ query }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
-  let practice_phone_number = practice.fields['Practice Phone Number'];
+  let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
 
   let user = await getUserByMessengerID(user_messenger_id);
   let user_name = user.fields['First Name'];
 
   let msg = createCustomerMsg({ user_name, practice_name });
   let messages = [msg];
-  res.send({ messages });
+  // res.send({ messages });
 
   await timeout(5000);
 
@@ -53,9 +58,30 @@ let callPractice = async ({ query }, res) => {
   await timeout(5000);
 
   let voice_response = new VoiceResponse();
-  voice_response.dial({ callerId: practice_phone_number, record: 'record-from-answer' });
+
+  voice_response.dial({
+    callerId: `+1${practice_phone_number}`,
+    record: 'record-from-answer',
+    recordingStatusCallback: `${BASEURL}/practices/call/record`
+  });
+
   voice_response.say('Goodbye');
 
+  res.send(voice_response);
 }
 
-module.exports = callPractice;
+let saveCallRecording = async ({ query }, res) => {
+  let { CallSid: call_id, RecordingSid } = query;
+}
+
+router.get(
+  '/',
+  handleRoute(callPractice, '[Error] Calling Customer')
+);
+
+router.get(
+  '/record',
+  handleRoute(saveCallRecording, '[Error] Saving Call Recording')
+);
+
+module.exports = router;
