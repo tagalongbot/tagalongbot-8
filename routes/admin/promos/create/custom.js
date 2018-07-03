@@ -80,12 +80,12 @@ let createCustomPromo = async ({ query }, res) => {
     new_promo_claim_limit: promo_claim_limit,
     new_promo_image_id: promo_image_id,
   } = query;
-
+  
   let practice = await getPracticeByUserID(messenger_user_id);
-  let practice_base_id = practice.fields['Practice Base ID'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let new_promo = await createNewPromo(
-    { practice_base_id, promo_name, promo_details, promo_expiration_date, promo_claim_limit, promo_image_id }
+    { practice_promos_base_id, promo_name, promo_details, promo_expiration_date, promo_claim_limit, promo_image_id }
   );
 
   let redirect_to_blocks = ['New Custom Promo Created'];

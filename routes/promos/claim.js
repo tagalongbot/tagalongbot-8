@@ -46,6 +46,7 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
+  console.log('query', query);
   let { promo_id, practice_id } = query;
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = query;
 

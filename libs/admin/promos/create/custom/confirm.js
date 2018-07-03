@@ -5,7 +5,7 @@ let { getCustomImageByID } = require('../../../../../libs/data/custom-images.js'
 let { createExpirationDate } = require('../../../../../libs/admin/promos/create.js');
 
 let createNewPromo = async (data) => {
-  let { practice_promos_base_id, promo_expiration_date, promo_name, promo_details, promo_claim_limit, promo_image_id } = data;
+  let { practice_promos_base_id, promo_name, promo_details, promo_expiration_date, promo_claim_limit, promo_image_id } = data;
 
   let custom_promo_image = await getCustomImageByID({ custom_image_id: promo_image_id })
   let promo_image = custom_promo_image.fields['Image URL'];
