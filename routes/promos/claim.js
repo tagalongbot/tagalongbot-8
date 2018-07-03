@@ -52,7 +52,7 @@ let claimPromotion = async ({ query }, res) => {
   let practice = await getPracticeByID(practice_id);
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
   let practice_users_base_id = practice.fields['Practice Users Base ID'];
-  let practice_phone_number = practice.fields['Practice Phone #'];
+  let practice_phone_number = practice.fields['Practice Phone Number'];
   let practice_booking_url = practice.fields['Practice Booking URL'];
 
   let promo = await getPracticePromo({ practice_promos_base_id, promo_id });

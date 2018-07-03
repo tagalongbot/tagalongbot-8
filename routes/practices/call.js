@@ -37,6 +37,7 @@ let callPractice = async ({ query }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
+  let practice_phone_number = practice.fields['Practice Phone Number'];
 
   let user = await getUserByMessengerID(user_messenger_id);
   let user_name = user.fields['First Name'];
@@ -44,10 +45,17 @@ let callPractice = async ({ query }, res) => {
   let msg = createCustomerMsg({ user_name, practice_name });
   let messages = [msg];
   res.send({ messages });
-  
+
   await timeout(5000);
 
   let call_created = await createCustomerCall(user);
+
+  await timeout(5000);
+
+  let voice_response = new VoiceResponse();
+  voice_response.dial({ callerId: practice_phone_number, record: 'record-from-answer' });
+  voice_response.say('Goodbye');
+
 }
 
 module.exports = callPractice;
