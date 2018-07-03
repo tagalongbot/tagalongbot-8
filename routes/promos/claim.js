@@ -1,6 +1,6 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
 
-let { isValidPhoneNumber } = require('../../libs/helpers.js');
+let { isValidPhoneNumber, convertLongTextToArray } = require('../../libs/helpers.js');
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
@@ -46,7 +46,6 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  console.log('query', query);
   let { promo_id, practice_id } = query;
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = query;
 
@@ -68,7 +67,7 @@ let claimPromotion = async ({ query }, res) => {
     practice
   );
 
-  let claimed_by_users = promo.fields['Claimed By Users'] || [];
+  let claimed_by_users = convertLongTextToArray(promo.fields['Claimed By Users']);
 
   if (claimed_by_users.includes(user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];

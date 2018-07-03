@@ -71,6 +71,10 @@ let timeout = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+let convertLongTextToArray = (long_text = '') => {
+  return long_text.split('\n');
+}
+
 let logError = async (error) => {
   let path = '.data/errors.txt';
   let date = new Date();
@@ -97,6 +101,7 @@ module.exports = {
   flattenArray,
   flattenDeepArray,
   timeout,
+  convertLongTextToArray,
   logError,
   logToFile,
 }

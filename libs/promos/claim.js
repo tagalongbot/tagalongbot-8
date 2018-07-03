@@ -4,10 +4,8 @@ let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
+let { updatePracticePromo } = require('../../libs/data/promos.js');
 let { getPracticeUser, createPracticeUser, updatePracticeUser } = require('../../libs/data/practice/users.js');
-let { getTable, createTableData, updateTableData } = require('../../libs/data.js');
-
-let getPromosTable = getTable('Promos');
 
 let createUserData = ({ messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }) => {
   let user_data = {
@@ -24,14 +22,14 @@ let createUserData = ({ messenger_user_id, first_name, last_name, gender, practi
 }
 
 let updateUserFromAllUsersBase = async ({ user, user_email, user_data, practice_id }) => {
-  let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',');
+  let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split('\n');
 
   let new_practice_ids = [
     ...new Set([practice_id, ...practice_ids])
   ];
 
   let updateUserData = { 
-    ['Practices Claimed Promos From']: new_practice_ids.join(','),
+    ['Practices Claimed Promos From']: new_practice_ids.join('\n'),
     ['Email Address']: user_email, 
     ...user_data 
   }
@@ -42,24 +40,23 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_data, practice_
 }
 
 // Exposed Functions
-let updatePromo = async ({ practice_promos_base_id, promo, user, claimed_by_users }) => {
-  let promosTable = getPromosTable(practice_promos_base_id);
-  let updatePromoFromTable = updateTableData(promosTable);
-
+let updatePromo = async ({ practice_promos_base_id, practice_users_base_id, promo, user, claimed_by_users }) => {
   let new_claimed_users = [
     ...new Set([user.id, ...claimed_by_users])
   ];
 
-  let updateData = {
+  let promo_data = {
     'Total Claim Count': Number(promo.fields['Total Claim Count']) + 1,
-    'Claimed By Users': new_claimed_users,
+    'Claimed By Users': new_claimed_users.join('\n'),
   }
+  
+  let practice_user = await getPracticeUser({ practice_users_base_id, user_id: user.id });
 
-  let updatedPromo = await updatePromoFromTable(updateData, promo);
+  let updatedPromo = await updatePracticePromo({ practice_promos_base_id, promo_data, promo });
   return updatedPromo;
 }
 
-// Refactor Data Clump
+// Refactor Code:
 let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => {
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
 
