@@ -2,6 +2,7 @@ let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, CUSTOMER_XML_D
 
 let twilio = require('twilio');
 let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
 let { VoiceResponse } = twilio.twiml;
 
 let { createButtonMessage } = require('../../libs/bots.js');
@@ -34,7 +35,8 @@ let callPractice = async ({ query }, res) => {
 
   let { practice_id, messenger_user_id: user_messenger_id } = query;
 
-  let practice = await getPracticeByID(practice_id.trim());
+  let practice = await getPracticeByID(practice_id);
+  console.log('practice', practice);
   let practice_name = practice.fields['Practice Name'];
 
   let user = await getUserByMessengerID(user_messenger_id);
