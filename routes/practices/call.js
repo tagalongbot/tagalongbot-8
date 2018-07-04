@@ -15,9 +15,9 @@ let { getNumbersOnly, timeout } = require('../../libs/helpers.js');
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
 
-let { getPracticeCall, createPracticeCall, updatePracticeCall } = require('../../libs/data/practice/calls.js');
+let { getPracticeCall, updatePracticeCall } = require('../../libs/data/practice/calls.js');
 
-let { createCallRecord, createCustomerMsg, createCustomerCall } = require('../../libs/practices/calls.js');
+let { createCallRecord, createCustomerMsg, createCustomerCall } = require('../../libs/practices/call.js');
 
 let callPractice = async ({ query }, res) => {
   // This happens after customer claims promotions
@@ -45,17 +45,18 @@ let callPractice = async ({ query }, res) => {
 
   // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
   await timeout(5000);
-  let call_created = await createCustomerCall(
-    
+  let customer_call = await createCustomerCall(
+    {  }
   );
-
 }
 
 let answerCustomer = async ({ query, params }, res) => {
-  let {} = params;
+  let { practice_id, new_call_record } = params;
 
-  
-  
+  let practice = await getPracticeByID(practice_id);
+  let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
+  let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
+
   let voice_response = new VoiceResponse();
 
   let dial = voice_response.dial({
@@ -66,11 +67,10 @@ let answerCustomer = async ({ query, params }, res) => {
 
   voice_response.say('Hello Tobey');
 
-  await timeout(30000);
   dial.number(`+1${practice_phone_number}`);
 
+  res.set('Content-Type', 'text/xml');
   res.send(voice_response.toString());
-
 }
 
 let saveCallRecording = async ({ query, params }, res) => {
