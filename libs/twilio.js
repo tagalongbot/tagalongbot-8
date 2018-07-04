@@ -1,4 +1,4 @@
-let { AUTHY_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, CUSTOMER_XML_DOC_URL } = process.env;
+let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, AUTHY_API_KEY } = process.env;
 
 let twilio = require('twilio');
 let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
@@ -35,6 +35,21 @@ let checkVerificationCode = async ({ phone_number, verification_code }) => {
   );
   
   return result;
+}
+
+let createCall = async (data) => {
+  let { 
+    phone_number: to,
+    call_url: url,
+    call_status: StatusCallbackEvent = '',
+    call_from: from = TWILIO_PHONE_NUMBER, 
+  } = data;
+
+  let statusCallback = ``;
+  
+  let call_options = { url, to, from, statusCallback, statusCallbackMethod };
+
+  return client.calls.create(call_options);
 }
 
 module.exports = {
