@@ -1,9 +1,17 @@
-let { AUTHY_API_KEY } = process.env;
-let authyClient = require('authy-client');
+let { AUTHY_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, CUSTOMER_XML_DOC_URL } = process.env;
 
+let twilio = require('twilio');
+let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
+let authyClient = require('authy-client');
 let { Client, enums } = authyClient;
 
 let authy = new Client({ key: AUTHY_API_KEY });
+
+// Exposed Functions
+let checkIfValidPhoneNumber = async ({ phone_number }) => {
+  
+}
 
 let sendPhoneVerificationCode = async ({ phone_number = '3475419673', code_length = 6 }) => {
   let result = await authy.startPhoneVerification(
@@ -23,6 +31,7 @@ let checkVerificationCode = async ({ phone_number, verification_code }) => {
 }
 
 module.exports = {
+  checkIfValidPhoneNumber,
   sendPhoneVerificationCode,
   checkVerificationCode,
 }
