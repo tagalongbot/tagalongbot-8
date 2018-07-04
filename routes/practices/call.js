@@ -81,17 +81,20 @@ let callPractice = async ({ query }, res) => {
   // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
   await timeout(5000);
   let call_created = await createCustomerCall(user);
-  await timeout(10000);
+  await timeout(20000);
 
   let voice_response = new VoiceResponse();
 
-  voice_response.dial({
-    callerId: `+1${practice_phone_number}`,
+  let dial = voice_response.dial({
+    callerId: TWILIO_PHONE_NUMBER,
     record: 'record-from-answer',
     recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record.id}`
   });
 
-  voice_response.say('Goodbye');
+  // voice_response.say('Hello Tobey');
+  
+  console.log('practice_phone_number', practice_phone_number);
+  dial.number(`+1${practice_phone_number}`);
   
   res.send(voice_response.toString());
 }
