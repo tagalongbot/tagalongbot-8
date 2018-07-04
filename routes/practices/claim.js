@@ -1,8 +1,6 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
 
-let { isValidPhoneNumber } = require('../../libs/helpers.js');
-
-let { sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
+let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { updatePractice, createUpdateMsg } = require('../../libs/practices/claim.js');
 
@@ -20,11 +18,16 @@ let askForUserInfo = async ({ query }, res) => {
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
   
-  if (!isValidPhoneNumber(phone_number)) {
-    let redirect_to_blocks = ['Invalid Phone Number (Claim Practice)'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
+  let isValidPhoneNumber = await checkIfValidPhoneNumber({ phone_number });
+  console.log('isValidPhoneNumber', isValidPhoneNumber);
+  res.sendStatus(isValidPhoneNumber);
+  return;
+  
+  // if (!isValidPhoneNumber(phone_number)) {
+  //   let redirect_to_blocks = ['Invalid Phone Number (Claim Practice)'];
+  //   res.send({ redirect_to_blocks });
+  //   return;
+  // }
 
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
 

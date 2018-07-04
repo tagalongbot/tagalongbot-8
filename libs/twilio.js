@@ -8,9 +8,16 @@ let { Client, enums } = authyClient;
 
 let authy = new Client({ key: AUTHY_API_KEY });
 
+let { getNumbersOnly } = require('../libs/helpers.js');
+
 // Exposed Functions
 let checkIfValidPhoneNumber = async ({ phone_number }) => {
+  let phone_numbers = getNumbersOnly(phone_number);
+
+  let data = await client.lookups.phoneNumbers(`+1${phone_numbers}`).fetch();
   
+  console.log('data', data);
+  return data;
 }
 
 let sendPhoneVerificationCode = async ({ phone_number = '3475419673', code_length = 6 }) => {
