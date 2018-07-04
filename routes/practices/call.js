@@ -63,7 +63,7 @@ let answerCustomer = async ({ query, params }, res) => {
   let voice_response = new VoiceResponse();
 
   voice_response.say(
-    `Hey thank you for claiming a promotion with ${practice_name} via Bevl Beauty. One moment while I connect you to the practice you claimed a promotion from`
+    `Hey thank you for claiming a promotion with ${practice_name} via Bevl Beauty. One moment while I get you connected`
   );
 
   voice_response.play(
@@ -118,13 +118,13 @@ router.get(
   handleRoute(callPractice, '[Error] Calling Customer')
 );
 
-router.get(
+router.post(
   '/answered/customer/:practice_id/:new_call_record_id',
   answerCustomer
 );
 
 router.get(
-  '/record:practice_calls_base_id/:call_record_id',
+  '/record/:practice_calls_base_id/:call_record_id',
   handleRoute(saveCallRecording, '[Error] Saving Call Recording')
 );
 
