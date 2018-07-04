@@ -81,7 +81,6 @@ let callPractice = async ({ query }, res) => {
   // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
   await timeout(5000);
   let call_created = await createCustomerCall(user);
-  await timeout(20000);
 
   let voice_response = new VoiceResponse();
 
@@ -92,10 +91,12 @@ let callPractice = async ({ query }, res) => {
   });
 
   // voice_response.say('Hello Tobey');
-  
-  console.log('practice_phone_number', practice_phone_number);
-  dial.number(`+1${practice_phone_number}`);
-  
+
+  await timeout(20000);
+  // dial.number(`+1${practice_phone_number}`);
+  dial.number(`+13475419673`);
+
+  console.log('voice_response', voice_response);
   res.send(voice_response.toString());
 }
 
