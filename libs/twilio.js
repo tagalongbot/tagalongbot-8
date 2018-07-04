@@ -14,10 +14,10 @@ let { getNumbersOnly } = require('../libs/helpers.js');
 let checkIfValidPhoneNumber = async ({ phone_number }) => {
   let phone_numbers = getNumbersOnly(phone_number);
 
-  let data = await client.lookups.phoneNumbers(`+1${phone_numbers}`).fetch();
-  
-  console.log('data', data);
-  return data;
+  let is_valid = await client.lookups.phoneNumbers(`+1${phone_numbers}`).fetch()
+    .catch(err => false);
+
+  return is_valid ? true : false;
 }
 
 let sendPhoneVerificationCode = async ({ phone_number = '3475419673', code_length = 6 }) => {

@@ -19,15 +19,12 @@ let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
   
   let isValidPhoneNumber = await checkIfValidPhoneNumber({ phone_number });
-  console.log('isValidPhoneNumber', isValidPhoneNumber);
-  res.sendStatus(isValidPhoneNumber);
-  return;
-  
-  // if (!isValidPhoneNumber(phone_number)) {
-  //   let redirect_to_blocks = ['Invalid Phone Number (Claim Practice)'];
-  //   res.send({ redirect_to_blocks });
-  //   return;
-  // }
+
+  if (!isValidPhoneNumber) {
+    let redirect_to_blocks = ['Invalid Phone Number (Claim Practice)'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
 
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
 

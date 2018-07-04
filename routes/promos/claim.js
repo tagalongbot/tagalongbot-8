@@ -6,7 +6,7 @@ let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 
-let { sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
+let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
 
 let express = require('express');
 let router = express.Router();
@@ -22,7 +22,9 @@ let askForUserInfo = async ({ query }, res) => {
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
-  if (!isValidPhoneNumber(phone_number)) {
+  let isValidPhoneNumber = await checkIfValidPhoneNumber({ phone_number });
+
+  if (!isValidPhoneNumber) {
     let redirect_to_blocks = ['Invalid Phone Number (Claim Promo)'];
     res.send({ redirect_to_blocks });
     return;
