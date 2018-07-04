@@ -48,7 +48,7 @@ let callPractice = async ({ query }, res) => {
   // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
   await timeout(5000);
   let customer_call = await createCustomerCall(
-    { practice_id, new_call_record_id }
+    { practice, user, new_call_record_id }
   );
 }
 
@@ -116,6 +116,11 @@ let saveCallRecording = async ({ query, params }, res) => {
 router.get(
   '/',
   handleRoute(callPractice, '[Error] Calling Customer')
+);
+
+router.get(
+  '/answered/customer/:practice_id/:new_call_record_id',
+  answerCustomer
 );
 
 router.get(

@@ -1,12 +1,10 @@
 let { BASEURL } = process.env;
 
 let { getNumbersOnly } = require('../../libs/helpers.js');
-
 let { createButtonMessage } = require('../../libs/bots.js');
 
 let { createCall } = require('../../libs/twilio.js');
-
-let { createPracticeCall } = require('../../libs/practice/calls.js');
+let { createPracticeCall } = require('../../libs/data/practice/calls.js');
 
 let createCustomerMsg = ({ user_name, practice_name }) => {
   let msg = createButtonMessage(
@@ -19,10 +17,8 @@ let createCustomerMsg = ({ user_name, practice_name }) => {
 
 let createCustomerCall = async (data) => {
   let { practice, user, new_call_record_id } = data;
-  
-  
-  let { practice_id, new_call_record_id } = query;
 
+  let practice_id = practice.id;
   let customer_phone_number = getNumbersOnly(user.fields['Phone Number']);
 
   let call_data = {
