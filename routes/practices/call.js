@@ -92,11 +92,11 @@ let callPractice = async ({ query }, res) => {
 
   // voice_response.say('Hello Tobey');
 
-  await timeout(20000);
-  // dial.number(`+1${practice_phone_number}`);
-  dial.number(`+13475419673`);
+  await timeout(30000);
+  dial.number(`+1${practice_phone_number}`);
+  // dial.number(`+13475419673`);
+  console.log('Dialed');
 
-  console.log('voice_response', voice_response);
   res.send(voice_response.toString());
 }
 
