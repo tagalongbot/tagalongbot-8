@@ -36,6 +36,8 @@ let callPractice = async ({ query }, res) => {
     { practice, user, user_messenger_id }
   );
 
+  let new_call_record_id = new_call_record.id;
+
   let msg = createCustomerMsg(
     { user_name: user_first_name, practice_name }
   );
@@ -46,12 +48,12 @@ let callPractice = async ({ query }, res) => {
   // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
   await timeout(5000);
   let customer_call = await createCustomerCall(
-    {  }
+    { practice_id, new_call_record_id }
   );
 }
 
 let answerCustomer = async ({ query, params }, res) => {
-  let { practice_id, new_call_record } = params;
+  let { practice_id, new_call_record_id } = params;
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
@@ -72,7 +74,7 @@ let answerCustomer = async ({ query, params }, res) => {
   let dial = voice_response.dial({
     callerId: TWILIO_PHONE_NUMBER,
     record: 'record-from-answer',
-    recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record.id}`
+    recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record_id}`
   });
 
   dial.number(`+1${practice_phone_number}`);

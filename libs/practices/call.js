@@ -1,5 +1,10 @@
+let { BASEURL } = process.env;
+
 let { getNumbersOnly } = require('../../libs/helpers.js');
+
 let { createButtonMessage } = require('../../libs/bots.js');
+
+let { createCall } = require('../../libs/twilio.js');
 
 let { createPracticeCall } = require('../../libs/practice/calls.js');
 
@@ -12,14 +17,26 @@ let createCustomerMsg = ({ user_name, practice_name }) => {
   return msg;
 }
 
-let createCustomerCall = async ({ id: user_id, fields: user }) => {
-  let customer_phone_number = getNumbersOnly(user['Phone Number']);
+let createCustomerCall = async (data) => {
+  let { practice, user, new_call_record_id } = data;
+  
+  
+  let { practice_id, new_call_record_id } = query;
 
-  
-  
-  let customer_call = await createCall(
-    {}
-  );
+  let customer_phone_number = getNumbersOnly(user.fields['Phone Number']);
+
+  let call_data = {
+    phone_number: customer_phone_number,
+    call_url: `${BASEURL}/practices/call/answered/customer/${practice_id}/${new_call_record_id}`,
+    // call_status_url,
+    // call_status_event,
+    // call_status_method,
+    // recording_url,
+    // recording_status
+  }
+
+  let customer_call = await createCall(call_data);
+  return customer_call;
 }
 
 let createCallRecord = async (data) => {
@@ -53,4 +70,10 @@ let createCallRecord = async (data) => {
   );
 
   return new_call_record
+}
+
+module.exports = {
+  createCustomerMsg,
+  createCustomerCall,
+  createCallRecord,
 }
