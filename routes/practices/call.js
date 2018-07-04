@@ -54,18 +54,26 @@ let answerCustomer = async ({ query, params }, res) => {
   let { practice_id, new_call_record } = params;
 
   let practice = await getPracticeByID(practice_id);
+  let practice_name = practice.fields['Practice Name'];
   let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
   let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
 
   let voice_response = new VoiceResponse();
+
+  voice_response.say(
+    `Hey thank you for claiming a promotion with ${practice_name} via Bevl Beauty. One moment while I connect you to the practice you claimed a promotion from`
+  );
+
+  voice_response.play(
+    { loop: 5 },
+    'http://demo.twilio.com/docs/classic.mp3'
+  );
 
   let dial = voice_response.dial({
     callerId: TWILIO_PHONE_NUMBER,
     record: 'record-from-answer',
     recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record.id}`
   });
-
-  voice_response.say('Hello Tobey');
 
   dial.number(`+1${practice_phone_number}`);
 
