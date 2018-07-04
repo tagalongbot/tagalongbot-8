@@ -1,4 +1,4 @@
-let { BASEURL, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } = process.env;
+let { BASEURL, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER } = process.env;
 
 let handleRoute = require('../../middlewares/handleRoute.js');
 
@@ -17,13 +17,7 @@ let { getUserByMessengerID } = require('../../libs/data/users.js');
 
 let { getPracticeCall, createPracticeCall, updatePracticeCall } = require('../../libs/data/practice/calls.js');
 
-let createCustomerCall = async ({ id: user_id, fields: user }) => {
-  let customer_phone_number = getNumbersOnly(user['Phone Number']);
-
-  return client.calls.create(
-    { url: CUSTOMER_XML_DOC_URL, to: customer_phone_number, from: TWILIO_PHONE_NUMBER }
-  );
-}
+let { createCallRecord, createCustomerMsg, createCustomerCall } = require('../../libs/practices/calls.js');
 
 let callPractice = async ({ query }, res) => {
   // This happens after customer claims promotions
@@ -34,17 +28,13 @@ let callPractice = async ({ query }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
-  let practice_state = practice.fields['Practice State'];
-  let practice_city = practice.fields['Practice City'];
-  let practice_zip_code = practice.fields['Practice Zip Code'];
-  let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
-  let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
 
   let user = await getUserByMessengerID(user_messenger_id);
   let user_first_name = user.fields['First Name'];
-  let user_last_name = user.fields['Last Name'];
-  let user_gender = user.fields['Gender'];
-  let user_phone_number = user.fields['Phone Number'];
+
+  let new_call_record = await createCallRecord(
+    { practice, user, user_messenger_id }
+  );
 
   let msg = createCustomerMsg(
     { user_name: user_first_name, practice_name }
@@ -53,25 +43,19 @@ let callPractice = async ({ query }, res) => {
   let messages = [msg];
   res.send({ messages });
 
-  let call_data = {
-    ['messenger user id']: user_messenger_id,
-    ['First Name']: user_first_name,
-    ['Last Name']: user_last_name,
-    ['Gender']: user_gender,
-    ['State']: practice_state,
-    ['City']: practice_city,
-    ['Zip Code']: practice_zip_code,
-    ['Phone Number']: user_phone_number,
-  };
-
-  let new_call_record = await createPracticeCall(
-    { practice_calls_base_id, call_data }
-  );
-
   // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
   await timeout(5000);
-  let call_created = await createCustomerCall(user);
+  let call_created = await createCustomerCall(
+    
+  );
 
+}
+
+let answerCustomer = async ({ query, params }, res) => {
+  let {} = params;
+
+  
+  
   let voice_response = new VoiceResponse();
 
   let dial = voice_response.dial({
@@ -80,14 +64,13 @@ let callPractice = async ({ query }, res) => {
     recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record.id}`
   });
 
-  // voice_response.say('Hello Tobey');
+  voice_response.say('Hello Tobey');
 
   await timeout(30000);
   dial.number(`+1${practice_phone_number}`);
-  // dial.number(`+13475419673`);
-  console.log('Dialed');
 
   res.send(voice_response.toString());
+
 }
 
 let saveCallRecording = async ({ query, params }, res) => {
