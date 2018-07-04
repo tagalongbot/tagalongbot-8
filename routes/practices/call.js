@@ -44,9 +44,9 @@ let callPractice = async ({ query }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
-  let practice_state = practice.fields['State'];
-  let practice_city = practice.fields['City'];
-  let practice_zip_code = practice.fields['Zip Code'];
+  let practice_state = practice.fields['Practice State'];
+  let practice_city = practice.fields['Practice City'];
+  let practice_zip_code = practice.fields['Practice Zip Code'];
   let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
   let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
 
