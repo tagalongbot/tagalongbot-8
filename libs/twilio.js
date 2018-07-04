@@ -20,13 +20,13 @@ let checkIfValidPhoneNumber = async ({ phone_number }) => {
   return is_valid ? true : false;
 }
 
-let sendPhoneVerificationCode = async ({ phone_number = '3475419673', code_length = 6 }) => {
-  let result = await authy.startPhoneVerification(
+let sendPhoneVerificationCode = async ({ phone_number, code_length = 6 }) => {
+  let sent_verification_code = await authy.startPhoneVerification(
     { countryCode: 'US', locale: 'en', phone: phone_number, via: enums.verificationVia.SMS },
     { codeLength: code_length }
   );
 
-  return result;
+  return sent_verification_code;
 }
 
 let checkVerificationCode = async ({ phone_number, verification_code }) => {
@@ -49,13 +49,16 @@ let createCall = async (data) => {
     recording_status: RecordingStatusCallbackEvent = 'completed',
   } = data;
 
-  return client.calls.create(
+  let new_call = client.calls.create(
     { url, to, from, StatusCallback, StatusCallbackEvent, StatusCallbackMethod, RecordingStatusCallback, RecordingStatusCallbackEvent }
   );
+  
+  return new_call;
 }
 
 module.exports = {
   checkIfValidPhoneNumber,
   sendPhoneVerificationCode,
   checkVerificationCode,
+  createCall,
 }

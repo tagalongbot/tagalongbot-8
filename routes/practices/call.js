@@ -1,31 +1,21 @@
+let { BASEURL, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } = process.env;
+
 let handleRoute = require('../../middlewares/handleRoute.js');
-
-let { BASEURL, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, CUSTOMER_XML_DOC_URL } = process.env;
-
-let twilio = require('twilio');
-let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
 let express = require('express');
 let router = express.Router();
 
+let twilio = require('twilio');
+let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
 let { VoiceResponse } = twilio.twiml;
 
-let { createButtonMessage } = require('../../libs/bots.js');
 let { getNumbersOnly, timeout } = require('../../libs/helpers.js');
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
 
 let { getPracticeCall, createPracticeCall, updatePracticeCall } = require('../../libs/data/practice/calls.js');
-
-let createCustomerMsg = ({ user_name, practice_name }) => {
-  let msg = createButtonMessage(
-    `Hey ${user_name} you'll receive a call right now connecting you to ${practice_name} practice`,
-    `Main Menu|show_block|Discover Main Menu`,
-  );
-  
-  return msg;
-}
 
 let createCustomerCall = async ({ id: user_id, fields: user }) => {
   let customer_phone_number = getNumbersOnly(user['Phone Number']);
@@ -61,7 +51,7 @@ let callPractice = async ({ query }, res) => {
   );
 
   let messages = [msg];
-  // res.send({ messages });
+  res.send({ messages });
 
   let call_data = {
     ['messenger user id']: user_messenger_id,
@@ -123,9 +113,9 @@ let saveCallRecording = async ({ query, params }, res) => {
 
   console.log('call_data', call_data);
 
-  // let updated_call = await updatePracticeCall(
-  //   { practice_calls_base_id, call_data, call }
-  // );
+  let updated_call = await updatePracticeCall(
+    { practice_calls_base_id, call_data, call }
+  );
 
   res.sendStatus(200);
 }
