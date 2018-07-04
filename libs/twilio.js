@@ -38,18 +38,20 @@ let checkVerificationCode = async ({ phone_number, verification_code }) => {
 }
 
 let createCall = async (data) => {
-  let { 
+  let {
     phone_number: to,
+    call_from: from = TWILIO_PHONE_NUMBER,
     call_url: url,
-    call_status: StatusCallbackEvent = '',
-    call_from: from = TWILIO_PHONE_NUMBER, 
+    call_status_url: StatusCallback,
+    call_status_event: StatusCallbackEvent = 'completed',
+    call_status_method: StatusCallbackMethod = 'POST',
+    recording_url: RecordingStatusCallback,
+    recording_status: RecordingStatusCallbackEvent = 'completed',
   } = data;
 
-  let statusCallback = ``;
-  
-  let call_options = { url, to, from, statusCallback, statusCallbackMethod };
-
-  return client.calls.create(call_options);
+  return client.calls.create(
+    { url, to, from, StatusCallback, StatusCallbackEvent, StatusCallbackMethod, RecordingStatusCallback, RecordingStatusCallbackEvent }
+  );
 }
 
 module.exports = {
