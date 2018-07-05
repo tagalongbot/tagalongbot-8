@@ -68,16 +68,12 @@ let answerCustomer = async ({ query, params }, res) => {
     `Hey thank you for claiming a promotion with ${practice_name} via Bevl Beauty. One moment while I get you connected`
   );
 
-  // voice_response.play(
-  //   { loop: 5 },
-  //   'http://demo.twilio.com/docs/classic.mp3'
-  // );
-
   let dial = voice_response.dial({
     callerId: TWILIO_PHONE_NUMBER,
     record: 'record-from-answer',
     timeout: 600,
-    recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record_id}`
+    recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record_id}`,
+    recordingStatusCallbackEvent: 'completed',
   });
 
   dial.number(
