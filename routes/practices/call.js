@@ -15,6 +15,7 @@ let { getNumbersOnly, timeout } = require('../../libs/helpers.js');
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
 
+let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { getPracticeCall, updatePracticeCall } = require('../../libs/data/practice/calls.js');
 
 let { createCallRecord, createCustomerMsg, createCustomerCall } = require('../../libs/practices/call.js');
@@ -78,7 +79,7 @@ let answerCustomer = async ({ query, params }, res) => {
   });
 
   dial.number(
-    { url: `${BASEURL}/practices/call/answered/practice/${practice_id}/${promo_id}`  },
+    { url: `${BASEURL}/practices/call/answered/practice/${practice_id}/${new_call_record_id}/${promo_id}`  },
     `+1${practice_phone_number}`
   );
 
@@ -87,17 +88,23 @@ let answerCustomer = async ({ query, params }, res) => {
 }
 
 let answerPractice = async ({ query, params }, res) => {
-  let { practice_id, promo_id } = params;
+  let { practice_id, new_call_record_id, promo_id } = params;
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+  let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
 
-  let promo = await 
+  let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
+  let promo_name = promo.fields['Promotion Name'];
+
+  let call = await getPracticeCall({ practice_calls_base_id, call_id: new_call_record_id });
+  let lead_name = `${call.fields['First Name']} ${call.fields['Last Name']}`;
+
   let voice_response = new VoiceResponse();
 
   voice_response.say(
-    `Hello ${practice_name} you have a new lead via Bevl Beauty `,
+    `Hello ${practice_name} you have a new lead ${lead_name} that claimed the promotion ${promo_name}. Again ${lead_name} who claimed ${promo_name}. Thank You For Using Bevl Beauty.`,
   );
 
   res.set('Content-Type', 'text/xml');
@@ -145,7 +152,7 @@ router.post(
 );
 
 router.post(
-  '/answered/practice/:practice_id/:new_call_record_id/',
+  '/answered/practice/:practice_id/:new_call_record_id/:promo_id',
   answerCustomer
 );
 
