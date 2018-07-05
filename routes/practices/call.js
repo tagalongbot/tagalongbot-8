@@ -76,6 +76,7 @@ let answerCustomer = async ({ query, params }, res) => {
   let dial = voice_response.dial({
     callerId: TWILIO_PHONE_NUMBER,
     record: 'record-from-answer',
+    timeout: 600,
     recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record_id}`
   });
 
