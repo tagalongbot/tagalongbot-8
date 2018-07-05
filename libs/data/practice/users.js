@@ -1,4 +1,5 @@
 // This library is used for managing users for each practice
+let { convertLongTextToArray } = require('../../../libs/helpers.js');
 let { getTable, getAllDataFromTable, createTableData, updateTableData } = require('../../../libs/data.js');
 
 let getUsersTable = getTable('Users');
@@ -44,10 +45,17 @@ let getUserPromos = async ({ practice_promos_base_id, user_id, view = 'Main View
 
   let promos = await getPromos({ view });
 
-  let matched_promos = promos.filter(
-    promo => (promo.fields['Claimed By Users'] || []).includes(user_id)
-  );
-
+  let matched_promos = promos.filter((promo) => { 
+    let promo_claimed_by_users = convertLongTextToArray(
+      promo.fields['Claimed By Users']
+    );
+    
+    console.log('promo_claimed_by_users', promo_claimed_by_users);
+    
+    console.log('user_id', user_id);
+    return promo_claimed_by_users.includes(user_id);
+  });
+  
   return matched_promos;
 }
 

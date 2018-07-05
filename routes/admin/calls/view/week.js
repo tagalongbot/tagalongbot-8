@@ -17,12 +17,12 @@ let toCallData = ({ practice_users_base_id, practice_promos_base_id }) => async 
   );
 
   let practice_user_promos = await getUserPromos(
-    { practice_promos_base_id, user_id: user_messenger_id }
+    { practice_promos_base_id, user_id: practice_user.id }
   );
 
   let last_practice_user_promo = practice_user_promos[practice_user_promos.length - 1];
   let caller_promo_name = last_practice_user_promo.fields['Promotion Name'];
-  
+
   let caller_first_name = call['First Name'];
   let caller_last_name = call['Last Name'];
 
@@ -50,10 +50,8 @@ let getCallsThisWeek = async ({ query }, res) => {
   );
 
   let calls = await Promise.all(calls_this_week.map(
-    toCallData({ practice_users_base_id })
+    toCallData({ practice_users_base_id, practice_promos_base_id })
   ));
-
-  console.log('calls', calls);
 
   let view_html = riot.render(week_tag, { calls });
   res.render('week-calls', { view_html });
