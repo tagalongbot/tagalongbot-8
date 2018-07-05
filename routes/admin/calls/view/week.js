@@ -41,6 +41,7 @@ let getCallsThisWeek = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
   let practice = await getPracticeByUserID(messenger_user_id);
+  let practice_name = practice.fields['Practice Name'];
   let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
   let practice_users_base_id = practice.fields['Practice Users Base ID'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
@@ -54,7 +55,7 @@ let getCallsThisWeek = async ({ query }, res) => {
   ));
 
   let view_html = riot.render(week_tag, { calls });
-  res.render('week-calls', { view_html });
+  res.render('week-calls', { view_html, practice_name });
 }
 
 module.exports = getCallsThisWeek;
