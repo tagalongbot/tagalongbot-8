@@ -149,13 +149,13 @@ router.get(
 );
 
 router.post(
-  '/answered/customer/:practice_id/:new_call_record_id',
+  '/answered/customer/:practice_id/:new_call_record_id/:promo_id',
   answerCustomer
 );
 
 router.post(
   '/answered/practice/:practice_id/:new_call_record_id/:promo_id',
-  answerCustomer
+  answerPractice
 );
 
 router.get(

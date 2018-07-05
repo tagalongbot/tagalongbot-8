@@ -131,7 +131,7 @@ let createClaimedMsg = ({ data, updated_promo, practice_phone_number, practice_b
 
   let call_practice_url = createURL(
     `${BASEURL}/practices/call`,
-    { practice_id, messenger_user_id }
+    { practice_id, messenger_user_id, promo_id }
   );
 
   let btn1 = `View Provider|json_plugin_url|${view_practice_url}`;
