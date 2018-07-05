@@ -5,6 +5,8 @@ let handleRoute = require('../middlewares/handleRoute.js');
 let cache = require('../middlewares/cache.js');
 
 let getAdminMenu = require('../routes/admin/menu.js');
+
+// Promos
 let createCustomPromo = require('../routes/admin/promos/create/custom.js');
 let createManufacturedPromo = require('../routes/admin/promos/create/manufactured.js');
 let viewManufacturedPromoDetails = require('../routes/admin/promos/view/manufactured/details.js');
@@ -14,6 +16,9 @@ let viewPromoInfo = require('../routes/admin/promos/view/info.js');
 let updatePromoInfo = require('../routes/admin/promos/update.js');
 let togglePromo = require('../routes/admin/promos/toggle.js');
 let updateUserPromo = require('../routes/admin/promos/user/update.js');
+
+// Calls
+let getCallsThisWeek = require('../routes/admin/calls/view/week.js');
 
 router.get(
   '/menu',
@@ -65,6 +70,11 @@ router.get(
 router.get(
   '/promos/user/update', 
   handleRoute(updateUserPromo, '[Error] Updating User Promo')
+);
+
+router.get(
+  '/calls/view/week',
+  handleRoute(getCallsThisWeek, '[Error] Getting Calls This Week')
 );
 
 module.exports = router;
