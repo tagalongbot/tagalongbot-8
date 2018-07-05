@@ -1,4 +1,4 @@
-let { BASURL } = process.env;
+let { BASEURL } = process.env;
 
 let { localizeDate } = require('../../../../libs/helpers.js');
 
@@ -29,10 +29,10 @@ let toCallData = ({ practice_users_base_id, practice_promos_base_id }) => async 
   let caller_name = `${caller_first_name} ${caller_last_name}`;
 
   let call_date = localizeDate(
-    call['Date / Time Created']
+    new Date(call['Date / Time Created'])
   );
 
-  let call_url = `${BASURL}`;
+  let call_url = `${BASEURL}`;
 
   return { caller_first_name, caller_last_name, caller_name, call_date, caller_promo_name };
 }

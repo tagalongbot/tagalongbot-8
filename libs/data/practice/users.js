@@ -50,9 +50,6 @@ let getUserPromos = async ({ practice_promos_base_id, user_id, view = 'Main View
       promo.fields['Claimed By Users']
     );
     
-    console.log('promo_claimed_by_users', promo_claimed_by_users);
-    
-    console.log('user_id', user_id);
     return promo_claimed_by_users.includes(user_id);
   });
   
