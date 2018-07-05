@@ -54,6 +54,7 @@ let callPractice = async ({ query }, res) => {
 }
 
 let answerCustomer = async ({ query, params }, res) => {
+  console.log('Customer Answered');
   let { practice_id, new_call_record_id, promo_id } = params;
 
   let practice = await getPracticeByID(practice_id);
@@ -88,6 +89,7 @@ let answerCustomer = async ({ query, params }, res) => {
 }
 
 let answerPractice = async ({ query, params }, res) => {
+  console.log('Practice Answered');
   let { practice_id, new_call_record_id, promo_id } = params;
 
   let practice = await getPracticeByID(practice_id);
