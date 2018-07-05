@@ -68,10 +68,10 @@ let answerCustomer = async ({ query, params }, res) => {
     `Hey thank you for claiming a promotion with ${practice_name} via Bevl Beauty. One moment while I get you connected`
   );
 
-  voice_response.play(
-    { loop: 5 },
-    'http://demo.twilio.com/docs/classic.mp3'
-  );
+  // voice_response.play(
+  //   { loop: 5 },
+  //   'http://demo.twilio.com/docs/classic.mp3'
+  // );
 
   let dial = voice_response.dial({
     callerId: TWILIO_PHONE_NUMBER,
@@ -114,6 +114,7 @@ let answerPractice = async ({ query, params }, res) => {
 }
 
 let saveCallRecording = async ({ query, params }, res) => {
+  console.log('Saving Call');
   let { practice_calls_base_id, call_record_id } = params;
 
   let {
@@ -160,7 +161,7 @@ router.post(
 
 router.get(
   '/record/:practice_calls_base_id/:call_record_id',
-  handleRoute(saveCallRecording, '[Error] Saving Call Recording')
+  saveCallRecording
 );
 
 module.exports = router;
