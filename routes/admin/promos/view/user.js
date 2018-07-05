@@ -18,7 +18,7 @@ let viewUserPromos = async ({ query }, res) => {
 
   let user_name = `${user.fields['First Name']} ${user.fields['Last Name']}`;
 
-  let promos = await getUserPromos({ practice_promos_base_id, user_id });
+  let promos = await getUserPromos({ practice_promos_base_id, user_id, view: 'Active Promos' });
 
   if (!promos[0]) {
     let redirect_to_blocks = ['[Admin Verify Promo] No User Promos Found'];

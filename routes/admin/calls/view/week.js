@@ -9,17 +9,20 @@ let { getPracticeByUserID } = require('../../../../libs/data/practices.js');
 let { getPracticeCalls } = require('../../../../libs/data/practice/calls.js');
 let { getPracticeUser, getUserPromos } = require('../../../../libs/data/practice/users.js');
 
-let toCallData = ({ practice_users_base_id }) => async ({ fields: call }) => {
+let toCallData = ({ practice_users_base_id, practice_promos_base_id }) => async ({ fields: call }) => {
   let user_messenger_id = call['messenger user id'];
 
   let practice_user = await getPracticeUser(
     { practice_users_base_id, user_messenger_id }
   );
-  
+
   let practice_user_promos = await getUserPromos(
-    { practice_users_base_id, user_id: user_messenger_id }
+    { practice_promos_base_id, user_id: user_messenger_id }
   );
 
+  let last_practice_user_promo = practice_user_promos[practice_user_promos.length - 1];
+  let caller_promo_name = last_practice_user_promo.fields['Promotion Name'];
+  
   let caller_first_name = call['First Name'];
   let caller_last_name = call['Last Name'];
 
@@ -31,7 +34,7 @@ let toCallData = ({ practice_users_base_id }) => async ({ fields: call }) => {
 
   let call_url = `${BASURL}`;
 
-  return { caller_first_name, caller_last_name, caller_name, call_date };
+  return { caller_first_name, caller_last_name, caller_name, call_date, caller_promo_name };
 }
 
 let getCallsThisWeek = async ({ query }, res) => {
@@ -40,6 +43,7 @@ let getCallsThisWeek = async ({ query }, res) => {
   let practice = await getPracticeByUserID(messenger_user_id);
   let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
   let practice_users_base_id = practice.fields['Practice Users Base ID'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let calls_this_week = await getPracticeCalls(
     { practice_calls_base_id, view: 'Calls This Week' }

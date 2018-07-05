@@ -38,11 +38,10 @@ let updatePracticeUser = async ({ practice_users_base_id, user_data, practice_us
   return updated_user;
 }
 
-let getUserPromos = async ({ practice_users_base_id, user_id }) => {
-  let promosTable = getPromosTable(practice_users_base_id);
+let getUserPromos = async ({ practice_promos_base_id, user_id, view = 'Main View' }) => {
+  let promosTable = getPromosTable(practice_promos_base_id);
   let getPromos = getAllDataFromTable(promosTable);
 
-  let view = 'Active Promos';
   let promos = await getPromos({ view });
 
   let matched_promos = promos.filter(
