@@ -18,7 +18,9 @@
     "expeditious-engine-redis": "^0.1.1",
     "express-redis-cache": "^1.1.3",
     "grasp": "^0.6.0",
-    "twilio": "^4.6.0"
+    "twilio": "^4.6.0",
+    "riot": "^3.10.3",
+    "swig": "^1.4.2"
   },
   "engines": {
     "node": "10.x"

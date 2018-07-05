@@ -1,5 +1,7 @@
 let express = require('express');
 let app = express();
+let bodyParser = require('body-parser');
+let swig = require('swig');
 
 // Middlewares
 let updateQueryParameter = require('./middlewares/updateQueryParameter.js');
@@ -12,6 +14,13 @@ let promosRouter = require('./routes/promos.js');
 let servicesRouter = require('./routes/services.js');
 
 let getFile = require('./routes/files.js');
+
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
 
 app.use(updateQueryParameter);
 
