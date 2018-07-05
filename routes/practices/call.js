@@ -24,7 +24,7 @@ let callPractice = async ({ query }, res) => {
   // Aware of which customer claimed the promo
   // Aware of which practice they claimed from
 
-  let { practice_id, messenger_user_id: user_messenger_id } = query;
+  let { practice_id, promo_id, messenger_user_id: user_messenger_id } = query;
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
@@ -48,12 +48,12 @@ let callPractice = async ({ query }, res) => {
   // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
   await timeout(5000);
   let customer_call = await createCustomerCall(
-    { practice, user, new_call_record_id }
+    { practice, user, new_call_record_id, promo_id }
   );
 }
 
 let answerCustomer = async ({ query, params }, res) => {
-  let { practice_id, new_call_record_id } = params;
+  let { practice_id, new_call_record_id, promo_id } = params;
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
@@ -77,7 +77,28 @@ let answerCustomer = async ({ query, params }, res) => {
     recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record_id}`
   });
 
-  dial.number(`+1${practice_phone_number}`);
+  dial.number(
+    { url: `${BASEURL}/practices/call/answered/practice/${practice_id}/${promo_id}`  },
+    `+1${practice_phone_number}`
+  );
+
+  res.set('Content-Type', 'text/xml');
+  res.send(voice_response.toString());
+}
+
+let answerPractice = async ({ query, params }, res) => {
+  let { practice_id, promo_id } = params;
+
+  let practice = await getPracticeByID(practice_id);
+  let practice_name = practice.fields['Practice Name'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+
+  let promo = await 
+  let voice_response = new VoiceResponse();
+
+  voice_response.say(
+    `Hello ${practice_name} you have a new lead via Bevl Beauty `,
+  );
 
   res.set('Content-Type', 'text/xml');
   res.send(voice_response.toString());
@@ -120,6 +141,11 @@ router.get(
 
 router.post(
   '/answered/customer/:practice_id/:new_call_record_id',
+  answerCustomer
+);
+
+router.post(
+  '/answered/practice/:practice_id/:new_call_record_id/',
   answerCustomer
 );
 
