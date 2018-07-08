@@ -37,8 +37,9 @@ let toCallData = ({ practice_users_base_id, practice_promos_base_id }) => async 
   return { caller_first_name, caller_last_name, caller_name, call_date, caller_promo_name };
 }
 
-let getCallsList = async ({ query }, res) => {
+let getCallsList = async ({ query, params }, res) => {
   let { messenger_user_id } = query;
+  let { range } = params;
 
   let practice = await getPracticeByUserID(messenger_user_id);
   let practice_name = practice.fields['Practice Name'];
@@ -46,8 +47,10 @@ let getCallsList = async ({ query }, res) => {
   let practice_users_base_id = practice.fields['Practice Users Base ID'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
+  let view = (range === 'week') ? 'Calls This Week' : 'Calls This Month';
+
   let calls_this_week = await getPracticeCalls(
-    { practice_calls_base_id, view: 'Calls This Week' }
+    { practice_calls_base_id, view }
   );
 
   let calls = await Promise.all(calls_this_week.map(

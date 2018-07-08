@@ -1,4 +1,6 @@
 # Code
+- Figure out how to get rid of swig as a dependency
+
 - Update code to use ES6 Modules using `graspjs`
 
 - Update code to use ChatFuel blocks for responses by setting attributes, and linking button names to blocks that call JSON plugins instead of using `json_plugin_url`

@@ -73,7 +73,7 @@ router.get(
 );
 
 router.get(
-  '/calls/view/week',
+  '/calls/view/:range',
   handleRoute(getCallsList, '[Error] Getting Calls List')
 );
 
