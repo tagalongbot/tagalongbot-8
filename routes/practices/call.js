@@ -88,8 +88,8 @@ let answerCustomer = async ({ query, params }, res) => {
   res.send(voice_response.toString());
 }
 
-let ringingPractice = async ({ params }) => {
-  console.log('Ringing Practice');
+let ringingPractice = async ({ params, body }) => {
+  console.log('Ringing Practice', body);
   let { user_id, practice_id, promo_id } = params;
 
   let practice = await getPracticeByID(practice_id);
@@ -168,7 +168,7 @@ router.post(
 );
 
 router.post(
-  '/ringing/customer/:user_id/:practice_id/:promo_id',
+  '/ringing/practice/:user_id/:practice_id/:promo_id',
   ringingPractice
 );
 
