@@ -162,7 +162,7 @@ router.post(
 );
 
 router.post(
-  '/pracices/call/ringing/customer/:user_id/:practice_id/:promo_id',
+  '/ringing/customer/:user_id/:practice_id/:promo_id',
   ringingPractice
 );
 
