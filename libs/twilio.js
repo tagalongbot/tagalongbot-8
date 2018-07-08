@@ -38,7 +38,6 @@ let checkVerificationCode = async ({ phone_number, verification_code }) => {
 }
 
 let createCall = async (data) => {
-  console.log('data', data.call_status_event);
   let {
     phone_number: to,
     call_from: from = TWILIO_PHONE_NUMBER,
@@ -50,7 +49,6 @@ let createCall = async (data) => {
     recording_status: RecordingStatusCallbackEvent = 'completed',
   } = data;
 
-  console.log('StatusCallbackEvent', StatusCallbackEvent);
   let new_call = client.calls.create(
     { url, to, from, StatusCallback, StatusCallbackEvent, StatusCallbackMethod, RecordingStatusCallback, RecordingStatusCallbackEvent }
   );

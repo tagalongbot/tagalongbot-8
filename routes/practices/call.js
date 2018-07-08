@@ -73,8 +73,14 @@ let answerCustomer = async ({ query, params }, res) => {
     recordingStatusCallbackEvent: 'completed',
   });
 
+  let dial_number_options = {
+    url: `${BASEURL}/practices/call/answered/practice/${user_id}/${practice_id}/${promo_id}`,
+    statusCallback: `${BASEURL}/practices/call/ringing/practice/${user_id}/${practice_id}/${promo_id}`,
+    statusCallbackEvent: 'ringing',
+  }
+
   dial.number(
-    { url: `${BASEURL}/practices/call/answered/practice/${user_id}/${practice_id}/${promo_id}` },
+    dial_number_options, 
     `+1${practice_phone_number}`
   );
 
