@@ -13,7 +13,7 @@ let { VoiceResponse } = twilio.twiml;
 let { getNumbersOnly, timeout } = require('../../libs/helpers.js');
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
-let { getUserByMessengerID } = require('../../libs/data/users.js');
+let { getUserByID, getUserByMessengerID } = require('../../libs/data/users.js');
 
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { getPracticeCall, updatePracticeCall } = require('../../libs/data/practice/calls.js');
@@ -33,12 +33,6 @@ let callPractice = async ({ query }, res) => {
   let user = await getUserByMessengerID(user_messenger_id);
   let user_first_name = user.fields['First Name'];
 
-  let new_call_record = await createCallRecord(
-    { practice, user, user_messenger_id }
-  );
-
-  let new_call_record_id = new_call_record.id;
-
   let msg = createCustomerMsg(
     { user_name: user_first_name, practice_name }
   );
@@ -49,7 +43,7 @@ let callPractice = async ({ query }, res) => {
   // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
   await timeout(5000);
   let customer_call = await createCustomerCall(
-    { practice, user, new_call_record_id, promo_id }
+    { practice, user, promo_id }
   );
 }
 
@@ -83,6 +77,24 @@ let answerCustomer = async ({ query, params }, res) => {
 
   res.set('Content-Type', 'text/xml');
   res.send(voice_response.toString());
+}
+
+let ringingPractice = async ({ params }) => {
+  let { user_id, practice_id, promo_id } = params;
+  
+  let practice = await getPracticeByID(practice_id);
+
+  let user = await getUserByID(user_id);
+  let user_messenger_id = user.fields['messenger user id'];
+
+  let new_call_record = await createCallRecord(
+    { practice, user, user_messenger_id }
+  );
+
+  let new_call_record_id = new_call_record.id;
+
+  
+  
 }
 
 let answerPractice = async ({ query, params }, res) => {
@@ -149,6 +161,11 @@ router.get(
 router.post(
   '/answered/customer/:user_id/:practice_id/:promo_id',
   answerCustomer
+);
+
+router.post(
+  '/pracices/call/ringing/customer/:user_id/:practice_id/:promo_id',
+  ringingPractice
 );
 
 router.post(

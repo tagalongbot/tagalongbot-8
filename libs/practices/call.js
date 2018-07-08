@@ -26,9 +26,8 @@ let createCustomerCall = async (data) => {
   let call_data = {
     phone_number: `+1${customer_phone_number}`,
     call_url: `${BASEURL}/practices/call/answered/customer/${user_id}/${practice_id}/${promo_id}`,
-    // call_status_url,
-    // call_status_event,
-    // call_status_method,
+    call_status_url: `${BASEURL}/pracices/call/ringing/customer/${user_messenger_id}/${practice_id}/${promo_id}`,
+    call_status_event: 'ringing',
     // recording_url,
     // recording_status
   }
