@@ -92,13 +92,15 @@ let ringingPractice = async ({ params, body }) => {
   console.log('Ringing Practice', body);
   let { user_id, practice_id, promo_id } = params;
 
-  let practice = await getPracticeByID(practice_id);
-
   let user = await getUserByID(user_id);
-  let user_messenger_id = user.fields['messenger user id'];
+  
+  let practice = await getPracticeByID(practice_id);
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+
+  let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
 
   let new_call_record = await createCallRecord(
-    { practice, user, user_messenger_id }
+    { user, practice, promo }
   );
 }
 
