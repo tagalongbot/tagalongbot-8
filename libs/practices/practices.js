@@ -162,7 +162,7 @@ let createLastGalleryElement = () => {
 
   let buttons = [btn1, btn2, btn3];
 
-  let last_gallery_element = { title, buttons };
+  let last_gallery_element = { title, image_url, buttons };
   return last_gallery_element;
 }
 
