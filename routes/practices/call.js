@@ -65,7 +65,7 @@ let answerCustomer = async ({ query, params }, res) => {
   let voice_response = new VoiceResponse();
 
   voice_response.say(
-    `Hey thank you for claiming a promotion with ${practice_name} via Bevl Beauty. One moment while I get you connected`
+    `Hey thank you for claiming a promotion with ${practice_name}  Bevl Beauty. One moment while I get you connected.`
   );
 
   let dial = voice_response.dial({
@@ -147,7 +147,7 @@ router.get(
 );
 
 router.post(
-  '/answered/customer/:practice_id/:new_call_record_id/:promo_id',
+  '/answered/customer/:user_id/:practice_id/:promo_id',
   answerCustomer
 );
 
