@@ -1,4 +1,4 @@
-let { BASEURL, DEFAULT_PRACTICE_IMAGE, SEARCH_PRACTICES_MORE_OPTIONS_IMAGE_URL } = process.env;
+let { BASEURL, DEFAULT_PRACTICE_IMAGE, LIST_YOUR_PRACTICE_IMAGE_URL } = process.env;
 
 let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
@@ -153,8 +153,8 @@ let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
 }
 
 let createLastGalleryElement = () => {
-  let title = 'More Options';
-  let image_url = SEARCH_PRACTICES_MORE_OPTIONS_IMAGE_URL;
+  let title = 'List Your Practice';
+  let image_url = LIST_YOUR_PRACTICE_IMAGE_URL;
 
   let btn1 = createBtn(`List My Practice|show_block|Ask For User Info (List Practice)`);
   let btn2 = createBtn(`Main Menu|show_block|Discover Main Menu`);
