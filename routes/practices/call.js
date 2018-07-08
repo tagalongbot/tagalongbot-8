@@ -40,7 +40,7 @@ let callPractice = async ({ query }, res) => {
   let messages = [msg];
   res.send({ messages });
 
-  // Start The Call Process 5 seconds after user receives message and call record is created in Airtable
+  // Start the call 5 seconds after message is sent back to user on messenger
   await timeout(5000);
   let customer_call = await createCustomerCall(
     { practice, user, promo_id }
@@ -49,7 +49,10 @@ let callPractice = async ({ query }, res) => {
 
 let answerCustomer = async ({ query, params }, res) => {
   console.log('Customer Answered');
-  let { practice_id, new_call_record_id, promo_id } = params;
+  let { user_id, practice_id, promo_id } = params;
+
+  let user = await getUserByID(user_id);
+  let user_first_name = user.fields['First Name'];
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
@@ -59,19 +62,19 @@ let answerCustomer = async ({ query, params }, res) => {
   let voice_response = new VoiceResponse();
 
   voice_response.say(
-    `Hey thank you for claiming a promotion with ${practice_name}  Bevl Beauty. One moment while I get you connected.`
+    `Hello ${user_first_name} thank you for claiming a promotion with ${practice_name}. One moment while I get you connected. Thank You For Using Bevl Beauty.`
   );
 
   let dial = voice_response.dial({
     callerId: TWILIO_PHONE_NUMBER,
     record: 'record-from-answer',
     timeout: 600,
-    recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}/${new_call_record_id}`,
+    recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}`,
     recordingStatusCallbackEvent: 'completed',
   });
 
   dial.number(
-    { url: `${BASEURL}/practices/call/answered/practice/${practice_id}/${new_call_record_id}/${promo_id}`  },
+    { url: `${BASEURL}/practices/call/answered/practice/${user_id}/${practice_id}/${promo_id}` },
     `+1${practice_phone_number}`
   );
 
@@ -80,8 +83,9 @@ let answerCustomer = async ({ query, params }, res) => {
 }
 
 let ringingPractice = async ({ params }) => {
+  console.log('Ringing Practice');
   let { user_id, practice_id, promo_id } = params;
-  
+
   let practice = await getPracticeByID(practice_id);
 
   let user = await getUserByID(user_id);
@@ -90,32 +94,26 @@ let ringingPractice = async ({ params }) => {
   let new_call_record = await createCallRecord(
     { practice, user, user_messenger_id }
   );
-
-  let new_call_record_id = new_call_record.id;
-
-  
-  
 }
 
 let answerPractice = async ({ query, params }, res) => {
   console.log('Practice Answered');
-  let { practice_id, new_call_record_id, promo_id } = params;
+  let { user_id, practice_id, promo_id } = params;
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
-  let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
 
   let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
   let promo_name = promo.fields['Promotion Name'];
 
-  let call = await getPracticeCall({ practice_calls_base_id, call_id: new_call_record_id });
-  let lead_name = `${call.fields['First Name']} ${call.fields['Last Name']}`;
+  let user = await getUserByID(user_id);
+  let user_name = `${user.fields['First Name']} ${user.fields['Last Name']}`;
 
   let voice_response = new VoiceResponse();
 
   voice_response.say(
-    `Hello ${practice_name} you have a new lead ${lead_name} that claimed the promotion ${promo_name}. Again ${lead_name} who claimed ${promo_name}. Thank You For Using Bevl Beauty.`,
+    `Hello ${practice_name} you have a new lead ${user_name} that claimed the promotion ${promo_name}. Again ${user_name} who claimed ${promo_name}. Thank You For Using Bevl Beauty.`,
   );
 
   res.set('Content-Type', 'text/xml');
@@ -169,7 +167,7 @@ router.post(
 );
 
 router.post(
-  '/answered/practice/:practice_id/:new_call_record_id/:promo_id',
+  '/answered/practice/:user_id/:practice_id/:promo_id',
   answerPractice
 );
 

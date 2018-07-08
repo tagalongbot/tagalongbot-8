@@ -18,15 +18,15 @@ let createCustomerMsg = ({ user_name, practice_name }) => {
 let createCustomerCall = async (data) => {
   let { practice, user, new_call_record_id, promo_id } = data;
 
-  let user_id = user.id;
-
   let practice_id = practice.id;
-  let customer_phone_number = getNumbersOnly(user.fields['Phone Number']);
+
+  let user_id = user.id;  
+  let user_phone_number = getNumbersOnly(user.fields['Phone Number']);
 
   let call_data = {
-    phone_number: `+1${customer_phone_number}`,
+    phone_number: `+1${user_phone_number}`,
     call_url: `${BASEURL}/practices/call/answered/customer/${user_id}/${practice_id}/${promo_id}`,
-    call_status_url: `${BASEURL}/pracices/call/ringing/customer/${user_messenger_id}/${practice_id}/${promo_id}`,
+    call_status_url: `${BASEURL}/pracices/call/ringing/customer/${user_id}/${practice_id}/${promo_id}`,
     call_status_event: 'ringing',
     // recording_url,
     // recording_status
