@@ -1,7 +1,7 @@
 let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, AUTHY_API_KEY } = process.env;
 
 let twilio = require('twilio');
-let client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+let client = twilio(null, TWILIO_AUTH_TOKEN);
 
 let authyClient = require('authy-client');
 let { Client, enums } = authyClient;
@@ -38,7 +38,7 @@ let checkVerificationCode = async ({ phone_number, verification_code }) => {
 }
 
 let createCall = async (data) => {
-  console.log('data', data);
+  console.log('data', data.call_status_event);
   let {
     phone_number: to,
     call_from: from = TWILIO_PHONE_NUMBER,
