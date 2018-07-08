@@ -1,4 +1,4 @@
-<week-calls>
+<calls-list>
   <div class="row" each="{ call in opts.calls }">
     <div class="col s12 m6">
       <div class="card pink lighten-1">
@@ -14,4 +14,4 @@
       </div>
     </div>
   </div>
-</week-calls>
+</calls-list>

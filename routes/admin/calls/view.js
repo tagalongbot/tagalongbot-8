@@ -1,13 +1,13 @@
 let { BASEURL } = process.env;
 
-let { localizeDate } = require('../../../../libs/helpers.js');
+let { localizeDate } = require('../../../libs/helpers.js');
 
 let riot = require('riot');
-let week_tag = require('../../../../tags/calls/week-calls.tag');
+let calls_list_tag = require('../../../tags/calls/calls-list.tag');
 
-let { getPracticeByUserID } = require('../../../../libs/data/practices.js');
-let { getPracticeCalls } = require('../../../../libs/data/practice/calls.js');
-let { getPracticeUser, getUserPromos } = require('../../../../libs/data/practice/users.js');
+let { getPracticeByUserID } = require('../../../libs/data/practices.js');
+let { getPracticeCalls } = require('../../../libs/data/practice/calls.js');
+let { getPracticeUser, getUserPromos } = require('../../../libs/data/practice/users.js');
 
 let toCallData = ({ practice_users_base_id, practice_promos_base_id }) => async ({ fields: call }) => {
   let user_messenger_id = call['messenger user id'];
@@ -37,7 +37,7 @@ let toCallData = ({ practice_users_base_id, practice_promos_base_id }) => async 
   return { caller_first_name, caller_last_name, caller_name, call_date, caller_promo_name };
 }
 
-let getCallsThisWeek = async ({ query }, res) => {
+let getCallsList = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
   let practice = await getPracticeByUserID(messenger_user_id);
@@ -54,8 +54,8 @@ let getCallsThisWeek = async ({ query }, res) => {
     toCallData({ practice_users_base_id, practice_promos_base_id })
   ));
 
-  let view_html = riot.render(week_tag, { calls });
-  res.render('week-calls', { view_html, practice_name });
+  let view_html = riot.render(calls_list_tag, { calls });
+  res.render('calls-list', { view_html, practice_name });
 }
 
-module.exports = getCallsThisWeek;
+module.exports = getCallsList;

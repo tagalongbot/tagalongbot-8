@@ -18,7 +18,7 @@ let togglePromo = require('../routes/admin/promos/toggle.js');
 let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
 // Calls
-let getCallsThisWeek = require('../routes/admin/calls/view/week.js');
+let getCallsList = require('../routes/admin/calls/view.js');
 
 router.get(
   '/menu',
@@ -74,7 +74,7 @@ router.get(
 
 router.get(
   '/calls/view/week',
-  handleRoute(getCallsThisWeek, '[Error] Getting Calls This Week')
+  handleRoute(getCallsList, '[Error] Getting Calls List')
 );
 
 module.exports = router;
