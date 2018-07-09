@@ -5,7 +5,6 @@ let { createURL, convertLongTextToArray } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
-// let { getPracticeUser, createPracticeUser, updatePracticeUser } = require('../../libs/data/practice/users.js');
 
 let createUserData = (data) => {
   let { 
@@ -50,24 +49,9 @@ let updateUserFromAllUsersBase = async ({ practice_id, user, user_email, user_ph
 }
 
 // Exposed Functions
-let updatePromo = async ({ practice_promos_base_id, practice_users_base_id, promo, practice_user, claimed_by_users }) => {
-  let practice_user_claimed_promos = convertLongTextToArray(practice_user.fields['Promos Claimed']);
-
-  let new_claimed_promos = [
-    ...new Set([promo.id, ...practice_user_claimed_promos])
-  ];
-
-  let user_data = {
-    ['Promos Claimed']: new_claimed_promos.join('\n'),
-  }
-
-  let updated_user = await updatePracticeUser(
-    { practice_users_base_id, user_data, practice_user }
-  );
-
-  // Update Promo Data
+let updatePromo = async ({ practice_promos_base_id, promo, user, claimed_by_users }) => {
   let new_claimed_users = [
-    ...new Set([practice_user.id, ...claimed_by_users])
+    ...new Set([user.id, ...claimed_by_users])
   ];
 
   let promo_data = {

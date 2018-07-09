@@ -22,7 +22,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   );
 
   let view_promo_practice_url = createURL(
-    `${BASEURL}/promos/provider`,
+    `${BASEURL}/promos/practice`,
     { practice_id, practice_promos_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 

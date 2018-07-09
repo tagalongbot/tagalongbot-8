@@ -53,11 +53,12 @@ let claimPromotion = async ({ query }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
-  let practice_users_base_id = practice.fields['Practice Users Base ID'];
   let practice_phone_number = practice.fields['Practice Phone Number'];
   let practice_booking_url = practice.fields['Practice Booking URL'];
 
-  let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
+  let promo = await getPracticePromo(
+    { practice_promos_base_id, promo_id }
+  );
 
   if (!promo || promo.fields['Claim Limit Reached'] === '1') {
     let redirect_to_blocks = ['Promo No Longer Valid'];
@@ -65,26 +66,30 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let practice_user = await createOrUpdateUser(
+  let user = await createOrUpdateUser(
     { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number },
     practice
   );
 
-  let claimed_by_users = convertLongTextToArray(promo.fields['Claimed By Users']);
+  let claimed_by_users = convertLongTextToArray(
+    promo.fields['Claimed By Users']
+  );
 
-  if (claimed_by_users.includes(practice_user.id)) {
+  if (claimed_by_users.includes(user.id)) {
     let redirect_to_blocks = ['Promo Already Claimed By User'];
     res.send({ redirect_to_blocks });
     return;
   }
 
   let updated_promo = await updatePromo(
-    { practice_promos_base_id, practice_users_base_id, promo, practice_user, claimed_by_users }
+    { practice_promos_base_id, promo, user, claimed_by_users }
   );
 
   let data = { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id };
 
-  let claimedMsg = createClaimedMsg({ data, updated_promo, practice_phone_number, practice_booking_url });
+  let claimedMsg = createClaimedMsg(
+    { data, updated_promo, practice_phone_number, practice_booking_url }
+  );
 
   let messages = [claimedMsg];
   res.send({ messages });
