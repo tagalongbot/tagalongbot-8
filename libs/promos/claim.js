@@ -6,35 +6,23 @@ let { createURL, convertLongTextToArray } = require('../../libs/helpers.js');
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 
-let createUserData = (data) => {
-  let { 
-    messenger_user_id = null, 
-    first_name = null, 
-    last_name = null, 
-    gender = null, 
-    practice_state = null, 
-    practice_city = null, 
-    practice_zip_code = null 
-  } = data;
+let updateUserFromAllUsersBase = async (data) => {
+  let { practice, user, user_email, user_phone_number, messenger_user_id, first_name, last_name, gender } = data;
+  
+  let practice_state = practice.fields['Practice State'];
+  let practice_city = practice.fields['Practice City'];
+  let practice_zip_code = practice.fields['Practice Zip Code'];
 
-  let user_data = {
-    'messenger user id': messenger_user_id,
-    'First Name': first_name,
-    'Last Name': last_name,
-    'Gender': gender.toLowerCase(),
-    'State': practice_state.toLowerCase(),
-    'City': practice_city.toLowerCase(),
-    'Zip Code': Number(practice_zip_code),
-  }
-
-  return user_data;
-}
-
-let updateUserFromAllUsersBase = async ({ user, user_email, user_phone_number, user_data }) => {
   let updateUserData = {
     ['Email Address']: user_email,
     ['Phone Number']: user_phone_number,
-    ...user_data
+    ['messenger user id']: messenger_user_id,
+    ['First Name']: first_name,
+    ['Last Name']: last_name,
+    ['Gender']: gender.toLowerCase(),
+    ['State']: practice_state.toLowerCase(),
+    ['City']: practice_city.toLowerCase(),
+    ['Zip Code']: Number(practice_zip_code),
   }
 
   let updated_user = await updateUser(updateUserData, user);
@@ -42,28 +30,25 @@ let updateUserFromAllUsersBase = async ({ user, user_email, user_phone_number, u
 }
 
 // Exposed Functions
-let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => {
+let createOrUpdateUser = async (data, practice) => {
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
 
-  let practice_users_base_id = practice['Practice Users Base ID'];
-  let practice_state = practice['Practice State'];
-  let practice_city = practice['Practice City'];
-  let practice_zip_code = practice['Practice Zip Code'];
+  let practice_state = practice.fields['Practice State'];
+  let practice_city = practice.fields['Practice City'];
+  let practice_zip_code = practice.fields['Practice Zip Code'];
 
   let user = await getUserByMessengerID(messenger_user_id);
 
-  let user_data = createUserData(
-    { messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }
-  );
-
   let updated_user = await updateUserFromAllUsersBase(
-    { practice_id, user, user_email, user_phone_number, user_data }
+    { practice, user, user_email, user_phone_number, messenger_user_id, first_name, last_name, gender }
   );
 
   return updated_user;
 }
 
-let updatePromo = async ({ practice_promos_base_id, promo, user, claimed_by_users }) => {
+let updatePromo = async ({ practice, promo, user, claimed_by_users }) => {
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+
   let new_claimed_users = [
     ...new Set([user.id, ...claimed_by_users])
   ];
@@ -80,8 +65,15 @@ let updatePromo = async ({ practice_promos_base_id, promo, user, claimed_by_user
   return updated_promo;
 }
 
-let createClaimedMsg = ({ data, updated_promo, practice_phone_number, practice_booking_url }) => {
-  let { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
+let createClaimedMsg = (data) => {
+  let { first_name, last_name, gender, messenger_user_id, practice, updated_promo } = data;
+
+  let practice_id = practice.id;
+  let practice_phone_number = practice.fields['Practice Phone Number'];
+  let practice_booking_url = practice.fields['Practice Booking URL'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+
+  let promo_id = updated_promo.id;
 
   let view_practice_url = createURL(
     `${BASEURL}/promos/practice`, 
