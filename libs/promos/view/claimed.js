@@ -14,7 +14,7 @@ let getUserClaimedPromos = (data) => async (practice_id) => {
 
   let user = await getPracticeUser({ practice_promos_base_id, user_messenger_id: messenger_user_id });
   let user_id = user.id;
-  
+
   let user_promos = await getUserPromos({ practice_promos_base_id, user_id, view: 'Active Promos' });
 
   return user_promos.map(
@@ -43,9 +43,8 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   let btn1 = createBtn(`View Promo Info|json_plugin_url|${view_promo_details_url}`);
   let btn2 = createBtn(`View Promo Provider|json_plugin_url|${view_promo_practice_url}`);
-  let btn3 = createBtn(`Get My User ID|show_block|Get User ID`);
 
-  let buttons = [btn1, btn2, btn3];
+  let buttons = [btn1, btn2];
 
   return { title, subtitle, image_url, buttons };
 }
