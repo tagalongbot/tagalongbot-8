@@ -6,14 +6,24 @@ let { createURL, convertLongTextToArray } = require('../../libs/helpers.js');
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 
-let updateUserFromAllUsersBase = async (data) => {
-  let { practice, user, user_email, user_phone_number, messenger_user_id, first_name, last_name, gender } = data;
-  
+// Exposed Functions
+let updateClaimedUser = async (data) => {
+  let { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
+
+  let user = await getUserByMessengerID(messenger_user_id);
+  let already_claimed_promos_data = user.fields['Claimed Promos'];
+
   let practice_id = practice.id;
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
   let practice_state = practice.fields['Practice State'];
   let practice_city = practice.fields['Practice City'];
   let practice_zip_code = practice.fields['Practice Zip Code'];
+
+  let new_claimed_promo_data = `${practice_id}-${practice_promos_base_id}-${promo.id}`;
+
+  let claimed_promos = [
+    ...new Set([new_claimed_promo_data, ...already_claimed_promos_data])
+  ];
 
   let updateUserData = {
     ['Email Address']: user_email,
@@ -25,22 +35,10 @@ let updateUserFromAllUsersBase = async (data) => {
     ['State']: practice_state.toLowerCase(),
     ['City']: practice_city.toLowerCase(),
     ['Zip Code']: Number(practice_zip_code),
+    ['Claimed Promos']: claimed_promos.join('\n')
   }
 
   let updated_user = await updateUser(updateUserData, user);
-  return updated_user;
-}
-
-// Exposed Functions
-let createOrUpdateUser = async (data) => {
-  let { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
-
-  let user = await getUserByMessengerID(messenger_user_id);
-
-  let updated_user = await updateUserFromAllUsersBase(
-    { practice, promo, user, user_email, user_phone_number, messenger_user_id, first_name, last_name, gender }
-  );
-
   return updated_user;
 }
 
@@ -97,6 +95,6 @@ let createClaimedMsg = (data) => {
 
 module.exports = {
   updatePromo,
-  createOrUpdateUser,
+  updateClaimedUser,
   createClaimedMsg,
 }

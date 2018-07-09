@@ -7,7 +7,7 @@ let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 
 let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
 
-let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
+let { updatePromo, updateClaimedUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 
 let express = require('express');
 let router = express.Router();
@@ -64,7 +64,7 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let user = await createOrUpdateUser(
+  let user = await updateClaimedUser(
     { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number },
   );
 
