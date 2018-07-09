@@ -30,18 +30,11 @@ let createUserData = (data) => {
   return user_data;
 }
 
-let updateUserFromAllUsersBase = async ({ practice_id, user, user_email, user_phone_number, user_data }) => {
-  let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split('\n');
-
-  let new_practice_ids = [
-    ...new Set([practice_id, ...practice_ids])
-  ];
-
-  let updateUserData = { 
-    ['Practices Claimed Promos From']: new_practice_ids.join('\n'),
+let updateUserFromAllUsersBase = async ({ user, user_email, user_phone_number, user_data }) => {
+  let updateUserData = {
     ['Email Address']: user_email,
     ['Phone Number']: user_phone_number,
-    ...user_data 
+    ...user_data
   }
 
   let updated_user = await updateUser(updateUserData, user);
@@ -49,6 +42,27 @@ let updateUserFromAllUsersBase = async ({ practice_id, user, user_email, user_ph
 }
 
 // Exposed Functions
+let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => {
+  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
+
+  let practice_users_base_id = practice['Practice Users Base ID'];
+  let practice_state = practice['Practice State'];
+  let practice_city = practice['Practice City'];
+  let practice_zip_code = practice['Practice Zip Code'];
+
+  let user = await getUserByMessengerID(messenger_user_id);
+
+  let user_data = createUserData(
+    { messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }
+  );
+
+  let updated_user = await updateUserFromAllUsersBase(
+    { practice_id, user, user_email, user_phone_number, user_data }
+  );
+
+  return updated_user;
+}
+
 let updatePromo = async ({ practice_promos_base_id, promo, user, claimed_by_users }) => {
   let new_claimed_users = [
     ...new Set([user.id, ...claimed_by_users])
@@ -64,45 +78,6 @@ let updatePromo = async ({ practice_promos_base_id, promo, user, claimed_by_user
   );
 
   return updated_promo;
-}
-
-let createOrUpdateUser = async (data, { id: practice_id, fields: practice }) => {
-  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
-
-  let practice_users_base_id = practice['Practice Users Base ID'];
-  let practice_state = practice['Practice State'];
-  let practice_city = practice['Practice City'];
-  let practice_zip_code = practice['Practice Zip Code'];
-
-  let user_messenger_id = messenger_user_id;
-
-  let user = await getUserByMessengerID(messenger_user_id);
-
-  let practice_user = await getPracticeUser(
-    { user_messenger_id, practice_users_base_id }
-  );
-
-  let user_data = createUserData(
-    { messenger_user_id, first_name, last_name, gender, practice_state, practice_city, practice_zip_code }
-  );
-
-  let updated_user = await updateUserFromAllUsersBase(
-    { practice_id, user, user_email, user_phone_number, user_data, practice_id }
-  );
-
-  if (!practice_user) {
-    let newUser = await createPracticeUser(
-      { practice_users_base_id, user_data }
-    );
-
-    return newUser;
-  }
-
-  let updated_practice_user = await updatePracticeUser(
-    { practice_users_base_id, user_data, practice_user }
-  );
-
-  return updated_practice_user;
 }
 
 let createClaimedMsg = ({ data, updated_promo, practice_phone_number, practice_booking_url }) => {

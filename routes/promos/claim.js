@@ -4,9 +4,10 @@ let { isValidPhoneNumber, convertLongTextToArray } = require('../../libs/helpers
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
-let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 
 let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
+
+let { updatePromo, createOrUpdateUser, createClaimedMsg } = require('../../libs/promos/claim.js');
 
 let express = require('express');
 let router = express.Router();
