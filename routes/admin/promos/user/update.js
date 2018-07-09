@@ -1,13 +1,15 @@
-let { updatePromo, createUpdateMsg } = require('../../../../libs/admin/promos/user/update.js');
 let { getPracticePromo } = require('../../../../libs/data/practice/promos.js');
-let { getPracticeUser } = require('../../../../libs/data/practice/users.js');
+let { getUserByMessengerID } = require('../../../../libs/data/users.js');
+
+let { updatePromo, createUpdateMsg } = require('../../../../libs/admin/promos/user/update.js');
 
 let updateUserPromo = async ({ query }, res) => {
+  // Code Needs to be refactored, since the update will happen from a password protected webview
   let { practice_promos_base_id, promo_id, user_messenger_id } = query;
   // console.log('user_messenger_id', user_messenger_id); // Added twice to url
 
   let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
-  let user = await getPracticeUser({ practice_promos_base_id, user_messenger_id });
+  let user = await getUserByMessengerID(user_messenger_id);
 
   if (!user) {
     let redirect_to_blocks = ['[Admin Verify Promo] User Does Not Exist'];

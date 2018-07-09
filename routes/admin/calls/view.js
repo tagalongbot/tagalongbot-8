@@ -7,7 +7,7 @@ let calls_list_tag = require('../../../tags/calls/calls-list.tag');
 
 let { getPracticeByUserID } = require('../../../libs/data/practices.js');
 let { getPracticeCalls } = require('../../../libs/data/practice/calls.js');
-let { getPracticeUser, getUserPromos } = require('../../../libs/data/practice/users.js');
+let { getUserByMessengerID, getUserPromos } = require('../../../libs/data/practice/users.js');
 
 let toCallData = ({ practice_users_base_id, practice_promos_base_id }) => async ({ fields: call }) => {
   let user_messenger_id = call['messenger user id'];
