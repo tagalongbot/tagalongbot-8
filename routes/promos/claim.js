@@ -1,6 +1,6 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
 
-let { isValidPhoneNumber, convertLongTextToArray } = require('../../libs/helpers.js');
+let { convertLongTextToArray } = require('../../libs/helpers.js');
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
@@ -49,8 +49,7 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { promo_id, practice_id } = query;
-  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = query;
+  let { practice_id, promo_id, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = query;
 
   let practice = await getPracticeByID(practice_id);
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
@@ -66,8 +65,7 @@ let claimPromotion = async ({ query }, res) => {
   }
 
   let user = await createOrUpdateUser(
-    { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number },
-    practice
+    { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number },
   );
 
   let claimed_by_users = convertLongTextToArray(

@@ -9,6 +9,8 @@ let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 let updateUserFromAllUsersBase = async (data) => {
   let { practice, user, user_email, user_phone_number, messenger_user_id, first_name, last_name, gender } = data;
   
+  let practice_id = practice.id;
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
   let practice_state = practice.fields['Practice State'];
   let practice_city = practice.fields['Practice City'];
   let practice_zip_code = practice.fields['Practice Zip Code'];
@@ -30,17 +32,13 @@ let updateUserFromAllUsersBase = async (data) => {
 }
 
 // Exposed Functions
-let createOrUpdateUser = async (data, practice) => {
-  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
-
-  let practice_state = practice.fields['Practice State'];
-  let practice_city = practice.fields['Practice City'];
-  let practice_zip_code = practice.fields['Practice Zip Code'];
+let createOrUpdateUser = async (data) => {
+  let { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
 
   let user = await getUserByMessengerID(messenger_user_id);
 
   let updated_user = await updateUserFromAllUsersBase(
-    { practice, user, user_email, user_phone_number, messenger_user_id, first_name, last_name, gender }
+    { practice, promo, user, user_email, user_phone_number, messenger_user_id, first_name, last_name, gender }
   );
 
   return updated_user;
