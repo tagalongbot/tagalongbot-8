@@ -41,20 +41,20 @@ let getUserPromos = async ({ user_id, view = 'Main View' }) => {
   let claimed_promos_data = convertLongTextToArray(
     user.fields['Claimed Promos']
   );
-
+  
   let practice_promos_base_ids = claimed_promos_data.map(
-    (data) => data.split('-')[0]
+    (data) => data.split('-')[1]
   );
-
+  
   let unique_practice_promos_base_ids = [
     ...new Set(practice_promos_base_ids)
   ];
-
+  
   let practice_promos_by_ids_obj = unique_practice_promos_base_ids.reduce((obj, practice_promos_base_id) => {
     let practice_promos_ids = claimed_promos_data.filter(
-      (data) => data.startsWith(practice_promos_base_id)
+      (data) => data.includes(practice_promos_base_id)
     ).map(
-      (data) => data.split('-')[1]
+      (data) => data.split('-')[2]
     );
 
     return { ...obj, [practice_promos_base_id]: practice_promos_ids };

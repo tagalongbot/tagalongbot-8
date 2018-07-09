@@ -5,7 +5,7 @@ let { createURL, convertLongTextToArray } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
-let { getPracticeUser, createPracticeUser, updatePracticeUser } = require('../../libs/data/practice/users.js');
+// let { getPracticeUser, createPracticeUser, updatePracticeUser } = require('../../libs/data/practice/users.js');
 
 let createUserData = (data) => {
   let { 
