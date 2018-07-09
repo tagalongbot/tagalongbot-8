@@ -4,7 +4,7 @@ let { createBtn } = require('../../../libs/bots.js');
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
 
 let { getPracticeByID } = require('../../../libs/data/practices.js');
-let { getPracticeUser, getUserPromos } = require('../../../libs/data/practice/users.js');
+let { getUserByMessengerID, getUserPromos } = require('../../../libs/data/users.js');
 
 let getUserClaimedPromos = (data) => async (practice_id) => {
   let { messenger_user_id, first_name, last_name, gender } = data;
@@ -12,10 +12,10 @@ let getUserClaimedPromos = (data) => async (practice_id) => {
   let practice = await getPracticeByID(practice_id);
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
-  let user = await getPracticeUser({ practice_promos_base_id, user_messenger_id: messenger_user_id });
+  let user = await getUserByMessengerID(messenger_user_id);
   let user_id = user.id;
 
-  let user_promos = await getUserPromos({ practice_promos_base_id, user_id, view: 'Active Promos' });
+  let user_promos = await getUserPromos({ user_id, view: 'Active Promos' });
 
   return user_promos.map(
     toGalleryElement({ practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender })

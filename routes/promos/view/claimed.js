@@ -1,18 +1,17 @@
 let { flattenArray } = require('../../../libs/helpers.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
 
-let { getUserByMessengerID } = require('../../../libs/data/users.js');
+let { getUserByMessengerID, getUserPromos } = require('../../../libs/data/users.js');
 let { getUserClaimedPromos, toGalleryElement } = require('../../../libs/promos/view/claimed.js');
 
 let viewClaimedPromos = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
 
   let user = await getUserByMessengerID(messenger_user_id);
-  
-  let practice_ids = (user.fields['Practices Claimed Promos From'] || '').split(',').filter(Boolean);
+  let user_id = user.id;
 
-  let practice_promos = practice_ids.map(
-    getUserClaimedPromos({ messenger_user_id, first_name, last_name, gender })
+  let user_promos = await getUserPromos(
+    { user_id, view: 'Active Promos' }
   );
 
   let promos = flattenArray(
