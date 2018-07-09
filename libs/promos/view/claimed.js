@@ -3,27 +3,12 @@ let { BASEURL } = process.env;
 let { createBtn } = require('../../../libs/bots.js');
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
 
-let { getPracticeByID } = require('../../../libs/data/practices.js');
-let { getUserByMessengerID, getUserPromos } = require('../../../libs/data/users.js');
-
-let getUserClaimedPromos = (data) => async (practice_id) => {
-  let { messenger_user_id, first_name, last_name, gender } = data;
-
-  let practice = await getPracticeByID(practice_id);
-  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
-
-  let user = await getUserByMessengerID(messenger_user_id);
-  let user_id = user.id;
-
-  let user_promos = await getUserPromos({ user_id, view: 'Active Promos' });
-
-  return user_promos.map(
-    toGalleryElement({ practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender })
-  );
-}
-
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
-  let { practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender } = data;
+  let { messenger_user_id, first_name, last_name, gender, user_claimed_promos_data } = data;
+
+  let [practice_id, practice_promos_base_id] = user_claimed_promos_data.find(
+    (data) => data.endsWith(promo_id)
+  ).split('-');
 
   let promo_expiration_date = new Date(promo['Expiration Date']);
 
@@ -50,6 +35,5 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 }
 
 module.exports = {
-  getUserClaimedPromos,
   toGalleryElement,
 }
