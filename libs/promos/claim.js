@@ -110,25 +110,20 @@ let createClaimedMsg = (data) => {
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let promo_id = updated_promo.id;
+  let promotion_name = updated_promo.fields['Promotion Name'];
 
   let view_practice_url = createURL(
     `${BASEURL}/promos/practice`, 
     { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
-  let call_practice_url = createURL(
-    `${BASEURL}/practices/call`,
-    { practice_id, messenger_user_id, promo_id }
+  let msg1 = createButtonMessage(
+    `Congrats ${first_name} your promotion "${promotion_name}" has been claimed!`,
+    `View Practice|json_plugin_url|${view_practice_url}`,
+    `Main Menu|show_block|Discover Main Menu`
   );
-
-  let btn1 = `View Provider|json_plugin_url|${view_practice_url}`;
-  let btn2 = (practice_booking_url) ? `View Booking Site|web_url|${practice_booking_url}` : `Call Provider|json_plugin_url|${call_practice_url}`;
-  let btn3 = `Main Menu|show_block|Discover Main Menu`;
-
-  let msg = createButtonMessage(
-    `Congrats ${first_name} your promotion "${updated_promo.fields['Promotion Name']}" has been claimed!`,
-    ...[btn1, btn2, btn3]
-  );
+  
+  let msg2 = 
 
   return msg;
 }

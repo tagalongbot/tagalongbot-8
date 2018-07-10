@@ -6,10 +6,10 @@ let BUTTON_TYPES = {
 }
 
 let createBtn = (button) => {
-  let [title, btnType, value] = button.split('|');
-  let type = btnType.toLowerCase();
-  let typeName = BUTTON_TYPES[type];
-  let btn = { title, type, [typeName]: value }
+  let [title, btn_type, value] = button.split('|');
+  let type = btn_type.toLowerCase();
+  let type_name = BUTTON_TYPES[type];
+  let btn = { title, type, [type_name]: value }
   return btn;
 }
 
@@ -28,6 +28,19 @@ let createButtonMessage = (text, ...btns) => {
 	}
 
 	return { attachment };
+}
+
+let createQuickReplyMessage = (text, ...btns) => {
+  let buttons = btns.map(btn => {
+    let [title, type, value] = btn.split('|');
+    
+    if (type === '') {
+      return { title, block_names: value };
+    }
+    
+    let type_name = 
+    return { title, type, [ }
+  });
 }
 
 let createGallery = (elements, image_aspect_ratio = 'horizontal') => {
