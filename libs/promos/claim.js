@@ -5,14 +5,16 @@ let { createURL, convertLongTextToArray, getNumbersOnly } = require('../../libs/
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
-let { createPracticeLead } = require('../../libs/data/practice/leads.js');
+let { updatePracticeLead } = require('../../libs/data/practice/leads.js');
 
 // Exposed Functions
 let updateClaimedUser = async (data) => {
   let { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
 
   let user = await getUserByMessengerID(messenger_user_id);
-  let already_claimed_promos_data = user.fields['Claimed Promos'];
+  let already_claimed_promos_data = convertLongTextToArray(
+    user.fields['Claimed Promos']
+  );
 
   let practice_id = practice.id;
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
@@ -27,12 +29,12 @@ let updateClaimedUser = async (data) => {
   ];
 
   let updateUserData = {
-    ['Email Address']: user_email,
-    ['Phone Number']: user_phone_number,
     ['messenger user id']: messenger_user_id,
     ['First Name']: first_name,
     ['Last Name']: last_name,
     ['Gender']: gender.toLowerCase(),
+    ['Email Address']: user_email,
+    ['Phone Number']: user_phone_number,
     ['State']: practice_state.toLowerCase(),
     ['City']: practice_city.toLowerCase(),
     ['Zip Code']: Number(practice_zip_code),
@@ -63,7 +65,7 @@ let updatePromo = async (data) => {
   return updated_promo;
 }
 
-let createLead = async (data) => {
+let updateLead = async (data) => {
   let { practice, promo, user } = data;
 
   let practice_name = practice.fields['Practice Name'];
@@ -94,11 +96,11 @@ let createLead = async (data) => {
     ['Claimed Promotion URL']: `${practice_promos_base_url}/${promo_id}`
   }
 
-  let new_lead_record = await createPracticeLead(
+  let updated_lead_record = await updatePracticeLead(
     { practice_leads_base_id, lead_data }
   );
 
-  return new_lead_record;
+  return updated_lead_record;
 }
 
 let createClaimedMsg = (data) => {
@@ -166,7 +168,7 @@ let createNoCallMsg = (data) => {
 module.exports = {
   updatePromo,
   updateClaimedUser,
-  createLead,
+  updateLead,
   createClaimedMsg,
   createNoCallMsg,
 }

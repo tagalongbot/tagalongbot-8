@@ -16,7 +16,7 @@ let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getUserByID, getUserByMessengerID } = require('../../libs/data/users.js');
 
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
-let { getPracticeCall, updatePracticeCall } = require('../../libs/data/practice/leads.js');
+let { getPracticeLead, updatePracticeLead } = require('../../libs/data/practice/leads.js');
 
 let { createCallRecord, createCustomerMsg, createCustomerCall } = require('../../libs/practices/call.js');
 
@@ -130,7 +130,7 @@ let answerPractice = async ({ query, params }, res) => {
 
 let saveCallRecording = async ({ query, params }, res) => {
   console.log('Saving Call');
-  let { practice_leads_base_id, lead_record_id } = params;
+  let { practice_leads_base_id, lead_record_id: lead_id } = params;
 
   let {
     CallSid: call_id,
@@ -139,21 +139,17 @@ let saveCallRecording = async ({ query, params }, res) => {
     RecordingDuration: recording_duration
   } = query;
 
-  let lead = await getPracticeLea(
-    { practice_leads_base_id, lead_record_id }
+  let lead = await getPracticeLead(
+    { practice_leads_base_id, lead_id }
   );
 
-  let call_data = {
-    ['Call ID']: call_id,
-    ['Recording ID']: recording_id,
+  let lead_data = {
     ['Recording URL']: recording_url,
     ['Recording Duration']: recording_duration
   }
 
-  console.log('call_data', call_data);
-
-  let updated_call = await updatePracticeCall(
-    { practice_leads_base_id, call_data, call }
+  let updated_call = await updatePracticeLead(
+    { practice_leads_base_id, lead_data, lead_id }
   );
 
   res.sendStatus(200);
