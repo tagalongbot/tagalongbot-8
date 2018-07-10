@@ -29,9 +29,18 @@ let callPractice = async ({ query }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let user = await getUserByMessengerID(user_messenger_id);
   let user_first_name = user.fields['First Name'];
+
+  let promo = await getPracticePromo(
+    { practice_promos_base_id, promo_id }
+  );
+
+  let updated_lead = await updateLeadRecord(
+    { practice, user, promo }
+  );
 
   let msg = createCustomerMsg(
     { user_name: user_first_name, practice_name }
@@ -88,20 +97,9 @@ let answerCustomer = async ({ query, params }, res) => {
   res.send(voice_response.toString());
 }
 
-let ringingPractice = async ({ params, body }) => {
+let ringingPractice = async ({ params, body }, res) => {
   console.log('Ringing Practice', body);
-  let { user_id, practice_id, promo_id } = params;
-
-  let user = await getUserByID(user_id);
-  
-  let practice = await getPracticeByID(practice_id);
-  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
-
-  let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
-
-  let new_call_record = await createCallRecord(
-    { user, practice, promo }
-  );
+  res.sendStatus(200);
 }
 
 let answerPractice = async ({ query, params }, res) => {
