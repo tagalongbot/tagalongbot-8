@@ -86,11 +86,10 @@ let claimPromotion = async ({ query }, res) => {
     { practice, promo, user }
   );
 
-  let claimedMsg = createClaimedMsg(
+  let messages = createClaimedMsg(
     { first_name, last_name, gender, messenger_user_id, practice, updated_promo }
   );
 
-  let messages = [claimedMsg];
   res.send({ messages });
 }
 
