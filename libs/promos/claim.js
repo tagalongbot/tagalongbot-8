@@ -5,7 +5,7 @@ let { createURL, convertLongTextToArray, getNumbersOnly } = require('../../libs/
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
-let { updatePracticeLead } = require('../../libs/data/practice/leads.js');
+let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
 // Exposed Functions
 let updateClaimedUser = async (data) => {
@@ -65,7 +65,7 @@ let updatePromo = async (data) => {
   return updated_promo;
 }
 
-let updateLead = async (data) => {
+let createLead = async (data) => {
   let { practice, promo, user } = data;
 
   let practice_name = practice.fields['Practice Name'];
@@ -96,7 +96,7 @@ let updateLead = async (data) => {
     ['Claimed Promotion URL']: `${practice_promos_base_url}/${promo_id}`
   }
 
-  let updated_lead_record = await updatePracticeLead(
+  let updated_lead_record = await createPracticeLead(
     { practice_leads_base_id, lead_data }
   );
 
@@ -168,7 +168,7 @@ let createNoCallMsg = (data) => {
 module.exports = {
   updatePromo,
   updateClaimedUser,
-  updateLead,
+  createLead,
   createClaimedMsg,
   createNoCallMsg,
 }

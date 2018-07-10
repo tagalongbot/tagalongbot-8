@@ -18,7 +18,7 @@ let getPracticeLeads = async ({ practice_leads_base_id, view = 'Main View' }) =>
   return leads;
 }
 
-let createPracticeLeads = async ({ practice_leads_base_id, lead_data }) => {
+let createPracticeLead = async ({ practice_leads_base_id, lead_data }) => {
   let leadsTable = getLeadsTable(practice_leads_base_id);
   let createLead = createTableData(leadsTable);
   
@@ -37,6 +37,6 @@ let updatePracticeLead = async ({ practice_leads_base_id, lead_data, lead }) => 
 module.exports = {
   getPracticeLead,
   getPracticeLeads,
-  createPracticeLeads,
+  createPracticeLead,
   updatePracticeLead,
 }

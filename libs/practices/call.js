@@ -4,7 +4,7 @@ let { getNumbersOnly } = require('../../libs/helpers.js');
 let { createButtonMessage } = require('../../libs/bots.js');
 
 let { createCall } = require('../../libs/twilio.js');
-let { createPracticeLead } = require('../../libs/data/practice/leads.js');
+let { updatePracticeLead } = require('../../libs/data/practice/leads.js');
 
 let createCustomerMsg = ({ user_name, practice_name }) => {
   let msg = createButtonMessage(
@@ -34,12 +34,12 @@ let createCustomerCall = async (data) => {
   return customer_call;
 }
 
-let createLeadRecord = async (data) => {
+let updateLeadRecord = async (data) => {
   let { practice, user, promo } = data;
 }
 
 module.exports = {
   createCustomerMsg,
   createCustomerCall,
-  createLeadRecord,
+  updateLeadRecord,
 }
