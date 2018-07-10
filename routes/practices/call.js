@@ -18,7 +18,7 @@ let { getUserByID, getUserByMessengerID } = require('../../libs/data/users.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { getPracticeLead, updatePracticeLead } = require('../../libs/data/practice/leads.js');
 
-let { createCallRecord, createCustomerMsg, createCustomerCall } = require('../../libs/practices/call.js');
+let { createCustomerMsg, createCustomerCall, updateLeadRecord } = require('../../libs/practices/call.js');
 
 let callPractice = async ({ query }, res) => {
   // This happens after customer claims promotions

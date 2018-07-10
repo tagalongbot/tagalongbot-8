@@ -1,5 +1,7 @@
 # Code
-- Figure out how to get rid of swig as a dependency
+- learn how `app.engine` works
+
+- Learn how to render views without `swig`
 
 - Update code to use ES6 Modules using `graspjs`
 
