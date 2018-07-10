@@ -1,10 +1,11 @@
 let { BASEURL } = process.env;
 
 let { createButtonMessage } = require('../../libs/bots.js');
-let { createURL, convertLongTextToArray } = require('../../libs/helpers.js');
+let { createURL, convertLongTextToArray, getNumbersOnly } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
+let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
 // Exposed Functions
 let updateClaimedUser = async (data) => {
@@ -42,7 +43,8 @@ let updateClaimedUser = async (data) => {
   return updated_user;
 }
 
-let updatePromo = async ({ practice, promo, user, claimed_by_users }) => {
+let updatePromo = async (data) => {
+  let { practice, promo, user, claimed_by_users } = data;
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let new_claimed_users = [
@@ -59,6 +61,44 @@ let updatePromo = async ({ practice, promo, user, claimed_by_users }) => {
   );
 
   return updated_promo;
+}
+
+let createLead = async (data) => {
+  let { practice, promo, user } = data;
+
+  let practice_name = practice.fields['Practice Name'];
+  let practice_state = practice.fields['Practice State'];
+  let practice_city = practice.fields['Practice City'];
+  let practice_zip_code = practice.fields['Practice Zip Code'];
+  let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
+  let practice_promos_base_url = practice.fields['Practice Promos Base URL'];
+  let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
+
+  let user_first_name = user.fields['First Name'];
+  let user_last_name = user.fields['Last Name'];
+  let user_gender = user.fields['Gender'];
+  let user_phone_number = user.fields['Phone Number'];
+
+  let promo_id = promo.id;
+  let promo_name = promo.fields['Promotion Name'];
+
+  let lead_data = {
+    ['First Name']: user_first_name,
+    ['Last Name']: user_last_name,
+    ['Gender']: user_gender,
+    ['State']: practice_state,
+    ['City']: practice_city,
+    ['Zip Code']: practice_zip_code,
+    ['Phone Number']: user_phone_number,
+    ['Claimed Promotion Name']: promo_name,
+    ['Claimed Promotion URL']: `${practice_promos_base_url}/${promo_id}`
+  }
+
+  let new_lead_record = await createPracticeLead(
+    { practice_leads_base_id, lead_data }
+  );
+
+  return new_lead_record;
 }
 
 let createClaimedMsg = (data) => {
@@ -96,5 +136,6 @@ let createClaimedMsg = (data) => {
 module.exports = {
   updatePromo,
   updateClaimedUser,
+  createLead,
   createClaimedMsg,
 }
