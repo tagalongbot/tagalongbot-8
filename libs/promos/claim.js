@@ -118,7 +118,15 @@ let createClaimedMsg = (data) => {
     { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
-  let c
+  let call_practice_url = createURL(
+    `${BASEURL}/practices/call`,
+    { practice_id, promo_id, messenger_user_id }
+  );
+  
+  let no_call_practice_url = createURL(
+    `${BASEURL}/promos/claim/no_practice_call`,
+    { practice_id, promo_id, messenger_user_id, first_name, last_name, gender }
+  );
   
   let msg1 = createButtonMessage(
     `Congrats ${first_name} your promotion "${promotion_name}" has been claimed!`,
@@ -128,10 +136,31 @@ let createClaimedMsg = (data) => {
   
   let msg2 = createQuickReplyMessage(
     `Would you like to call ${practice_name} now?`,
-    `Yes|json_plugin_url|${}`
+    `Yes|json_plugin_url|${call_practice_url}`,
+    `No|json_plugin_url|${no_call_practice_url}`
   );
 
   return [msg1, msg2];
+}
+
+let createNoCallMsg = (data) => {
+  let { first_name, last_name, gender, messenger_user_id, practice, promo_id } = data;
+
+  let practice_id = practice.id;
+  let practice_name = practice.fields['Practice Name'];
+
+  let call_practice_url = createURL(
+    `${BASEURL}/practices/call`,
+    { practice_id, promo_id, messenger_user_id }
+  );
+
+  let msg = createButtonMessage(
+    `Hey ${first_name} whenever you're ready to call ${practice_name} just click the button below`,
+    `Call Practice|json_plugin_url|${call_practice_url}`,
+    `Main Menu|show_block|Discover Main Menu`,
+  );
+
+  return msg;
 }
 
 module.exports = {
@@ -139,4 +168,5 @@ module.exports = {
   updateClaimedUser,
   createLead,
   createClaimedMsg,
+  createNoCallMsg,
 }

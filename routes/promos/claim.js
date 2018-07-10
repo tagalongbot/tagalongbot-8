@@ -94,6 +94,8 @@ let claimPromotion = async ({ query }, res) => {
   res.send({ messages });
 }
 
+let sendNoPracticeCallMsg = 
+
 router.get(
   '/user_info',
   handleRoute(askForUserInfo, '[Error] Claiming Promo')
@@ -112,6 +114,11 @@ router.get(
 router.get(
   '/',
   handleRoute(claimPromotion, '[Error] Claiming Promo')
+);
+
+router.get(
+  '/no_practice_call',
+  handleRoute(sendNoPracticeCallMsg)
 );
 
 module.exports = router;
