@@ -9,8 +9,7 @@ let createBtn = (button) => {
   let [title, btn_type, value] = button.split('|');
   let type = btn_type.toLowerCase();
   let type_name = BUTTON_TYPES[type];
-  let btn = { title, type, [type_name]: value }
-  return btn;
+  return { title, type, [type_name]: value };
 }
 
 let createButtonMessage = (text, ...btns) => {
@@ -31,16 +30,18 @@ let createButtonMessage = (text, ...btns) => {
 }
 
 let createQuickReplyMessage = (text, ...btns) => {
-  let buttons = btns.map(btn => {
+  let quick_replies = btns.map(btn => {
     let [title, type, value] = btn.split('|');
-    
+
     if (type === '') {
-      return { title, block_names: value };
+      return { title, block_names: [value] };
     }
-    
-    let type_name = 
-    return { title, type, [ }
+
+    let type_name = BUTTON_TYPES[type];
+    return { title, type, [type_name]: value };
   });
+  
+  return { text, quick_replies };
 }
 
 let createGallery = (elements, image_aspect_ratio = 'horizontal') => {
@@ -87,6 +88,7 @@ let createTextMessage = (text) => {
 module.exports = {
   createBtn,
   createButtonMessage,
+  createQuickReplyMessage,
   createGallery,
   createMultiGallery,
   createImage,

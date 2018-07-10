@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
 
-let { createButtonMessage } = require('../../libs/bots.js');
+let { createButtonMessage, createQuickReplyMessage } = require('../../libs/bots.js');
 let { createURL, convertLongTextToArray, getNumbersOnly } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
@@ -105,6 +105,7 @@ let createClaimedMsg = (data) => {
   let { first_name, last_name, gender, messenger_user_id, practice, updated_promo } = data;
 
   let practice_id = practice.id;
+  let practice_name = practice.fields['Practice Name'];
   let practice_phone_number = practice.fields['Practice Phone Number'];
   let practice_booking_url = practice.fields['Practice Booking URL'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
@@ -117,15 +118,20 @@ let createClaimedMsg = (data) => {
     { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
   );
 
+  let c
+  
   let msg1 = createButtonMessage(
     `Congrats ${first_name} your promotion "${promotion_name}" has been claimed!`,
     `View Practice|json_plugin_url|${view_practice_url}`,
     `Main Menu|show_block|Discover Main Menu`
   );
   
-  let msg2 = 
+  let msg2 = createQuickReplyMessage(
+    `Would you like to call ${practice_name} now?`,
+    `Yes|json_plugin_url|${}`
+  );
 
-  return msg;
+  return [msg1, msg2];
 }
 
 module.exports = {
