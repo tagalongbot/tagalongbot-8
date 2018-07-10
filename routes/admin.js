@@ -17,8 +17,8 @@ let updatePromoInfo = require('../routes/admin/promos/update.js');
 let togglePromo = require('../routes/admin/promos/toggle.js');
 let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
-// Calls
-let getCallsList = require('../routes/admin/calls/view.js');
+// Leads
+let getLeadsList = require('../routes/admin/leads/view.js');
 
 router.get(
   '/menu',
@@ -73,8 +73,8 @@ router.get(
 );
 
 router.get(
-  '/calls/view/:range',
-  handleRoute(getCallsList, '[Error] Getting Calls List')
+  '/leads/view/:range',
+  handleRoute(getLeadsList, '[Error] Getting Calls List')
 );
 
 module.exports = router;
