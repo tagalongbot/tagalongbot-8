@@ -4,6 +4,8 @@ let { convertLongTextToArray } = require('../../libs/helpers.js');
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
+let { getUniqueLead, updatePracticeLead } = require('../../libs/data/practice/leads.js');
+let { getUserByMessengerID } = require('../../libs/data/users.js');
 
 let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
 
@@ -97,7 +99,30 @@ let sendNoPracticeCallMsg = async ({ query }, res) => {
   let { first_name, last_name, gender, messenger_user_id, practice_id, promo_id } = query;
 
   let practice = await getPracticeByID(practice_id);
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+  let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
+
+  let user = await getUserByMessengerID(messenger_user_id);
+  let user_phone_number = user.fields['Phone Number'];
+
+  let promo = await getPracticePromo(
+    { practice_promos_base_id, promo_id }
+  );
+
+  let promotion_name = promo.fields['Promotion Name'];
+
+  let lead = await getUniqueLead(
+    { practice_leads_base_id, user_phone_number, promotion_name }
+  );
   
+  let lead_data = {
+    ['Initiated Call']: 'NO'
+  }
+  
+  let updated_lead = await updatePracticeLead(
+    { practice_leads_base_id, lead_data, lead }
+  );
+
   let msg = createNoCallMsg(
     { first_name, last_name, gender, messenger_user_id, practice, promo_id }
   );

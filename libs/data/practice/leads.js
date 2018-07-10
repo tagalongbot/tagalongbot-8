@@ -34,6 +34,15 @@ let updatePracticeLead = async ({ practice_leads_base_id, lead_data, lead }) => 
   return updated_call;
 }
 
+let getUniqueLead = async ({ practice_leads_base_id, user_phone_number, promotion_name }) => {
+  let leadsTable = getLeadsTable(practice_leads_base_id);
+  let getLeads = getAllDataFromTable(leadsTable);
+
+  let filterByFormula = `AND({Phone Number} = '${user_phone_number}', {Promotion Name} = '${promotion_name}')`;
+  let [lead] = await getLeads({ filterByFormula });
+  return lead;
+}
+
 module.exports = {
   getPracticeLead,
   getPracticeLeads,

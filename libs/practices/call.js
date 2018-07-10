@@ -4,11 +4,7 @@ let { getNumbersOnly } = require('../../libs/helpers.js');
 let { createButtonMessage } = require('../../libs/bots.js');
 
 let { createCall } = require('../../libs/twilio.js');
-let { updatePracticeLead } = require('../../libs/data/practice/leads.js');
-
-let { getTable, getAllDataFromTable } = require('../../libs/data.js');
-
-let getLeadsTable = getTable('Leads');
+let { getUniqueLead, updatePracticeLead } = require('../../libs/data/practice/leads.js');
 
 let createCustomerMsg = ({ user_name, practice_name }) => {
   let msg = createButtonMessage(
@@ -45,12 +41,9 @@ let updateLeadRecord = async (data) => {
   let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
   let promotion_name = promo.fields['Promotion Name'];
 
-  let leadsTable = getLeadsTable(practice_leads_base_id);
-  let getLeads = getAllDataFromTable(leadsTable);
-
-  let filterByFormula = `AND({Phone Number} = '${user_phone_number}', {Promotion Name} = '${promotion_name}')`;
-
-  let [lead] = await getLeads({ filterByFormula });
+  let lead = await getUniqueLead(
+    { practice_leads_base_id, user_phone_number, promotion_name }
+  );
 
   let lead_data = {
     ['Call Initiated']: 'YES',
