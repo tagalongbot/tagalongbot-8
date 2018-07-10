@@ -16,7 +16,7 @@ let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getUserByID, getUserByMessengerID } = require('../../libs/data/users.js');
 
 let { getPracticePromo } = require('../../libs/data/practice/promos.js');
-let { getPracticeCall, updatePracticeCall } = require('../../libs/data/practice/calls.js');
+let { getPracticeCall, updatePracticeCall } = require('../../libs/data/practice/leads.js');
 
 let { createCallRecord, createCustomerMsg, createCustomerCall } = require('../../libs/practices/call.js');
 
@@ -56,7 +56,7 @@ let answerCustomer = async ({ query, params }, res) => {
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
-  let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
+  let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
   let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
 
   let voice_response = new VoiceResponse();
@@ -69,7 +69,7 @@ let answerCustomer = async ({ query, params }, res) => {
     callerId: TWILIO_PHONE_NUMBER,
     record: 'record-from-answer',
     timeout: 600,
-    recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_calls_base_id}`,
+    recordingStatusCallback: `${BASEURL}/practices/call/record/${practice_leads_base_id}`,
     recordingStatusCallbackEvent: 'completed',
   });
 
@@ -130,7 +130,7 @@ let answerPractice = async ({ query, params }, res) => {
 
 let saveCallRecording = async ({ query, params }, res) => {
   console.log('Saving Call');
-  let { practice_calls_base_id, call_record_id } = params;
+  let { practice_leads_base_id, lead_record_id } = params;
 
   let {
     CallSid: call_id,
@@ -139,8 +139,8 @@ let saveCallRecording = async ({ query, params }, res) => {
     RecordingDuration: recording_duration
   } = query;
 
-  let call = await getPracticeCall(
-    { practice_calls_base_id, call_record_id }
+  let lead = await getPracticeLea(
+    { practice_leads_base_id, lead_record_id }
   );
 
   let call_data = {
@@ -153,7 +153,7 @@ let saveCallRecording = async ({ query, params }, res) => {
   console.log('call_data', call_data);
 
   let updated_call = await updatePracticeCall(
-    { practice_calls_base_id, call_data, call }
+    { practice_leads_base_id, call_data, call }
   );
 
   res.sendStatus(200);
@@ -180,7 +180,7 @@ router.post(
 );
 
 router.get(
-  '/record/:practice_calls_base_id/:call_record_id',
+  '/record/:practice_calls_base_id/:lead_record_id',
   saveCallRecording
 );
 
