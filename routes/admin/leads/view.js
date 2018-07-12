@@ -15,16 +15,24 @@ let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
     new Date(lead['Call Date / Time'])
   );
 
+  let follow_up_1_date = localizeDate(
+    new Date(lead['Follow Up #1'])
+  );
+
+  let follow_up_2_date = localizeDate(
+    new Date(lead['Follow Up #2'])
+  );
+
   let lead_obj = {
     ['name']: `${lead['First Name']} ${lead['Last Name']}`,
     ['gender']: lead['Gender'],
     ['phone_number']: lead['Phone Number'],
     ['call_date']: call_date,
-    ['promotion_name']: lead['Promotion Name'],
+    ['promotion_name']: lead['Claimed Promotion Name'],
     ['recording_url']: lead['Recording URL'],
-    ['follow_up_1_date']: lead['Follow Up #1'],
+    ['follow_up_1_date']: follow_up_1_date,
     ['follow_up_1_notes']: lead['Follow Up #1 Notes'],
-    ['follow_up_2_date']: lead['Follow Up #2'],
+    ['follow_up_2_date']: follow_up_2_date,
     ['follow_up_2_notes']: lead['Follow Up #2 Notes'],
   }
 
@@ -45,8 +53,6 @@ let getLeadsList = async ({ query, params }, res) => {
   let found_leads = await getPracticeLeads(
     { practice_leads_base_id, view }
   );
-  
-  console.log('found_leads', found_leads);
   
   let leads = await Promise.all(found_leads.map(
     toLeadData({ practice_promos_base_id })
