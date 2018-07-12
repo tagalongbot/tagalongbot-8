@@ -30,5 +30,3 @@
     </div>
   </div>
 </leads-list>
-
-<script></s
