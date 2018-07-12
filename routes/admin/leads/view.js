@@ -22,6 +22,10 @@ let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
     ['call_date']: call_date,
     ['promotion_name']: lead['Promotion Name'],
     ['recording_url']: lead['Recording URL'],
+    ['follow_up_1_date']: lead['Follow Up #1'],
+    ['follow_up_1_notes']: lead['Follow Up #1 Notes'],
+    ['follow_up_2_date']: lead['Follow Up #2'],
+    ['follow_up_2_notes']: lead['Follow Up #2 Notes'],
   }
 
   return lead_obj;
@@ -33,16 +37,18 @@ let getLeadsList = async ({ query, params }, res) => {
 
   let practice = await getPracticeByUserID(messenger_user_id);
   let practice_name = practice.fields['Practice Name'];
-  let practice_calls_base_id = practice.fields['Practice Calls Base ID'];
+  let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
-  let view = (range === 'week') ? 'Calls This Week' : 'Calls This Month';
+  let view = (range === 'week') ? 'Leads This Week' : 'Leads This Month';
 
-  let leads_this_week = await getPracticeLeads(
-    { practice_calls_base_id, view }
+  let found_leads = await getPracticeLeads(
+    { practice_leads_base_id, view }
   );
-
-  let leads = await Promise.all(leads_this_week.map(
+  
+  console.log('found_leads', found_leads);
+  
+  let leads = await Promise.all(found_leads.map(
     toLeadData({ practice_promos_base_id })
   ));
 

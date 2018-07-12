@@ -74,7 +74,7 @@ router.get(
 
 router.get(
   '/leads/view/:range',
-  handleRoute(getLeadsList, '[Error] Getting Calls List')
+  handleRoute(getLeadsList, '[Error] Getting Leads List')
 );
 
 module.exports = router;
