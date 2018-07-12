@@ -1,7 +1,7 @@
 <leads-list>
   <div class="card pink lighten-1" each="{ lead in opts.leads }">
     <div class="card-content white-text">
-      <span class="card-title">{ lead.name }</span>
+      <span>{ lead.name }</span>
       <span>Lead Name: { lead.name } ({ lead.gender })</span><br>
       <span>Phone Number: { lead.phone_number }</span><br>
       <span>Promotion Claimed: { lead.promotion_name }</span><br>
@@ -15,7 +15,7 @@
       </ul>
     </div>
     <div if="{ lead.call_date || lead.follow_up_1_date || lead.follow_up_2_date }" class="card-content grey lighten-4">
-      <div id="callInfo">
+      <div if="{ lead.call_date }" id="callInfo">
         <span>Call Date: { lead.call_date }</span><br>
         <span if="{ lead.call_duration }">Call Duration: { lead.call_duration }</span><br>
         <a if="{ lead.recording_url }" href="{ lead.recording_url }">Click To Listen To Call Recording</a><br>
