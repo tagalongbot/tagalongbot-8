@@ -15,7 +15,6 @@ let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
     ['name']: `${lead['First Name']} ${lead['Last Name']}`,
     ['gender']: lead['Gender'],
     ['phone_number']: lead['Phone Number'],
-    ['call_date']: call_date,
     ['promotion_name']: lead['Claimed Promotion Name'],
     ['initiated_call']: lead['Call Initiated'],
   }
@@ -23,7 +22,7 @@ let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
   let call_date = localizeDate(
     new Date(lead['Call Date / Time'])
   );
-  
+
   let follow_up_1_date = localizeDate(
     new Date(lead['Follow Up #1'])
   );
@@ -33,8 +32,15 @@ let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
   );
 
   if (call_date) {
-    lead_obj['call_duration'] = lead['Recording Duration'];
-    lead_obj['recording_url'] = lead['Recording URL'];
+    lead_obj['call_date'] = call_date;
+
+    if (lead['Recording Duration']) {
+      lead_obj['call_duration'] = lead['Recording Duration'];
+    }
+
+    if (lead['Recording URL']) {
+      lead_obj['recording_url'] = lead['Recording URL'];
+    }
   }
 
   if (follow_up_1_date) {
