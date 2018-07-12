@@ -15,6 +15,15 @@ let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
     new Date(lead['Call Date / Time'])
   );
 
+  let lead_obj = {
+    ['name']: `${lead['First Name']} ${lead['Last Name']}`,
+    ['gender']: lead['Gender'],
+    ['phone_number']: lead['Phone Number'],
+    ['call_date']: call_date,
+    ['promotion_name']: lead['Claimed Promotion Name'],
+    ['recording_url']: lead['Recording URL'],
+  }
+
   let follow_up_1_date = localizeDate(
     new Date(lead['Follow Up #1'])
   );
@@ -23,17 +32,14 @@ let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
     new Date(lead['Follow Up #2'])
   );
 
-  let lead_obj = {
-    ['name']: `${lead['First Name']} ${lead['Last Name']}`,
-    ['gender']: lead['Gender'],
-    ['phone_number']: lead['Phone Number'],
-    ['call_date']: call_date,
-    ['promotion_name']: lead['Claimed Promotion Name'],
-    ['recording_url']: lead['Recording URL'],
-    ['follow_up_1_date']: follow_up_1_date,
-    ['follow_up_1_notes']: lead['Follow Up #1 Notes'],
-    ['follow_up_2_date']: follow_up_2_date,
-    ['follow_up_2_notes']: lead['Follow Up #2 Notes'],
+  if (follow_up_1_date) {
+    lead_obj['follow_up_1_date'] = follow_up_1_date;
+    lead_obj['follow_up_1_notes'] = lead['Follow Up #1 Notes'];
+  }
+
+  if (follow_up_2_date) {
+    lead_obj['follow_up_2_date'] = follow_up_2_date;
+    lead_obj['follow_up_2_notes'] = lead['Follow Up #2 Notes'];
   }
 
   return lead_obj;
