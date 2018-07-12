@@ -11,19 +11,19 @@ let { getPracticeLeads } = require('../../../libs/data/practice/leads.js');
 let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
   let user_messenger_id = lead['messenger user id'];
 
-  let call_date = localizeDate(
-    new Date(lead['Call Date / Time'])
-  );
-
   let lead_obj = {
     ['name']: `${lead['First Name']} ${lead['Last Name']}`,
     ['gender']: lead['Gender'],
     ['phone_number']: lead['Phone Number'],
     ['call_date']: call_date,
     ['promotion_name']: lead['Claimed Promotion Name'],
-    ['recording_url']: lead['Recording URL'],
+    ['initiated_call']: lead['Call Initiated'],
   }
 
+  let call_date = localizeDate(
+    new Date(lead['Call Date / Time'])
+  );
+  
   let follow_up_1_date = localizeDate(
     new Date(lead['Follow Up #1'])
   );
@@ -31,6 +31,11 @@ let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
   let follow_up_2_date = localizeDate(
     new Date(lead['Follow Up #2'])
   );
+
+  if (call_date) {
+    lead_obj['call_duration'] = lead['Recording Duration'];
+    lead_obj['recording_url'] = lead['Recording URL'];
+  }
 
   if (follow_up_1_date) {
     lead_obj['follow_up_1_date'] = follow_up_1_date;
