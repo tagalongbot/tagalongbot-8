@@ -10,10 +10,18 @@ let getPromoPractice = require('../routes/promos/practice.js');
 let claimPromotion = require('../routes/promos/claim.js');
 let viewClaimedPromos = require('../routes/promos/view/claimed.js');
 
+// Broadcasts
+let findPromosOffLastSearch = require('../routes/promos/broadcasts.js');
+
 router.get(
   '/search/:search_type',
   cache.withTtl('15 minutes'),
   handleRoute(getPromos, '[Error] Searching Promos')
+);
+
+router.get(
+  '/search/last/:search_type',
+  handleRoute(findPromosOffLastSearch, '[Error] Searching Promos Off Last Search')
 );
 
 router.get(

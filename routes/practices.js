@@ -12,6 +12,7 @@ let practiceClaimed = require('../routes/practices/claimed.js');
 let listPractice = require('../routes/practices/list.js');
 let callPractice = require('../routes/practices/call.js');
 
+
 router.get(
   '/search/:search_type',
   handleRoute(getPractices, '[Error] Searching Practices')
