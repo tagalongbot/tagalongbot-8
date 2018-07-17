@@ -31,7 +31,7 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   );
 
   let btn1 = createBtn(`View Service Details|json_plugin_url|${view_service_details_btn_url}`);
-  let btn2 = createBtn(`Find Providers|json_plugin_url|${find_practices_btn_url}`);
+  let btn2 = createBtn(`Find Practices|json_plugin_url|${find_practices_btn_url}`);
   let btn3 = createBtn(`Find Promos|json_plugin_url|${find_promos_btn_url}`);
 
   let buttons = [btn1, btn2, btn3];

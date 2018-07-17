@@ -18,7 +18,7 @@ let searchServicePractices = async ({ query }, res) => {
   let service_name = service.fields['Name'];
 
   let set_attributes = { service_id, service_name };
-  let redirect_to_blocks = ['Search Service Providers'];
+  let redirect_to_blocks = ['Search Service Practices'];
   res.send({ set_attributes, redirect_to_blocks });
 }
 
@@ -32,13 +32,15 @@ let getServicePractices = async ({ query }, res) => {
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
-  let practices = await searchPractices({ state_name, city_name });
+  let practices = await searchPractices(
+    { state_name, city_name }
+  );
 
   let practicesByService = (practices[0]) ? filterPracticesByService(service_name, practices) : [];
 
   if (!practicesByService[0]) {
     let set_attributes = { service_name }
-    let redirect_to_blocks = ['No Service Providers Found'];
+    let redirect_to_blocks = ['No Service Practices Found'];
     res.send({ set_attributes, redirect_to_blocks });
     return;
   }
@@ -58,12 +60,12 @@ let getServicePractices = async ({ query }, res) => {
 
 router.get(
   '/', 
-  handleRoute(searchServicePractices, '[Error] Searching Service Providers')
+  handleRoute(searchServicePractices, '[Error] Searching Service Practices')
 );
 
 router.get(
   '/:search_type', 
-  handleRoute(getServicePractices, '[Error] Searching Service Providers')
+  handleRoute(getServicePractices, '[Error] Searching Service Practices')
 );
 
 module.exports = router;

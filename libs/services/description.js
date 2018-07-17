@@ -16,7 +16,7 @@ let createFindPracticesMsg = ({ service, service_id, messenger_user_id, first_na
 
   let txtMsg = createButtonMessage(
     service.fields['Long Description'].slice(0, 640),
-    `Find Providers|json_plugin_url|${find_practices_btn_url}`,
+    `Find Practices|json_plugin_url|${find_practices_btn_url}`,
     `Find Promos|json_plugin_url|${find_promos_btn_url}`,
   );
 

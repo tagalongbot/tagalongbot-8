@@ -8,7 +8,6 @@ let errorHandler = (block_name, res) => async (error) => {
 }
 
 let handleRoute = (routeFn, block_name) => (req, res) => {
-  console.log('req.url', req.url);
   routeFn(req, res)
 
   .catch(
