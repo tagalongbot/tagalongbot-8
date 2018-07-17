@@ -35,7 +35,7 @@ let updateUser = async (userData, user) => {
   return updatedUser;
 }
 
-let getUserPromos = async ({ user_id, view = 'Main View' }) => {
+let getUserPromos = async ({ user_id, view = 'Active Promos' }) => {
   let user = await findUser(user_id);
 
   let claimed_promos_data = convertLongTextToArray(
