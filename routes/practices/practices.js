@@ -20,7 +20,9 @@ let getPractices = async ({ query }, res) => {
 	let user = await getUserByMessengerID(messenger_user_id);
 	let new_updated_user = await createOrUpdateUser(user, query);
 
-  let practices = await searchPractices({ state_name, city_name, zip_code });
+  let practices = await searchPractices(
+    { state_name, city_name, zip_code }
+  );
 
   if (!practices[0]) {
     let redirect_to_blocks = ['No Practices Found'];

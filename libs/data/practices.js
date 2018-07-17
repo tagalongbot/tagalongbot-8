@@ -1,5 +1,7 @@
 let { PRACTICE_DATABASE_BASE_ID } = process.env;
 
+let { getStateByInitials } = require('../../libs/data/us-cities.js');
+
 let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../libs/data.js');
 
 let getPracticeTable = getTable('Practices');
@@ -30,6 +32,11 @@ let updatePractice = async (updateData, practice) => {
 }
 
 let getPracticesByState = async ({ state_name, active }) => {
+  if (state_name.length === 2) {
+    // Just broke immutability rule
+    state_name = getStateByInitials(state_name);
+  }
+
   let filterByFormula = `{All Uppercase Practice State} = '${state_name.trim().toUpperCase()}'`;
 
   if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
