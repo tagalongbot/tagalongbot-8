@@ -69,7 +69,7 @@ let createLastGalleryElement = ({ service_type, index }) => {
   
   let btn1 = createBtn(`Load More Services|json_plugin_url|${load_more_services_url}`);
   let btn2 = createBtn(`Main Menu|show_block|Discover Main Menu`);
-  let btn3 = createBtn(`About Bevl Beauty|show_block|About Bevl Beauty`);
+  let btn3 = createBtn(`About Bevl Beauty|show_block|AboutBB`);
 
   let buttons = [btn1, btn2, btn3];
 

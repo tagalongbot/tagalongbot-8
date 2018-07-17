@@ -158,7 +158,7 @@ let createLastGalleryElement = () => {
 
   let btn1 = createBtn(`List My Practice|show_block|Ask For User Info (List Practice)`);
   let btn2 = createBtn(`Main Menu|show_block|Discover Main Menu`);
-  let btn3 = createBtn(`About Bevl Beauty|show_block|About Bevl Beauty`);
+  let btn3 = createBtn(`About Bevl Beauty|show_block|AboutBB`);
 
   let buttons = [btn1, btn2, btn3];
 
