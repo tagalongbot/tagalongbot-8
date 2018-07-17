@@ -21,7 +21,7 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   );
 
   let find_practices_btn_url = createURL(
-    `${BASEURL}/services/providers`,
+    `${BASEURL}/services/practices`,
     { service_id, messenger_user_id, first_name, last_name, gender }
   );
   
