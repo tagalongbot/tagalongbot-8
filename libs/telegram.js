@@ -19,22 +19,16 @@ bot.start();
 
 bot.on('/test1', (msg) => {
    let replyMarkup = bot.keyboard([
-        ['/buttons', '/test1'],
-        ['/start', '/hide']
+        ['1', '2'],
     ], {resize: true});
 
-    return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
+    return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup, ask: 'test'});
 });
 
-bot.on('/buttons', msg => {
-    let replyMarkup = bot.keyboard([
-        [bot.button('/test1', 'Your contact'), bot.button('location', 'Your location')],
-        ['/back', '/hide']
-    ], {resize: true});
-
-    return bot.sendMessage(msg.from.id, 'Button example.', {replyMarkup});
-
-});
+bot.on('ask.test', (msg) => {
+  console.log('msg', msg.text);
+  return bot.sendMessage(msg.from.id, 'Working');
+})
 
 // Exposed Functions
 let sendErrorMsg = async (error_msg) => {
