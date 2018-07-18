@@ -3,7 +3,7 @@ dependencies:
   apiai: 4.0.3
   authy-client: 1.1.1
   body-parser: 1.18.3
-  bottleneck: 2.5.1
+  bottleneck: 2.6.0
   expeditious: 1.0.1
   expeditious-engine-redis: 0.1.1
   express: 4.16.3
@@ -14,6 +14,7 @@ dependencies:
   request: 2.87.0
   riot: 3.11.1
   swig: 1.4.2
+  telebot: 1.2.6
   twilio: 4.6.0
 packages:
   /@uphold/request-logger/2.0.0/request@2.87.0:
@@ -298,10 +299,10 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-Z5BTk6ZRe4tXXQlkqftmsAUANpXmuwlsF5Oov8ThoMbQRzdGTA1ngYRW160GexgOgjsFOKJz0LYhoNi+2AMBUw==
-  /bottleneck/2.5.1:
+  /bottleneck/2.6.0:
     dev: false
     resolution:
-      integrity: sha512-KHP545mlqYBiLgjmXQRyfxdMgvPndxRTFtwFOETrmIvYW5y7foftaMHt6UGR22x1UEBNgJsVxwViUbeDd1K6VQ==
+      integrity: sha512-3fgu36UohvqOzv4aYPFyUR39LckOcA5cM4Yxija/V9Effd7a/22tFtZga89t3rSNtqEqo0bMT8IhCFztD7d/8A==
   /brace-expansion/1.1.11:
     dependencies:
       balanced-match: 1.0.0
@@ -2443,6 +2444,14 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-QIXKBFM2kQS11IPihBs5t64aq6U=
+  /telebot/1.2.6:
+    dependencies:
+      request: 2.87.0
+    dev: false
+    engines:
+      node: '>= 6.0.0'
+    resolution:
+      integrity: sha512-ebrfQCymJEklFvrxpBm1sQGBexsZfsIc6T+u1fWacGeZu4SBKFyYC7RBnGk6SgNZwB4UT4s0d3OxTAbV9c0CHQ==
   /timers-ext/0.1.5:
     dependencies:
       es5-ext: 0.10.45
@@ -2747,7 +2756,7 @@ specifiers:
   apiai: ^4.0.3
   authy-client: ^1.1.1
   body-parser: ^1.18.3
-  bottleneck: ^2.5.1
+  bottleneck: ^2.6.0
   expeditious: ^1.0.1
   expeditious-engine-redis: ^0.1.1
   express: ^4.16.3
@@ -2758,4 +2767,5 @@ specifiers:
   request: ^2.87.0
   riot: ^3.10.3
   swig: ^1.4.2
+  telebot: ^1.2.6
   twilio: ^4.6.0

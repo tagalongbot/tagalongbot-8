@@ -12,7 +12,7 @@
     "node-fetch": "^2.1.2",
     "request": "^2.87.0",
     "authy-client": "^1.1.1",
-    "bottleneck": "^2.5.1",
+    "bottleneck": "^2.6.0",
     "expeditious": "^1.0.1",
     "express-expeditious": "^3.3.0",
     "expeditious-engine-redis": "^0.1.1",
@@ -21,7 +21,8 @@
     "twilio": "^4.6.0",
     "riot": "^3.10.3",
     "swig": "^1.4.2",
-    "body-parser": "^1.18.3"
+    "body-parser": "^1.18.3",
+    "telebot": "^1.2.6"
   },
   "engines": {
     "node": "10.x"
