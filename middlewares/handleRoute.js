@@ -5,7 +5,7 @@ let { logToFile } = require('../libs/helpers.js');
 let errorHandler = (block_name, res) => async (error) => {
   console.log(error);
   logToFile(`${block_name}`, 'errors.txt');
-  sendErrorMsg(block_name);
+  await sendErrorMsg(block_name);
 
   let redirect_to_blocks = [block_name];
   res.send({ redirect_to_blocks });
