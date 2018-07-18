@@ -3,21 +3,21 @@ let { TELEGRAM_BOT_API_KEY } = process.env;
 let TeleBot = require('telebot');
 let bot = new TeleBot(TELEGRAM_BOT_API_KEY);
 
-bot.start();
+let user_ids = ['320152621'];
 
-bot.on('/bot-error', (msg) => {
-  console.log('msg', msg);
+bot.on('/start', (msg) => {
   return msg.reply.text(
-    `Testing`,
-    { asReply: true }
+    `Please Give Edwin Your User ID: ${msg.from.id}`
   );
 });
 
-let sendErrorMsg = () => {
-  bot.event(
-    '/bot-error',
-    { x: 1 }
-  );
+bot.start();
+
+// Exposed Functions
+let sendErrorMsg = (error_msg) => {
+  for (let user_id of user_ids) {
+    bot.sendMessage(user_id, error_msg);
+  }
 }
 
 module.exports = {
