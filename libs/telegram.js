@@ -5,16 +5,17 @@ let bot = new TeleBot(TELEGRAM_BOT_API_KEY);
 
 bot.start();
 
-bot.on('bot-error', (msg) => {
-  console.log(arguments);
+bot.on('/bot-error', (msg) => {
+  console.log('msg', msg);
   return msg.reply.text(
-    `Testing`
+    `Testing`,
+    { asReply: true }
   );
 });
 
 let sendErrorMsg = () => {
   bot.event(
-    'bot-error',
+    '/bot-error',
     { x: 1 }
   );
 }
