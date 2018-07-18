@@ -9,60 +9,26 @@ let bot = new TeleBot({
 
 let user_ids = ['320152621'];
 
-var lastMessage;
-
-bot.on('/start', msg => {
-
-    const markup = updateKeyboard('apples');
-
-    return bot.sendMessage(
-        msg.from.id, 'This is a editMessageReplyMarkup example. So, apples or oranges?', {markup}
-    ).then(re => {
-        // Start updating message
-        lastMessage = [msg.from.id, re.result.message_id];
-    });
-
-});
-
-// On button callback
-bot.on('callbackQuery', msg => {
-
-    // Send confirm
-    bot.answerCallbackQuery(msg.id);
-
-    if (!lastMessage) return bot.sendMessage(msg.from.id, 'Type /start');
-
-    const data = msg.data;
-    const [chatId, messageId] = lastMessage;
-    const replyMarkup = updateKeyboard(data);
-
-    // Edit message markup
-    return bot.editMessageReplyMarkup({chatId, messageId}, {replyMarkup});
-
+bot.on('/start', (msg) => {
+  return msg.reply.text(
+    `Please Give Edwin Your User ID: ${msg.from.id}`
+  );
 });
 
 bot.start();
 
-// Returns keyboard markup
-function updateKeyboard(fruit) {
+bot.on('/test1', (msg) => {
+   let replyMarkup = bot.keyboard([
+        ['1', '2'],
+    ], {resize: true});
 
-    let apples = 'apples';
-    let oranges = 'oranges';
+    return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup, ask: 'test'});
+});
 
-    if (fruit == 'apples') {
-        apples = `==> ${ apples } <==`;
-    } else {
-        oranges = `==> ${ oranges } <==`;
-    }
-
-    return bot.inlineKeyboard([
-        [
-            bot.inlineButton(apples, {callback: 'apples'}),
-            bot.inlineButton(oranges, {callback: 'oranges'})
-        ]
-    ]);
-
-}
+bot.on('ask.test', (msg) => {
+  console.log('msg', msg.text);
+  return bot.sendMessage(msg.from.id, 'Working');
+})
 
 // Exposed Functions
 let sendErrorMsg = async (error_msg) => {
