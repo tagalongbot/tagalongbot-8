@@ -8,6 +8,8 @@ let updateQueryParameter = require('./middlewares/updateQueryParameter.js');
 
 // Routers
 let AIRoute = require('./routes/ai.js');
+let AITraining = require('./routes/ai-training.js');
+
 let adminRouter = require('./routes/admin.js');
 let practicesRouter = require('./routes/practices.js');
 let promosRouter = require('./routes/promos.js');
@@ -24,7 +26,10 @@ app.use(bodyParser.json());
 
 app.use(updateQueryParameter);
 
+// AI Training
 app.get('/ai', AIRoute);
+app.get('/ai-training', AITraining);
+
 app.use('/admin', adminRouter);
 app.use('/practices', practicesRouter);
 app.use('/promos', promosRouter);
