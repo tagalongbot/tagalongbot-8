@@ -13,15 +13,51 @@ bot.on('/start', (msg) => {
 
 bot.start();
 
+bot.on('inlineQuery', msg => {
+    let query = msg.query;
+    console.log(`inline query: ${ query }`);
+
+    // Create a new answer list object
+    const answers = bot.answerList(msg.id, {cacheTime: 60});
+
+    // Article
+    answers.addArticle({
+        id: 'query',
+        title: 'Inline Title',
+        description: `Your query: ${ query }`,
+        message_text: 'Click!'
+    });
+
+    // Photo
+    answers.addPhoto({
+        id: 'photo',
+        caption: 'Telegram logo.',
+        photo_url: 'https://telegram.org/img/t_logo.png',
+        thumb_url: 'https://telegram.org/img/t_logo.png'
+    });
+
+    // Gif
+    answers.addGif({
+        id: 'gif',
+        gif_url: 'https://telegram.org/img/tl_card_wecandoit.gif',
+        thumb_url: 'https://telegram.org/img/tl_card_wecandoit.gif'
+    });
+
+    // Send answers
+    return bot.answerQuery(answers);
+
+});
+
 // Exposed Functions
 let sendErrorMsg = async (error_msg) => {
   for (let user_id of user_ids) {
     let msg = await bot.sendMessage(user_id, error_msg);
     console.log('msg', msg);
+    createAnswerList(msg, 'Hi')
   }
 }
 
-let createAnswerList = () => {
+let createAnswerList = (msg, query) => {
  // Create a new answer list object
     const answers = bot.answerList(msg.id, {cacheTime: 60});
 
@@ -49,7 +85,8 @@ let createAnswerList = () => {
     });
 
     // Send answers
-    return bot.answerQuery(answers);}
+    return bot.answerQuery(answers);
+}
 
 module.exports = {
   sendErrorMsg,
