@@ -13,38 +13,23 @@ bot.on('/start', (msg) => {
 
 bot.start();
 
-bot.on('inlineQuery', msg => {
-    let query = msg.query;
-    console.log(`inline query: ${ query }`);
+bot.on('/test1', (msg) => {
+   let replyMarkup = bot.keyboard([
+        ['/buttons', '/inlineKeyboard', '/test2'],
+        ['/start', '/hide']
+    ], {resize: true});
 
-    // Create a new answer list object
-    const answers = bot.answerList(msg.id, {cacheTime: 60});
+    return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
+});
 
-    // Article
-    answers.addArticle({
-        id: 'query',
-        title: 'Inline Title',
-        description: `Your query: ${ query }`,
-        message_text: 'Click!'
-    });
+bot.on('/buttons', msg => {
 
-    // Photo
-    answers.addPhoto({
-        id: 'photo',
-        caption: 'Telegram logo.',
-        photo_url: 'https://telegram.org/img/t_logo.png',
-        thumb_url: 'https://telegram.org/img/t_logo.png'
-    });
+    let replyMarkup = bot.keyboard([
+        [bot.button('contact', 'Your contact'), bot.button('location', 'Your location')],
+        ['/back', '/hide']
+    ], {resize: true});
 
-    // Gif
-    answers.addGif({
-        id: 'gif',
-        gif_url: 'https://telegram.org/img/tl_card_wecandoit.gif',
-        thumb_url: 'https://telegram.org/img/tl_card_wecandoit.gif'
-    });
-
-    // Send answers
-    return bot.answerQuery(answers);
+    return bot.sendMessage(msg.from.id, 'Button example.', {replyMarkup});
 
 });
 
@@ -55,37 +40,6 @@ let sendErrorMsg = async (error_msg) => {
     console.log('msg', msg);
     createAnswerList(msg, 'Hi')
   }
-}
-
-let createAnswerList = (msg, query) => {
- // Create a new answer list object
-    const answers = bot.answerList(msg.id, {cacheTime: 60});
-
-    // Article
-    answers.addArticle({
-        id: 'query',
-        title: 'Inline Title',
-        description: `Your query: ${ query }`,
-        message_text: 'Click!'
-    });
-
-    // Photo
-    answers.addPhoto({
-        id: 'photo',
-        caption: 'Telegram logo.',
-        photo_url: 'https://telegram.org/img/t_logo.png',
-        thumb_url: 'https://telegram.org/img/t_logo.png'
-    });
-
-    // Gif
-    answers.addGif({
-        id: 'gif',
-        gif_url: 'https://telegram.org/img/tl_card_wecandoit.gif',
-        thumb_url: 'https://telegram.org/img/tl_card_wecandoit.gif'
-    });
-
-    // Send answers
-    return bot.answerQuery(answers);
 }
 
 module.exports = {
