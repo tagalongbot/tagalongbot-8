@@ -28,7 +28,7 @@ app.use(updateQueryParameter);
 
 // AI Training
 app.get('/ai', AIRoute);
-app.get('/ai-training', AITraining);
+app.post('/ai-training', AITraining);
 
 app.use('/admin', adminRouter);
 app.use('/practices', practicesRouter);
