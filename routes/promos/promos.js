@@ -1,10 +1,10 @@
 let { createGallery } = require('../../libs/bots.js');
 let { shuffleArray, flattenArray } = require('../../libs/helpers.js');
 
-let { searchPractices, filterPracticesByService } = require('../../libs/data/practices.js');
+let { searchPractices } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 
-let { filterPromosByService, toGalleryElement } = require('../../libs/promos/promos.js');
+let { toGalleryElement } = require('../../libs/promos/promos.js');
 
 let getPromos = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;

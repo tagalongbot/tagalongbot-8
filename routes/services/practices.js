@@ -24,16 +24,16 @@ let searchServicePractices = async ({ query }, res) => {
 
 let getServicePractices = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_id } = query;
+
   let {
-    search_service_practices_state: state_name, 
-    search_service_practices_city: city_name 
+    search_service_practices_zip_code: zip_code 
   } = query;
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
   let practices = await searchPractices(
-    { state_name, city_name }
+    { zip_code }
   );
 
   let practicesByService = (practices[0]) ? filterPracticesByService(service_name, practices) : [];
@@ -64,7 +64,7 @@ router.get(
 );
 
 router.get(
-  '/:search_type', 
+  '/zip_code',
   handleRoute(getServicePractices, '[Error] Searching Service Practices')
 );
 
