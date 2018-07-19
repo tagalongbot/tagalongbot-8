@@ -42,6 +42,7 @@ let getPracticesByZipCode = async ({ zip_code, active }) => {
 
 let searchPractices = async ({ zip_code }) => {
   let practices = null;
+  let zip_codes_index = 0;
   let last_nearby_zip_code = null;
 
   let nearby_zip_codes = zipcodes.radius(
@@ -49,21 +50,16 @@ let searchPractices = async ({ zip_code }) => {
     Number(SEARCH_ZIP_CODE_RADIUS)
   );
 
-  console.log('nearby_zip_codes', nearby_zip_codes.slice(-10), nearby_zip_codes.length);
+  console.log('nearby_zip_codes', nearby_zip_codes.length, nearby_zip_codes.slice(0, 10));
 
   do {
     practices = await getPracticesByZipCode({ zip_code, active: true });
 
     if (!practices[0]) {
-      let nearby_zip_codes = zipcodes.radius(
-        zip_code,
-        Number(SEARCH_ZIP_CODE_RADIUS)
-      );
-
-      last_nearby_zip_code = nearby_zip_codes[0];
-      if (last_nearby_zip_code === zip_code) break;
+      last_nearby_zip_code = nearby_zip_codes[zip_codes_index];
       console.log('last_nearby_zip_code', last_nearby_zip_code);
       zip_code = last_nearby_zip_code;
+      zip_codes_index = zip_codes_index + 1;
     }
   } while(!practices[0]);
 
