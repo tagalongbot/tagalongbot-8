@@ -32,7 +32,7 @@ let updatePractice = async (updateData, practice) => {
 }
 
 let getPracticesByZipCode = async ({ zip_code, active }) => {
-  let filterByFormula = `{Practice Zip Code} = '${zip_code.trim().toUpperCase()}'`;
+  let filterByFormula = `{Practice Zip Code} = '${zip_code}'`;
 
   if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
 	let practices = await getPractices({ filterByFormula });
@@ -41,24 +41,20 @@ let getPracticesByZipCode = async ({ zip_code, active }) => {
 }
 
 let searchPractices = async ({ zip_code }) => {
-  let practices = null;
+  let practices = [];
   let zip_codes_index = 0;
-  let last_nearby_zip_code = null;
 
   let nearby_zip_codes = zipcodes.radius(
     zip_code,
     Number(SEARCH_ZIP_CODE_RADIUS)
-  );
-
-  console.log('nearby_zip_codes', nearby_zip_codes.length, nearby_zip_codes.slice(0, 10));
+  ).slice(0, 15);
 
   do {
     practices = await getPracticesByZipCode({ zip_code, active: true });
 
     if (!practices[0]) {
-      last_nearby_zip_code = nearby_zip_codes[zip_codes_index];
-      console.log('last_nearby_zip_code', last_nearby_zip_code);
-      zip_code = last_nearby_zip_code;
+      zip_code = nearby_zip_codes[zip_codes_index];
+      if (!zip_code) break;
       zip_codes_index = zip_codes_index + 1;
     }
   } while(!practices[0]);
