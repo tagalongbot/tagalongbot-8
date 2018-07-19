@@ -22,14 +22,16 @@ let searchServicePromos = async ({ query }, res) => {
   res.send({ set_attributes, redirect_to_blocks });
 }
 
-let getServicePromos = async ({ query }, res) => {
+let getServicePromos = async ({ query, params }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_id } = query;
-  let { search_service_promos_state: state_name, search_service_promos_city: city_name } = query;
+  let { zip_code } = params;
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
-  let practices = await searchPractices({ state_name, city_name });
+  let practices = await searchPractices(
+    { zip_code }
+  );
 
   let practices_with_service = (practices[0]) ? filterPracticesByService(service_name, practices) : [];
 
@@ -55,7 +57,7 @@ let getServicePromos = async ({ query }, res) => {
 
   let randomPromos = shuffleArray(promos).slice(0, 10);
 
-  let txtMsg = { text: `Here are some promos I found in ${state_name} for ${service_name}` };
+  let txtMsg = { text: `Here are some promos I found near ${zip_code} for ${service_name}` };
   let gallery = createGallery(randomPromos, 'square');
 
   let messages = [txtMsg, gallery];
@@ -69,7 +71,7 @@ router.get(
 );
 
 router.get(
-  '/:search_type', 
+  '/:zip_code', 
   handleRoute(getServicePromos, '[Error] Searching Service Promos')
 );
 

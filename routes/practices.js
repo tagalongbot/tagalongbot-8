@@ -14,7 +14,7 @@ let callPractice = require('../routes/practices/call.js');
 
 
 router.get(
-  '/search/:search_type',
+  '/search',
   handleRoute(getPractices, '[Error] Searching Practices')
 );
 

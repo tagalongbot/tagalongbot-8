@@ -22,12 +22,10 @@ let searchServicePractices = async ({ query }, res) => {
   res.send({ set_attributes, redirect_to_blocks });
 }
 
-let getServicePractices = async ({ query }, res) => {
+let getServicePractices = async ({ query, params }, res) => {
   let { messenger_user_id, first_name, last_name, gender, service_id } = query;
 
-  let {
-    search_service_practices_zip_code: zip_code 
-  } = query;
+  let { zip_code } = params;
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
