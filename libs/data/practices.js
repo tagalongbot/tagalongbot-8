@@ -59,6 +59,16 @@ let searchPractices = async ({ zip_code }) => {
     }
   } while(!practices[0]);
 
+  while (practices.length < 3) {
+    console.log('zip_codes_index', zip_codes_index);
+    if (zip_codes_index === 0) zip_codes_index = zip_codes_index + 1;
+    zip_code = nearby_zip_codes[zip_codes_index];
+    if (!zip_code) break;
+    let more_practices = await getPracticesByZipCode({ zip_code, active: true });
+    zip_codes_index = zip_codes_index + 1;
+    practices = [...practices, ...more_practices];
+  }
+
   return practices;
 }
 
