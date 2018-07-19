@@ -44,6 +44,13 @@ let searchPractices = async ({ zip_code }) => {
   let practices = null;
   let last_nearby_zip_code = null;
 
+  let nearby_zip_codes = zipcodes.radius(
+    zip_code,
+    Number(SEARCH_ZIP_CODE_RADIUS)
+  );
+
+  console.log('nearby_zip_codes', nearby_zip_codes.slice(-10), nearby_zip_codes.length);
+
   do {
     practices = await getPracticesByZipCode({ zip_code, active: true });
 
