@@ -6,10 +6,10 @@ let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 
 let { toGalleryElement } = require('../../libs/promos/promos.js');
 
-let getPromos = async ({ query }, res) => {
+let getPromos = async ({ query, params }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
 
-  let { search_promos_zip_code: zip_code } = query;
+  let { zip_code } = params;
 
   let practices = await searchPractices(
     { zip_code }

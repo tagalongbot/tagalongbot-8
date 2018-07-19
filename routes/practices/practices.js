@@ -7,10 +7,9 @@ let { getUserByMessengerID } = require('../../libs/data/users.js');
 let { searchPractices, sortPractices } = require('../../libs/data/practices.js');
 let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
-let getPractices = async ({ query }, res) => {
+let getPractices = async ({ query, params }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
-
-  let { search_practices_zip_code: zip_code } = query;
+  let { zip_code } = params;
 
 	let user = await getUserByMessengerID(messenger_user_id);
 	let new_updated_user = await createOrUpdateUser(user, query);

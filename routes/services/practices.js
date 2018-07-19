@@ -62,7 +62,7 @@ router.get(
 );
 
 router.get(
-  '/zip_code',
+  '/:zip_code',
   handleRoute(getServicePractices, '[Error] Searching Service Practices')
 );
 

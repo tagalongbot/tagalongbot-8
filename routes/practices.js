@@ -14,7 +14,7 @@ let callPractice = require('../routes/practices/call.js');
 
 
 router.get(
-  '/search',
+  '/search/:zip_code',
   handleRoute(getPractices, '[Error] Searching Practices')
 );
 
@@ -25,7 +25,7 @@ router.get(
 );
 
 router.get(
-  '/promos',
+  '/promos/:zip_code',
   handleRoute(getPracticePromos, '[Error] Viewing Practice Promos')
 );
 
