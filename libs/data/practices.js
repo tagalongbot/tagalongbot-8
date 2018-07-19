@@ -31,29 +31,6 @@ let updatePractice = async (updateData, practice) => {
   return updatedPractice;
 }
 
-let getPracticesByState = async ({ state_name, active }) => {
-  if (state_name.length === 2) {
-    // Just broke immutability rule
-    state_name = getStateByInitials(state_name);
-  }
-
-  let filterByFormula = `{All Uppercase Practice State} = '${state_name.trim().toUpperCase()}'`;
-
-  if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
-	let practices = await getPractices({ filterByFormula });
-
-	return practices;
-}
-
-let getPracticesByCity = async ({ city_name, active }) => {
-  let filterByFormula = `{All Uppercase Practice City} = '${city_name.trim().toUpperCase()}'`;
-
-  if (active) filterByFormula = `AND(${filterByFormula}, {Active?})`;
-	let practices = await getPractices({ filterByFormula });
-
-	return practices;
-}
-
 let getPracticesByZipCode = async ({ zip_code, active }) => {
   let filterByFormula = `{Practice Zip Code} = '${zip_code.trim().toUpperCase()}'`;
 
@@ -63,17 +40,7 @@ let getPracticesByZipCode = async ({ zip_code, active }) => {
 	return practices;
 }
 
-let searchPractices = async ({ state_name, city_name, zip_code }) => {
-  if (state_name) {
-    let practices = await getPracticesByState({ state_name, active: true });
-    return practices;
-  }
-
-  if (city_name) {
-    let practices = await getPracticesByCity({ city_name, active: true });
-    return practices;
-  }
-
+let searchPractices = async ({ zip_code }) => {
   if (zip_code) {
     let practices = await getPracticesByZipCode({ zip_code, active: true });
     return practices;
@@ -103,8 +70,6 @@ module.exports = {
   getPracticeByUserID,
   getPracticeByID,
   updatePractice,
-  getPracticesByState,
-  getPracticesByCity,
   getPracticesByZipCode,
   searchPractices,
   filterPracticesByService,
