@@ -1,7 +1,5 @@
 let { PRACTICE_DATABASE_BASE_ID } = process.env;
 
-let { getStateByInitials } = require('../../libs/data/us-cities.js');
-
 let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../libs/data.js');
 
 let getPracticeTable = getTable('Practices');

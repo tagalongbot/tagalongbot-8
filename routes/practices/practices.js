@@ -10,18 +10,13 @@ let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require
 let getPractices = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
 
-  let { 
-    search_practices_state: state_name,
-    search_practices_city: city_name,
-    search_practices_zip_code: zip_code,
-    search_practice_code
-  } = query;
+  let { search_practices_zip_code: zip_code } = query;
 
 	let user = await getUserByMessengerID(messenger_user_id);
 	let new_updated_user = await createOrUpdateUser(user, query);
 
   let practices = await searchPractices(
-    { state_name, city_name, zip_code }
+    { zip_code }
   );
 
   if (!practices[0]) {
