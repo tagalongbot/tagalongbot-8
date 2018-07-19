@@ -42,14 +42,23 @@ let getPracticesByZipCode = async ({ zip_code, active }) => {
 
 let searchPractices = async ({ zip_code }) => {
   let practices = null;
+  let last_nearby_zip_code = null;
 
   do {
-    zip_code = zipcodes.radius(
-      zip_code,
-      Number(SEARCH_ZIP_CODE_RADIUS)
-    );
     practices = await getPracticesByZipCode({ zip_code, active: true });
-  } while(!practices[0]);  
+
+    if (!practices[0]) {
+      let nearby_zip_codes = zipcodes.radius(
+        zip_code,
+        Number(SEARCH_ZIP_CODE_RADIUS)
+      );
+
+      last_nearby_zip_code = nearby_zip_codes[0];
+      if (last_nearby_zip_code === zip_code) break;
+      console.log('last_nearby_zip_code', last_nearby_zip_code);
+      zip_code = last_nearby_zip_code;
+    }
+  } while(!practices[0]);
 
   return practices;
 }
