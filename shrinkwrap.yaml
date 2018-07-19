@@ -16,6 +16,7 @@ dependencies:
   swig: 1.4.2
   telebot: 1.2.6
   twilio: 4.6.0
+  zipcodes: 6.0.1
 packages:
   /@uphold/request-logger/2.0.0/request@2.87.0:
     dependencies:
@@ -2748,6 +2749,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-2K/49mXpTDS9JZvevRv68N3TU2E=
+  /zipcodes/6.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-h8RGmanizGCOkChYNr8c3Zqlr6U5FzE5QfXO7a4oVuYw6VxbbbdQX9sILsSlZVUihho+rOO5m+XLOjS8CpGubg==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 8
 shrinkwrapVersion: 3
@@ -2769,3 +2774,4 @@ specifiers:
   swig: ^1.4.2
   telebot: ^1.2.6
   twilio: ^4.6.0
+  zipcodes: ^6.0.1

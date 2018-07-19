@@ -1,4 +1,6 @@
-let { PRACTICE_DATABASE_BASE_ID } = process.env;
+let { PRACTICE_DATABASE_BASE_ID, SEARCH_ZIP_CODE_RADIUS } = process.env;
+
+let zipcodes = require('zipcodes');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../libs/data.js');
 
@@ -39,10 +41,17 @@ let getPracticesByZipCode = async ({ zip_code, active }) => {
 }
 
 let searchPractices = async ({ zip_code }) => {
-  if (zip_code) {
-    let practices = await getPracticesByZipCode({ zip_code, active: true });
-    return practices;
-  }
+  let practices = null;
+
+  do {
+    zip_code = zipcodes.radius(
+      zip_code,
+      Number(SEARCH_ZIP_CODE_RADIUS)
+    );
+    practices = await getPracticesByZipCode({ zip_code, active: true });
+  } while(!practices[0]);  
+
+  return practices;
 }
 
 let filterPracticesByService = (service_name, practices) => {
