@@ -1,5 +1,7 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
 
+let { formatPhoneNumber } = require('../../libs/helpers.js');
+
 let { getAllPractices, updatePractice } = require('../../libs/data/practices.js');
 
 let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
@@ -38,17 +40,18 @@ let verifyVerificationCode = async ({ query }, res) => {
 let getAdminAccess = async ({ query }, res) => {
   let { messenger_user_id, user_phone_number } = query;
 
-  let filterByFormula = `{Main Provider Phone Number} = '${user_phone_number}'`;
+  let filterByFormula = `{Main Provider Phone Number} = '${formatPhoneNumber(user_phone_number)}'`;
 
   let [practice] = await getAllPractices({ filterByFormula });
   
   let update_data = {
     ['Provider Messenger ID']: messenger_user_id
   }
-  
+
   let updated_practice = await updatePractice(update_data, practice);
 
-  res.sendStatus(200);
+  let redirect_to_blocks = ['Admin Access Granted'];
+  res.send({ redirect_to_blocks });
 }
 
 router.get(
