@@ -36,84 +36,19 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let getAdminAccess = async ({ query }, res) => {
-  let { practice_id, promo_id, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = query;
+  let { messenger_user_id, user_phone_number } = query;
 
-  let practice = await getPracticeByID(practice_id);
-  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+  let filterByFormula = `{Main Provider Phone Number} = '${user_phone_number}'`;
 
-  let promo = await getPracticePromo(
-    { practice_promos_base_id, promo_id }
-  );
-
-  if (!promo || promo.fields['Claim Limit Reached'] === '1') {
-    let redirect_to_blocks = ['Promo No Longer Valid'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
-  let user = await updateClaimedUser(
-    { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number },
-  );
-
-  let claimed_by_users = convertLongTextToArray(
-    promo.fields['Claimed By Users']
-  );
-
-  if (claimed_by_users.includes(user.id)) {
-    let redirect_to_blocks = ['Promo Already Claimed By User'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
-  let updated_promo = await updatePromo(
-    { practice, promo, user, claimed_by_users }
-  );
+  let [practice] = await getAllPractices({ filterByFormula });
   
-  let new_lead = await createLead(
-    { practice, promo, user }
-  );
-
-  let messages = createClaimedMsg(
-    { first_name, last_name, gender, messenger_user_id, practice, updated_promo }
-  );
-
-  res.send({ messages });
-}
-
-let sendNoPracticeCallMsg = async ({ query }, res) => {
-  let { first_name, last_name, gender, messenger_user_id, practice_id, promo_id } = query;
-
-  let practice = await getPracticeByID(practice_id);
-  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
-  let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
-
-  let user = await getUserByMessengerID(messenger_user_id);
-  let user_phone_number = user.fields['Phone Number'];
-
-  let promo = await getPracticePromo(
-    { practice_promos_base_id, promo_id }
-  );
-
-  let promotion_name = promo.fields['Promotion Name'];
-
-  let lead = await getUniqueLead(
-    { practice_leads_base_id, user_phone_number, promotion_name }
-  );
-  
-  let lead_data = {
-    ['Initiated Call']: 'NO'
+  let update_data = {
+    ['Provider Messenger ID']: messenger_user_id
   }
   
-  let updated_lead = await updatePracticeLead(
-    { practice_leads_base_id, lead_data, lead }
-  );
+  let updated_practice = await updatePractice(update_data, practice);
 
-  let msg = createNoCallMsg(
-    { first_name, last_name, gender, messenger_user_id, practice, promo_id }
-  );
-
-  let messages = [msg];
-  res.send({ messages });
+  res.sendStatus(200);
 }
 
 router.get(
@@ -129,11 +64,6 @@ router.get(
 router.get(
   '/',
   handleRoute(getAdminAccess, '[Error] Claiming Promo')
-);
-
-router.get(
-  '/no_practice_call',
-  handleRoute(sendNoPracticeCallMsg)
 );
 
 module.exports = router;
