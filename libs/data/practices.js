@@ -10,8 +10,8 @@ let getPractices = getAllDataFromTable(practiceTable);
 let findPractice = findTableData(practiceTable);
 let updatePracticeFromTable = updateTableData(practiceTable);
 
-let getAllPractices = async () => {
-  let practices = await getPractices();
+let getAllPractices = async (filterQuery = {}) => {
+  let practices = await getPractices(filterQuery);
   return practices;
 }
 
