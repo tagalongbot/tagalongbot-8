@@ -15,9 +15,9 @@ let getAllPractices = async () => {
   return practices;
 }
 
-let getPracticeByUserID = async (messenger_user_id, fields = []) => {
-  let filterByFormula = `{Claimed By Messenger User ID} = '${messenger_user_id}'`;
-  let [user] = await getPractices({ filterByFormula, fields });
+let getPracticeByUserID = async (messenger_user_id) => {
+  let filterByFormula = `{Provider Messenger ID} = '${messenger_user_id}'`;
+  let [user] = await getPractices({ filterByFormula,  });
   return user;
 }
 
