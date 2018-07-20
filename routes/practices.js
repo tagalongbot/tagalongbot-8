@@ -12,18 +12,18 @@ let callPractice = require('../routes/practices/call.js');
 
 router.get(
   '/search/:zip_code',
-  handleRoute(getPractices, '[Error] Searching Practices')
+  handleRoute(getPractices, '[Error] User')
 );
 
 router.get(
   '/services',
   cache.withTtl('1 day'),
-  handleRoute(getPracticeServices, '[Error] Viewing Practice Services')
+  handleRoute(getPracticeServices, '[Error] User')
 );
 
 router.get(
   '/promos/:zip_code',
-  handleRoute(getPracticePromos, '[Error] Viewing Practice Promos')
+  handleRoute(getPracticePromos, '[Error] User')
 );
 
 router.use(

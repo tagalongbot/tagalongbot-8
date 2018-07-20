@@ -155,7 +155,7 @@ let saveCallRecording = async ({ query, params }, res) => {
 
 router.get(
   '/',
-  handleRoute(callPractice, '[Error] Calling Customer')
+  handleRoute(callPractice, '[Error] User')
 );
 
 router.post(

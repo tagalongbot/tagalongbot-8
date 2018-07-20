@@ -133,22 +133,22 @@ let sendNoPracticeCallMsg = async ({ query }, res) => {
 
 router.get(
   '/user_info',
-  handleRoute(askForUserInfo, '[Error] Claiming Promo')
+  handleRoute(askForUserInfo, '[Error] User')
 );
 
 router.get(
   '/verify',
-  handleRoute(verifyPhoneNumber, '[Error] Verifying Promo')
+  handleRoute(verifyPhoneNumber, '[Error] User')
 );
 
 router.get(
   '/verify/code',
-  handleRoute(verifyVerificationCode, '[Error] Verifying Promo')
+  handleRoute(verifyVerificationCode, '[Error] User')
 );
 
 router.get(
   '/',
-  handleRoute(claimPromotion, '[Error] Claiming Promo')
+  handleRoute(claimPromotion, '[Error] User')
 );
 
 router.get(

@@ -16,23 +16,23 @@ let findPromosOffLastSearch = require('../routes/promos/broadcasts.js');
 router.get(
   '/search/:search_type',
   cache.withTtl('15 minutes'),
-  handleRoute(getPromos, '[Error] Searching Promos')
+  handleRoute(getPromos, '[Error] User')
 );
 
 router.get(
   '/search/last/:search_type',
-  handleRoute(findPromosOffLastSearch, '[Error] Searching Promos Off Last Search')
+  handleRoute(findPromosOffLastSearch, '[Error] User')
 );
 
 router.get(
   '/details/:is_claimed',
-  handleRoute(getPromoDetails, '[Error] Viewing Promo Details')
+  handleRoute(getPromoDetails, '[Error] User')
 );
 
 router.get(
   '/practice',
   cache.withTtl('1 day'),
-  handleRoute(getPromoPractice, '[Error] Viewing Promo Practice')
+  handleRoute(getPromoPractice, '[Error] User')
 );
 
 router.use(
@@ -42,7 +42,7 @@ router.use(
 
 router.get(
   '/view/claimed',
-  handleRoute(viewClaimedPromos, '[Error] Viewing Claimed Promos')
+  handleRoute(viewClaimedPromos, '[Error] User')
 );
 
 module.exports = router;

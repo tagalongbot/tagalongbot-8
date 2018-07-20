@@ -76,17 +76,17 @@ let listPractice = async({ query }, res) => {
 
 router.get(
   '/verify',
-  handleRoute(verifyPhoneNumber, '[Error] Listing Practice')
+  handleRoute(verifyPhoneNumber, '[Error] User')
 );
 
 router.get(
   '/verify/code',
-  handleRoute(verifyVerificationCode, '[Error] Listing Practice')
+  handleRoute(verifyVerificationCode, '[Error] User')
 );
 
 router.get(
   '/',
-  handleRoute(listPractice, '[Error] Listing Practice')
+  handleRoute(listPractice, '[Error] User')
 );
 
 module.exports = router;

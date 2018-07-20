@@ -8,7 +8,7 @@ let findPractice = async ({ res, parameters, user }) => {
   let { state, city, zip_code, location, brand_name, procedure } = parameters;
 
   if (!zip_code && (state || city)) {
-    let redirect_to_blocks = ['Search Practices (Zip Code Only)'];
+    let redirect_to_blocks = ['Search Practices (Zip Code Only)', 'Search Practices'];
     res.send({ redirect_to_blocks });
     return;
   }

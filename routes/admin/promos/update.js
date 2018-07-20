@@ -110,32 +110,32 @@ let updatePromoInfo = async ({ query }, res) => {
 
 router.get(
   '/', // Gets field to update from user
-  handleRoute(getUpdateField, '[Error] Updating Promo')
+  handleRoute(getUpdateField, '[Error] Admin')
 );
 
 router.get(
   '/expiration_date',
-  handleRoute(updateExpirationDate, '[Error] Updating Promo')
+  handleRoute(updateExpirationDate, '[Error] Admin')
 );
 
 router.get(
   '/image_categories',
-  handleRoute(getImageCategories, '[Error] Updating Promo')
+  handleRoute(getImageCategories, '[Error] Admin')
 );
 
 router.get(
   '/images',
-  handleRoute(getImagesFromCategory, '[Error] Updating Promo')
+  handleRoute(getImagesFromCategory, '[Error] Admin')
 );
 
 router.get(
   '/image/select',
-  handleRoute(selectUpdateImage, '[Error] Updating Promo')
+  handleRoute(selectUpdateImage, '[Error] Admin')
 );
 
 router.get(
   '/field', // Updates the promo field
-  handleRoute(updatePromoInfo, '[Error] Updating Promo')
+  handleRoute(updatePromoInfo, '[Error] Admin')
 );
 
 module.exports = router;

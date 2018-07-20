@@ -56,17 +56,17 @@ let getAdminAccess = async ({ query }, res) => {
 
 router.get(
   '/verify',
-  handleRoute(verifyPhoneNumber, '[Error] Verifying Promo')
+  handleRoute(verifyPhoneNumber, '[Error] Admin')
 );
 
 router.get(
   '/verify/code',
-  handleRoute(verifyVerificationCode, '[Error] Verifying Promo')
+  handleRoute(verifyVerificationCode, '[Error] Admin')
 );
 
 router.get(
   '/',
-  handleRoute(getAdminAccess, '[Error] Claiming Promo')
+  handleRoute(getAdminAccess, '[Error] Admin')
 );
 
 module.exports = router;

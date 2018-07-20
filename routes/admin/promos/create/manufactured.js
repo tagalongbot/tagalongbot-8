@@ -87,22 +87,22 @@ let confirmCreateServicePromo = async ({ query }, res) => {
 
 router.get(
   '/',
-  handleRoute(sendManufacturedServicesWithPromotions, '[Error] Getting Manufactured Promo Services')
+  handleRoute(sendManufacturedServicesWithPromotions, '[Error] Admin')
 );
 
 router.get(
   '/service',
-  handleRoute(sendServiceManufacturedPromos, '[Error] Getting Manufactured Service Promos')
+  handleRoute(sendServiceManufacturedPromos, '[Error] Admin')
 );
 
 router.get(
   '/service/create',
-  handleRoute(createServicePromo, '[Error] Selecting Manufactured Promo')
+  handleRoute(createServicePromo, '[Error] Admin')
 );
 
 router.get(
   '/service/create/confirm',
-  handleRoute(confirmCreateServicePromo, '[Error] Creating Manufactured Promo')
+  handleRoute(confirmCreateServicePromo, '[Error] Admin')
 );
 
 module.exports = router;

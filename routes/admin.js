@@ -25,7 +25,7 @@ let getLeadsList = require('../routes/admin/leads/view.js');
 router.get(
   '/menu',
   // cache.withTtl('1 hour'),
-  handleRoute(getAdminMenu, '[Error] Admin Menu')
+  handleRoute(getAdminMenu, '[Error] Admin')
 );
 
 router.use(
@@ -46,22 +46,22 @@ router.use(
 router.get(
   '/promos/view/manufactured/details',
   cache.withTtl('1 day'),
-  handleRoute(viewManufacturedPromoDetails, '[Error] Viewing Manufactured Promo Details')
+  handleRoute(viewManufacturedPromoDetails, '[Error] Admin')
 );
 
 router.get(
   '/promos/view/all',
-  handleRoute(viewAllPromos, '[Error] Viewing All Promos')
+  handleRoute(viewAllPromos, '[Error] Admin')
 );
 
 router.get(
   '/promos/view/user',
-  handleRoute(viewUserPromos, '[Error] Viewing User Promos')
+  handleRoute(viewUserPromos, '[Error] Admin')
 );
 
 router.get(
   '/promos/view/info',
-  handleRoute(viewPromoInfo, '[Error] Viewing Promo Info')
+  handleRoute(viewPromoInfo, '[Error] Admin')
 );
 
 router.use(
@@ -71,12 +71,12 @@ router.use(
 
 router.get(
   '/promos/toggle', 
-  handleRoute(togglePromo, '[Error] Toggling Promos')
+  handleRoute(togglePromo, '[Error] Admin')
 );
 
 router.get(
   '/promos/user/update', 
-  handleRoute(updateUserPromo, '[Error] Updating User Promo')
+  handleRoute(updateUserPromo, '[Error] Admin')
 );
 
 router.get(

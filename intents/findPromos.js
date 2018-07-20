@@ -8,14 +8,13 @@ let findPromos = async ({ res, parameters, user }) => {
 
   let { brand_name, procedure, location, state, city, zip_code } = parameters;
 
-
-  let data = {
-    search_promos_state: state,
-    search_promos_city: city,
-    search_promos_zip_code: zip_code,
+  if (!zip_code && (state || city)) {
+    let redirect_to_blocks = ['Search Promos (Zip Code Only)', 'Search Promos'];
+    res.send({ redirect_to_blocks });
+    return;
   }
 
-  if ( !search_type && (brand_name || procedure) ) {
+  if ( !zip_code && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).trim();
     let set_attributes = { service_name };
     let redirect_to_blocks = ['Search Promos NLP (By Service)'];
@@ -23,31 +22,31 @@ let findPromos = async ({ res, parameters, user }) => {
     return;
   }
 
-  if ( !search_type && (!brand_name && !procedure) ) {
+  if ( !zip_code && (!brand_name && !procedure) ) {
     let redirect_to_blocks = ['Search Promos NLP (No Procedure)'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  if ( search_type && (brand_name || procedure) ) {
+  if ( zip_code && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).toLowerCase();
   
     let service = await getServiceByName({ service_name });
     let service_id = service.id;
     
     let redirect_url = createURL(
-      `${BASEURL}/services/promos`, 
-      { service_id, ...user, ...data }
+      `${BASEURL}/services/promos/${zip_code}`, 
+      { service_id, ...user }
     );
 
     res.redirect(redirect_url);
     return;
   }
 
-  if ( search_type && (!brand_name && !procedure) ) {
+  if ( zip_code && (!brand_name && !procedure) ) {
     let redirect_url = createURL(
-      `${BASEURL}/promos/search/${search_type}`, 
-      { ...user, ...data }
+      `${BASEURL}/promos/search/${zip_code}`, 
+      { ...user }
     );
 
     res.redirect(redirect_url);

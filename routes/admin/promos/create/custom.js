@@ -94,22 +94,22 @@ let createCustomPromo = async ({ query }, res) => {
 
 router.get(
   '/categories',
-  handleRoute(sendCustomCategories, '[Error] Getting Custom Promo Image Categories')
+  handleRoute(sendCustomCategories, '[Error] Admin')
 );
 
 router.get(
   '/images',
-  handleRoute(sendCustomImages, '[Error] Getting Custom Promo Category Images')
+  handleRoute(sendCustomImages, '[Error] Admin')
 );
 
 router.get(
   '/images/select',
-  handleRoute(sendSelectedImage, '[Error] Selecting Image')
+  handleRoute(sendSelectedImage, '[Error] Admin')
 );
 
 router.get(
   '/confirm',
-  handleRoute(createCustomPromo, '[Error] Creating Custom Promo')
+  handleRoute(createCustomPromo, '[Error] Admin')
 );
 
 module.exports = router;
