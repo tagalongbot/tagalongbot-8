@@ -8,11 +8,6 @@ let findPromos = async ({ res, parameters, user }) => {
 
   let { brand_name, procedure, location, state, city, zip_code } = parameters;
 
-  let search_type = {
-    [Boolean(state)]: 'state',
-    [Boolean(city)]: 'city',
-    [Boolean(zip_code)]: 'zip_code'
-  }[true];
 
   let data = {
     search_promos_state: state,
