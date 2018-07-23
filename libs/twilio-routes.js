@@ -38,7 +38,7 @@ let handleVerifyVerificationCode = async ({ phone_number, verification_code, blo
   }
 
   let incorrect_verification_code_msg = createIncorrectVerificationCodeMsg(
-    { user_phone_number: phone_number, block_name: `[JSON] Invalid Verification Code (${block_name})` },
+    { user_phone_number: phone_number, block_name: `[ROUTER] Invalid Verification Code (${block_name})` },
   );
 
   let messages = [incorrect_verification_code_msg];
