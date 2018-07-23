@@ -22,7 +22,7 @@ router.get(
 );
 
 router.get(
-  '/promos/:zip_code',
+  '/promos',
   handleRoute(getPracticePromos, '[Error] User')
 );
 
