@@ -20,7 +20,7 @@ router.get(
 );
 
 router.get(
-  '/search/last/:search_type',
+  '/search/last',
   handleRoute(findPromosOffLastSearch, '[Error] User')
 );
 
