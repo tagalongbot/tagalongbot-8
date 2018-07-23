@@ -108,7 +108,7 @@ let sendNoPracticeCallMsg = async ({ query }, res) => {
   );
   
   let lead_data = {
-    ['Initiated Call']: 'NO'
+    ['Call Initiated ']: 'NO'
   }
   
   let updated_lead = await updatePracticeLead(
