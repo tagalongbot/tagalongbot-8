@@ -64,7 +64,7 @@ let createServicePromo = async ({ query }, res) => {
   let new_promo_practice_promos_base_id = practice_promos_base_id;
 
   let set_attributes = { new_promo_id, new_promo_service_id, new_promo_service_name, new_promo_type, new_promo_practice_id, new_promo_practice_promos_base_id };
-  let redirect_to_blocks = ['[JSON] New Manufactured Promo Route'];
+  let redirect_to_blocks = ['[ROUTER] New Manufactured Promo'];
   res.send({ set_attributes, redirect_to_blocks });
 }
 

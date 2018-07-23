@@ -17,7 +17,7 @@ let router = express.Router();
 let askForUserInfo = async ({ query }, res) => {
   let { promo_id, practice_id } = query;
 
-  let redirect_to_blocks = ['[JSON] Claim Promo Route'];
+  let redirect_to_blocks = ['[ROUTER] Claim Promo'];
   let set_attributes = { promo_id, practice_id };
   res.send({ redirect_to_blocks, set_attributes });
 }
