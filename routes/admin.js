@@ -45,7 +45,7 @@ router.use(
 
 router.get(
   '/promos/view/manufactured/details',
-  cache.withTtl('1 day'),
+  // cache.withTtl('1 day'),
   handleRoute(viewManufacturedPromoDetails, '[Error] Admin')
 );
 

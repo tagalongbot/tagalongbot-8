@@ -17,7 +17,7 @@ router.get(
 
 router.get(
   '/services',
-  cache.withTtl('1 day'),
+  // cache.withTtl('1 day'),
   handleRoute(getPracticeServices, '[Error] User')
 );
 

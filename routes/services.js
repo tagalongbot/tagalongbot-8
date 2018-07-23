@@ -2,7 +2,6 @@ let express = require('express');
 let router = express.Router();
 
 let handleRoute = require('../middlewares/handleRoute.js');
-let cache = require('../middlewares/cache.js');
 
 let getServices = require('../routes/services/services.js');
 let getServiceDescription = require('../routes/services/description.js');
