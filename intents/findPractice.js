@@ -8,7 +8,7 @@ let findPractice = async ({ res, parameters, user }) => {
   let { state, city, zip_code, location, brand_name, procedure } = parameters;
 
   if (!zip_code && (state || city)) {
-    let redirect_to_blocks = ['Zip Code Only Message', 'Search Practices'];
+    let redirect_to_blocks = ['Zip Code Only Message', '[ROUTER] Search Practices'];
     res.send({ redirect_to_blocks });
     return;
   }
@@ -16,13 +16,13 @@ let findPractice = async ({ res, parameters, user }) => {
   if (!zip_code && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).trim();
     let set_attributes = { service_name };
-    let redirect_to_blocks = ['Search Practices'];
+    let redirect_to_blocks = ['[ROUTER] Search Practices'];
     res.send({ set_attributes, redirect_to_blocks });
     return;
   }
 
   if ( !zip_code && (!brand_name && !procedure) ) {
-    let redirect_to_blocks = ['Search Practices'];
+    let redirect_to_blocks = ['[ROUTER] Search Practices'];
     res.send({ redirect_to_blocks });
     return;
   }

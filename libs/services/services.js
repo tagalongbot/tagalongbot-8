@@ -24,7 +24,7 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
     `${BASEURL}/services/practices`,
     { service_id, messenger_user_id, first_name, last_name, gender }
   );
-  
+
   let find_promos_btn_url = createURL(
     `${BASEURL}/services/promos`,
     { service_id, messenger_user_id, first_name, last_name, gender }
