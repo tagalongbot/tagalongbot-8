@@ -9,7 +9,7 @@ let findPromos = async ({ res, parameters, user }) => {
   let { brand_name, procedure, location, state, city, zip_code } = parameters;
 
   if (!zip_code && (state || city)) {
-    let redirect_to_blocks = ['Search Promos (Zip Code Only)', 'Search Promos'];
+    let redirect_to_blocks = ['Zip Code Only Message', 'Search Promos'];
     res.send({ redirect_to_blocks });
     return;
   }
@@ -17,13 +17,13 @@ let findPromos = async ({ res, parameters, user }) => {
   if ( !zip_code && (brand_name || procedure) ) {
     let service_name = (brand_name || procedure).trim();
     let set_attributes = { service_name };
-    let redirect_to_blocks = ['Search Promos NLP (By Service)'];
+    let redirect_to_blocks = ['Search Promos'];
     res.send({ set_attributes, redirect_to_blocks });
     return;
   }
 
   if ( !zip_code && (!brand_name && !procedure) ) {
-    let redirect_to_blocks = ['Search Promos NLP (No Procedure)'];
+    let redirect_to_blocks = ['Search Promos'];
     res.send({ redirect_to_blocks });
     return;
   }
