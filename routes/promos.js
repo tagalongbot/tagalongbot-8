@@ -14,8 +14,8 @@ let viewClaimedPromos = require('../routes/promos/view/claimed.js');
 let findPromosOffLastSearch = require('../routes/promos/broadcasts.js');
 
 router.get(
-  '/search/:search_type',
-  cache.withTtl('15 minutes'),
+  '/search/:zip_code',
+  // cache.withTtl('15 minutes'),
   handleRoute(getPromos, '[Error] User')
 );
 
