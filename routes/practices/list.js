@@ -43,8 +43,13 @@ let verifyPhoneNumber = async ({ query }, res) => {
 
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
 
-  let block_name = (sent_verification_code.success) ? '[JSON] Check Verification Code (List Practice)' : '[Error] Listing Practice';
-  let redirect_to_blocks = [block_name];
+  if (sent_verification_code.success) {
+    let redirect_to_blocks = ['Ask For Verification Code [Verification]', '[JSON] Check Verification Code (List Practice)'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  let redirect_to_blocks = ['[Error] User'];
   res.send({ redirect_to_blocks });
 }
 
