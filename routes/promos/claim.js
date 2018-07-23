@@ -35,12 +35,11 @@ let verifyPhoneNumber = async ({ query }, res) => {
 let verifyVerificationCode = async ({ query }, res) => {
   let { user_phone_number: phone_number, verification_code } = query;
 
+  let response = await handleVerifyVerificationCode(
+    { phone_number, verification_code, block_name: 'Claim Promo' }
+  );
   
-  let sent_verification_code = await checkVerificationCode({ phone_number, verification_code });
-
-  let block_name = (sent_verification_code.success) ? 'Correct Verification Code (Claim Promo)' : 'Incorrect Verification Code (Claim Promo)';
-  let redirect_to_blocks = [block_name];
-  res.send({ redirect_to_blocks });
+  res.send(response);
 }
 
 let claimPromotion = async ({ query }, res) => {

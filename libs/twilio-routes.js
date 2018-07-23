@@ -8,7 +8,7 @@ let createIncorrectVerificationCodeMsg = ({ user_phone_number, block_name }) => 
     `Sorry but the code you entered is not the correct code sent to the phone number ${formatPhoneNumber(user_phone_number)}`
     `Try Again|show_block|${block_name}`
   );
-  
+
   return msg;
 }
 
@@ -38,7 +38,7 @@ let handleVerifyVerificationCode = async ({ phone_number, verification_code, blo
   }
 
   let incorrect_verification_code_msg = createIncorrectVerificationCodeMsg(
-    { user_phone_number: phone_number, block_name: `[JSON] Check Verification Code (${block_name})` },
+    { user_phone_number: phone_number, block_name: `[JSON] Invalid Verification Code (${block_name})` },
   );
 
   let messages = [incorrect_verification_code_msg];

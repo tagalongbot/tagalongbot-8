@@ -4,7 +4,7 @@ let { formatPhoneNumber } = require('../../libs/helpers.js');
 
 let { getAllPractices, updatePractice } = require('../../libs/data/practices.js');
 
-let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
+let { handleVerifyPhoneNumberRoute, handleVerifyVerificationCode } = require('../../libs/twilio-routes.js');
 
 let express = require('express');
 let router = express.Router();
@@ -12,29 +12,21 @@ let router = express.Router();
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
-  let isValidPhoneNumber = await checkIfValidPhoneNumber({ phone_number });
-
-  if (!isValidPhoneNumber) {
-    let redirect_to_blocks = ['Invalid Phone Number (Admin Access)'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
-  let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
-
-  let block_name = (sent_verification_code.success) ? 'Verify Phone Number (Admin Access)' : '[Error] Verifying Promo';
-  let redirect_to_blocks = [block_name];
-  res.send({ redirect_to_blocks });
+  let response = await handleVerifyPhoneNumberRoute(
+    { phone_number, block_name: 'Claim Promo' }
+  );
+  
+  res.send(response);
 }
 
 let verifyVerificationCode = async ({ query }, res) => {
   let { user_phone_number: phone_number, verification_code } = query;
 
-  let sent_verification_code = await checkVerificationCode({ phone_number, verification_code });
-
-  let block_name = (sent_verification_code.success) ? 'Correct Verification Code (Admin Access)' : 'Incorrect Verification Code (Admin Access)';
-  let redirect_to_blocks = [block_name];
-  res.send({ redirect_to_blocks });
+  let response = await handleVerifyVerificationCode(
+    { phone_number, verification_code, block_name: 'Claim Promo' }
+  );
+  
+  res.send(response);
 }
 
 let getAdminAccess = async ({ query }, res) => {
