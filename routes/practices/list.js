@@ -1,7 +1,6 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
 
-let { isValidPhoneNumber } = require('../../libs/helpers.js');
-let { sendPhoneVerificationCode, checkVerificationCode, createIncorrectVerificationCodeMsg } = require('../../libs/twilio.js');
+let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode, createIncorrectVerificationCodeMsg } = require('../../libs/twilio.js');
 let { getUserByMessengerID, updateUser, createUser } = require('../../libs/data/users.js');
 
 let express = require('express');
@@ -36,15 +35,15 @@ let updateExistingUser = async ({ user_email, user_phone_number, first_name, las
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
-  if (!isValidPhoneNumber(phone_number)) {
-    let redirect_to_blocks = ['Invalid Phone Number [Verification]', '[JSON] Check Verification Code (List Practice)'];
+  if (!checkIfValidPhoneNumber({ phone_number })) {
+    let redirect_to_blocks = ['Invalid Phone Number [Verification]', '[JSON] Get Verification Code (List Practice)'];
     res.send({ redirect_to_blocks });
     return;
   }
 
   let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
 
-  let block_name = (sent_verification_code.success) ? 'Verify Phone Number (List Practice)' : '[Error] Listing Practice';
+  let block_name = (sent_verification_code.success) ? '[JSON] Check Verification Code (List Practice)' : '[Error] Listing Practice';
   let redirect_to_blocks = [block_name];
   res.send({ redirect_to_blocks });
 }
