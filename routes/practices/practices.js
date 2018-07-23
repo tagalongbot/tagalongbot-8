@@ -8,6 +8,7 @@ let { searchPractices, sortPractices } = require('../../libs/data/practices.js')
 let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let getPractices = async ({ query, params }, res) => {
+  console.log('here', query, params);
   let { messenger_user_id, first_name, last_name, gender } = query;
   let { zip_code } = params;
 

@@ -54,26 +54,6 @@ let createButtons = (data) => {
   return [btn1, btn2];
 }
 
-// Booking Site and Site URL Only
-let createButtons2 = (practice, data) => {
-  let view_practice_site_url = practice['Practice Website'];
-  let view_practice_book_url = practice['Practice Booking URL'];
-
-  let btns = [];
-
-  if (view_practice_site_url) {
-    let btn = createBtn(`Visit Provider Site|web_url|${view_practice_site_url}`);
-    btns.push(btn);
-  }
-
-  if (view_practice_book_url) {
-    let btn = createBtn(`Visit Booking Site|web_url|${view_practice_book_url}`);
-    btns.push(btn);
-  }
-
-  return btns;
-}
-
 // Exported Functions
 let createOrUpdateUser = async (user, query) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
@@ -115,7 +95,7 @@ let createLastGalleryElement = () => {
   let title = 'List Your Practice';
   let image_url = LIST_YOUR_PRACTICE_IMAGE_URL;
 
-  let btn1 = createBtn(`List My Practice|show_block|Ask For User Info (List Practice)`);
+  let btn1 = createBtn(`List My Practice|show_block|[JSON] List Practice Route`);
   let btn2 = createBtn(`Main Menu|show_block|Discover Main Menu`);
   let btn3 = createBtn(`About Bevl Beauty|show_block|AboutBB`);
 
