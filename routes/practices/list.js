@@ -60,9 +60,9 @@ let verifyVerificationCode = async ({ query }, res) => {
   }
 
   let incorrect_verification_code_msg = createIncorrectVerificationCodeMsg(
-    { user_phone_number: phone_number, block_names: ['[JSON] Check Verification Code (List Practice)'] },
+    { user_phone_number: phone_number, block_name: '[JSON] Check Verification Code (List Practice)' },
   );
-  
+
   let messages = [incorrect_verification_code_msg];
   res.send({ messages });
 }

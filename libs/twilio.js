@@ -57,11 +57,29 @@ let createCall = async (data) => {
   return new_call;
 }
 
-let createIncorrectVerificationCodeMsg = ({ user_phone_number, block_names }) => {
-  let msg = createButtonMessage(
-    `Sorry but the code you entered is not the correct code sent to the phone number ${formatPhoneNumber(user_phone_number)}`
-    
-  );
+let createIncorrectVerificationCodeMsg = ({ user_phone_number, block_name }) => {
+  let text = `Sorry but the code you entered is not the correct code sent to the phone number ${formatPhoneNumber(user_phone_number)}`;
+
+  let btn = {
+    title: 'Try Again',
+    type: 'show_block',
+    block_names: [block_name]
+  }
+  
+  let buttons = [btn];
+  
+  let payload = {
+		text,
+		buttons,
+		template_type: 'button'
+	}
+
+	let attachment = {
+		payload,
+		type: 'template'
+	}
+
+	return { attachment };
 }
 
 module.exports = {
@@ -69,4 +87,5 @@ module.exports = {
   sendPhoneVerificationCode,
   checkVerificationCode,
   createCall,
+  createIncorrectVerificationCodeMsg,
 }
