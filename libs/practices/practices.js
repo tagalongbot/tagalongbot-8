@@ -96,7 +96,7 @@ let createLastGalleryElement = () => {
   let image_url = LIST_YOUR_PRACTICE_IMAGE_URL;
 
   let btn1 = createBtn(`List My Practice|show_block|[JSON] List Practice Route`);
-  let btn2 = createBtn(`Main Menu|show_block|Discover Main Menu`);
+  let btn2 = createBtn(`Main Menu|show_block|Main Menu`);
   let btn3 = createBtn(`About Bevl Beauty|show_block|AboutBB`);
 
   let buttons = [btn1, btn2, btn3];

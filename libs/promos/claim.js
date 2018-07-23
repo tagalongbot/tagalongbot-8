@@ -133,7 +133,7 @@ let createClaimedMsg = (data) => {
   let msg1 = createButtonMessage(
     `Congrats ${first_name} your promotion "${promotion_name}" has been claimed!`,
     `View Practice|json_plugin_url|${view_practice_url}`,
-    `Main Menu|show_block|Discover Main Menu`
+    `Main Menu|show_block|Main Menu`
   );
   
   let msg2 = createQuickReplyMessage(
@@ -159,7 +159,7 @@ let createNoCallMsg = (data) => {
   let msg = createButtonMessage(
     `Hey ${first_name} whenever you're ready to call ${practice_name} just click the button below`,
     `Call Practice|json_plugin_url|${call_practice_url}`,
-    `Main Menu|show_block|Discover Main Menu`,
+    `Main Menu|show_block|Main Menu`,
   );
 
   return msg;

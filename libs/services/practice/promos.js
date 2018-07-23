@@ -29,7 +29,7 @@ let createNoPromosMsg = (data) => {
   let msg = createButtonMessage(
     `Sorry ${first_name} looks like ${practice_name} does not have any promotions for ${service_name} at the moment`,
     `View Services Again|json_plugin_url|${view_services_btn_url}`,
-    `Main Menu|show_block|Discover Main Menu`,
+    `Main Menu|show_block|Main Menu`,
     `About Bevl Beauty|show_block|AboutBB`
   );
 
