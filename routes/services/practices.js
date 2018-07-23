@@ -58,12 +58,12 @@ let getServicePractices = async ({ query, params }, res) => {
 
 router.get(
   '/', 
-  handleRoute(searchServicePractices, '[Error] Searching Service Practices')
+  handleRoute(searchServicePractices, '[Error] User')
 );
 
 router.get(
   '/:zip_code',
-  handleRoute(getServicePractices, '[Error] Searching Service Practices')
+  handleRoute(getServicePractices, '[Error] User')
 );
 
 module.exports = router;

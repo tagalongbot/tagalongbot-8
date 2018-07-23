@@ -14,7 +14,9 @@ let getPracticeServices = async ({ query }, res) => {
   let services_from_practice = filterServicesFromPractice({ services, practice });
 
   if (!services_from_practice[0]) {
-    let redirect_to_blocks = ['No Practice Services Found'];
+    // Should never happen
+    // All practices should have services
+    let redirect_to_blocks = ['[Error] User'];
     res.send({ redirect_to_blocks });
     return;
   }

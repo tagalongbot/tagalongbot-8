@@ -67,12 +67,12 @@ let getServicePromos = async ({ query, params }, res) => {
 
 router.get(
   '/', 
-  handleRoute(searchServicePromos, '[Error] Searching Service Promos')
+  handleRoute(searchServicePromos, '[Error] User')
 );
 
 router.get(
   '/:zip_code', 
-  handleRoute(getServicePromos, '[Error] Searching Service Promos')
+  handleRoute(getServicePromos, '[Error] User')
 );
 
 module.exports = router;
