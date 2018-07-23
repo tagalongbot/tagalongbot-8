@@ -1,6 +1,6 @@
 let handleRoute = require('../../middlewares/handleRoute.js');
 
-let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode, createIncorrectVerificationCodeMsg } = require('../../libs/twilio.js');
+let { handleVerifyPhoneNumberRoute, handleVerifyVerificationCode } = require('../../libs/twilio-routes.js');
 let { getUserByMessengerID, updateUser, createUser } = require('../../libs/data/users.js');
 
 let express = require('express');
@@ -35,40 +35,21 @@ let updateExistingUser = async ({ user_email, user_phone_number, first_name, las
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
-  if (!checkIfValidPhoneNumber({ phone_number })) {
-    let redirect_to_blocks = ['Invalid Phone Number [Verification]', '[JSON] Get Verification Code (List Practice)'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
+  let redirect_to_blocks = await handleVerifyPhoneNumberRoute(
+    { phone_number, block_name: 'List Practice' }
+  );
 
-  let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
-
-  if (sent_verification_code.success) {
-    let redirect_to_blocks = ['Ask For Verification Code [Verification]', '[JSON] Check Verification Code (List Practice)'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
-  let redirect_to_blocks = ['[Error] User'];
   res.send({ redirect_to_blocks });
 }
 
 let verifyVerificationCode = async ({ query }, res) => {
   let { user_phone_number: phone_number, verification_code } = query;
 
-  let sent_verification_code = await checkVerificationCode({ phone_number, verification_code });
-
-  if (sent_verification_code.success) {
-    let redirect_to_blocks = ['[JSON] List Practice', 'List Practice'];
-    res.send({ redirect_to_blocks });
-  }
-
-  let incorrect_verification_code_msg = createIncorrectVerificationCodeMsg(
-    { user_phone_number: phone_number, block_name: '[JSON] Check Verification Code (List Practice)' },
+  let response = await handleVerifyVerificationCode(
+    { phone_number, verification_code, block_name: 'List Practice' }
   );
 
-  let messages = [incorrect_verification_code_msg];
-  res.send({ messages });
+  res.send(response);
 }
 
 let listPractice = async({ query }, res) => {

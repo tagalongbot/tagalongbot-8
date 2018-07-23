@@ -8,8 +8,7 @@ let { Client, enums } = authyClient;
 
 let authy = new Client({ key: AUTHY_API_KEY });
 
-let { getNumbersOnly, formatPhoneNumber } = require('../libs/helpers.js');
-let { createButtonMessage } = require('../libs/bots.js');
+let { getNumbersOnly } = require('../libs/helpers.js');
 
 // Exposed Functions
 let checkIfValidPhoneNumber = async ({ phone_number }) => {
@@ -57,19 +56,9 @@ let createCall = async (data) => {
   return new_call;
 }
 
-let createIncorrectVerificationCodeMsg = ({ user_phone_number, block_name }) => {
-  let msg = createButtonMessage(
-    `Sorry but the code you entered is not the correct code sent to the phone number ${formatPhoneNumber(user_phone_number)}`
-    `Try Again|show_block|${block_name}`
-  );
-  
-  return msg;
-}
-
 module.exports = {
   checkIfValidPhoneNumber,
   sendPhoneVerificationCode,
   checkVerificationCode,
   createCall,
-  createIncorrectVerificationCodeMsg,
 }
