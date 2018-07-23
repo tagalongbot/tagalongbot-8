@@ -1,14 +1,28 @@
 let { BASEURL } = process.env;
 
-let { getNumbersOnly } = require('../../libs/helpers.js');
+let { getNumbersOnly, createURL } = require('../../libs/helpers.js');
 let { createButtonMessage } = require('../../libs/bots.js');
 
 let { createCall } = require('../../libs/twilio.js');
 let { getUniqueLead, updatePracticeLead } = require('../../libs/data/practice/leads.js');
 
-let createCustomerMsg = ({ user_name, practice_name }) => {
+let createCustomerMsg = ({ practice, user, promo }) => {
+  let practice_id = practice.id;
+  let practice_name = practice.fields['Practice Name'];
+  
+  let promo_id = promo.id;
+
+  let user_name = user.fields['First Name'];
+  let messenger_user_id = user.fields['messenger user id'];
+
+  let call_practice_url = createURL(
+    `${BASEURL}/practices/call`,
+    { practice_id, promo_id, messenger_user_id }
+  );
+
   let msg = createButtonMessage(
     `Hey ${user_name} you'll receive a call right now connecting you to ${practice_name} practice`,
+    `Call Practice Again|json_plugin_url|${call_practice_url}`
     `Main Menu|show_block|Main Menu`,
   );
 

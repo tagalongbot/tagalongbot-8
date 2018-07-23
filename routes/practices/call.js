@@ -28,11 +28,9 @@ let callPractice = async ({ query }, res) => {
   let { practice_id, promo_id, messenger_user_id: user_messenger_id } = query;
 
   let practice = await getPracticeByID(practice_id);
-  let practice_name = practice.fields['Practice Name'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let user = await getUserByMessengerID(user_messenger_id);
-  let user_first_name = user.fields['First Name'];
 
   let promo = await getPracticePromo(
     { practice_promos_base_id, promo_id }
@@ -43,7 +41,7 @@ let callPractice = async ({ query }, res) => {
   );
 
   let msg = createCustomerMsg(
-    { user_name: user_first_name, practice_name }
+    { practice, user, promo }
   );
 
   let messages = [msg];
