@@ -13,9 +13,9 @@ let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
   let response = await handleVerifyPhoneNumberRoute(
-    { phone_number, block_name: 'Claim Promo' }
+    { phone_number, block_name: 'Admin Access Granted' }
   );
-  
+
   res.send(response);
 }
 
@@ -23,9 +23,9 @@ let verifyVerificationCode = async ({ query }, res) => {
   let { user_phone_number: phone_number, verification_code } = query;
 
   let response = await handleVerifyVerificationCode(
-    { phone_number, verification_code, block_name: 'Claim Promo' }
+    { phone_number, verification_code, block_name: 'Admin Access Granted' }
   );
-  
+
   res.send(response);
 }
 
