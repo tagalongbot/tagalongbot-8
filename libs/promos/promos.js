@@ -1,4 +1,5 @@
 let { BASEURL } = process.env;
+
 let { createURL, localizeDate } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 let { getTable, getAllDataFromTable } = require('../../libs/data.js');
@@ -33,7 +34,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   let buttons = [btn];
 
-  let element = { title, subtitle, image_url, buttons};
+  let element = { title, subtitle, image_url, buttons };
   return element;
 }
 

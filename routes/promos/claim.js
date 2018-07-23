@@ -7,7 +7,7 @@ let { getPracticePromo } = require('../../libs/data/practice/promos.js');
 let { getUniqueLead, updatePracticeLead } = require('../../libs/data/practice/leads.js');
 let { getUserByMessengerID } = require('../../libs/data/users.js');
 
-let { checkIfValidPhoneNumber, sendPhoneVerificationCode, checkVerificationCode } = require('../../libs/twilio.js');
+let { handleVerifyPhoneNumberRoute, handleVerifyVerificationCode } = require('../../libs/twilio-routes.js');
 
 let { updatePromo, updateClaimedUser, createLead, createClaimedMsg, createNoCallMsg } = require('../../libs/promos/claim.js');
 
@@ -17,7 +17,7 @@ let router = express.Router();
 let askForUserInfo = async ({ query }, res) => {
   let { promo_id, practice_id } = query;
 
-  let redirect_to_blocks = ['Ask For User Info (Promo)'];
+  let redirect_to_blocks = ['[JSON] Claim Promo Route'];
   let set_attributes = { promo_id, practice_id };
   res.send({ redirect_to_blocks, set_attributes });
 }
@@ -25,24 +25,17 @@ let askForUserInfo = async ({ query }, res) => {
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
-  let isValidPhoneNumber = await checkIfValidPhoneNumber({ phone_number });
-
-  if (!isValidPhoneNumber) {
-    let redirect_to_blocks = ['Invalid Phone Number (Claim Promo)'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
-  let sent_verification_code = await sendPhoneVerificationCode({ phone_number });
-
-  let block_name = (sent_verification_code.success) ? 'Verify Phone Number (Claim Promo)' : '[Error] Verifying Promo';
-  let redirect_to_blocks = [block_name];
-  res.send({ redirect_to_blocks });
+  let response = await handleVerifyPhoneNumberRoute(
+    { phone_number, block_name: 'Claim Promo' }
+  );
+  
+  res.send(response);
 }
 
 let verifyVerificationCode = async ({ query }, res) => {
   let { user_phone_number: phone_number, verification_code } = query;
 
+  
   let sent_verification_code = await checkVerificationCode({ phone_number, verification_code });
 
   let block_name = (sent_verification_code.success) ? 'Correct Verification Code (Claim Promo)' : 'Incorrect Verification Code (Claim Promo)';

@@ -35,11 +35,11 @@ let updateExistingUser = async ({ user_email, user_phone_number, first_name, las
 let verifyPhoneNumber = async ({ query }, res) => {
   let { user_phone_number: phone_number } = query;
 
-  let redirect_to_blocks = await handleVerifyPhoneNumberRoute(
+  let response = await handleVerifyPhoneNumberRoute(
     { phone_number, block_name: 'List Practice' }
   );
 
-  res.send({ redirect_to_blocks });
+  res.send(response);
 }
 
 let verifyVerificationCode = async ({ query }, res) => {
@@ -64,7 +64,8 @@ let listPractice = async({ query }, res) => {
 
   let updated_user = updateExistingUser({ user_email, user_phone_number, first_name, last_name, gender, messenger_user_id, user });
 
-  res.sendStatus(200);
+  let redirect_to_blocks = ['List Practice'];
+  res.send({ redirect_to_blocks });
 }
 
 router.get(
