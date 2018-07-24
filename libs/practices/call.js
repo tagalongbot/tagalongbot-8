@@ -22,7 +22,7 @@ let createCustomerMsg = ({ practice, user, promo }) => {
 
   let msg = createButtonMessage(
     `Hey ${user_name} you'll receive a call right now connecting you to ${practice_name} practice`,
-    `Call Practice Again|json_plugin_url|${call_practice_url}`
+    `Call Practice Again|json_plugin_url|${call_practice_url}`,
     `Main Menu|show_block|Main Menu`,
   );
 
