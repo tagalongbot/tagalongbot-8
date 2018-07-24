@@ -3,8 +3,10 @@ let { BASEURL } = process.env;
 let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
-let createDetailsMsg = (promo, data, { is_claimed }) => {
-  let { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = data;
+let createDetailsMsg = (data) => {
+  let { practice_id, practice_promos_base_id, promo, is_claimed, first_name, last_name, gender, messenger_user_id } = data;
+
+  let promo_id = promo.id;
 
   let btns = [];
 

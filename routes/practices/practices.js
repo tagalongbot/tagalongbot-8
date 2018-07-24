@@ -17,7 +17,7 @@ let getPractices = async ({ query, params }, res) => {
   let practices = await searchPractices(
     { zip_code }
   );
-  
+
   if (!practices[0]) {
     let redirect_to_blocks = ['No Practices Found'];
     res.send({ redirect_to_blocks });
