@@ -37,8 +37,11 @@ let getServicePromos = async ({ query, params }, res) => {
 
   let practice_promos = practices_with_service.map(async practice => {
     let practice_id = practice.id;
-    let practice_promos_base_id = practice.fields['Practice Base ID'];
-    let promos = await getPracticePromos({ practice_promos_base_id });
+    let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+    let promos = await getPracticePromos(
+      { practice_promos_base_id }
+    );
+
     return promos.map(
       toGalleryElement({ practice_id, practice_promos_base_id })
     );
@@ -58,7 +61,7 @@ let getServicePromos = async ({ query, params }, res) => {
   let randomPromos = shuffleArray(promos).slice(0, 10);
 
   let txtMsg = { text: `Here are some promos I found near ${zip_code} for ${service_name}` };
-  let gallery = createGallery(randomPromos, 'square');
+  let gallery = createGallery(randomPromos);
 
   let messages = [txtMsg, gallery];
 

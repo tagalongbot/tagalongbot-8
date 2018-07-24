@@ -11,17 +11,17 @@ let getServicePractices = require('../routes/services/practices.js');
 
 router.get(
   '/search/:service_type',
-  handleRoute(getServices, '[Error] Searching Services')
+  handleRoute(getServices, '[Error] User')
 );
 
 router.get(
   '/description/:show_practices',
-  handleRoute(getServiceDescription, '[Error] Viewing Service Description')
+  handleRoute(getServiceDescription, '[Error] User')
 );
 
 router.get(
   '/practice/promos',
-  handleRoute(getServicePracticePromos, '[Error] Viewing Service Practice Promos')
+  handleRoute(getServicePracticePromos, '[Error] User')
 );
 
 router.use(
