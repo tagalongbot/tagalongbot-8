@@ -4,13 +4,12 @@ let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
 let createViewPracticePromosMsg = (data) => {
-  let { service, practice_id } = data;
-
-  let service_id = service.id;
+  let { service, service_id, practice_id } = data;
 
   let view_practice_promos = createURL(
     `${BASEURL}/services/practice/promos`, 
-    { service_id, practice_id }
+    { practice_id }
+    // { service_id, practice_id } // ChatFuel Bug Sending "service_id" twice
   );
 
   let txtMsg = createButtonMessage(
