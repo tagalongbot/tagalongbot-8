@@ -1,33 +1,33 @@
 let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
+
 let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 
-let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
-  let { messenger_user_id, first_name, last_name, gender } = data;
-
+let toGalleryElement = ({ id: service_id, fields: service }) => {
   let surgical_or_non_surgical = service['Surgical / Non Surgical'];
   let non_surgical_category = service[`${surgical_or_non_surgical} Category`];
 
   let title = service['Name'].slice(0, 80);
-  let subtitle = (surgical_or_non_surgical.toLowerCase() === 'non surgical') ? 
-      `Non Surgical | ${non_surgical_category} | ${service[non_surgical_category]}`.slice(0, 80) : 
-      `Surgical Service`;
+
+  let subtitle = (surgical_or_non_surgical.toLowerCase() === 'surgical') ? 
+    `Surgical Service` :
+    `Non Surgical | ${non_surgical_category} | ${service[non_surgical_category]}`.slice(0, 80);
 
   let image_url = service['Image URL'];
 
   let view_service_details_btn_url = createURL(
     `${BASEURL}/services/description/yes`,
-    { service_id, messenger_user_id, first_name, last_name, gender }
+    { service_id }
   );
 
   let find_practices_btn_url = createURL(
     `${BASEURL}/services/practices`,
-    { service_id, messenger_user_id, first_name, last_name, gender }
+    { service_id }
   );
 
   let find_promos_btn_url = createURL(
     `${BASEURL}/services/promos`,
-    { service_id, messenger_user_id, first_name, last_name, gender }
+    { service_id }
   );
 
   let btn1 = createBtn(`View Service Details|json_plugin_url|${view_service_details_btn_url}`);
@@ -40,16 +40,14 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   return element;
 }
 
-let createSurgicalCategoryElement = (data) => {
-  let { messenger_user_id, first_name, last_name, gender } = data;
+let createSurgicalCategoryElement = () => {
   let title = 'Surgical Procedures';
   let image_url = SURGICAL_SERVICES_IMAGE_URL;
 
   let surgical_category_btn_url = createURL(
     `${BASEURL}/services/search/surgical`,
-    { messenger_user_id, first_name, last_name, gender }
   );
-  
+
   let btn = createBtn(`View Services|json_plugin_url|${surgical_category_btn_url}`);
 
   let buttons = [btn];

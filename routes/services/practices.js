@@ -23,8 +23,7 @@ let searchServicePractices = async ({ query }, res) => {
 }
 
 let getServicePractices = async ({ query, params }, res) => {
-  let { service_id, messenger_user_id, first_name, last_name, gender } = query;
-
+  let { service_id } = query;
   let { zip_code } = params;
 
   let service = await getServiceByID({ service_id });
@@ -44,7 +43,7 @@ let getServicePractices = async ({ query, params }, res) => {
   }
 
   let randomPractices = shuffleArray(practicesByService).slice(0, 9).sort(sortPractices).map(
-    toGalleryElement({ first_name, last_name, gender, messenger_user_id, service_id })
+    toGalleryElement({ service_id })
   );
 
   let last_gallery_element = createLastGalleryElement();
