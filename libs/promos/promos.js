@@ -17,7 +17,7 @@ let filterPromosByService = ({ service_name, promos }) => {
 }
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
-  let { practice_id, practice_promos_base_id, first_name, last_name, gender, messenger_user_id } = data;
+  let { practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender } = data;
 
   let promo_expiration_date = new Date(promo['Expiration Date']);
 
@@ -27,7 +27,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   let view_promo_details_url = createURL(
     `${BASEURL}/promos/details/unclaimed`,
-    { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
+    { practice_id, practice_promos_base_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let btn = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);

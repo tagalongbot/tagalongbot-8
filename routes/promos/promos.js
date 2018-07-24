@@ -24,7 +24,7 @@ let getPromos = async ({ query, params }, res) => {
       let promos = await getPracticePromos({ practice_promos_base_id, view });
 
       return promos.map(
-        toGalleryElement({ messenger_user_id, practice_id, practice_promos_base_id, first_name, last_name, gender })
+        toGalleryElement({ practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender })
       );
     })
   );

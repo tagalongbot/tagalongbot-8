@@ -6,7 +6,9 @@ let getServiceDescription = async ({ query, params }, res) => {
   let { show_practices } = params;
   let { service_id, practice_id, messenger_user_id, first_name, last_name, gender } = query;
 
-  let service = await getServiceByID({ service_id });
+  let service = await getServiceByID(
+    { service_id }
+  );
 
   if (show_practices === 'no') {
     let msg = createViewPracticePromosMsg(
