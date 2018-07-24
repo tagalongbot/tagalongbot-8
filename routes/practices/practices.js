@@ -25,7 +25,7 @@ let getPractices = async ({ query, params }, res) => {
   }
 
   let randomPractices = shuffleArray(practices).slice(0, 9).sort(sortPractices).map(
-    toGalleryElement({ messenger_user_id, first_name, last_name, gender })
+    toGalleryElement
   );
 
   let last_gallery_element = createLastGalleryElement();
