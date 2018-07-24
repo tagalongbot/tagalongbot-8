@@ -7,15 +7,10 @@ let getServiceDescription = async ({ query, params }, res) => {
   let { service_id, practice_id, messenger_user_id, first_name, last_name, gender } = query;
 
   let service = await getServiceByID({ service_id });
-  let service_name = service.fields['Name'];
 
   if (show_practices === 'no') {
-    let practice = await getPracticeByID(practice_id);
-    let practice_name = practice.fields['Practice Name'];    
-
     let msg = createViewPracticePromosMsg(
-      service,
-      { service_id, practice_id, messenger_user_id, first_name, last_name, gender, practice_name }
+      { service, practice_id, messenger_user_id, first_name, last_name, gender }
     );
 
     let messages = [msg];
@@ -24,7 +19,7 @@ let getServiceDescription = async ({ query, params }, res) => {
   }
 
   let msg = createFindPracticesMsg(
-    { service, service_id, messenger_user_id, first_name, last_name, gender }
+    { service }
   );
 
   let messages = [msg];

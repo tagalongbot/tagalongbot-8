@@ -23,7 +23,7 @@ let searchServicePromos = async ({ query }, res) => {
 }
 
 let getServicePromos = async ({ query, params }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, service_id } = query;
+  let { service_id, messenger_user_id, first_name, last_name, gender } = query;
   let { zip_code } = params;
 
   let service = await getServiceByID({ service_id });

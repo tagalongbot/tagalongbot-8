@@ -15,10 +15,15 @@ let getServicePracticePromos = async ({ query }, res) => {
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
 
-  let promos = await getServicePromos({ service_name, practice_promos_base_id });
+  let promos = await getServicePromos(
+    
+  );
 
   if (!promos[0]) {
-    let msg = createNoPromosMsg({ first_name, service_name, practice_id, practice_name });
+    let msg = createNoPromosMsg(
+      { first_name, service_name, practice_id, practice_name }
+    );
+
     let messages = [msg];
     res.send({ messages });
     return;

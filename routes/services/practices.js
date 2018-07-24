@@ -23,7 +23,7 @@ let searchServicePractices = async ({ query }, res) => {
 }
 
 let getServicePractices = async ({ query, params }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, service_id } = query;
+  let { service_id, messenger_user_id, first_name, last_name, gender } = query;
 
   let { zip_code } = params;
 
