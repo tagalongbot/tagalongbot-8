@@ -47,8 +47,8 @@ let callPractice = async ({ query }, res) => {
   let messages = [msg];
   res.send({ messages });
 
-  // Start the call 5 seconds after message is sent back to user on messenger
-  await timeout(5000);
+  // Start the call 10 seconds after message is sent back to user on messenger
+  await timeout(10000);
   let customer_call = await createCustomerCall(
     { practice, user, promo_id }
   );
