@@ -5,7 +5,7 @@ let { getUserByMessengerID, getUserPromos } = require('../../../libs/data/users.
 let { toGalleryElement } = require('../../../libs/promos/view/claimed.js');
 
 let viewClaimedPromos = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender } = query;
+  let { messenger_user_id } = query;
 
   let user = await getUserByMessengerID(messenger_user_id);
   let user_id = user.id;
@@ -13,7 +13,7 @@ let viewClaimedPromos = async ({ query }, res) => {
   let user_claimed_promos_data = convertLongTextToArray(
     user.fields['Claimed Promos']
   );
-  
+
   let user_promos = await getUserPromos(
     { user_id, view: 'Active Promos' }
   );
@@ -25,7 +25,7 @@ let viewClaimedPromos = async ({ query }, res) => {
   }
 
   let promos_gallery_data = user_promos.map(
-    toGalleryElement({ messenger_user_id, first_name, last_name, gender, user_claimed_promos_data })
+    toGalleryElement({ user_claimed_promos_data })
   );
 
   let messages = createMultiGallery(promos_gallery_data);
