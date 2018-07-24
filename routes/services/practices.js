@@ -49,7 +49,7 @@ let getServicePractices = async ({ query, params }, res) => {
   let last_gallery_element = createLastGalleryElement();
 	let practices_gallery = createGallery([...randomPractices, last_gallery_element], 'square');
 
-  let txtMsg = { text: `Here are some providers I found in Pennsylvania for Facelift` };
+  let txtMsg = { text: `Here are some providers I found in ${zip_code} for ${service_name}` };
   let messages = [txtMsg, practices_gallery];
 
   res.send({ messages });

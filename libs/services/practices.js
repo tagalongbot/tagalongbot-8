@@ -10,11 +10,10 @@ let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
   let subtitle = `${practice['Main Provider']} | ${practice['Practice Address']}`;
   let image_url = practice['Main Provider Image'] ? practice['Main Provider Image'][0].url : DEFAULT_PROVIDER_IMAGE;
 
-  let practice_base_id = practice['Practice Base ID'];
-
   let view_service_promos_url = createURL(
     `${BASEURL}/services/practice/promos`,
-    { service_id, practice_id, practice_base_id }
+    { practice_id }
+    // { service_id, practice_id } // Chatfuel bug already sending "service_id"
   );
 
   let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);
