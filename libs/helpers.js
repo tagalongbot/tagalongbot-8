@@ -70,7 +70,8 @@ let timeout = (ms) => {
 }
 
 let convertLongTextToArray = (long_text = '') => {
-  return long_text.split('\n');
+  let lines = long_text.split('\n');
+  return lines.filter(Boolean);
 }
 
 let logError = async (error) => {

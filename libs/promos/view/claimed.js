@@ -26,7 +26,7 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
     { practice_id, practice_promos_base_id, promo_id }
   );
 
-  let btn1 = createBtn(`View Promo Info|json_plugin_url|${view_promo_details_url}`);
+  let btn1 = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);
   let btn2 = createBtn(`View Promo Provider|json_plugin_url|${view_promo_practice_url}`);
 
   let buttons = [btn1, btn2];

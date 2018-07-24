@@ -61,13 +61,10 @@ let getUserPromos = async ({ user_id, view = 'Active Promos' }) => {
   }, {});
 
   let all_practice_promos = unique_practice_promos_base_ids.map(async (practice_promos_base_id) => {
-    console.log('practice_promos_base_id', practice_promos_base_id);
     let promosTable = getPromosTable(practice_promos_base_id);
-    console.log('promosTable', promosTable);
     let getPromos = getAllDataFromTable(promosTable);
 
     let practice_promos = await getPromos({ view });
-    console.log('practice_promos', practice_promos);
 
     let matching_practice_promos = practice_promos.filter(
       (promo) => practice_promos_by_ids_obj[practice_promos_base_id].includes(promo.id)
