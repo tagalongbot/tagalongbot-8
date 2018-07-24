@@ -18,7 +18,7 @@ let searchServicePractices = async ({ query }, res) => {
   let service_name = service.fields['Name'];
 
   let set_attributes = { service_id, service_name };
-  let redirect_to_blocks = ['Search Service Practices'];
+  let redirect_to_blocks = ['[ROUTER] Search Practice Services'];
   res.send({ set_attributes, redirect_to_blocks });
 }
 

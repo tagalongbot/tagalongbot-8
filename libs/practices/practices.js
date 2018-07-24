@@ -36,16 +36,16 @@ let createUpdateUserData = ({ search_practices_zip_code }) => {
 }
 
 let createButtons = (data) => {
-  let { practice_id, first_name, last_name, gender, messenger_user_id } = data;
+  let { practice_id, messenger_user_id, first_name, last_name, gender } = data;
 
   let view_services_btn_url = createURL(
     `${BASEURL}/practices/services`,
-    { practice_id, first_name, last_name, gender, messenger_user_id }
+    { practice_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let view_promos_btn_url = createURL(
     `${BASEURL}/practices/promos`,
-    { practice_id, first_name, last_name, gender, messenger_user_id }  
+    { practice_id, messenger_user_id, first_name, last_name, gender }  
   );
 
   let btn1 = createBtn(`View Services|json_plugin_url|${view_services_btn_url}`);
@@ -77,14 +77,14 @@ let createOrUpdateUser = async (user, query) => {
 }
 
 let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
-  let { first_name, last_name, gender, messenger_user_id } = data;
+  let { messenger_user_id, first_name, last_name, gender } = data;
 
   let title = practice['Practice Name'].slice(0, 80);
   let subtitle = `${practice['Main Provider']} | ${practice['Practice Address']}`;
   let image_url = practice['Main Provider Image'] ? practice['Main Provider Image'][0].url : DEFAULT_PRACTICE_IMAGE;
 
   let buttons = createButtons(
-    { practice_id, first_name, last_name, gender, messenger_user_id }
+    { practice_id, messenger_user_id, first_name, last_name, gender }
   );
 
   let element = { title, subtitle, image_url, buttons };

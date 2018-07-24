@@ -5,7 +5,7 @@ let { toGalleryElement } = require('../../libs/practices/services.js');
 let { createMultiGallery } = require('../../libs/bots.js');
 
 let getPracticeServices = async ({ query }, res) => {
-  let { practice_id, first_name, last_name, gender, messenger_user_id } = query;
+  let { practice_id, messenger_user_id, first_name, last_name, gender } = query;
 
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
@@ -22,7 +22,7 @@ let getPracticeServices = async ({ query }, res) => {
   }
 
   let servicesGalleryData = services_from_practice.slice(0, 9).map(
-    toGalleryElement({ messenger_user_id, first_name, last_name, gender, practice_id, practice_name })
+    toGalleryElement({ practice_id, practice_name, messenger_user_id, first_name, last_name, gender })
   );
 
   let servicesGallery = createMultiGallery(servicesGalleryData, 10, 'square');
