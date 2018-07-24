@@ -5,7 +5,7 @@ let { toGalleryElement } = require('../../libs/practices/practices.js');
 let { createGallery } = require('../../libs/bots.js');
 
 let getPromoPractice = async ({ query }, res) => {
-  let { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id } = query;
+  let { practice_id, practice_promos_base_id, promo_id } = query;
 
   let promo = await getPracticePromo(
     { practice_promos_base_id, promo_id }
@@ -26,7 +26,7 @@ let getPromoPractice = async ({ query }, res) => {
   }
 
   let practices_gallery_data = [practice].map(
-    toGalleryElement({ first_name, last_name, gender, messenger_user_id })
+    toGalleryElement
   );
 
   let practices_gallery = createGallery(practices_gallery_data, 'square');

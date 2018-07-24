@@ -4,13 +4,13 @@ let { createButtonMessage } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers.js');
 
 let createViewPracticePromosMsg = (data) => {
-  let { service, practice_id, messenger_user_id, first_name, last_name, gender } = data;
+  let { service, practice_id } = data;
 
   let service_id = service.id;
 
   let view_practice_promos = createURL(
     `${BASEURL}/services/practice/promos`, 
-    { service_id, practice_id, messenger_user_id, first_name, last_name, gender }
+    { service_id, practice_id }
   );
 
   let txtMsg = createButtonMessage(

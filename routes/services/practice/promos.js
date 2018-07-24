@@ -6,7 +6,7 @@ let { toGalleryElement } = require('../../../libs/promos/promos.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
 
 let getServicePracticePromos = async ({ query }, res) => {
-  let { service_id, practice_id, messenger_user_id, first_name, last_name, gender } = query;
+  let { service_id, practice_id } = query;
 
   let service = await getServiceByID({ service_id });
   let service_name = service.fields['Name'];
@@ -30,7 +30,7 @@ let getServicePracticePromos = async ({ query }, res) => {
   }
 
   let galleryData = promos.map(
-    toGalleryElement({ practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender })
+    toGalleryElement({ practice_id, practice_promos_base_id })
   );
 
   let text = `Here are some ${service_name} promos by ${practice_name}`;

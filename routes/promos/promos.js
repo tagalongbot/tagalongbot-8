@@ -7,8 +7,6 @@ let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/promos/promos.js');
 
 let getPromos = async ({ query, params }, res) => {
-  let { messenger_user_id, first_name, last_name, gender } = query;
-
   let { zip_code } = params;
 
   let practices = await searchPractices(
@@ -24,7 +22,7 @@ let getPromos = async ({ query, params }, res) => {
       let promos = await getPracticePromos({ practice_promos_base_id, view });
 
       return promos.map(
-        toGalleryElement({ practice_id, practice_promos_base_id, messenger_user_id, first_name, last_name, gender })
+        toGalleryElement({ practice_id, practice_promos_base_id })
       );
     })
   );
@@ -41,7 +39,7 @@ let getPromos = async ({ query, params }, res) => {
 
 	let promotionsGallery = createGallery(randomPromotions);
 
-  let txtMsg = { text: `Here's are some promotions I found ${first_name}` };
+  let txtMsg = { text: `Here's are some promotions I found` };
 	let messages = [txtMsg, promotionsGallery];
 	res.send({ messages });
 }
