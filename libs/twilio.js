@@ -22,8 +22,7 @@ let checkIfValidPhoneNumber = async ({ phone_number }) => {
 
 let sendPhoneVerificationCode = async ({ phone_number, code_length = 6 }) => {
   let sent_verification_code = await authy.startPhoneVerification(
-    { countryCode: 'US', locale: 'en', phone: phone_number, via: enums.verificationVia.SMS },
-    [{ codeLength: code_length }]
+    { countryCode: 'US', locale: 'en', phone: phone_number, via: enums.verificationVia.SMS, code_length },
   );
 
   return sent_verification_code;
