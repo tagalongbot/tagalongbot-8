@@ -85,6 +85,7 @@ let createLead = async (data) => {
   let promo_name = promo.fields['Promotion Name'];
 
   let lead_data = {
+    ['Call Initiated']: 'NO',
     ['First Name']: user_first_name,
     ['Last Name']: user_last_name,
     ['Gender']: user_gender,
