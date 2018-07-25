@@ -11,7 +11,9 @@ let getPracticeServices = async ({ query }, res) => {
   let practice_name = practice.fields['Practice Name'];
   let services = await getAllServices();
 
-  let services_from_practice = filterServicesFromPractice({ services, practice });
+  let services_from_practice = filterServicesFromPractice(
+    { services, practice }
+  );
 
   if (!services_from_practice[0]) {
     // Should never happen
@@ -25,9 +27,11 @@ let getPracticeServices = async ({ query }, res) => {
     toGalleryElement({ practice_id, practice_name })
   );
 
-  let servicesGallery = createMultiGallery(servicesGalleryData, 10, 'square');
-  let text = `Here are the services provided by ${practice_name}`;
-  let messages = [{ text }, ...servicesGallery];
+  let messages = [
+    { text: `Here are the services provided by ${practice_name}` }, 
+    ...createMultiGallery(servicesGalleryData, 10, 'square')
+  ];
+
   res.send({ messages });
 }
 

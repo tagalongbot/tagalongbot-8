@@ -17,7 +17,9 @@ let createNewUser = async ({ user_email, user_phone_number }) => {
   return new_user;
 }
 
-let updateExistingUser = async ({ user_email, user_phone_number, first_name, last_name, gender, messenger_user_id, user }) => {
+let updateExistingUser = async (data) => {
+  let { user_email, user_phone_number, first_name, last_name, gender, messenger_user_id, user } = data;
+
   let update_data = {
     ['Email Address']: user_email,
     ['Phone Number']: user_phone_number,
@@ -58,13 +60,23 @@ let listPractice = async({ query }, res) => {
   let user = await getUserByMessengerID(messenger_user_id);
 
   if (!user) {
-    let new_user = createNewUser({ user_email, user_phone_number });
+    let new_user = createNewUser(
+      { user_email, user_phone_number }
+    );
+  
+    let redirect_to_blocks = ['List Practice'];
+
+    res.send({ redirect_to_blocks });
+
     return;
   }
 
-  let updated_user = updateExistingUser({ user_email, user_phone_number, first_name, last_name, gender, messenger_user_id, user });
+  let updated_user = updateExistingUser(
+    { user_email, user_phone_number, first_name, last_name, gender, messenger_user_id, user }
+  );
 
   let redirect_to_blocks = ['List Practice'];
+
   res.send({ redirect_to_blocks });
 }
 

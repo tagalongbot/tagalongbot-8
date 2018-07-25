@@ -27,8 +27,10 @@ let getPracticesPromos = async ({ query }, res) => {
     toGalleryElement({ practice_id, practice_promos_base_id, first_name, last_name, gender, messenger_user_id })
   ).slice(0, 5);
 
-  let servicesGallery = createGallery(promosGalleryData);
-  let messages = [servicesGallery];
+  let messages = [
+    createGallery(promosGalleryData)
+  ];
+
   res.send({ messages });
 }
 

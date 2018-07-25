@@ -31,7 +31,9 @@ let updateUserPromo = async ({ query }, res) => {
     return;
   }
 
-  let updatedPromo = await updatePromo({ practice_promos_base_id, promo, user_record_id });
+  let updatedPromo = await updatePromo(
+    { practice_promos_base_id, promo, user_record_id }
+  );
 
   let msg = createUpdateMsg();
   let messages = [msg];

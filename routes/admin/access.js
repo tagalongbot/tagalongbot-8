@@ -34,7 +34,9 @@ let getAdminAccess = async ({ query }, res) => {
 
   let filterByFormula = `{Main Provider Phone Number} = '${formatPhoneNumber(user_phone_number)}'`;
 
-  let [practice] = await getAllPractices({ filterByFormula });
+  let [practice] = await getAllPractices(
+    { filterByFormula }
+  );
   
   let update_data = {
     ['Provider Messenger ID']: messenger_user_id
@@ -43,6 +45,7 @@ let getAdminAccess = async ({ query }, res) => {
   let updated_practice = await updatePractice(update_data, practice);
 
   let redirect_to_blocks = ['Admin Access Granted'];
+
   res.send({ redirect_to_blocks });
 }
 

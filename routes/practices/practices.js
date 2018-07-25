@@ -30,10 +30,10 @@ let getPractices = async ({ query, params }, res) => {
 
   let last_gallery_element = createLastGalleryElement();
 
-	let practices_gallery = createGallery([...randomPractices, last_gallery_element], 'square');
-  let textMsg = { text: `Here's are some providers I found ${first_name}` };
-
-	let messages = [textMsg, practices_gallery];
+	let messages = [
+    { text: `Here's are some providers I found ${first_name}` }, 
+    createGallery([...randomPractices, last_gallery_element], 'square')
+  ];
 
 	res.send({ messages });
 }

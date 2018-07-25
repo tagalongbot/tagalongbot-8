@@ -20,6 +20,7 @@ let getUpdateField = async ({ query }, res) => {
 
   let set_attributes = { updating_promo_id, updating_practice_promos_base_id };
   let redirect_to_blocks = ['Update Promo'];
+
   res.send({ set_attributes, redirect_to_blocks });
 }
 
@@ -31,54 +32,68 @@ let updateExpirationDate = async ({ query }, res) => {
   );
   
   let set_attributes = { update_promo_field_value: new_value }
+
   res.send({ set_attributes });
 }
 
 let getImageCategories = async ({ query }, res) => {
   let { promo_id, practice_promos_base_id } = query;
+
   let categories = await getCustomCategories();
 
   let gallery_data = categories.map(
     toCategoriesGallery({ promo_id, practice_promos_base_id })
   );
 
-  let galleries = createMultiGallery(gallery_data);
+  let messages = [
+    { text: `Please choose an image category from below` }, 
+    ...createMultiGallery(gallery_data)
+  ];
 
-  let txtMsg = { text: `Please choose an image category from below` };
-
-  let messages = [txtMsg, ...galleries];
   res.send({ messages });
 }
 
 let getImagesFromCategory = async ({ query }, res) => {
   let { promo_id, practice_promos_base_id, category_id } = query;
 
-  let promo = await getPracticePromo({ promo_id, practice_promos_base_id });
+  let promo = await getPracticePromo(
+    { promo_id, practice_promos_base_id }
+  );
 
-  let category = await getCustomCategoryByID({ category_id });
+  let category = await getCustomCategoryByID(
+    { category_id }
+  );
+
   let category_name = category.fields['Category Name'];
 
-  let images = await getCustomImagesByCategory({ category_name });
+  let images = await getCustomImagesByCategory(
+    { category_name }
+  );
 
   let gallery_data = images.map(
     toImagesGallery(promo)
   );
 
-  let galleries = createMultiGallery(gallery_data);
+  let messages = [
+    { text: `Please choose an image below to use for ${promo.fields['Promotion Name']}` },
+    ...createMultiGallery(gallery_data)
+  ];
 
-  let txtMsg = { text: `Please choose an image below to use for ${promo.fields['Promotion Name']}` };
-  let messages = [txtMsg, ...galleries];
   res.send({ messages });
 }
 
 let selectUpdateImage = async ({ query }, res) => {
   let { custom_image_id } = query;
 
-  let image_promo = await getCustomImageByID({ custom_image_id });
+  let image_promo = await getCustomImageByID(
+    { custom_image_id }
+  );
+
   let image_url = image_promo.fields['Image URL'];
 
   let set_attributes = { update_promo_field_value: image_url }
   let redirect_to_blocks = ['Update Promo (JSON)'];
+
   res.send({ set_attributes, redirect_to_blocks });
 }
 
@@ -107,6 +122,7 @@ let updatePromoInfo = async ({ query }, res) => {
   );
 
   let messages = [updateMsg];
+
   res.send({ messages });
 }
 

@@ -28,6 +28,7 @@ let callPractice = async ({ query }, res) => {
   let { practice_id, promo_id, messenger_user_id: user_messenger_id } = query;
 
   let practice = await getPracticeByID(practice_id);
+
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let user = await getUserByMessengerID(user_messenger_id);
@@ -49,13 +50,13 @@ let callPractice = async ({ query }, res) => {
 
   // Start the call 10 seconds after message is sent back to user on messenger
   await timeout(10000);
+
   let customer_call = await createCustomerCall(
     { practice, user, promo_id }
   );
 }
 
 let answerCustomer = async ({ query, params }, res) => {
-  console.log('Customer Answered');
   let { user_id, practice_id, promo_id } = params;
 
   let user = await getUserByID(user_id);
@@ -64,7 +65,10 @@ let answerCustomer = async ({ query, params }, res) => {
   let practice = await getPracticeByID(practice_id);
   let practice_name = practice.fields['Practice Name'];
   let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
-  let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
+
+  let practice_phone_number = getNumbersOnly(
+    practice.fields['Practice Phone Number']
+  );
 
   let voice_response = new VoiceResponse();
 
@@ -80,14 +84,8 @@ let answerCustomer = async ({ query, params }, res) => {
     recordingStatusCallbackEvent: 'completed',
   });
 
-  let dial_number_options = {
-    url: `${BASEURL}/practices/call/answered/practice/${user_id}/${practice_id}/${promo_id}`,
-    statusCallback: `${BASEURL}/practices/call/ringing/practice/${user_id}/${practice_id}/${promo_id}`,
-    statusCallbackEvent: 'ringing',
-  }
-
   dial.number(
-    dial_number_options, 
+    { url: `${BASEURL}/practices/call/answered/practice/${user_id}/${practice_id}/${promo_id}` }, 
     `+1${practice_phone_number}`
   );
 
@@ -95,13 +93,7 @@ let answerCustomer = async ({ query, params }, res) => {
   res.send(voice_response.toString());
 }
 
-let ringingPractice = async ({ params, body }, res) => {
-  console.log('Ringing Practice', body);
-  res.sendStatus(200);
-}
-
 let answerPractice = async ({ query, params }, res) => {
-  console.log('Practice Answered');
   let { user_id, practice_id, promo_id } = params;
 
   let practice = await getPracticeByID(practice_id);
@@ -159,11 +151,6 @@ router.get(
 router.post(
   '/answered/customer/:user_id/:practice_id/:promo_id',
   answerCustomer
-);
-
-router.post(
-  '/ringing/practice/:user_id/:practice_id/:promo_id',
-  ringingPractice
 );
 
 router.post(
