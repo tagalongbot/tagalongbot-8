@@ -29,8 +29,10 @@ let getPromoPractice = async ({ query }, res) => {
     toGalleryElement
   );
 
-  let practices_gallery = createGallery(practices_gallery_data, 'square');
-  let messages = [practices_gallery];
+  let messages = [
+    createGallery(practices_gallery_data, 'square')
+  ];
+
   res.send({ messages });
 }
 

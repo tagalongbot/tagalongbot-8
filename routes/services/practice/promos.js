@@ -8,7 +8,10 @@ let { createMultiGallery } = require('../../../libs/bots.js');
 let getServicePracticePromos = async ({ query }, res) => {
   let { service_id, practice_id } = query;
 
-  let service = await getServiceByID({ service_id });
+  let service = await getServiceByID(
+    { service_id }
+  );
+
   let service_name = service.fields['Name'];
 
   let practice = await getPracticeByID(practice_id);
@@ -21,7 +24,7 @@ let getServicePracticePromos = async ({ query }, res) => {
 
   if (!promos[0]) {
     let msg = createNoPromosMsg(
-      { first_name, service, practice }
+      { service, practice }
     );
 
     let messages = [msg];
@@ -33,9 +36,8 @@ let getServicePracticePromos = async ({ query }, res) => {
     toGalleryElement({ practice_id, practice_promos_base_id })
   );
 
-  let text = `Here are some ${service_name} promos by ${practice_name}`;
   let messages = [
-    { text },
+    { text: `Here are some ${service_name} promos by ${practice_name}` },
     ...createMultiGallery(galleryData)
   ];
 

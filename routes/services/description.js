@@ -1,5 +1,6 @@
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getServiceByID } = require('../../libs/data/services.js');
+
 let { createFindPracticesMsg, createViewPracticePromosMsg } = require('../../libs/services/description.js');
 
 let getServiceDescription = async ({ query, params }, res) => {
@@ -25,6 +26,7 @@ let getServiceDescription = async ({ query, params }, res) => {
   );
 
   let messages = [msg];
+
   res.send({ messages });
 }
 

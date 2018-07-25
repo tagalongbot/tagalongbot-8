@@ -14,6 +14,7 @@ let getPromoDetails = async ({ query, params }, res) => {
   );
 
   let messages = [msg];
+
   res.send({ messages });
 }
 

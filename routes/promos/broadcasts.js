@@ -11,12 +11,12 @@ let findPromosOffLastSearch = async ({ query }, res) => {
   let gender = user.fields['Gender'];
   
   let zip_code = user.fields['Last Zip Code Searched'] || null;
-  
-  let new_query = { messenger_user_id, first_name, last_name, gender };
-  let params = { zip_code };
 
   getPromos(
-    { query: new_query, params },
+    { 
+      query: { messenger_user_id, first_name, last_name, gender }, 
+      params: { zip_code }
+    },
     res
   );
 }

@@ -17,13 +17,16 @@ let getServices = async ({ query, params }, res) => {
 
   if (service_type === 'surgical') {
     let surgical_services = await getSurgicalServices();
+
     let surgical_services_gallery_data = surgical_services.map(
       toGalleryElement
     );
 
-    let gallery = createGallery(surgical_services_gallery_data);
-    let txtMsg = { text: `Here's are the top surgical services` };
-    let messages = [txtMsg, gallery];
+    let messages = [
+      { text: `Here's are the top surgical services` }, 
+      createGallery(surgical_services_gallery_data)
+    ];
+
     res.send({ messages });
     return;
   }
@@ -45,10 +48,10 @@ let getServices = async ({ query, params }, res) => {
     gallery_array.push(last_gallery_element);
   }
 
-  let textMsg = { text: `Here's are some services you can search for` };
-	let gallery = createGallery(gallery_array);
-  
-	let messages = [textMsg, gallery];
+	let messages = [
+    { text: `Here's are some services you can search for` }, 
+    createGallery(gallery_array)  
+  ];
 
 	res.send({ messages });
 }

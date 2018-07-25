@@ -14,11 +14,16 @@ let router = express.Router();
 
 let searchServicePractices = async ({ query }, res) => {
   let { service_id } = query;
-  let service = await getServiceByID({ service_id });
+
+  let service = await getServiceByID(
+    { service_id }
+  );
+
   let service_name = service.fields['Name'];
 
   let set_attributes = { service_id, service_name };
   let redirect_to_blocks = ['[ROUTER] Search Practice Services'];
+
   res.send({ set_attributes, redirect_to_blocks });
 }
 
@@ -26,7 +31,10 @@ let getServicePractices = async ({ query, params }, res) => {
   let { service_id } = query;
   let { zip_code } = params;
 
-  let service = await getServiceByID({ service_id });
+  let service = await getServiceByID(
+    { service_id }
+  );
+
   let service_name = service.fields['Name'];
 
   let practices = await searchPractices(
@@ -38,6 +46,7 @@ let getServicePractices = async ({ query, params }, res) => {
   if (!practicesByService[0]) {
     let set_attributes = { service_name }
     let redirect_to_blocks = ['No Service Practices Found'];
+  
     res.send({ set_attributes, redirect_to_blocks });
     return;
   }
@@ -47,10 +56,11 @@ let getServicePractices = async ({ query, params }, res) => {
   );
 
   let last_gallery_element = createLastGalleryElement();
-	let practices_gallery = createGallery([...randomPractices, last_gallery_element], 'square');
 
-  let txtMsg = { text: `Here are some providers I found in ${zip_code} for ${service_name}` };
-  let messages = [txtMsg, practices_gallery];
+  let messages = [
+    { text: `Here are some providers I found in ${zip_code} for ${service_name}` },
+    createGallery([...randomPractices, last_gallery_element], 'square')
+  ];
 
   res.send({ messages });
 }

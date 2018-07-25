@@ -19,6 +19,7 @@ let askForUserInfo = async ({ query }, res) => {
 
   let redirect_to_blocks = ['[ROUTER] Claim Promo'];
   let set_attributes = { promo_id, practice_id };
+
   res.send({ redirect_to_blocks, set_attributes });
 }
 
@@ -43,7 +44,16 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { practice_id, promo_id, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = query;
+  let { 
+    practice_id, 
+    promo_id, 
+    messenger_user_id, 
+    first_name, 
+    last_name, 
+    gender, 
+    user_email, 
+    user_phone_number 
+  } = query;
 
   let practice = await getPracticeByID(practice_id);
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
@@ -91,6 +101,7 @@ let sendNoPracticeCallMsg = async ({ query }, res) => {
   let { first_name, last_name, gender, messenger_user_id, practice_id, promo_id } = query;
 
   let practice = await getPracticeByID(practice_id);
+
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
   let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
 
