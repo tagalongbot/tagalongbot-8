@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
 
-let { createURL, localizeDate } = require('../../../../libs/helpers.js');
+let { localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 let { createExpirationDate } = require('../../../../libs/admin/promos/create.js');
 
@@ -10,12 +10,10 @@ let toCategoryGallery = (data) => ({ id: category_id, fields: category }) => {
   let title = category['Category Name'];
   let image_url = category['Image URL'];
 
-  let send_images_url = createURL(
-    `${BASEURL}/admin/promos/create/custom/images`,
-    { messenger_user_id, category_id } // Chatfuel was adding attributes
+  let btn1 = createBtn(
+    `View Category Images|show_block|[JSON] View Category Images (Custom Promo)`,
+    { category_id }
   );
-
-  let btn1 = createBtn(`View Category Images|json_plugin_url|${send_images_url}`);
 
   let buttons = [btn1];
 
@@ -34,12 +32,10 @@ let toImagesGallery = (data) => ({ id: promo_id, fields: promo_image }) => {
   let image_url = promo_image['Image URL'];
   let new_promo_image_id = promo_id;
 
-  let select_image_url = createURL(
-    `${BASEURL}/admin/promos/create/custom/images/select`,
+  let btn1 = createBtn(
+    `Use This Image|show_block|[JSON] Select Image (Custom Promo)`,
     { new_promo_image_id }
   );
-
-  let btn1 = createBtn(`Use This Image|json_plugin_url|${select_image_url}`);
 
   let buttons = [btn1];
 

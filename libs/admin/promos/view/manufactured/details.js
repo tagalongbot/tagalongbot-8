@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
 
-let { createButtonMessage } = require('../../../../../libs/bots.js');
+let { createBtn, createButtonMessage } = require('../../../../../libs/bots.js');
 let { createURL } = require('../../../../../libs/helpers.js');
 
 let createDetailsMsg = (data) => {
@@ -10,7 +10,7 @@ let createDetailsMsg = (data) => {
     `${BASEURL}/admin/promos/create/manufactured/service/create`,
     { service_id, promo_id, practice_id, practice_promos_base_id }
   );
-
+  
   let msg = createButtonMessage(
     promo.fields['Details'],
     `Create Promo|json_plugin_url|${create_promo_url}`

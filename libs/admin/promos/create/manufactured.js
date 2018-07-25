@@ -65,12 +65,10 @@ let toServicesGallery = (data) => ({ id: service_id, fields: service }) => {
   let title = service['Name'];
   let image_url = service['Image URL'];
 
-  let view_service_promos_url = createURL(
-    `${BASEURL}/admin/promos/create/manufactured/service`,
+  let btn = createBtn(
+    `View Service Promos|show_block|[JSON] Get Manufactured Service Promos`,
     { service_id, practice_id, practice_promos_base_id }
   );
-
-  let btn = createBtn(`View Service Promos|json_plugin_url|${view_service_promos_url}`);
 
   let buttons = [btn];
 
@@ -85,16 +83,17 @@ let toPromosGallery = (data) => ({ id: promo_id, fields: promo }) => {
 
   let create_promo_url = createURL(
     `${BASEURL}/admin/promos/create/manufactured/service/create`,
+  );
+
+  let btn1 = createBtn(
+    `Create Promo|show_block|[JSON] Create Manufactured Promo`,
     { service_id, promo_id, practice_id, practice_promos_base_id }
   );
 
-  let view_promo_details_url = createURL(
-    `${BASEURL}/admin/promos/view/manufactured/details`,
+  let btn2 = createBtn(
+    `View Promo Details|show_block|[JSON] View Manufactured Promo Details`,
     { service_id, promo_id, practice_id, practice_promos_base_id }
   );
-
-  let btn1 = createBtn(`Create Promo|json_plugin_url|${create_promo_url}`);
-  let btn2 = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);
 
   let buttons = [btn1, btn2];
 
