@@ -99,7 +99,6 @@ let selectUpdateImage = async ({ query }, res) => {
 
 let updatePromoInfo = async ({ query }, res) => {
   let {
-    messenger_user_id,
     updating_promo_id,
     updating_practice_promos_base_id,
     update_promo_field_name, 
@@ -118,7 +117,7 @@ let updatePromoInfo = async ({ query }, res) => {
   );
 
   let updateMsg = createUpdateMsg(
-    { messenger_user_id, practice_promos_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
+    { practice_promos_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
   );
 
   let messages = [updateMsg];

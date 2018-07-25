@@ -1,19 +1,19 @@
-let { createButtonMessage } = require('../../../libs/bots.js');
+let { createBtn, createButtonMessage } = require('../../../libs/bots.js');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../../libs/data.js');
 
 let getPromosTable = getTable('Promos');
 let getUsersTable = getTable('Users');
 
-let getPromo = async ({ practice_base_id, promo_id }) => {
-  let promosTable = getPromosTable(practice_base_id);
+let getPromo = async ({ practice_promos_base_id, promo_id }) => {
+  let promosTable = getPromosTable(practice_promos_base_id);
   let findPromo = findTableData(promosTable);
   let promo = await findPromo(promo_id);
   return promo;
 }
 
-let updatePromo = async ({ practice_base_id, promo }) => {
-  let promosTable = getPromosTable(practice_base_id);
+let updatePromo = async ({ practice_promos_base_id, promo }) => {
+  let promosTable = getPromosTable(practice_promos_base_id);
   let updatePromoFromTable = updateTableData(promosTable);
 
   let updateData = {
@@ -25,28 +25,27 @@ let updatePromo = async ({ practice_base_id, promo }) => {
 }
 
 let createUpdateMsg = (data) => {
-  let { messenger_user_id, promo_id, practice_base_id, promo, updatedPromo } = data;
+  let { promo_id, practice_promos_base_id, promo, updated_promo } = data;
   
-  let toggle_promo_url = createURL(
-    `${BASEURL}/admin/promos/toggle`,
-    { promo_id, practice_base_id }
+  let toggle_promo_btn = createBtn(
+    `${updated_promo.fields['Active?'] ? 'Deactivate' : 'Reactivate'}|show_block|[JSON] Toggle Promo`,
+    { promo_id, practice_promos_base_id }
   );
 
-  let view_promo_details_url = createURL(
-    `${BASEURL}/admin/promos/view/info`,
-    { messenger_user_id, promo_id, practice_base_id }
+  let view_promo_details_btn = createBtn(
+    `View Promo Details|show_block|[JSON] View Promo Info`,
+    { promo_id, practice_promos_base_id }
   );
 
-  let view_all_promos_url = createURL(
-    `${BASEURL}/admin/promos/view/all`,
-    { messenger_user_id }
+  let view_all_promos_btn = createBtn(
+    `View All Promotions|show_block|[JSON] View All Promotions`
   );
 
   let txtMsg = createButtonMessage(
-    `The promo "${promo.fields['Promotion Name']}" is now "${updatedPromo.fields['Active?'] ? 'Active' : 'Deactivated'}"`,
-    `${updatedPromo.fields['Active?'] ? 'Deactivate' : 'Reactivate'}|json_plugin_url|${toggle_promo_url}`,
-    `View Promo Details|json_plugin_url|${view_promo_details_url}`,
-    `View All Promotions|json_plugin_url|${view_all_promos_url}`
+    `The promo "${promo.fields['Promotion Name']}" is now "${updated_promo.fields['Active?'] ? 'Active' : 'Deactivated'}"`,
+    toggle_promo_btn,
+    view_promo_details_btn,
+    view_all_promos_btn,
   );
 
   return txtMsg;

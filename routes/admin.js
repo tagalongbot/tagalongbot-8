@@ -16,7 +16,6 @@ let viewAllPromos = require('../routes/admin/promos/view/all.js');
 let viewPromoInfo = require('../routes/admin/promos/view/info.js');
 let updatePromoInfo = require('../routes/admin/promos/update.js');
 let togglePromo = require('../routes/admin/promos/toggle.js');
-let updateUserPromo = require('../routes/admin/promos/user/update.js');
 
 // Leads
 let getLeadsList = require('../routes/admin/leads/view.js');
@@ -66,11 +65,6 @@ router.use(
 router.get(
   '/promos/toggle', 
   handleRoute(togglePromo, '[Error] Admin')
-);
-
-router.get(
-  '/promos/user/update', 
-  handleRoute(updateUserPromo, '[Error] Admin')
 );
 
 router.get(

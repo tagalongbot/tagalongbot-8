@@ -63,7 +63,6 @@ let updatePromo = async (data) => {
 
 let createUpdateMsg = (data) => {
   let {
-    messenger_user_id,
     promo_id,
     practice_promos_base_id,
     promo,
