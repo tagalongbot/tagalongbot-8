@@ -29,17 +29,15 @@ let createButtonMessage = (text, ...buttons) => {
 	return { attachment };
 }
 
-let createQuickReplyMessage = (text, ...quick_replies) => {
-//   let quick_replies = btns.map(btn => {
-//     let [title, type, value] = btn.split('|');
+let createQuickReplyMessage = (text, ...btns) => {
+  let quick_replies = btns.map(btn => {
+    let { title, type, block_name, set_attributes } = btn;
 
-//     if (type === '') {
-//       return { title, block_names: [value] };
-//     }
-
-//     let type_name = BUTTON_TYPES[type];
-//     return { title, type, [type_name]: value };
-//   });
+    let quick_reply = { title, block_names: [block_name] };
+    
+    if (set_attributes) quick_reply.set_attributes = set_attributes;
+    return quick_reply;
+  });
 
   return { text, quick_replies };
 }

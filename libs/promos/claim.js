@@ -136,7 +136,7 @@ let createClaimedMsg = (data) => {
   );
 
   let no_call_practice_btn = createBtn(
-    `No|show_block|[JSON] Call Practice Call`,
+    `No|show_block|[JSON] No Practice Call`,
     { practice_id, promo_id }
   );
 
