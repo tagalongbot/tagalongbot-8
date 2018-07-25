@@ -20,8 +20,7 @@ let toGalleryElement = (data) => ({ id: practice_id, fields: practice }) => {
 
   let buttons = [btn];
 
-  let element = { title, subtitle, image_url, buttons };
-  return element;
+  return { title, subtitle, image_url, buttons };
 }
 
 module.exports = {

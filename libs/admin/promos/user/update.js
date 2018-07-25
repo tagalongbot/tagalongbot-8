@@ -18,13 +18,13 @@ let updatePromo = async (data) => {
     ...new Set([user_record_id, ...already_used_user_ids])
   ];
 
-  let updateData = {
+  let updated_data = {
     ['Promo Used By Users']: new_used_user_ids,
     ['Total Used']: total_used + 1
   }
 
-  let updatedPromo = await updatePromoFromTable(updateData, promo);
-  return updatedPromo;
+  let updated_promo = await updatePromoFromTable(updated_data, promo);
+  return updated_promo;
 }
 
 let createUpdateMsg = () => {

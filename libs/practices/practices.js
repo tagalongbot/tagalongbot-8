@@ -7,9 +7,7 @@ let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/
 let { getPracticesByState, getPracticesByCity } = require('../../libs/data/practices.js');
 
 let createNewUserData = (data) => {
-  let { messenger_user_id, first_name, last_name, gender } = data;
-
-  let { search_practices_zip_code } = data;
+  let { search_practices_zip_code, messenger_user_id, first_name, last_name, gender } = data;
 
   let last_zip_code_searched = search_practices_zip_code ? Number(search_practices_zip_code.trim()) : null;
 

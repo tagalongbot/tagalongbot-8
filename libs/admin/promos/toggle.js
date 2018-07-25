@@ -23,8 +23,8 @@ let updatePromo = async ({ practice_base_id, promo }) => {
     ['Active?']: promo.fields['Active?'] ? false : true
   }
   
-  let updatedPromo = await updatePromoFromTable(updateData, promo);
-  return updatedPromo;
+  let updated_promo = await updatePromoFromTable(updateData, promo);
+  return updated_promo;
 }
 
 let createUpdateMsg = (data) => {

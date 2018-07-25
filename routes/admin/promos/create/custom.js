@@ -47,9 +47,14 @@ let sendCustomImages = async ({ query, url }, res) => {
   // console.log('url', url);
   // console.log('new_promo_name', new_promo_name);
 
-  let category = await getCustomCategoryByID({ category_id });
+  let category = await getCustomCategoryByID(
+    { category_id }
+  );
+  
   let category_name = category.fields['Category Name'];
-  let custom_promo_images = await getCustomImagesByCategory({ category_name });
+  let custom_promo_images = await getCustomImagesByCategory(
+    { category_name }
+  );
 
   let galleryData = custom_promo_images.map(
     toImagesGallery({ promo_name, promo_expiration_date, promo_claim_limit })
@@ -57,8 +62,11 @@ let sendCustomImages = async ({ query, url }, res) => {
 
   // console.log('Gallery Image Element', galleryData[0]);
 
-  let txtMsg = { text: `Please choose an image below from ${category_name} to use for your new custom promo` };
-  let messages = [txtMsg, ...createMultiGallery(galleryData)];
+  let messages = [
+    { text: `Please choose an image below from ${category_name} to use for your new custom promo` }, 
+    ...createMultiGallery(galleryData)
+  ];
+
   res.send({ messages });
 }
 
@@ -82,6 +90,7 @@ let createCustomPromo = async ({ query }, res) => {
   } = query;
   
   let practice = await getPracticeByUserID(messenger_user_id);
+
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let new_promo = await createNewPromo(

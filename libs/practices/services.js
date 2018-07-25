@@ -19,8 +19,7 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
 
   let buttons = [btn];
 
-  let element = { title, subtitle, image_url, buttons };
-  return element;
+  return { title, subtitle, image_url, buttons };
 }
 
 module.exports = {

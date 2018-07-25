@@ -61,6 +61,7 @@ let getLeadsList = async ({ query, params }, res) => {
   let { range } = params;
 
   let practice = await getPracticeByUserID(messenger_user_id);
+
   let practice_name = practice.fields['Practice Name'];
   let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
@@ -75,8 +76,15 @@ let getLeadsList = async ({ query, params }, res) => {
     toLeadData({ practice_promos_base_id })
   ));
 
-  let view_html = riot.render(leads_list_tag, { leads });
-  res.render('leads-list', { view_html, practice_name });
+  let view_html = riot.render(
+    leads_list_tag, 
+    { leads }
+  );
+
+  res.render(
+    'leads-list', 
+    { view_html, practice_name }
+  );
 }
 
 module.exports = getLeadsList;

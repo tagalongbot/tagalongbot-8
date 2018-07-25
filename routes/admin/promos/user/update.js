@@ -8,7 +8,10 @@ let updateUserPromo = async ({ query }, res) => {
   let { practice_promos_base_id, promo_id, user_messenger_id } = query;
   // console.log('user_messenger_id', user_messenger_id); // Added twice to url
 
-  let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
+  let promo = await getPracticePromo(
+    { practice_promos_base_id, promo_id }
+  );
+
   let user = await getUserByMessengerID(user_messenger_id);
 
   if (!user) {

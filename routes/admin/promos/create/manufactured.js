@@ -15,47 +15,70 @@ let sendManufacturedServicesWithPromotions = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
   let practice = await getPracticeByUserID(messenger_user_id);
+
   let practice_id = practice.id;
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let services = await getAllServices();
-  let practice_services = filterServicesFromPractice({ services, practice });
 
-  let services_with_promos = await getServicesWithPromos({ services: practice_services });
+  let practice_services = filterServicesFromPractice(
+    { services, practice }
+  );
+
+  let services_with_promos = await getServicesWithPromos(
+    { services: practice_services }
+  );
 
   let galleryData = services_with_promos.map(
     toServicesGallery({ practice_id, practice_promos_base_id })
   );
 
-  let txtMsg = { text: `Please pick a service to create a manufactured promo from?` };
-  let messages = [txtMsg, ...createMultiGallery(galleryData)];
+  let messages = [
+    { text: `Please pick a service to create a manufactured promo from?` }, 
+    ...createMultiGallery(galleryData)
+  ];
+
   res.send({ messages });
 }
 
 let sendServiceManufacturedPromos = async ({ query }, res) => {
   let { service_id, practice_id, practice_promos_base_id } = query;
 
-  let service = await getServiceByID({ service_id });
+  let service = await getServiceByID(
+    { service_id }
+  );
+  
   let service_name = service.fields['Name'];
-  let promos = await getManufacturedPromosByService({ service_name });
+
+  let promos = await getManufacturedPromosByService(
+    { service_name }
+  );
 
   let galleryData = promos.map(
     toPromosGallery({ service_id, practice_id, practice_promos_base_id }, service)
   );
 
-  let txtMsg = { text: `Which promo would you like to create for ${service_name}?` };
-  let gallery = createGallery(galleryData);
-  let messages = [txtMsg, gallery];
+  let messages = [
+    { text: `Which promo would you like to create for ${service_name}?` }, 
+    createGallery(galleryData)
+  ];
+
   res.send({ messages });
 }
 
 let createServicePromo = async ({ query }, res) => {
   let { service_id, promo_id, practice_id, practice_promos_base_id } = query;
 
-  let service = await getServiceByID({ service_id });
+  let service = await getServiceByID(
+    { service_id }
+  );
+  
   let new_promo_service_name = service.fields['Name'];
 
-  let promo = await getManufacturedPromoByID({ promo_id });
+  let promo = await getManufacturedPromoByID(
+    { promo_id }
+  );
+
   let new_promo_type = promo.fields['Name'];
 
   let new_promo_id = promo_id;
@@ -63,8 +86,17 @@ let createServicePromo = async ({ query }, res) => {
   let new_promo_practice_id = practice_id;
   let new_promo_practice_promos_base_id = practice_promos_base_id;
 
-  let set_attributes = { new_promo_id, new_promo_service_id, new_promo_service_name, new_promo_type, new_promo_practice_id, new_promo_practice_promos_base_id };
+  let set_attributes = { 
+    new_promo_id, 
+    new_promo_service_id, 
+    new_promo_service_name, 
+    new_promo_type, 
+    new_promo_practice_id, 
+    new_promo_practice_promos_base_id 
+  };
+
   let redirect_to_blocks = ['[ROUTER] New Manufactured Promo'];
+
   res.send({ set_attributes, redirect_to_blocks });
 }
 
@@ -82,6 +114,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
   );
 
   let redirect_to_blocks = ['New Manufactured Promo Created'];
+
   res.send({ redirect_to_blocks });
 }
 

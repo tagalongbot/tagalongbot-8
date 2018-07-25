@@ -51,11 +51,11 @@ let createNewPromo = async (data) => {
     ['Total Used']: 0,
   }
 
-  let newPromo = await createPracticePromo(
+  let new_promo = await createPracticePromo(
     { practice_promos_base_id, promo_data }
   );
 
-  return newPromo;
+  return new_promo;
 }
 
 // Mapping Functions
@@ -74,8 +74,7 @@ let toServicesGallery = (data) => ({ id: service_id, fields: service }) => {
 
   let buttons = [btn];
 
-  let element = { title, image_url, buttons };
-  return element;
+  return { title, image_url, buttons };
 }
 
 let toPromosGallery = (data) => ({ id: promo_id, fields: promo }) => {
@@ -99,8 +98,7 @@ let toPromosGallery = (data) => ({ id: promo_id, fields: promo }) => {
 
   let buttons = [btn1, btn2];
 
-  let element = { title, image_url, buttons };
-  return element;
+  return { title, image_url, buttons };
 }
 
 module.exports = {

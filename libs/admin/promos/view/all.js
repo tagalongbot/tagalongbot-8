@@ -48,8 +48,7 @@ let toGalleryData = (data) => ({ id: promo_id, fields: promo }) => {
 
   let buttons = [btn1, btn2, btn3];
 
-  let element = { title, subtitle, image_url, buttons }
-  return element;
+  return { title, subtitle, image_url, buttons }
 }
 
 module.exports = {

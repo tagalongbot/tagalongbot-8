@@ -36,8 +36,7 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 
   let buttons = [btn1, btn2, btn3];
 
-  let element = { title, subtitle, image_url, buttons};
-  return element;
+  return { title, subtitle, image_url, buttons};
 }
 
 let createSurgicalCategoryElement = () => {
@@ -52,8 +51,7 @@ let createSurgicalCategoryElement = () => {
 
   let buttons = [btn];
 
-  let surgical_category_gallery_element = { title, image_url, buttons };
-  return surgical_category_gallery_element;
+  return { title, image_url, buttons };
 }
 
 let createLastGalleryElement = ({ service_type, index }) => {
@@ -71,8 +69,7 @@ let createLastGalleryElement = ({ service_type, index }) => {
 
   let buttons = [btn1, btn2, btn3];
 
-  let last_gallery_element = { title, buttons };
-  return last_gallery_element;
+  return { title, buttons };
 }
 
 module.exports = {
