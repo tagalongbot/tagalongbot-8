@@ -3,6 +3,7 @@ let { createGallery } = require('../../libs/bots.js');
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
 let { toGalleryElement } = require('../../libs/promos/promos.js');
+let { createLastGalleryElement } = require('../../libs/practices/promos.js');
 
 let getPracticesPromos = async ({ query }, res) => {
   let { practice_id, messenger_user_id, first_name, last_name, gender } = query;
@@ -36,7 +37,7 @@ let getPracticesPromos = async ({ query }, res) => {
 
     promos_gallery_array.push(last_gallery_element);
   }
-  
+
   let messages = [
     createGallery(promos_gallery_array)
   ];
