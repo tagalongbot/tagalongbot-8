@@ -15,6 +15,7 @@ let getServicePromos = async (data) => {
   );
 
   let lower_cased_service_name = service_name.toLowerCase();
+
   let matched_promos = promos.filter(
     promo => promo.fields['Type'].toLowerCase().includes(lower_cased_service_name)
   );

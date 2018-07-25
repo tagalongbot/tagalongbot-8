@@ -1,5 +1,5 @@
 let { createBtn } = require('../../../libs/bots.js');
-let { createURL, localizeDate } = require('../../../libs/helpers.js');
+let { localizeDate } = require('../../../libs/helpers.js');
 
 let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let { user_claimed_promos_data } = data;

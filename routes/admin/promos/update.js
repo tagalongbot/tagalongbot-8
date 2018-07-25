@@ -126,7 +126,7 @@ let updatePromoInfo = async ({ query }, res) => {
 }
 
 router.get(
-  '/', // Gets field to update from user
+  '/',
   handleRoute(getUpdateField, '[Error] Admin')
 );
 
@@ -151,7 +151,7 @@ router.get(
 );
 
 router.get(
-  '/field', // Updates the promo field
+  '/field',
   handleRoute(updatePromoInfo, '[Error] Admin')
 );
 

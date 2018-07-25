@@ -17,7 +17,7 @@ let createDetailsMsg = (data) => {
   }
 
   let view_practice_btn = createBtn(
-    `View Promo Provider|show_block|[JSON] View Promo Practice`,
+    `View Promo Practice|show_block|[JSON] View Promo Practice`,
     { practice_id, practice_promos_base_id, promo_id }
   );
 
