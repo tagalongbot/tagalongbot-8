@@ -14,9 +14,7 @@ let createBtn = (button, set_attributes) => {
   return btn;
 }
 
-let createButtonMessage = (text, ...btns) => {
-	let buttons = btns.map(createBtn);
-
+let createButtonMessage = (text, ...buttons) => {
 	let payload = {
 		text,
 		buttons,

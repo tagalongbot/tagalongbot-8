@@ -6,14 +6,14 @@ let { createURL } = require('../../../../../libs/helpers.js');
 let createDetailsMsg = (data) => {
   let { service_id, promo_id, promo, practice_id, practice_promos_base_id } = data;
 
-  let create_promo_url = createURL(
-    `${BASEURL}/admin/promos/create/manufactured/service/create`,
+  let create_promo_btn = createBtn(
+    `Create Promo|show_block|[JSON] Create Manufactured Promo`,
     { service_id, promo_id, practice_id, practice_promos_base_id }
   );
-  
+
   let msg = createButtonMessage(
     promo.fields['Details'],
-    `Create Promo|json_plugin_url|${create_promo_url}`
+    create_promo_btn
   );
 
   return msg;

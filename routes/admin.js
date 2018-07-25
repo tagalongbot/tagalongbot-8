@@ -13,7 +13,6 @@ let createCustomPromo = require('../routes/admin/promos/create/custom.js');
 let createManufacturedPromo = require('../routes/admin/promos/create/manufactured.js');
 let viewManufacturedPromoDetails = require('../routes/admin/promos/view/manufactured/details.js');
 let viewAllPromos = require('../routes/admin/promos/view/all.js');
-let viewUserPromos = require('../routes/admin/promos/view/user.js');
 let viewPromoInfo = require('../routes/admin/promos/view/info.js');
 let updatePromoInfo = require('../routes/admin/promos/update.js');
 let togglePromo = require('../routes/admin/promos/toggle.js');
@@ -52,11 +51,6 @@ router.get(
 router.get(
   '/promos/view/all',
   handleRoute(viewAllPromos, '[Error] Admin')
-);
-
-router.get(
-  '/promos/view/user',
-  handleRoute(viewUserPromos, '[Error] Admin')
 );
 
 router.get(

@@ -15,7 +15,7 @@ let isPromoExpired = (promo_expiration_date) => {
 
 // Mapping Functions
 let toGalleryData = (data) => ({ id: promo_id, fields: promo }) => {
-  let { messenger_user_id, practice_promos_base_id } = data;
+  let { practice_promos_base_id } = data;
 
   let expiredText = isPromoExpired(promo['Expiration Date']) ? 'EXPIRED' : 'NOT EXPIRED';
 
@@ -29,7 +29,7 @@ let toGalleryData = (data) => ({ id: promo_id, fields: promo }) => {
 
   let view_promo_details_url = createURL(
     `${BASEURL}/admin/promos/view/info`,
-    { messenger_user_id, promo_id, practice_promos_base_id }
+    { promo_id, practice_promos_base_id }
   );
 
   let update_promo_url = createURL(
