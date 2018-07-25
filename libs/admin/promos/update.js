@@ -1,6 +1,4 @@
-let { BASEURL } = process.env;
-
-let { createURL, localizeDate } = require('../../../libs/helpers.js');
+let { localizeDate } = require('../../../libs/helpers.js');
 let { createExpirationDate } = require('../../../libs/admin/promos/create.js');
 let { createBtn, createButtonMessage } = require('../../../libs/bots.js');
 let { updatePracticePromo } = require('../../../libs/data/practice/promos.js');

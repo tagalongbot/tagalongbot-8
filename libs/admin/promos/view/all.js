@@ -1,6 +1,4 @@
-let { BASEURL } = process.env;
-
-let { createURL, localizeDate } = require('../../../../libs/helpers.js');
+let { localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 
 let isPromoExpired = (promo_expiration_date) => {

@@ -1,6 +1,4 @@
-let { BASEURL } = process.env;
-
-let { createURL, localizeDate } = require('../../../../libs/helpers.js');
+let { localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 
 let { getServiceByID } = require('../../../../libs/data/services.js');
@@ -80,10 +78,6 @@ let toPromosGallery = (data) => ({ id: promo_id, fields: promo }) => {
 
   let title = `${promo['Name']} on ${promo['Service Name']}`;
   let image_url = promo['Image URL'];
-
-  let create_promo_url = createURL(
-    `${BASEURL}/admin/promos/create/manufactured/service/create`,
-  );
 
   let btn1 = createBtn(
     `Create Promo|show_block|[JSON] Create Manufactured Promo`,

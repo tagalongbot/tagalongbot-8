@@ -1,5 +1,3 @@
-let { BASEURL } = process.env;
-
 let { createBtn } = require('../../../libs/bots.js');
 let { createURL, localizeDate } = require('../../../libs/helpers.js');
 
@@ -15,10 +13,6 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let title = promo['Promotion Name'];
   let subtitle = `Promo Expires On ${localizeDate(promo_expiration_date)}`;
   let image_url = promo['Image URL'];
-
-  let view_promo_details_url = createURL(
-    `${BASEURL}/promos/details/claimed`,
-  );
 
   let view_promo_details_btn = createBtn(
     `View Promo Details|show_block|[JSON] View Promo Details (Claimed)`,

@@ -1,5 +1,5 @@
 let { createBtn, createButtonMessage, createQuickReplyMessage } = require('../../libs/bots.js');
-let { createURL, convertLongTextToArray, getNumbersOnly } = require('../../libs/helpers.js');
+let { convertLongTextToArray, getNumbersOnly } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
@@ -132,22 +132,28 @@ let createClaimedMsg = (data) => {
 
   let call_practice_btn = createBtn(
     `Yes|show_block|[JSON] Call Practice`,
-    { practice_id, promo_id, messenger_user_id }
+    { practice_id, promo_id }
   );
 
-  let no_call_practice_btn = createURL(
-    `${BASEURL}/promos/claim/no_practice_call`,
-    { practice_id, promo_id, messenger_user_id, first_name, last_name, gender }
+  let no_call_practice_btn = createBtn(
+    `No|show_block|[JSON] Call Practice Call`,
+    { practice_id, promo_id }
+  );
+
+  let main_menu_btn = createBtn(
+    `Main Menu|show_block|Main Menu`,
   );
 
   let msg1 = createButtonMessage(
     `Congrats ${first_name} your promotion "${promotion_name}" has been claimed!`,
     view_promo_practice_btn,
-    `Main Menu|show_block|Main Menu`
+    main_menu_btn,
   );
   
   let msg2 = createQuickReplyMessage(
     `Would you like to call ${practice_name} now?`,
+    call_practice_btn,
+    no_call_practice_btn
   );
 
   return [msg1, msg2];
@@ -159,15 +165,19 @@ let createNoCallMsg = (data) => {
   let practice_id = practice.id;
   let practice_name = practice.fields['Practice Name'];
 
-  let call_practice_url = createURL(
-    `${BASEURL}/practices/call`,
-    { practice_id, promo_id, messenger_user_id }
+  let call_practice_btn = createBtn(
+    `Call Practice|show_block|[JSON] Call Practice`,
+    { practice_id, promo_id }
+  );
+
+  let main_menu_btn = createBtn(
+    `Main Menu|show_block|Main Menu`,
   );
 
   let msg = createButtonMessage(
     `Hey ${first_name} whenever you're ready to call ${practice_name} just click the button below`,
-    `Call Practice|json_plugin_url|${call_practice_url}`,
-    `Main Menu|show_block|Main Menu`,
+    call_practice_btn,
+    main_menu_btn,
   );
 
   return msg;

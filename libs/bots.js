@@ -29,18 +29,18 @@ let createButtonMessage = (text, ...buttons) => {
 	return { attachment };
 }
 
-let createQuickReplyMessage = (text, ...btns) => {
-  let quick_replies = btns.map(btn => {
-    let [title, type, value] = btn.split('|');
+let createQuickReplyMessage = (text, ...quick_replies) => {
+//   let quick_replies = btns.map(btn => {
+//     let [title, type, value] = btn.split('|');
 
-    if (type === '') {
-      return { title, block_names: [value] };
-    }
+//     if (type === '') {
+//       return { title, block_names: [value] };
+//     }
 
-    let type_name = BUTTON_TYPES[type];
-    return { title, type, [type_name]: value };
-  });
-  
+//     let type_name = BUTTON_TYPES[type];
+//     return { title, type, [type_name]: value };
+//   });
+
   return { text, quick_replies };
 }
 
