@@ -27,7 +27,7 @@ let getPracticesPromos = async ({ query }, res) => {
 
   let promosGalleryData = promos.map(
     toGalleryElement({ practice_id, practice_promos_base_id, first_name, last_name, gender, messenger_user_id })
-  ).slice(0, 5);
+  ).slice(0, 10);
 
   let messages = [
     createGallery(promosGalleryData)
