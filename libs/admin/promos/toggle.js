@@ -28,6 +28,7 @@ let updatePromo = async ({ practice_base_id, promo }) => {
 }
 
 let createUpdateMsg = (data) => {
+  let { messenger_user_id, promo_id, practice_base_id, promo, updatedPromo } = data;
   
   let toggle_promo_url = createURL(
     `${BASEURL}/admin/promos/toggle`,

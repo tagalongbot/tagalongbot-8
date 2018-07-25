@@ -28,9 +28,13 @@ let createNewUserData = (data) => {
 let createUpdateUserData = ({ search_practices_zip_code }) => {
   let update_user_data = {};
 
-  let last_zip_code_searched = search_practices_zip_code ? Number(search_practices_zip_code.trim()) : null;
+  let last_zip_code_searched = search_practices_zip_code ? 
+    Number(search_practices_zip_code.trim()) :
+    null;
 
-  if (last_zip_code_searched) update_user_data['Last Zip Code Searched'] = last_zip_code_searched;
+  if (last_zip_code_searched) {
+    update_user_data['Last Zip Code Searched'] = last_zip_code_searched
+  }
 
   return update_user_data;  
 }
@@ -56,37 +60,38 @@ let createButtons = (data) => {
 
 // Exported Functions
 let createOrUpdateUser = async (user, query) => {
-  let { messenger_user_id, first_name, last_name, gender } = query;
-  let { search_practices_zip_code } = query;
+  let { search_practices_zip_code, messenger_user_id, first_name, last_name, gender } = query;
 
   if (!user) {
     let new_user_data = createNewUserData(
       { search_practices_zip_code, messenger_user_id, first_name, last_name, gender }
     );
 
-		let newUser = await createUser(new_user_data);
-    return newUser;
+		let new_user = await createUser(new_user_data);
+    return new_user;
 	}
 
   let update_user_data = createUpdateUserData(
     { search_practices_zip_code }
   );
 
-  let updatedUser = await updateUser(update_user_data, user);
-  return updatedUser;
+  let updated_user = await updateUser(update_user_data, user);
+  return updated_user;
 }
 
 let toGalleryElement = ({ id: practice_id, fields: practice }) => {
   let title = practice['Practice Name'].slice(0, 80);
   let subtitle = `${practice['Main Provider']} | ${practice['Practice Address']}`;
-  let image_url = practice['Main Provider Image'] ? practice['Main Provider Image'][0].url : DEFAULT_PRACTICE_IMAGE;
+  
+  let image_url = practice['Main Provider Image'] ?
+    practice['Main Provider Image'][0].url :
+    DEFAULT_PRACTICE_IMAGE;
 
   let buttons = createButtons(
     { practice_id }
   );
 
-  let element = { title, subtitle, image_url, buttons };
-  return element;
+  return { title, subtitle, image_url, buttons };
 }
 
 let createLastGalleryElement = () => {
@@ -99,8 +104,7 @@ let createLastGalleryElement = () => {
 
   let buttons = [btn1, btn2, btn3];
 
-  let last_gallery_element = { title, image_url, buttons };
-  return last_gallery_element;
+  return { title, image_url, buttons };
 }
 
 module.exports = {

@@ -94,14 +94,16 @@ let updatePromoInfo = async ({ query }, res) => {
   let promo_id = updating_promo_id;
   let practice_promos_base_id = updating_practice_promos_base_id;
 
-  let promo = await getPracticePromo({ practice_promos_base_id, promo_id });
+  let promo = await getPracticePromo(
+    { practice_promos_base_id, promo_id }
+  );
 
   let updatedPromo = await updatePromo(
     { practice_promos_base_id, promo, update_promo_field_name, update_promo_field_value }
   );
 
   let updateMsg = createUpdateMsg(
-    { messenger_user_id, promo_id, practice_promos_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
+    { messenger_user_id, practice_promos_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
   );
 
   let messages = [updateMsg];
