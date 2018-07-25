@@ -1,6 +1,4 @@
-let { BASEURL } = process.env;
-
-let { createButtonMessage, createQuickReplyMessage } = require('../../libs/bots.js');
+let { createBtn, createButtonMessage, createQuickReplyMessage } = require('../../libs/bots.js');
 let { createURL, convertLongTextToArray, getNumbersOnly } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
@@ -9,9 +7,19 @@ let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
 // Exposed Functions
 let updateClaimedUser = async (data) => {
-  let { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
+  let { 
+    practice, 
+    promo, 
+    messenger_user_id, 
+    first_name, 
+    last_name, 
+    gender, 
+    user_email, 
+    user_phone_number
+  } = data;
 
   let user = await getUserByMessengerID(messenger_user_id);
+
   let already_claimed_promos_data = convertLongTextToArray(
     user.fields['Claimed Promos']
   );
@@ -47,6 +55,7 @@ let updateClaimedUser = async (data) => {
 
 let updatePromo = async (data) => {
   let { practice, promo, user, claimed_by_users } = data;
+
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let new_claimed_users = [
@@ -116,31 +125,29 @@ let createClaimedMsg = (data) => {
   let promo_id = updated_promo.id;
   let promotion_name = updated_promo.fields['Promotion Name'];
 
-  let view_practice_url = createURL(
-    `${BASEURL}/promos/practice`, 
-    { practice_id, practice_promos_base_id, promo_id, first_name, last_name, gender, messenger_user_id }
+  let view_promo_practice_btn = createBtn(
+    `View Promo Practice|show_block|[JSON] View Promo Practice`,
+    { practice_id, practice_promos_base_id, promo_id }
   );
 
-  let call_practice_url = createURL(
-    `${BASEURL}/practices/call`,
+  let call_practice_btn = createBtn(
+    `Yes|show_block|[JSON] Call Practice`,
     { practice_id, promo_id, messenger_user_id }
   );
-  
-  let no_call_practice_url = createURL(
+
+  let no_call_practice_btn = createURL(
     `${BASEURL}/promos/claim/no_practice_call`,
     { practice_id, promo_id, messenger_user_id, first_name, last_name, gender }
   );
-  
+
   let msg1 = createButtonMessage(
     `Congrats ${first_name} your promotion "${promotion_name}" has been claimed!`,
-    `View Practice|json_plugin_url|${view_practice_url}`,
+    view_promo_practice_btn,
     `Main Menu|show_block|Main Menu`
   );
   
   let msg2 = createQuickReplyMessage(
     `Would you like to call ${practice_name} now?`,
-    `Yes|json_plugin_url|${call_practice_url}`,
-    `No|json_plugin_url|${no_call_practice_url}`
   );
 
   return [msg1, msg2];

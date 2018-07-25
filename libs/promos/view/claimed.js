@@ -18,18 +18,19 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 
   let view_promo_details_url = createURL(
     `${BASEURL}/promos/details/claimed`,
+  );
+
+  let view_promo_details_btn = createBtn(
+    `View Promo Details|show_block|[JSON] View Promo Details (Claimed)`,
     { practice_id, practice_promos_base_id, promo_id }
   );
 
-  let view_promo_practice_url = createURL(
-    `${BASEURL}/promos/practice`,
+  let view_promo_practice_btn = createBtn(
+    `View Promo Practice|show_block|[JSON] View Promo Practice`,
     { practice_id, practice_promos_base_id, promo_id }
   );
 
-  let btn1 = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);
-  let btn2 = createBtn(`View Promo Provider|json_plugin_url|${view_promo_practice_url}`);
-
-  let buttons = [btn1, btn2];
+  let buttons = [view_promo_details_btn, view_promo_practice_btn];
 
   return { title, subtitle, image_url, buttons };
 }
