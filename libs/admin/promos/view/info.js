@@ -3,7 +3,7 @@ let { BASEURL } = process.env;
 let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn, createButtonMessage } = require('../../../../libs/bots.js');
 
-let createPromoMsg = ({ promo: { id: promo_id, fields: promo }, practice_base_id, messenger_user_id }) => {
+let createPromoMsg = ({ promo: { id: promo_id, fields: promo }, practice_promos_base_id, messenger_user_id }) => {
   let expiration_date = new Date(promo['Expiration Date']);
 
   let text = [
@@ -20,12 +20,12 @@ let createPromoMsg = ({ promo: { id: promo_id, fields: promo }, practice_base_id
 
   let update_promo_btn = createBtn(
     `Update Promo|show_block|[JSON] Update Promo`,
-    { promo_id, practice_base_id }
+    { promo_id, practice_promos_base_id }
   );
 
   let toggle_promo_btn = createBtn(
     `${promo['Active?'] ? 'Deactivate' : 'Activate'}|show_block|[JSON] Toggle Promo`,
-    { promo_id, practice_base_id }
+    { promo_id, practice_promos_base_id }
   );
 
   let view_active_promos_btn = createBtn(

@@ -11,12 +11,10 @@ let toCategoriesGallery = (data) => ({ id: category_id, fields: category }) => {
   let title = category['Category Name'];
   let image_url = category['Image URL'];
 
-  let send_images_url = createURL(
-    `${BASEURL}/admin/promos/update/images`,
+  let btn1 = createBtn(
+    `View Category Images|show_block|[JSON] View Category Images (Update Promo)`,
     { promo_id, practice_promos_base_id, category_id }
   );
-
-  let btn1 = createBtn(`View Category Images|json_plugin_url|${send_images_url}`);
 
   let buttons = [btn1];
 
@@ -35,10 +33,12 @@ let toImagesGallery = ({ id: promo_id, fields: promo }) => ({ id: custom_image_i
 
   let select_image_url = createURL(
     `${BASEURL}/admin/promos/update/image/select`,
-    { custom_image_id }
   );
 
-  let btn1 = createBtn(`Use This Image|json_plugin_url|${select_image_url}`);
+  let btn1 = createBtn(
+    `Use This Image|show_block|[JSON] Select Image (Update Promo)`,
+    { custom_image_id }
+  );
 
   let buttons = [btn1];
 
@@ -81,26 +81,26 @@ let createUpdateMsg = (data) => {
     `Image Updated Successfully for ${old_promo_name}` :
     `Updated ${update_promo_field_name} to "${update_promo_field_value}" for ${old_promo_name}`;
 
-  let view_promo_details_url = createURL(
-    `${BASEURL}/admin/promos/view/info`, 
-    { messenger_user_id, promo_id, practice_promos_base_id }
+  let view_promo_details_btn = createBtn(
+    `View Promo Details|show_block|[JSON] View Promo Info`,
+    { promo_id, practice_promos_base_id }
   );
 
-  let update_promo_url = createURL(
-    `${BASEURL}/admin/promos/update`, 
-    { messenger_user_id, promo_id, practice_promos_base_id }
+  let update_promo_btn = createBtn(
+    `Update Promo|show_block|[JSON] Update Promo`,
+    { promo_id, practice_promos_base_id }
   );
 
-  let toggle_promo_url = createURL(
-    `${BASEURL}/admin/promos/toggle`, 
-    { messenger_user_id, promo_id, practice_promos_base_id }
+  let toggle_promo_btn = createBtn(
+    `${promo['Active?'] ? 'Deactivate' : 'Activate'}|show_block|[JSON] Toggle Promo`,
+    { promo_id, practice_promos_base_id }
   );
 
   let msg = createButtonMessage(
     text,
-    `View Promo Details|json_plugin_url|${view_promo_details_url}`,
-    `Update Promo|json_plugin_url|${update_promo_url}`,
-    `${new_toggle_btn_name}|json_plugin_url|${toggle_promo_url}`,
+    view_promo_details_btn,
+    update_promo_btn,
+    toggle_promo_btn
   );
 
   return msg;
