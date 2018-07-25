@@ -1,6 +1,3 @@
-let { BASEURL } = process.env;
-
-let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 
 let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
@@ -10,14 +7,12 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   let subtitle = `Service provided by ${decodeURIComponent(practice_name)}`.slice(0, 80);
   let image_url = service['Image URL'];
 
-  let read_description_btn_url = createURL(
-    `${BASEURL}/services/description/no`, 
+  let read_description_btn = createBtn(
+    `Read Description|show_block|[JSON] Get Service Description`,
     { service_id, practice_id }
   );
 
-  let btn = createBtn(`Read Description|json_plugin_url|${read_description_btn_url}`);
-
-  let buttons = [btn];
+  let buttons = [read_description_btn];
 
   return { title, subtitle, image_url, buttons };
 }

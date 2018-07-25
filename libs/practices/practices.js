@@ -1,6 +1,5 @@
-let { BASEURL, DEFAULT_PRACTICE_IMAGE, LIST_YOUR_PRACTICE_IMAGE_URL } = process.env;
+let { DEFAULT_PRACTICE_IMAGE, LIST_YOUR_PRACTICE_IMAGE_URL } = process.env;
 
-let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 
 let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
@@ -40,20 +39,17 @@ let createUpdateUserData = ({ search_practices_zip_code }) => {
 let createButtons = (data) => {
   let { practice_id } = data;
 
-  let view_services_btn_url = createURL(
-    `${BASEURL}/practices/services`,
+  let view_services_btn = createBtn(
+    `View Services|show_block|[JSON] Get Practice Services`,
     { practice_id }
   );
 
-  let view_promos_btn_url = createURL(
-    `${BASEURL}/practices/promos`,
+  let view_promos_btn = createBtn(
+    `View Promos|show_block|[JSON] Get Practice Promos`,
     { practice_id }  
   );
 
-  let btn1 = createBtn(`View Services|json_plugin_url|${view_services_btn_url}`);
-  let btn2 = createBtn(`View Promos|json_plugin_url|${view_promos_btn_url}`);
-
-  return [btn1, btn2];
+  return [view_services_btn, view_promos_btn];
 }
 
 // Exported Functions

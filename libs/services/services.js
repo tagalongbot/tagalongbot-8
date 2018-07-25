@@ -1,6 +1,5 @@
-let { BASEURL, SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
+let { SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL } = process.env;
 
-let { createURL } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 
 let toGalleryElement = ({ id: service_id, fields: service }) => {
@@ -39,13 +38,11 @@ let createSurgicalCategoryElement = () => {
   let title = 'Surgical Procedures';
   let image_url = SURGICAL_SERVICES_IMAGE_URL;
 
-  let surgical_category_btn_url = createBtn(
-    `${BASEURL}/services/search/surgical`,
+  let surgical_category_btn = createBtn(
+    `View Services|show_block|[JSON] Get Surgical Services`
   );
 
-  let btn = createBtn(`View Services|show|${surgical_category_btn_url}`);
-
-  let buttons = [btn];
+  let buttons = [surgical_category_btn];
 
   return { title, image_url, buttons };
 }
@@ -54,16 +51,20 @@ let createLastGalleryElement = ({ service_type, index }) => {
   let title = 'More Options';
   let new_index = Number(index + 8);
 
-  let load_more_services_url = createURL(
-    `${BASEURL}/services/search/${service_type}`, 
-    { index: new_index }
+  let load_more_services_btn = createBtn(
+    `Load More Services|show_block|[JSON] Get More Services`,
+    { service_type, index: new_index }
   );
-  
-  let btn1 = createBtn(`Load More Services|json_plugin_url|${load_more_services_url}`);
-  let btn2 = createBtn(`Main Menu|show_block|Main Menu`);
-  let btn3 = createBtn(`About Bevl Beauty|show_block|AboutBB`);
 
-  let buttons = [btn1, btn2, btn3];
+  let main_menu_btn = createBtn(
+    `Main Menu|show_block|Main Menu`
+  );
+
+  let about_bb_btn = createBtn(
+    `About Bevl Beauty|show_block|AboutBB`
+  );
+
+  let buttons = [load_more_services_btn, main_menu_btn, about_bb_btn];
 
   return { title, buttons };
 }
