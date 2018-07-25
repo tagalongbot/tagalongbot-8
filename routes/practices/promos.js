@@ -6,7 +6,7 @@ let { toGalleryElement } = require('../../libs/promos/promos.js');
 let { createLastGalleryElement } = require('../../libs/practices/promos.js');
 
 let getPracticesPromos = async ({ query }, res) => {
-  let { practice_id, messenger_user_id, first_name, last_name, gender } = query;
+  let { practice_id } = query;
 
   let index = Number(query.index) || 0;
   let new_index = index + 8;
@@ -27,12 +27,12 @@ let getPracticesPromos = async ({ query }, res) => {
   }
 
   let promos_gallery_array = promos.slice(index, new_index).map(
-    toGalleryElement({ practice_id, practice_promos_base_id, first_name, last_name, gender, messenger_user_id })
+    toGalleryElement({ practice_id, practice_promos_base_id })
   ).slice(0, 9);
 
-  if ( new_index < promos_gallery_array.length )  {
+  if ( new_index < promos.length )  {
     let last_gallery_element = createLastGalleryElement(
-      { index }
+      { practice_id, index }
     );
 
     promos_gallery_array.push(last_gallery_element);

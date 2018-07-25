@@ -2,14 +2,14 @@ let { LOAD_MORE_PRACTICE_PROMOS_IMAGE_URL } = process.env;
 
 let { createBtn } = require('../../libs/bots.js');
 
-let createLastGalleryElement = ({ index }) => {
+let createLastGalleryElement = ({ practice_id, index }) => {
   let title = 'More Options';
   let image_url = LOAD_MORE_PRACTICE_PROMOS_IMAGE_URL;
   let new_index = Number(index + 8);
 
   let load_more_services_btn = createBtn(
     `Load More Promos|show_block|[JSON] Get More Practice Promos`,
-    { index: new_index }
+    { practice_id, index: new_index }
   );
 
   let main_menu_btn = createBtn(
