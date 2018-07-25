@@ -24,14 +24,14 @@ router.get(
   handleRoute(getServicePracticePromos, '[Error] User')
 );
 
-router.use(
-  '/promos',
-  getServicePromos
+router.get(
+  '/promos/:zip_code', 
+  handleRoute(getServicePromos, '[Error] User')
 );
 
-router.use(
-  '/practices',
-  getServicePractices
+router.get(
+  '/practices/:zip_code',
+  handleRoute(getServicePractices, '[Error] User')
 );
 
 module.exports = router;

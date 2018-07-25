@@ -40,6 +40,7 @@ let getServices = async ({ query, params }, res) => {
 
   let gallery_array = [surgical_category_gallery_element, ...non_surgical_services_gallery_data];
 
+  // Add Load More option
   if ( new_index < non_surgical_services.length )  {
     let last_gallery_element = createLastGalleryElement(
       { service_type, index }

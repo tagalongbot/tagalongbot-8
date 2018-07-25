@@ -9,9 +9,6 @@ let { searchPractices, sortPractices, filterPracticesByService } = require('../.
 let { toGalleryElement } = require('../../libs/services/practices.js');
 let { createLastGalleryElement } = require('../../libs/practices/practices.js');
 
-let express = require('express');
-let router = express.Router();
-
 let getServicePractices = async ({ query, params }, res) => {
   let { service_id } = query;
   let { zip_code } = params;
@@ -50,9 +47,4 @@ let getServicePractices = async ({ query, params }, res) => {
   res.send({ messages });
 }
 
-router.get(
-  '/:zip_code',
-  handleRoute(getServicePractices, '[Error] User')
-);
-
-module.exports = router;
+module.exports = getServicePractices;

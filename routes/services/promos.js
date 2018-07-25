@@ -1,5 +1,3 @@
-let handleRoute = require('../../middlewares/handleRoute.js');
-
 let { flattenArray, shuffleArray } = require('../../libs/helpers.js');
 
 let { searchPractices, filterPracticesByService } = require('../../libs/data/practices.js');
@@ -8,9 +6,6 @@ let { getServiceByID } = require('../../libs/data/services.js');
 
 let { toGalleryElement } = require('../../libs/promos/promos.js');
 let { createGallery } = require('../../libs/bots.js');
-
-let express = require('express');
-let router = express.Router();
 
 let getServicePromos = async ({ query, params }, res) => {
   let { service_id } = query;
@@ -63,9 +58,4 @@ let getServicePromos = async ({ query, params }, res) => {
   res.send({ messages });
 }
 
-router.get(
-  '/:zip_code', 
-  handleRoute(getServicePromos, '[Error] User')
-);
-
-module.exports = router;
+module.exports = getServicePromos;

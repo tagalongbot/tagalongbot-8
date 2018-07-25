@@ -1,3 +1,5 @@
+let { BASEURL } = process.env;
+
 let { getNumbersOnly } = require('../../libs/helpers.js');
 let { createCall } = require('../../libs/twilio.js');
 let { getUniqueLead, updatePracticeLead } = require('../../libs/data/practice/leads.js');
