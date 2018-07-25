@@ -5,15 +5,20 @@ let { createBtn } = require('../../../../libs/bots.js');
 
 let isPromoExpired = (promo_expiration_date) => {
   let date = new Date();
+
   let promo_date = new Date(promo_expiration_date);
+
   return date.getMonth() === promo_date.getMonth() && 
     date.getDate() === promo_date.getDate() && 
     date.getFullYear() === promo_date.getFullYear();
 }
 
 // Mapping Functions
-let toGalleryData = ({ messenger_user_id, practice_promos_base_id }) => ({ id: promo_id, fields: promo }) => {
+let toGalleryData = (data) => ({ id: promo_id, fields: promo }) => {
+  let { messenger_user_id, practice_promos_base_id } = data;
+
   let expiredText = isPromoExpired(promo['Expiration Date']) ? 'EXPIRED' : 'NOT EXPIRED';
+
   let localized_date = localizeDate(
     new Date(promo['Expiration Date'])
   );

@@ -1,4 +1,5 @@
 let { BASEURL } = process.env;
+
 let { createBtn, createMultiGallery } = require('../../../../libs/bots.js');
 let { createURL } = require('../../../../libs/helpers.js');
 
@@ -17,7 +18,9 @@ let createUpdateBtn = (data) => {
   return btn;
 }
 
-let toGalleryElement = ({ practice_base_id, messenger_user_id, user_messenger_id, user_id }) => ({ id: promo_id, fields: promo }) => {
+let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
+  let { practice_base_id, messenger_user_id, user_messenger_id, user_id } = data;
+
   let title = promo['Promotion Name'];
   let subtitle = promo['Terms'];
   let image_url = promo['Image URL'];

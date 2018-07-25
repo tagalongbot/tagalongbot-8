@@ -26,9 +26,14 @@ let getServicesWithPromos = async ({ services }) => {
 let createNewPromo = async (data) => {
   let { promo_id, practice_promos_base_id, service_id, expiration_date: expiration_date_text, claim_limit } = data;
 
-  let service = await getServiceByID({ service_id });
+  let service = await getServiceByID(
+    { service_id }
+  );
 
-  let manufactured_promo = await getManufacturedPromoByID({ promo_id });
+  let manufactured_promo = await getManufacturedPromoByID(
+    { promo_id }
+  );
+
   let new_promo_type = manufactured_promo.fields['Name'];
 
   let new_promo_image = manufactured_promo.fields['Image URL'];
@@ -46,13 +51,17 @@ let createNewPromo = async (data) => {
     ['Total Used']: 0,
   }
 
-  let newPromo = await createPracticePromo({ practice_promos_base_id, promo_data });
+  let newPromo = await createPracticePromo(
+    { practice_promos_base_id, promo_data }
+  );
 
   return newPromo;
 }
 
 // Mapping Functions
-let toServicesGallery = ({ practice_id, practice_promos_base_id }) => ({ id: service_id, fields: service }) => {
+let toServicesGallery = (data) => ({ id: service_id, fields: service }) => {
+  let { practice_id, practice_promos_base_id } = data;
+
   let title = service['Name'];
   let image_url = service['Image URL'];
 
@@ -69,7 +78,9 @@ let toServicesGallery = ({ practice_id, practice_promos_base_id }) => ({ id: ser
   return element;
 }
 
-let toPromosGallery = ({ practice_id, practice_promos_base_id, service_id }) => ({ id: promo_id, fields: promo }) => {
+let toPromosGallery = (data) => ({ id: promo_id, fields: promo }) => {
+  let { practice_id, practice_promos_base_id, service_id } = data;
+
   let title = `${promo['Name']} on ${promo['Service Name']}`;
   let image_url = promo['Image URL'];
 

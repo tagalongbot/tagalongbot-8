@@ -1,4 +1,5 @@
 let { BASEURL } = process.env;
+
 let { createURL } = require('../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../libs/bots.js');
 
@@ -26,7 +27,8 @@ let updatePromo = async ({ practice_base_id, promo }) => {
   return updatedPromo;
 }
 
-let createUpdateMsg = ({ messenger_user_id, promo_id, practice_base_id, promo, updatedPromo }) => {
+let createUpdateMsg = (data) => {
+  
   let toggle_promo_url = createURL(
     `${BASEURL}/admin/promos/toggle`,
     { promo_id, practice_base_id }

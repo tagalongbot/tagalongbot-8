@@ -1,8 +1,9 @@
 let { BASEURL } = process.env;
+
 let { createURL, localizeDate } = require('../../../../libs/helpers.js');
 let { createButtonMessage } = require('../../../../libs/bots.js');
 
-let createPromoMsg = ({ id: promo_id, fields: promo }, { practice_base_id, messenger_user_id }) => {
+let createPromoMsg = ({ promo: { id: promo_id, fields: promo }, practice_base_id, messenger_user_id }) => {
   let expiration_date = new Date(promo['Expiration Date']);
 
   let text = [
@@ -17,9 +18,20 @@ let createPromoMsg = ({ id: promo_id, fields: promo }, { practice_base_id, messe
     `All Claimed Promos Used: ${(promo['Total Claim Count'] === promo['Total Used'] && promo['Total Claim Count'] != 0) ? 'TRUE' : 'FALSE'}`,
   ].join('\n\n');
 
-  let update_promo_url = createURL(`${BASEURL}/admin/promos/update`, { promo_id, practice_base_id });
-  let toggle_promo_url = createURL(`${BASEURL}/admin/promos/toggle`, { promo_id, practice_base_id });
-  let view_active_promos_url = createURL(`${BASEURL}/admin/promos/view/all`, { messenger_user_id });
+  let update_promo_url = createURL(
+    `${BASEURL}/admin/promos/update`, 
+    { promo_id, practice_base_id }
+  );
+
+  let toggle_promo_url = createURL(
+    `${BASEURL}/admin/promos/toggle`, 
+    { promo_id, practice_base_id }
+  );
+
+  let view_active_promos_url = createURL(
+    `${BASEURL}/admin/promos/view/all`, 
+    { messenger_user_id }
+  );
 
   let msg = createButtonMessage(
     text,
