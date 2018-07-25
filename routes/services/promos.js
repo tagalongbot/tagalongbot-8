@@ -12,21 +12,6 @@ let { createGallery } = require('../../libs/bots.js');
 let express = require('express');
 let router = express.Router();
 
-let searchServicePromos = async ({ query }, res) => {
-  let { service_id } = query;
-
-  let service = await getServiceByID(
-    { service_id }
-  );
-
-  let service_name = service.fields['Name'];
-
-  let set_attributes = { service_id, service_name };
-  let redirect_to_blocks = ['[ROUTER] Search Promos Services'];
-
-  res.send({ set_attributes, redirect_to_blocks });
-}
-
 let getServicePromos = async ({ query, params }, res) => {
   let { service_id } = query;
   let { zip_code } = params;
@@ -77,11 +62,6 @@ let getServicePromos = async ({ query, params }, res) => {
 
   res.send({ messages });
 }
-
-router.get(
-  '/', 
-  handleRoute(searchServicePromos, '[Error] User')
-);
 
 router.get(
   '/:zip_code', 

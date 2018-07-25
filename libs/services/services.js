@@ -15,26 +15,22 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
 
   let image_url = service['Image URL'];
 
-  let view_service_details_btn_url = createURL(
-    `${BASEURL}/services/description/yes`,
+  let view_service_details_btn = createBtn(
+    `View Service Details|show_block|[JSON] Get Service Description (Show Find Practices Btn)`,
     { service_id }
   );
 
-  let find_practices_btn_url = createURL(
-    `${BASEURL}/services/practices`,
+  let find_practices_btn = createBtn(
+    `Find Practices|show_block|[JSON] Search Practices By Service`,
     { service_id }
   );
 
-  let find_promos_btn_url = createURL(
-    `${BASEURL}/services/promos`,
+  let find_promos_btn = createBtn(
+    `Find Promos|show_block|[JSON] Search Promos By Service`,
     { service_id }
   );
 
-  let btn1 = createBtn(`View Service Details|json_plugin_url|${view_service_details_btn_url}`);
-  let btn2 = createBtn(`Find Practices|json_plugin_url|${find_practices_btn_url}`);
-  let btn3 = createBtn(`Find Promos|json_plugin_url|${find_promos_btn_url}`);
-
-  let buttons = [btn1, btn2, btn3];
+  let buttons = [view_service_details_btn, find_practices_btn, find_promos_btn];
 
   return { title, subtitle, image_url, buttons};
 }
@@ -43,11 +39,11 @@ let createSurgicalCategoryElement = () => {
   let title = 'Surgical Procedures';
   let image_url = SURGICAL_SERVICES_IMAGE_URL;
 
-  let surgical_category_btn_url = createURL(
+  let surgical_category_btn_url = createBtn(
     `${BASEURL}/services/search/surgical`,
   );
 
-  let btn = createBtn(`View Services|json_plugin_url|${surgical_category_btn_url}`);
+  let btn = createBtn(`View Services|show|${surgical_category_btn_url}`);
 
   let buttons = [btn];
 
