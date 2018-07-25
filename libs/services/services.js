@@ -20,12 +20,12 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   );
 
   let find_practices_btn = createBtn(
-    `Find Practices|show_block|[JSON] Search Practices By Service`,
+    `Find Practices|show_block|[ROUTER] Search Practice Services`,
     { service_id }
   );
 
   let find_promos_btn = createBtn(
-    `Find Promos|show_block|[JSON] Search Promos By Service`,
+    `Find Promos|show_block|[ROUTER] Search Promos Services`,
     { service_id }
   );
 
