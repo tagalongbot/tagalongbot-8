@@ -5,11 +5,13 @@ let BUTTON_TYPES = {
 	phone_number: 'phone_number'
 }
 
-let createBtn = (button) => {
+let createBtn = (button, set_attributes) => {
   let [title, btn_type, value] = button.split('|');
   let type = btn_type.toLowerCase();
   let type_name = BUTTON_TYPES[type];
-  return { title, type, [type_name]: value };
+  let btn = { title, type, [type_name]: value };
+  if (set_attributes) btn.set_attributes = set_attributes;
+  return btn;
 }
 
 let createButtonMessage = (text, ...btns) => {
