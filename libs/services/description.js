@@ -1,20 +1,16 @@
-let { BASEURL } = process.env;
-
-let { createButtonMessage } = require('../../libs/bots.js');
-let { createURL } = require('../../libs/helpers.js');
+let { createBtn, createButtonMessage } = require('../../libs/bots.js');
 
 let createViewPracticePromosMsg = (data) => {
   let { service, service_id, practice_id } = data;
 
-  let view_practice_promos = createURL(
-    `${BASEURL}/services/practice/promos`, 
-    { practice_id }
-    // { service_id, practice_id } // ChatFuel Bug Sending "service_id" twice
+  let view_practice_promos = createBtn(
+    `View Promos|show_block|[JSON] Get Service Practice Promos`,
+    { service_id, practice_id }
   );
 
   let txtMsg = createButtonMessage(
     service.fields['Long Description'].slice(0, 640),
-    `View Promos|json_plugin_url|${view_practice_promos}`
+    view_practice_promos,
   );
 
   return txtMsg;

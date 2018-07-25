@@ -1,7 +1,4 @@
-let { BASEURL } = process.env;
-
-let { createURL } = require('../../../libs/helpers.js');
-let { createButtonMessage } = require('../../../libs/bots.js');
+let { createBtn, createButtonMessage } = require('../../../libs/bots.js');
 
 let { getPracticeByID } = require('../../../libs/data/practices.js');
 let { getPracticePromos } = require('../../../libs/data/practice/promos.js');
@@ -33,16 +30,24 @@ let createNoPromosMsg = (data) => {
 
   let service_name = service.fields['Name'];
 
-  let view_services_btn_url = createURL(
-    `${BASEURL}/practices/services`,
+  let view_services_btn = createBtn(
+    `View Services Again|show_block|[JSON] Get Practice Services`,
     { practice_id }
+  );
+
+  let main_menu_btn = createBtn(
+    `Main Menu|show_block|Main Menu`,
+  );
+  
+  let about_bb_btn = createBtn(
+    `About Bevl Beauty|show_block|AboutBB`,
   );
 
   let msg = createButtonMessage(
     `Sorry looks like ${practice_name} does not have any promotions for ${service_name} at the moment`,
-    `View Services Again|json_plugin_url|${view_services_btn_url}`,
-    `Main Menu|show_block|Main Menu`,
-    `About Bevl Beauty|show_block|AboutBB`
+    view_services_btn,
+    main_menu_btn,
+    about_bb_btn,
   );
 
   return msg;

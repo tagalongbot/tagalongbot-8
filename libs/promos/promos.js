@@ -1,6 +1,4 @@
-let { BASEURL } = process.env;
-
-let { createURL, localizeDate } = require('../../libs/helpers.js');
+let { localizeDate } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
 let { getTable, getAllDataFromTable } = require('../../libs/data.js');
 
@@ -25,14 +23,12 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
   let subtitle = `Valid Until ${localizeDate(promo_expiration_date)}`;
   let image_url = promo['Image URL'];
 
-  let view_promo_details_url = createURL(
-    `${BASEURL}/promos/details/unclaimed`,
+  let view_promo_details_url = createBtn(
+    `View Promo Details|show_block|[JSON] View Promo Details (Unclaimed)`,
     { practice_id, practice_promos_base_id, promo_id }
   );
 
-  let btn = createBtn(`View Promo Details|json_plugin_url|${view_promo_details_url}`);
-
-  let buttons = [btn];
+  let buttons = [view_promo_details_url];
 
   return { title, subtitle, image_url, buttons };
 }

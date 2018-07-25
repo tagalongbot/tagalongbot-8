@@ -9,23 +9,21 @@ let createDetailsMsg = (data) => {
 
   if (is_claimed.toLowerCase() != 'claimed') {
     let claim_promo_btn = createBtn(
-      `${BASEURL}/promos/claim/user_info`, 
+      `Claim Promotion|show_block|[JSON] Get User Info (Claim Promo)`,
       { practice_id, promo_id }
     );
 
-    btns.push(`Claim Promotion|json_plugin_url|${claim_promo_url}`);
+    btns = [claim_promo_btn];
   }
 
   let view_practice_btn = createBtn(
-    `${BASEURL}/promos/practice`, 
+    `View Promo Provider|show_block|[JSON] View Promo Practice`,
     { practice_id, practice_promos_base_id, promo_id }
   );
 
-  btns.push(`View Promo Provider|json_plugin_url|${view_practice_url}`);
-
   let msg = createButtonMessage(
     promo.fields['Details'],
-    ...btns
+    ...[...btns, view_practice_btn]
   );
 
   return msg;
