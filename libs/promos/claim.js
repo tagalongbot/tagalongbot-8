@@ -42,7 +42,7 @@ let updateClaimedUser = async (data) => {
     ['Last Name']: last_name,
     ['Gender']: gender.toLowerCase(),
     ['Email Address']: user_email,
-    ['Phone Number']: user_phone_number,
+    ['Phone Number']: getNumbersOnly(user_phone_number).slice(-10),
     ['State']: practice_state.toLowerCase(),
     ['City']: practice_city.toLowerCase(),
     ['Zip Code']: Number(practice_zip_code),

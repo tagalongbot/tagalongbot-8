@@ -37,8 +37,8 @@ let createCustomerCall = async (data) => {
 
   let practice_id = practice.id;
 
-  let user_id = user.id;  
-  let user_phone_number = getNumbersOnly(user.fields['Phone Number']);
+  let user_id = user.id;
+  let user_phone_number = getNumbersOnly(user.fields['Phone Number']).slice(-10);
 
   let call_data = {
     phone_number: `+1${user_phone_number}`,
