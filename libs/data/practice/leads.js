@@ -30,10 +30,10 @@ let createPracticeLead = async ({ practice_leads_base_id, lead_data }) => {
 
 let updatePracticeLead = async ({ practice_leads_base_id, lead_data, lead }) => {
   let leadsTable = getLeadsTable(practice_leads_base_id);
-  let updateCall = updateTableData(leadsTable);
+  let updateLead = updateTableData(leadsTable);
 
-  let updated_call = await updateCall(lead_data, lead);
-  return updated_call;
+  let updated_lead = await updateLead(lead_data, lead);
+  return updated_lead;
 }
 
 let getUniqueLead = async ({ practice_leads_base_id, user_phone_number, promotion_name }) => {
