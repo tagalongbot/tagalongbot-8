@@ -2,7 +2,7 @@
   <div class="card pink lighten-1" each="{ lead in opts.leads }">
     <div class="card-content white-text">
       <span>Lead Name: { lead.name } ({ lead.gender })</span><br>
-      <span>Phone Number: { lead.phone_number }</span><br>
+      <span>Lead Phone Number: { lead.phone_number }</span><br>
       <span>Promotion Claimed: { lead.promotion_name }</span><br>
       <span>Initiated Call: { lead.initiated_call }</span><br>
     </div>

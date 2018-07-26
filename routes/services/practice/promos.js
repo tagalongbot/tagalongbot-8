@@ -2,7 +2,7 @@ let { getPracticeByID } = require('../../../libs/data/practices.js');
 let { getServiceByID } = require('../../../libs/data/services.js');
 let { getServicePromos, createNoPromosMsg } = require('../../../libs/services/practice/promos.js');
 
-let { toGalleryElement } = require('../../../libs/promos/promos.js');
+let { toGalleryElement, createLastGalleryElement } = require('../../../libs/promos/promos.js');
 let { createMultiGallery } = require('../../../libs/bots.js');
 
 let getServicePracticePromos = async ({ query }, res) => {
@@ -32,9 +32,17 @@ let getServicePracticePromos = async ({ query }, res) => {
     return;
   }
 
-  let galleryData = promos.map(
+  let galleryData = promos.slice(index, new_index).map(
     toGalleryElement({ practice_id, practice_promos_base_id })
   );
+  
+  if ( new_index < promos.length )  {
+    let last_gallery_element = createLastGalleryElement(
+      { practice_id, index }
+    );
+
+    promos_gallery_array.push(last_gallery_element);
+  }
 
   let messages = [
     { text: `Here are some ${service_name} promos by ${practice_name}` },

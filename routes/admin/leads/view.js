@@ -1,6 +1,6 @@
 let { BASEURL } = process.env;
 
-let { localizeDate } = require('../../../libs/helpers.js');
+let { localizeDate, formatPhoneNumber } = require('../../../libs/helpers.js');
 
 let riot = require('riot');
 let leads_list_tag = require('../../../tags/leads/leads-list.tag');
@@ -14,7 +14,7 @@ let toLeadData = ({ practice_promos_base_id }) => ({ fields: lead }) => {
   let lead_obj = {
     ['name']: `${lead['First Name']} ${lead['Last Name']}`,
     ['gender']: lead['Gender'],
-    ['phone_number']: lead['Phone Number'],
+    ['phone_number']: formatPhoneNumber(lead['Phone Number']),
     ['promotion_name']: lead['Claimed Promotion Name'],
     ['initiated_call']: lead['Call Initiated'],
   }
@@ -71,13 +71,13 @@ let getLeadsList = async ({ query, params }, res) => {
   let found_leads = await getPracticeLeads(
     { practice_leads_base_id, view }
   );
-  
-  // Called Leads
-  let called_leads = found_leads.filter(
-    (lead) => lead.fields['Initiated Call'] === 'YES'
-  );
 
-  let called_leads_data = found_leads.map(
+  // Leads That Called
+  let called_leads = found_leads.filter(
+    (lead) => lead.fields['Call Initiated'] === 'YES'
+  );
+  
+  let called_leads_data = called_leads.map(
     toLeadData({ practice_promos_base_id })
   );
 
@@ -85,22 +85,23 @@ let getLeadsList = async ({ query, params }, res) => {
     leads_list_tag,
     { leads: called_leads_data }
   );
-  
+
+  // Leads That Did Not Call
   let non_called_leads = found_leads.filter(
-    (lead) => lead.fields['Initiated Call'] === 'NO'
+    (lead) => lead.fields['Call Initiated'] === 'NO'
   );
 
-  let non_called_leads_data = found_leads.map(
+  let non_called_leads_data = non_called_leads.map(
     toLeadData({ practice_promos_base_id })
   );
-  
+
   let non_called_leads_html = riot.render(
     leads_list_tag,
     { leads: non_called_leads_data }
   );
 
-  let vie
-  
+  let view_html = `<h5>Leads Who Called</h5>${called_leads_html}<br><h5>Lead Who Did Not Call</h5>${non_called_leads_html}`;
+
   res.render(
     'leads-list', 
     { view_html, practice_name }

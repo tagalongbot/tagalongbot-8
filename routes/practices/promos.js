@@ -2,8 +2,7 @@ let { createGallery } = require('../../libs/bots.js');
 
 let { getPracticeByID } = require('../../libs/data/practices.js');
 let { getPracticePromos } = require('../../libs/data/practice/promos.js');
-let { toGalleryElement } = require('../../libs/promos/promos.js');
-let { createLastGalleryElement } = require('../../libs/practices/promos.js');
+let { toGalleryElement, createLastGalleryElement } = require('../../libs/promos/promos.js');
 
 let getPracticesPromos = async ({ query }, res) => {
   let { practice_id } = query;
