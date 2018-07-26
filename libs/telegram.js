@@ -17,19 +17,6 @@ bot.on('/start', (msg) => {
 
 bot.start();
 
-bot.on('/test1', (msg) => {
-   let replyMarkup = bot.keyboard([
-        ['1', '2'],
-    ], {resize: true});
-
-    return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup, ask: 'test'});
-});
-
-bot.on('ask.test', (msg) => {
-  console.log('msg', msg.text);
-  return bot.sendMessage(msg.from.id, 'Working');
-})
-
 // Exposed Functions
 let sendErrorMsg = async (error_msg) => {
   for (let user_id of user_ids) {

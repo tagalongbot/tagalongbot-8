@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Bevl Beauty Bot",
   "scripts": {
-    "start": ".data/redis-4.0.10/src/redis-server .data/redis-4.0.10/redis.conf & node server.js"
+    "start": ".data/redis-4.0.10/src/redis-server .data/redis-4.0.10/redis.conf & node app.js"
   },
   "dependencies": {
     "airtable": "^0.5.6",
