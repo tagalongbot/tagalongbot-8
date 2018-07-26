@@ -1,5 +1,5 @@
 // This library is used for managing leads for each practice
-let { formatPhoneNumber } = require('../../../libs/helpers.js');
+let { getNumbersOnly, formatPhoneNumber } = require('../../../libs/helpers.js');
 
 let { getTable, getAllDataFromTable, findTableData, createTableData, updateTableData } = require('../../../libs/data.js');
 
@@ -39,8 +39,10 @@ let updatePracticeLead = async ({ practice_leads_base_id, lead_data, lead }) => 
 let getUniqueLead = async ({ practice_leads_base_id, user_phone_number, promotion_name }) => {
   let leadsTable = getLeadsTable(practice_leads_base_id);
   let getLeads = getAllDataFromTable(leadsTable);
+  
+  let phone_number = getNumbersOnly(user_phone_number).slice(-10);
 
-  let filterByFormula = `AND({Phone Number} = '${formatPhoneNumber(user_phone_number)}', {Claimed Promotion Name} = '${promotion_name}')`;
+  let filterByFormula = `AND({Phone Number} = '${formatPhoneNumber(phone_number)}', {Claimed Promotion Name} = '${promotion_name}')`;
   let [lead] = await getLeads({ filterByFormula });
   return lead;
 }

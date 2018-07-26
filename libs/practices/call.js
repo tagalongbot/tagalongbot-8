@@ -61,7 +61,6 @@ let updateLeadRecord = async (data) => {
   let lead = await getUniqueLead(
     { practice_leads_base_id, user_phone_number, promotion_name }
   );
-  
 
   let lead_data = {
     ['Call Initiated']: 'YES',
