@@ -8,7 +8,7 @@ let leads_list_tag = require('../../../tags/leads/leads-list.tag');
 let { getPracticeByUserID } = require('../../../libs/data/practices.js');
 let { getPracticeLeads } = require('../../../libs/data/practice/leads.js');
 
-let toLeadData = ({ practice_promos_base_id }) => async ({ fields: lead }) => {
+let toLeadData = ({ practice_promos_base_id }) => ({ fields: lead }) => {
   let user_messenger_id = lead['messenger user id'];
 
   let lead_obj = {
@@ -72,15 +72,35 @@ let getLeadsList = async ({ query, params }, res) => {
     { practice_leads_base_id, view }
   );
   
-  let leads = await Promise.all(found_leads.map(
-    toLeadData({ practice_promos_base_id })
-  ));
-
-  let view_html = riot.render(
-    leads_list_tag, 
-    { leads }
+  // Called Leads
+  let called_leads = found_leads.filter(
+    (lead) => lead.fields['Initiated Call'] === 'YES'
   );
 
+  let called_leads_data = found_leads.map(
+    toLeadData({ practice_promos_base_id })
+  );
+
+  let called_leads_html = riot.render(
+    leads_list_tag,
+    { leads: called_leads_data }
+  );
+  
+  let non_called_leads = found_leads.filter(
+    (lead) => lead.fields['Initiated Call'] === 'NO'
+  );
+
+  let non_called_leads_data = found_leads.map(
+    toLeadData({ practice_promos_base_id })
+  );
+  
+  let non_called_leads_html = riot.render(
+    leads_list_tag,
+    { leads: non_called_leads_data }
+  );
+
+  let vie
+  
   res.render(
     'leads-list', 
     { view_html, practice_name }
