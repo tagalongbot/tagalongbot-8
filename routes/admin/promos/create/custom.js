@@ -13,10 +13,12 @@ let express = require('express');
 let router = express.Router();
 
 let sendCustomCategories = async ({ query }, res) => {
+  let { new_promo_name, new_promo_expiration_date } = query;
+
   let custom_promo_categories = await getCustomCategories();
 
   let galleryData = custom_promo_categories.map(
-    toCategoryGallery
+    toCategoryGallery({ new_promo_name, new_promo_expiration_date })
   );
 
   let messages = [
@@ -27,12 +29,8 @@ let sendCustomCategories = async ({ query }, res) => {
   res.send({ messages });
 }
 
-let sendCustomImages = async ({ query, url }, res) => {
-  let {
-    category_id,
-    new_promo_name: promo_name, 
-    new_promo_expiration_date: promo_expiration_date, 
-  } = query;
+let sendCustomImages = async ({ query }, res) => {
+  let { category_id, new_promo_name, new_promo_expiration_date } = query;
 
   let category = await getCustomCategoryByID(
     { category_id }
@@ -44,7 +42,7 @@ let sendCustomImages = async ({ query, url }, res) => {
   );
 
   let galleryData = custom_promo_images.map(
-    toImagesGallery({ promo_name, promo_expiration_date })
+    toImagesGallery({ new_promo_name, new_promo_expiration_date })
   );
 
   let messages = [
