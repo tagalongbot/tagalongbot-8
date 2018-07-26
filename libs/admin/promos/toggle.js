@@ -1,26 +1,13 @@
 let { createBtn, createButtonMessage } = require('../../../libs/bots.js');
 
-let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../../libs/data.js');
-
-let getPromosTable = getTable('Promos');
-let getUsersTable = getTable('Users');
-
-let getPromo = async ({ practice_promos_base_id, promo_id }) => {
-  let promosTable = getPromosTable(practice_promos_base_id);
-  let findPromo = findTableData(promosTable);
-  let promo = await findPromo(promo_id);
-  return promo;
-}
+let { updatePracticePromo } = require('../../../libs/data/practice/promos.js');
 
 let updatePromo = async ({ practice_promos_base_id, promo }) => {
-  let promosTable = getPromosTable(practice_promos_base_id);
-  let updatePromoFromTable = updateTableData(promosTable);
-
-  let updateData = {
+  let promo_data = {
     ['Active?']: promo.fields['Active?'] ? false : true
   }
-  
-  let updated_promo = await updatePromoFromTable(updateData, promo);
+
+  let updated_promo = await updatePracticePromo({ practice_promos_base_id, promo_data, promo });
   return updated_promo;
 }
 
@@ -52,7 +39,6 @@ let createUpdateMsg = (data) => {
 }
 
 module.exports = {
-  getPromo,
   updatePromo,
   createUpdateMsg,
 }

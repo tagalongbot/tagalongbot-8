@@ -11,7 +11,6 @@ let isPromoExpired = (promo_expiration_date) => {
     date.getFullYear() === promo_date.getFullYear();
 }
 
-// Mapping Functions
 let toGalleryData = (data) => ({ id: promo_id, fields: promo }) => {
   let { practice_promos_base_id } = data;
 

@@ -1,7 +1,7 @@
 let { localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn, createButtonMessage } = require('../../../../libs/bots.js');
 
-let createPromoMsg = ({ promo: { id: promo_id, fields: promo }, practice_promos_base_id, messenger_user_id }) => {
+let createPromoMsg = ({ promo: { id: promo_id, fields: promo }, practice_promos_base_id }) => {
   let expiration_date = new Date(promo['Expiration Date']);
 
   let text = [
