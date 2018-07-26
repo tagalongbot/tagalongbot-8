@@ -13,54 +13,39 @@ let express = require('express');
 let router = express.Router();
 
 let sendCustomCategories = async ({ query }, res) => {
-  // console.log('query', query);
-  let { 
-    messenger_user_id,
-    new_promo_name: promo_name,
-    new_promo_expiration_date: expiration_date,
-    new_promo_claim_limit: claim_limit,
-  } = query;
-
   let custom_promo_categories = await getCustomCategories();
 
   let galleryData = custom_promo_categories.map(
-    toCategoryGallery({ messenger_user_id, promo_name, expiration_date, claim_limit })
+    toCategoryGallery
   );
 
-  // console.log('Category Gallery Button', galleryData[0].buttons[0]);
+  let messages = [
+    { text: `Please choose an image category from below` }, 
+    ...createMultiGallery(galleryData)
+  ];
 
-  let txtMsg = { text: `Please choose an image category from below` };
-  let messages = [txtMsg, ...createMultiGallery(galleryData)];
   res.send({ messages });
 }
 
 let sendCustomImages = async ({ query, url }, res) => {
-  let { 
-    messenger_user_id, 
-    category_id, new_promo_name: 
-    promo_name, new_promo_expiration_date: 
-    promo_expiration_date, new_promo_claim_limit: 
-    promo_claim_limit
+  let {
+    category_id,
+    new_promo_name: promo_name, 
+    new_promo_expiration_date: promo_expiration_date, 
   } = query;
-
-  // console.log('query', query);
-  // console.log('url', url);
-  // console.log('new_promo_name', new_promo_name);
 
   let category = await getCustomCategoryByID(
     { category_id }
   );
-  
+
   let category_name = category.fields['Category Name'];
   let custom_promo_images = await getCustomImagesByCategory(
     { category_name }
   );
 
   let galleryData = custom_promo_images.map(
-    toImagesGallery({ promo_name, promo_expiration_date, promo_claim_limit })
+    toImagesGallery({ promo_name, promo_expiration_date })
   );
-
-  // console.log('Gallery Image Element', galleryData[0]);
 
   let messages = [
     { text: `Please choose an image below from ${category_name} to use for your new custom promo` }, 

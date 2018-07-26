@@ -2,9 +2,7 @@ let { localizeDate } = require('../../../../libs/helpers.js');
 let { createBtn } = require('../../../../libs/bots.js');
 let { createExpirationDate } = require('../../../../libs/admin/promos/create.js');
 
-let toCategoryGallery = (data) => ({ id: category_id, fields: category }) => {
-  let { messenger_user_id, promo_name, promo_expiration_date, promo_claim_limit } = data;
-
+let toCategoryGallery = ({ id: category_id, fields: category }) => {
   let title = category['Category Name'];
   let image_url = category['Image URL'];
 
