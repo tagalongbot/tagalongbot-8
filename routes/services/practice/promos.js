@@ -7,6 +7,9 @@ let { createMultiGallery } = require('../../../libs/bots.js');
 
 let getServicePracticePromos = async ({ query }, res) => {
   let { service_id, practice_id } = query;
+  
+  let index = Number(query.index) || 0;
+  let new_index = index + 8;
 
   let service = await getServiceByID(
     { service_id }
@@ -32,10 +35,10 @@ let getServicePracticePromos = async ({ query }, res) => {
     return;
   }
 
-  let galleryData = promos.slice(index, new_index).map(
+  let promos_gallery_array = promos.slice(index, new_index).map(
     toGalleryElement({ practice_id, practice_promos_base_id })
   );
-  
+
   if ( new_index < promos.length )  {
     let last_gallery_element = createLastGalleryElement(
       { practice_id, index }
@@ -46,7 +49,7 @@ let getServicePracticePromos = async ({ query }, res) => {
 
   let messages = [
     { text: `Here are some ${service_name} promos by ${practice_name}` },
-    ...createMultiGallery(galleryData)
+    ...createMultiGallery(promos_gallery_array)
   ];
 
   res.send({ messages });
