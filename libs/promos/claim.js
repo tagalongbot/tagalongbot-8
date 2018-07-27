@@ -26,27 +26,17 @@ let createNewUserData = (data) => {
 }
 
 let createOrUpdateUser = async (data) => {
-  let { state, city, zip_code, user_data } = data;
+  let { practice, promo, state, city, zip_code, user_data } = data;
+
   let { messenger_user_id } = user_data;
 
-  let new_user_data = createNewUserData(
-    { state, city, zip_code, user_data }
-  );
-
+  
+  
   let user = await getUserByMessengerID(messenger_user_id);
 
   if (!user) {
     
   }
-      
-  let updated_user = await updateUser(updateUserData, user);
-  return updated_user;
-
-}
-
-// Exposed Functions
-let createClaimedUser = async (data) => {
-  let { practice, promo, state, city, zip_code, user_data } = data;
 
   let user = await getOrCreateUser(
     { practice, promo, state, city, zip_code, user_data }
@@ -65,8 +55,22 @@ let createClaimedUser = async (data) => {
     ...new Set([new_claimed_promo_data, ...already_claimed_promos_data])
   ];
 
+  
+  
+  let { state, city, zip_code, user_data } = data;
+  let { messenger_user_id } = user_data;
+
+  let new_user_data = createNewUserData(
+    { state, city, zip_code, user_data }
+  );
+
+      
+  let updated_user = await updateUser(updateUserData, user);
+  return updated_user;
+
 }
 
+// Exposed Functions
 let updatePromo = async (data) => {
   let { practice, promo, user, claimed_by_users } = data;
 
