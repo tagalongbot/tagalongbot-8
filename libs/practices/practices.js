@@ -5,10 +5,8 @@ let { createBtn } = require('../../libs/bots.js');
 let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
 let { getPracticesByState, getPracticesByCity } = require('../../libs/data/practices.js');
 
-let createNewUserData = (data) => {
-  let { search_practices_zip_code, messenger_user_id, first_name, last_name, gender } = data;
-
-  let last_zip_code_searched = search_practices_zip_code ? Number(search_practices_zip_code.trim()) : null;
+let createNewUser = async (data) => {
+  let { zip_code, messenger_user_id, first_name, last_name, gender } = data;
 
   let new_user_data = {
     'messenger user id': messenger_user_id,
@@ -16,60 +14,40 @@ let createNewUserData = (data) => {
     'First Name': first_name,
     'Last Name': last_name,
     'Gender': gender,
-    'Last Zip Code Searched': last_zip_code_searched,
+    'Last Zip Code Searched': Number(zip_code.trim()),
   }
-
-  return new_user_data;
+  
+  let new_user = await createUser(new_user_data);
+  return new_user;
 }
 
-let createUpdateUserData = ({ search_practices_zip_code }) => {
-  let update_user_data = {};
-
-  let last_zip_code_searched = search_practices_zip_code ? 
-    Number(search_practices_zip_code.trim()) :
-    null;
-
-  if (last_zip_code_searched) {
-    update_user_data['Last Zip Code Searched'] = last_zip_code_searched
+let createUpdatedUser = async (data) => {
+  let { zip_code, user } = data;
+  
+  let update_user_data = {
+    ['Last Zip Code Searched']: Number(zip_code.trim())
   }
 
-  return update_user_data;  
-}
-
-let createButtons = (data) => {
-  let { practice_id } = data;
-
-  let view_services_btn = createBtn(
-    `View Services|show_block|[JSON] Get Practice Services`,
-    { practice_id }
-  );
-
-  let view_promos_btn = createBtn(
-    `View Promos|show_block|[JSON] Get Practice Promos`,
-    { practice_id }  
-  );
-
-  return [view_services_btn, view_promos_btn];
+  let updated_user = await updateUser(update_user_data, user);
+  return updated_user;
 }
 
 // Exported Functions
-let createOrUpdateUser = async (user, query) => {
-  let { search_practices_zip_code, messenger_user_id, first_name, last_name, gender } = query;
+let createOrUpdateUser = async (user, data) => {
+  let { zip_code, messenger_user_id, first_name, last_name, gender } = data;
 
   if (!user) {
-    let new_user_data = createNewUserData(
-      { search_practices_zip_code, messenger_user_id, first_name, last_name, gender }
+    let new_user = await createNewUser(
+      { zip_code, messenger_user_id, first_name, last_name, gender }
     );
 
-		let new_user = await createUser(new_user_data);
     return new_user;
 	}
 
-  let update_user_data = createUpdateUserData(
-    { search_practices_zip_code }
+  let updated_user = await createUpdatedUser(
+    { zip_code, user }
   );
 
-  let updated_user = await updateUser(update_user_data, user);
   return updated_user;
 }
 
@@ -80,10 +58,18 @@ let toGalleryElement = ({ id: practice_id, fields: practice }) => {
   let image_url = practice['Main Provider Image'] ?
     practice['Main Provider Image'][0].url :
     DEFAULT_PRACTICE_IMAGE;
-
-  let buttons = createButtons(
+  
+  let view_services_btn = createBtn(
+    `View Services|show_block|[JSON] Get Practice Services`,
     { practice_id }
   );
+
+  let view_promos_btn = createBtn(
+    `View Promos|show_block|[JSON] Get Practice Promos`,
+    { practice_id }  
+  );
+
+  let buttons = [view_services_btn, view_promos_btn];
 
   return { title, subtitle, image_url, buttons };
 }
