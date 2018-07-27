@@ -1,17 +1,19 @@
 let { createBtn, createButtonMessage, createQuickReplyMessage } = require('../../libs/bots.js');
 let { convertLongTextToArray, getNumbersOnly } = require('../../libs/helpers.js');
 
-let { getUserByMessengerID, updateUser } = require('../../libs/data/users.js');
+let { getUserByMessengerID, createUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
 // Exposed Functions
-let updateClaimedUser = async (data) => {
+let createClaimedUser = async (data) => {
   let { practice, promo, state, city, zip_code, user_data } = data;
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = user_data;
 
   let user = await getUserByMessengerID(messenger_user_id);
 
+  
+  
   let already_claimed_promos_data = convertLongTextToArray(
     user.fields['Claimed Promos']
   );
@@ -32,6 +34,10 @@ let updateClaimedUser = async (data) => {
     ['Gender']: gender.toLowerCase(),
     ['Email Address']: user_email,
     ['Phone Number']: getNumbersOnly(user_phone_number).slice(-10),
+    ['State']: state.toUpperCase() || null,
+    ['City']: city.toUpperCase() || null,
+    ['Zip Code']: Number(zip_code.trim()) || null,
+    ['Last Zip Code Searched']: Number(zip_code.trim()) || null,
     ['Claimed Promos']: claimed_promos.join('\n')
   }
 
@@ -163,7 +169,7 @@ let createNoCallMsg = (data) => {
 
 module.exports = {
   updatePromo,
-  updateClaimedUser,
+  createClaimedUser,
   createLead,
   createClaimedMsg,
   createNoCallMsg,

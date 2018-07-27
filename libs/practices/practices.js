@@ -2,54 +2,6 @@ let { DEFAULT_PRACTICE_IMAGE, LIST_YOUR_PRACTICE_IMAGE_URL } = process.env;
 
 let { createBtn } = require('../../libs/bots.js');
 
-let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
-
-let createNewUser = async (data) => {
-  let { zip_code, messenger_user_id, first_name, last_name, gender } = data;
-
-  let new_user_data = {
-    'messenger user id': messenger_user_id,
-    'User Type': 'CONSUMER',
-    'First Name': first_name,
-    'Last Name': last_name,
-    'Gender': gender,
-    'Last Zip Code Searched': Number(zip_code.trim()),
-  }
-  
-  let new_user = await createUser(new_user_data);
-  return new_user;
-}
-
-let createUpdatedUser = async (data) => {
-  let { zip_code, user } = data;
-  
-  let update_user_data = {
-    ['Last Zip Code Searched']: Number(zip_code.trim())
-  }
-
-  let updated_user = await updateUser(update_user_data, user);
-  return updated_user;
-}
-
-// Exported Functions
-let createOrUpdateUser = async (user, data) => {
-  let { zip_code, messenger_user_id, first_name, last_name, gender } = data;
-
-  if (!user) {
-    let new_user = await createNewUser(
-      { zip_code, messenger_user_id, first_name, last_name, gender }
-    );
-
-    return new_user;
-	}
-
-  let updated_user = await createUpdatedUser(
-    { zip_code, user }
-  );
-
-  return updated_user;
-}
-
 let toGalleryElement = ({ id: practice_id, fields: practice }) => {
   let title = practice['Practice Name'].slice(0, 80);
   let subtitle = `${practice['Main Provider']} | ${practice['Practice Address']}`;
@@ -87,7 +39,6 @@ let createLastGalleryElement = () => {
 }
 
 module.exports = {
-  createOrUpdateUser,
   toGalleryElement,
   createLastGalleryElement,
 }

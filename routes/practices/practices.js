@@ -5,7 +5,7 @@ let { createURL, shuffleArray } = require('../../libs/helpers.js');
 
 let { getUserByMessengerID } = require('../../libs/data/users.js');
 let { searchPractices, sortPractices } = require('../../libs/data/practices.js');
-let { createOrUpdateUser, toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
+let { toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let getPractices = async ({ query, params }, res) => {
   let { messenger_user_id, first_name, last_name, gender } = query;
