@@ -8,7 +8,7 @@ let { searchPractices, sortPractices } = require('../../libs/data/practices.js')
 let { toGalleryElement, createLastGalleryElement } = require('../../libs/practices/practices.js');
 
 let getPractices = async ({ query, params }, res) => {
-  let { messenger_user_id, first_name, last_name, gender } = query;
+  let { messenger_user_id } = query;
   let { zip_code } = params;
 
 	let user = await getUserByMessengerID(messenger_user_id);
@@ -30,7 +30,7 @@ let getPractices = async ({ query, params }, res) => {
   let last_gallery_element = createLastGalleryElement();
 
 	let messages = [
-    { text: `Here's are some providers I found ${first_name}` }, 
+    { text: `Here's are some practices I found near ${zip_code}` }, 
     createGallery([...randomPractices, last_gallery_element], 'square')
   ];
 
