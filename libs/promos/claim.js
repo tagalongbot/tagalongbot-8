@@ -1,12 +1,12 @@
 let { createBtn, createButtonMessage, createQuickReplyMessage } = require('../../libs/bots.js');
 let { convertLongTextToArray, getNumbersOnly } = require('../../libs/helpers.js');
 
-let { getUserByMessengerID, createUser } = require('../../libs/data/users.js');
+let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
-let createNewUserData = (data) => {
-  let { state, city, zip_code, user_data } = data;
+let createNewUser = async (data) => {
+  let { state, city, zip_code, user_data, new_claimed_promo_data } = data;
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = user_data;
 
   let new_user_data = {
@@ -20,76 +20,48 @@ let createNewUserData = (data) => {
     ['City']: city.toUpperCase() || null,
     ['Zip Code']: Number(zip_code.trim()) || null,
     ['Last Zip Code Searched']: Number(zip_code.trim()) || null,
+    ['Claimed Promos']: new_claimed_promo_data,
   }
   
-  return new_user_data;  
+  let new_user = await createUser(new_user_data);
+  
+  return new_user;
 }
 
+// Exposed Functions
 let createOrUpdateUser = async (data) => {
   let { practice, promo, state, city, zip_code, user_data } = data;
 
   let { messenger_user_id } = user_data;
 
-  
-  
+  let practice_id = practice.id;
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+  let new_claimed_promo_data = `${practice_id}-${practice_promos_base_id}-${promo.id}`;
+
   let user = await getUserByMessengerID(messenger_user_id);
 
   if (!user) {
+    let new_user = await createNewUser(
+      { state, city, zip_code, user_data, new_claimed_promo_data }
+    );
     
+    return new_user;
   }
-
-  let user = await getOrCreateUser(
-    { practice, promo, state, city, zip_code, user_data }
-  );
 
   let already_claimed_promos_data = convertLongTextToArray(
     user.fields['Claimed Promos']
   );
 
-  let practice_id = practice.id;
-  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
-
-  let new_claimed_promo_data = `${practice_id}-${practice_promos_base_id}-${promo.id}`;
-
   let claimed_promos = [
     ...new Set([new_claimed_promo_data, ...already_claimed_promos_data])
   ];
-
   
-  
-  let { state, city, zip_code, user_data } = data;
-  let { messenger_user_id } = user_data;
-
-  let new_user_data = createNewUserData(
-    { state, city, zip_code, user_data }
-  );
-
-      
-  let updated_user = await updateUser(updateUserData, user);
-  return updated_user;
-
-}
-
-// Exposed Functions
-let updatePromo = async (data) => {
-  let { practice, promo, user, claimed_by_users } = data;
-
-  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
-
-  let new_claimed_users = [
-    ...new Set([user.id, ...claimed_by_users])
-  ];
-
-  let promo_data = {
-    ['Total Claim Count']: Number(promo.fields['Total Claim Count']) + 1,
-    ['Claimed By Users']: new_claimed_users.join('\n'),
+  let update_user_data = {
+    ['Claimed Promos']: new_claimed_promo_data
   }
 
-  let updated_promo = await updatePracticePromo(
-    { practice_promos_base_id, promo_data, promo }
-  );
-
-  return updated_promo;
+  let updated_user = await updateUser(update_user_data, user);
+  return updated_user;
 }
 
 let createLead = async (data) => {
@@ -193,10 +165,31 @@ let createNoCallMsg = (data) => {
   return msg;
 }
 
+let updatePromo = async (data) => {
+  let { practice, promo, user, claimed_by_users } = data;
+
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+
+  let new_claimed_users = [
+    ...new Set([user.id, ...claimed_by_users])
+  ];
+
+  let promo_data = {
+    ['Total Claim Count']: Number(promo.fields['Total Claim Count']) + 1,
+    ['Claimed By Users']: new_claimed_users.join('\n'),
+  }
+
+  let updated_promo = await updatePracticePromo(
+    { practice_promos_base_id, promo_data, promo }
+  );
+
+  return updated_promo;
+}
+
 module.exports = {
-  updatePromo,
-  createClaimedUser,
+  createOrUpdateUser,
   createLead,
   createClaimedMsg,
   createNoCallMsg,
+  updatePromo,
 }
