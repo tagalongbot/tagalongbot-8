@@ -5,15 +5,49 @@ let { getUserByMessengerID, createUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
+let createUserData = async (data) => {
+  let user_data = {
+    ['messenger user id']: messenger_user_id,
+    ['First Name']: first_name,
+    ['Last Name']: last_name,
+    ['Gender']: gender.toLowerCase(),
+    ['Email Address']: user_email,
+    ['Phone Number']: getNumbersOnly(user_phone_number).slice(-10),
+    ['State']: state.toUpperCase() || null,
+    ['City']: city.toUpperCase() || null,
+    ['Zip Code']: Number(zip_code.trim()) || null,
+    ['Last Zip Code Searched']: Number(zip_code.trim()) || null,
+    ['Claimed Promos']: claimed_promos.join('\n')
+  }
+  
+  
+}
+
+let getOrCreateUser = async (data) => {
+  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
+
+  let user_data = createUserData(
+    { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number, zip_code, state, city }
+  );
+  
+  let user = await getUserByMessengerID(messenger_user_id);
+
+  if () {}
+      
+  let updated_user = await updateUser(updateUserData, user);
+  return updated_user;
+
+}
+
 // Exposed Functions
 let createClaimedUser = async (data) => {
   let { practice, promo, state, city, zip_code, user_data } = data;
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = user_data;
 
-  let user = await getUserByMessengerID(messenger_user_id);
+  let user = await getOrCreateUser(
+    {}
+  );
 
-  
-  
   let already_claimed_promos_data = convertLongTextToArray(
     user.fields['Claimed Promos']
   );
@@ -27,22 +61,6 @@ let createClaimedUser = async (data) => {
     ...new Set([new_claimed_promo_data, ...already_claimed_promos_data])
   ];
 
-  let updateUserData = {
-    ['messenger user id']: messenger_user_id,
-    ['First Name']: first_name,
-    ['Last Name']: last_name,
-    ['Gender']: gender.toLowerCase(),
-    ['Email Address']: user_email,
-    ['Phone Number']: getNumbersOnly(user_phone_number).slice(-10),
-    ['State']: state.toUpperCase() || null,
-    ['City']: city.toUpperCase() || null,
-    ['Zip Code']: Number(zip_code.trim()) || null,
-    ['Last Zip Code Searched']: Number(zip_code.trim()) || null,
-    ['Claimed Promos']: claimed_promos.join('\n')
-  }
-
-  let updated_user = await updateUser(updateUserData, user);
-  return updated_user;
 }
 
 let updatePromo = async (data) => {
