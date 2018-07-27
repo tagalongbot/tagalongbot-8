@@ -3,7 +3,6 @@ let { DEFAULT_PRACTICE_IMAGE, LIST_YOUR_PRACTICE_IMAGE_URL } = process.env;
 let { createBtn } = require('../../libs/bots.js');
 
 let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
-let { getPracticesByState, getPracticesByCity } = require('../../libs/data/practices.js');
 
 let createNewUser = async (data) => {
   let { zip_code, messenger_user_id, first_name, last_name, gender } = data;

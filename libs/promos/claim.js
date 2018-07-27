@@ -26,9 +26,6 @@ let updateClaimedUser = async (data) => {
 
   let practice_id = practice.id;
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
-  let practice_state = practice.fields['Practice State'];
-  let practice_city = practice.fields['Practice City'];
-  let practice_zip_code = practice.fields['Practice Zip Code'];
 
   let new_claimed_promo_data = `${practice_id}-${practice_promos_base_id}-${promo.id}`;
 
@@ -43,9 +40,6 @@ let updateClaimedUser = async (data) => {
     ['Gender']: gender.toLowerCase(),
     ['Email Address']: user_email,
     ['Phone Number']: getNumbersOnly(user_phone_number).slice(-10),
-    ['State']: practice_state.toLowerCase(),
-    ['City']: practice_city.toLowerCase(),
-    ['Zip Code']: Number(practice_zip_code),
     ['Claimed Promos']: claimed_promos.join('\n')
   }
 
@@ -78,13 +72,9 @@ let createLead = async (data) => {
   let { practice, promo, user } = data;
 
   let practice_name = practice.fields['Practice Name'];
-  let practice_state = practice.fields['Practice State'];
-  let practice_city = practice.fields['Practice City'];
-  let practice_zip_code = practice.fields['Practice Zip Code'];
   let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
   let practice_promos_base_url = practice.fields['Practice Promos Base URL'];
-  let practice_phone_number = getNumbersOnly(practice.fields['Practice Phone Number']);
-
+  
   let user_first_name = user.fields['First Name'];
   let user_last_name = user.fields['Last Name'];
   let user_gender = user.fields['Gender'];
@@ -98,9 +88,6 @@ let createLead = async (data) => {
     ['First Name']: user_first_name,
     ['Last Name']: user_last_name,
     ['Gender']: user_gender,
-    ['State']: practice_state,
-    ['City']: practice_city,
-    ['Zip Code']: practice_zip_code,
     ['Phone Number']: user_phone_number,
     ['Claimed Promotion Name']: promo_name,
     ['Claimed Promotion URL']: `${practice_promos_base_url}/${promo_id}`
@@ -114,12 +101,10 @@ let createLead = async (data) => {
 }
 
 let createClaimedMsg = (data) => {
-  let { first_name, last_name, gender, messenger_user_id, practice, updated_promo } = data;
+  let { practice, updated_promo, messenger_user_id, first_name, last_name, gender } = data;
 
   let practice_id = practice.id;
   let practice_name = practice.fields['Practice Name'];
-  let practice_phone_number = practice.fields['Practice Phone Number'];
-  let practice_booking_url = practice.fields['Practice Booking URL'];
   let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let promo_id = updated_promo.id;
@@ -160,7 +145,7 @@ let createClaimedMsg = (data) => {
 }
 
 let createNoCallMsg = (data) => {
-  let { first_name, last_name, gender, messenger_user_id, practice, promo_id } = data;
+  let { practice, promo_id, first_name, last_name, gender, messenger_user_id } = data;
 
   let practice_id = practice.id;
   let practice_name = practice.fields['Practice Name'];
