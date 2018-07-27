@@ -6,7 +6,7 @@ let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
 let createNewUserData = (data) => {
-  let { state, city, zip_code, user_data, claimed_promos } = data;
+  let { state, city, zip_code, user_data } = data;
   let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = user_data;
 
   let new_user_data = {
@@ -20,7 +20,6 @@ let createNewUserData = (data) => {
     ['City']: city.toUpperCase() || null,
     ['Zip Code']: Number(zip_code.trim()) || null,
     ['Last Zip Code Searched']: Number(zip_code.trim()) || null,
-    ['Claimed Promos']: claimed_promos.join('\n')
   }
   
   return new_user_data;  
@@ -31,7 +30,7 @@ let getOrCreateUser = async (data) => {
   let { messenger_user_id } = user_data;
 
   let new_user_data = createNewUserData(
-    { state, city, zip_code, user_data, claimed_promos }
+    { state, city, zip_code, user_data }
   );
 
   let user = await getUserByMessengerID(messenger_user_id);
