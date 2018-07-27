@@ -25,7 +25,7 @@ let createNewUserData = (data) => {
   return new_user_data;  
 }
 
-let getOrCreateUser = async (data) => {
+let createOrUpdateUser = async (data) => {
   let { state, city, zip_code, user_data } = data;
   let { messenger_user_id } = user_data;
 

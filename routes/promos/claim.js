@@ -9,7 +9,7 @@ let { getUserByMessengerID } = require('../../libs/data/users.js');
 
 let { handleVerifyPhoneNumberRoute, handleVerifyVerificationCode } = require('../../libs/twilio-routes.js');
 
-let { updatePromo, updateClaimedUser, createLead, createClaimedMsg, createNoCallMsg } = require('../../libs/promos/claim.js');
+let { updatePromo, createOrUpdateUser, createLead, createClaimedMsg, createNoCallMsg } = require('../../libs/promos/claim.js');
 
 let express = require('express');
 let router = express.Router();
@@ -66,7 +66,7 @@ let claimPromotion = async ({ query }, res) => {
     return;
   }
 
-  let user = await updateClaimedUser(
+  let user = await createOrUpdateUser(
     { practice, promo, zip_code, state, city, user_data },
   );
 
@@ -83,7 +83,7 @@ let claimPromotion = async ({ query }, res) => {
   let updated_promo = await updatePromo(
     { practice, promo, user, claimed_by_users }
   );
-  
+
   let new_lead = await createLead(
     { practice, promo, user }
   );
