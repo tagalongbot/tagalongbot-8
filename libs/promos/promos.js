@@ -49,11 +49,7 @@ let createLastGalleryElement = ({ practice_id, index }) => {
     `Main Menu|show_block|Main Menu`
   );
 
-  let about_bb_btn = createBtn(
-    `About Bevl Beauty|show_block|AboutBB`
-  );
-
-  let buttons = [load_more_services_btn, main_menu_btn, about_bb_btn];
+  let buttons = [load_more_services_btn, main_menu_btn];
 
   return { title, image_url, buttons };
 }

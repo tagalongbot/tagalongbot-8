@@ -40,15 +40,10 @@ let createNoPromosMsg = (data) => {
     `Main Menu|show_block|Main Menu`,
   );
   
-  let about_bb_btn = createBtn(
-    `About Bevl Beauty|show_block|AboutBB`,
-  );
-
   let msg = createButtonMessage(
     `Sorry looks like ${practice_name} does not have any promotions for ${service_name} at the moment`,
     view_services_btn,
     main_menu_btn,
-    about_bb_btn,
   );
 
   return msg;
