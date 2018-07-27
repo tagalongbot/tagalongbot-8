@@ -5,8 +5,11 @@ let { getUserByMessengerID, createUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
 let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
-let createUserData = async (data) => {
-  let user_data = {
+let createNewUserData = (data) => {
+  let { state, city, zip_code, user_data, claimed_promos } = data;
+  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = user_data;
+
+  let new_user_data = {
     ['messenger user id']: messenger_user_id,
     ['First Name']: first_name,
     ['Last Name']: last_name,
@@ -20,19 +23,22 @@ let createUserData = async (data) => {
     ['Claimed Promos']: claimed_promos.join('\n')
   }
   
-  
+  return new_user_data;  
 }
 
 let getOrCreateUser = async (data) => {
-  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = data;
+  let { state, city, zip_code, user_data } = data;
+  let { messenger_user_id } = user_data;
 
-  let user_data = createUserData(
-    { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number, zip_code, state, city }
+  let new_user_data = createNewUserData(
+    { state, city, zip_code, user_data, claimed_promos }
   );
-  
+
   let user = await getUserByMessengerID(messenger_user_id);
 
-  if () {}
+  if (!user) {
+    
+  }
       
   let updated_user = await updateUser(updateUserData, user);
   return updated_user;
@@ -42,10 +48,9 @@ let getOrCreateUser = async (data) => {
 // Exposed Functions
 let createClaimedUser = async (data) => {
   let { practice, promo, state, city, zip_code, user_data } = data;
-  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = user_data;
 
   let user = await getOrCreateUser(
-    {}
+    { practice, promo, state, city, zip_code, user_data }
   );
 
   let already_claimed_promos_data = convertLongTextToArray(
