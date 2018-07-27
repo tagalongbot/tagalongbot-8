@@ -44,15 +44,13 @@ let verifyVerificationCode = async ({ query }, res) => {
 }
 
 let claimPromotion = async ({ query }, res) => {
-  let { 
-    practice_id, 
-    promo_id, 
-    messenger_user_id, 
-    first_name, 
-    last_name, 
-    gender, 
-    user_email, 
-    user_phone_number 
+  let {
+    practice_id,
+    promo_id,
+    zip_code,
+    state,
+    city,
+    ...user_data
   } = query;
 
   let practice = await getPracticeByID(practice_id);
@@ -69,7 +67,7 @@ let claimPromotion = async ({ query }, res) => {
   }
 
   let user = await updateClaimedUser(
-    { practice, promo, messenger_user_id, first_name, last_name, gender, user_email, user_phone_number },
+    { practice, promo, zip_code, state, city, user_data },
   );
 
   let claimed_by_users = convertLongTextToArray(
@@ -91,7 +89,7 @@ let claimPromotion = async ({ query }, res) => {
   );
 
   let messages = createClaimedMsg(
-    { practice, updated_promo, first_name, last_name, gender, messenger_user_id }
+    { practice, updated_promo, user_data }
   );
 
   res.send({ messages });

@@ -13,11 +13,6 @@ let getPractices = async ({ query, params }, res) => {
 
 	let user = await getUserByMessengerID(messenger_user_id);
 
-	let new_updated_user = await createOrUpdateUser(
-    user,
-    { zip_code, messenger_user_id, first_name, last_name, gender }
-  );
-
   let practices = await searchPractices(
     { zip_code }
   );

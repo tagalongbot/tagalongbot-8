@@ -7,16 +7,8 @@ let { createPracticeLead } = require('../../libs/data/practice/leads.js');
 
 // Exposed Functions
 let updateClaimedUser = async (data) => {
-  let { 
-    practice, 
-    promo, 
-    messenger_user_id, 
-    first_name, 
-    last_name, 
-    gender, 
-    user_email, 
-    user_phone_number
-  } = data;
+  let { practice, promo, state, city, zip_code, user_data } = data;
+  let { messenger_user_id, first_name, last_name, gender, user_email, user_phone_number } = user_data;
 
   let user = await getUserByMessengerID(messenger_user_id);
 
@@ -101,7 +93,8 @@ let createLead = async (data) => {
 }
 
 let createClaimedMsg = (data) => {
-  let { practice, updated_promo, messenger_user_id, first_name, last_name, gender } = data;
+  let { practice, updated_promo, user_data } = data;
+  let { messenger_user_id, first_name, last_name, gender } = user_data;
 
   let practice_id = practice.id;
   let practice_name = practice.fields['Practice Name'];
