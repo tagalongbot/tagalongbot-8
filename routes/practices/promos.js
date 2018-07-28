@@ -20,7 +20,7 @@ let getPracticesPromos = async ({ query }, res) => {
 
   if (!promos[0]) {
     let set_attributes = { practice_name };
-    let redirect_to_blocks = ['No Practice Promos Found'];
+    let redirect_to_blocks = ['No Practice Promos'];
     res.send({ set_attributes, redirect_to_blocks });
     return;
   }

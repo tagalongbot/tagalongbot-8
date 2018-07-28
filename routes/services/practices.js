@@ -27,7 +27,7 @@ let getServicePractices = async ({ query, params }, res) => {
 
   if (!practicesByService[0]) {
     let set_attributes = { service_name }
-    let redirect_to_blocks = ['No Service Practices Found'];
+    let redirect_to_blocks = ['No Service Practices'];
   
     res.send({ set_attributes, redirect_to_blocks });
     return;

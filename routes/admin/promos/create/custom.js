@@ -69,7 +69,7 @@ let createCustomPromo = async ({ query }, res) => {
     { practice_promos_base_id, promo_name, promo_details, promo_expiration_date, promo_claim_limit, promo_image_id }
   );
 
-  let redirect_to_blocks = ['New Custom Promo Created'];
+  let redirect_to_blocks = ['New Promo Created'];
   res.send({ redirect_to_blocks });
 }
 

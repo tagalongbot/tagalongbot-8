@@ -42,7 +42,7 @@ let getServicePromos = async ({ query, params }, res) => {
 
   if (!promos[0]) {
     let set_attributes = { service_name };
-    let redirect_to_blocks = ['No Service Promos Found'];
+    let redirect_to_blocks = ['No Service Promos'];
   
     res.send({ set_attributes, redirect_to_blocks });
     return;

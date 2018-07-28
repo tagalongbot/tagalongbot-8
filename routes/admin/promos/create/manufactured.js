@@ -113,7 +113,7 @@ let confirmCreateServicePromo = async ({ query }, res) => {
     { promo_id, practice_promos_base_id, service_id, expiration_date, claim_limit }
   );
 
-  let redirect_to_blocks = ['New Manufactured Promo Created'];
+  let redirect_to_blocks = ['New Promo Created'];
 
   res.send({ redirect_to_blocks });
 }
