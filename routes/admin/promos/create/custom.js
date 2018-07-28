@@ -4,9 +4,7 @@ let { getPracticeByUserID } = require('../../../../libs/data/practices.js');
 let { getCustomCategoryByID } = require('../../../../libs/data/custom-images.js');
 let { getCustomCategories, getCustomImagesByCategory } = require('../../../../libs/data/custom-images.js');
 
-let { createNewPromo } = require('../../../../libs/admin/promos/create/custom/confirm.js');
-
-let { toCategoryGallery, toImagesGallery } = require('../../../../libs/admin/promos/create/custom.js');
+let { toCategoryGallery, toImagesGallery, createNewPromo } = require('../../../../libs/admin/promos/create/custom.js');
 let { createMultiGallery } = require('../../../../libs/bots.js');
 
 let express = require('express');
