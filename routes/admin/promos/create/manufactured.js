@@ -134,7 +134,7 @@ router.get(
 );
 
 router.get(
-  '/service/create/confirm',
+  '/service/create/confirmed',
   handleRoute(confirmCreateServicePromo, '[Error] Admin')
 );
 

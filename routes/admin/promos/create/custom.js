@@ -100,7 +100,7 @@ router.get(
 );
 
 router.get(
-  '/confirm',
+  '/confirmed',
   handleRoute(createCustomPromo, '[Error] Admin')
 );
 
