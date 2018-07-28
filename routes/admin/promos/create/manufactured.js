@@ -60,7 +60,7 @@ let sendServiceManufacturedPromos = async ({ query }, res) => {
 
   let messages = [
     { text: `Which promo would you like to create for ${service_name}?` }, 
-    createGallery(galleryData)
+    ...createMultiGallery(galleryData)
   ];
 
   res.send({ messages });
