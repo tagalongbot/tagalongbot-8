@@ -38,6 +38,7 @@ let getPracticesPromos = async ({ query }, res) => {
   }
 
   let messages = [
+    { text: `Here are some promotions from ${practice_name}` },
     createGallery(promos_gallery_array)
   ];
 
