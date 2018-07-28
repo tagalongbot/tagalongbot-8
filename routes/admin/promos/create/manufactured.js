@@ -72,25 +72,25 @@ let createServicePromo = async ({ query }, res) => {
   let service = await getServiceByID(
     { service_id }
   );
-  
+
   let new_promo_service_name = service.fields['Name'];
 
   let promo = await getManufacturedPromoByID(
     { promo_id }
   );
 
-  let new_promo_type = promo.fields['Name'];
+  let new_promo_name = promo.fields['Name'];
 
   let new_promo_id = promo_id;
   let new_promo_service_id = service_id;
   let new_promo_practice_id = practice_id;
   let new_promo_practice_promos_base_id = practice_promos_base_id;
 
-  let set_attributes = { 
-    new_promo_id, 
+  let set_attributes = {
+    new_promo_id,
     new_promo_service_id,
     new_promo_service_name,
-    new_promo_type,
+    new_promo_name,
     new_promo_practice_id,
     new_promo_practice_promos_base_id 
   };

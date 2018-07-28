@@ -30,20 +30,22 @@ let createNewPromo = async (data) => {
   let service = await getServiceByID(
     { service_id }
   );
+  
+  let service_name = service.fields['Name'];
 
   let manufactured_promo = await getManufacturedPromoByID(
     { promo_id }
   );
 
-  let new_promo_type = manufactured_promo.fields['Name'];
-
+  let new_promo_name = manufactured_promo.fields['Name'];
   let new_promo_image = manufactured_promo.fields['Image URL'];
+  let new_promo_details = manufactured_promo.fields['Details'];
 
   let promo_data = {
-    ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
-    ['Type']: `${service.fields['Name']}-${new_promo_type.trim().toLowerCase()}`,
+    ['Promotion Name']: `${new_promo_name} on ${service_name}`,
+    ['Type']: `${service_name}-${new_promo_name.trim().toLowerCase()}`,
     ['Active?']: true,
-    ['Details']: manufactured_promo.fields['Details'],
+    ['Details']: new_promo_details,
     ['Expiration Date']: expiration_date,
     ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(claim_limit.trim()),
