@@ -4,6 +4,9 @@ let router = express.Router();
 let handleRoute = require('../middlewares/handleRoute.js');
 let cache = require('../middlewares/cache.js');
 
+// Helper Module
+let adminHelpers = require('../routes/admin/helpers.js');
+
 // Admin Menu
 let getAdminMenu = require('../routes/admin/menu.js');
 let getAdminAccess = require('../routes/admin/access.js');
@@ -19,6 +22,11 @@ let togglePromo = require('../routes/admin/promos/toggle.js');
 
 // Leads
 let getLeadsList = require('../routes/admin/leads/view.js');
+
+router.use(
+  '/helpers',
+  adminHelpers
+);
 
 router.get(
   '/menu',

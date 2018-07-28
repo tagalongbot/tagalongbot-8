@@ -1,6 +1,4 @@
 let handleRoute = require('../../../../middlewares/handleRoute.js');
-let { localizeDate } = require('../../../../libs/helpers.js');
-let { createExpirationDate } = require('../../../../libs/admin/promos/create.js');
 
 let { getPracticeByUserID } = require('../../../../libs/data/practices.js');
 let { getCustomCategoryByID } = require('../../../../libs/data/custom-images.js');
@@ -62,20 +60,6 @@ let sendSelectedImage = async ({ query }, res) => {
   res.send({ set_attributes, redirect_to_blocks });
 }
 
-let updateExpirationDate = async ({ query }, res) => {
-  let { new_promo_expiration_date } = query;
-
-  let expiration_date = localizeDate(
-    createExpirationDate(new_promo_expiration_date)
-  );
-
-  let set_attributes = {
-    new_promo_expiration_date: expiration_date
-  }
-
-  res.send({ set_attributes });
-}
-
 let createCustomPromo = async ({ query }, res) => {
   let {
     messenger_user_id,
@@ -111,11 +95,6 @@ router.get(
 router.get(
   '/images/select',
   handleRoute(sendSelectedImage, '[Error] Admin')
-);
-
-router.get(
-  '/update/date',
-  handleRoute(updateExpirationDate, '[Error] Admin')
 );
 
 router.get(
