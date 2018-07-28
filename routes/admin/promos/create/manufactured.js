@@ -88,10 +88,10 @@ let createServicePromo = async ({ query }, res) => {
 
   let set_attributes = { 
     new_promo_id, 
-    new_promo_service_id, 
-    new_promo_service_name, 
-    new_promo_type, 
-    new_promo_practice_id, 
+    new_promo_service_id,
+    new_promo_service_name,
+    new_promo_type,
+    new_promo_practice_id,
     new_promo_practice_promos_base_id 
   };
 
