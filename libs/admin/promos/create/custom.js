@@ -34,7 +34,7 @@ let toImagesGallery = (data) => ({ id: promo_id, fields: promo_image }) => {
   let new_promo_image_id = promo_id;
 
   let btn1 = createBtn(
-    `Use This Image|show_block|[JSON] Select Image (Custom Promo)`,
+    `Use This Image|show_block|[ROUTER] Image Selected (Custom Promo)`,
     { new_promo_image_id }
   );
 
