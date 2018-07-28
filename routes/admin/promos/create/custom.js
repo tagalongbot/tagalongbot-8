@@ -55,7 +55,7 @@ let sendSelectedImage = async ({ query }, res) => {
   let { new_promo_image_id } = query;
 
   let set_attributes = { new_promo_image_id };
-  let redirect_to_blocks = ['New Custom Promotion Confirmation'];
+  let redirect_to_blocks = ['[JSON] Update Expiration Date (Helpers)','New Custom Promotion Confirmation'];
 
   res.send({ set_attributes, redirect_to_blocks });
 }
