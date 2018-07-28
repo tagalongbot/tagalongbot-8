@@ -8,11 +8,14 @@ let { createPracticePromo } = require('../../../../libs/data/practice/promos.js'
 
 let getServicesWithPromos = async ({ services }) => {
   let manufactured_promos = await getManufacturedPromos();
+
   let all_manufactured_service_name = manufactured_promos.map(
     promo => promo.fields['Service Name'].toUpperCase()
   );
 
-  let manufacutred_promo_service_names = [...new Set(all_manufactured_service_name)];
+  let manufacutred_promo_service_names = [
+    ...new Set(all_manufactured_service_name)
+  ];
 
   let services_with_promos = services.filter(
     service => manufacutred_promo_service_names.includes(service.fields['Name'].toUpperCase())
@@ -22,7 +25,7 @@ let getServicesWithPromos = async ({ services }) => {
 }
 
 let createNewPromo = async (data) => {
-  let { promo_id, practice_promos_base_id, service_id, expiration_date: expiration_date_text, claim_limit } = data;
+  let { promo_id, practice_promos_base_id, service_id, expiration_date, claim_limit } = data;
 
   let service = await getServiceByID(
     { service_id }
@@ -35,14 +38,13 @@ let createNewPromo = async (data) => {
   let new_promo_type = manufactured_promo.fields['Name'];
 
   let new_promo_image = manufactured_promo.fields['Image URL'];
-  let expiration_date = new Date(expiration_date_text);
 
   let promo_data = {
     ['Promotion Name']: `${new_promo_type} on ${service.fields['Name']}`,
     ['Type']: `${service.fields['Name']}-${new_promo_type.trim().toLowerCase()}`,
     ['Active?']: true,
     ['Details']: manufactured_promo.fields['Details'],
-    ['Expiration Date']: localizeDate(expiration_date),
+    ['Expiration Date']: expiration_date,
     ['Image URL']: new_promo_image,
     ['Claim Limit']: Number(claim_limit.trim()),
     ['Total Claim Count']: 0,

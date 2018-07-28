@@ -58,16 +58,12 @@ let createNewPromo = async (data) => {
 
   let promo_image = custom_promo_image.fields['Image URL'];
 
-  let expiration_date = localizeDate(
-    createExpirationDate(promo_expiration_date)
-  );
-
   let promo_data = {
     ['Promotion Name']: promo_name,
     ['Type']: 'CUSTOM',
     ['Active?']: true,
     ['Details']: promo_details,
-    ['Expiration Date']: expiration_date,
+    ['Expiration Date']: promo_expiration_date,
     ['Image URL']: promo_image,
     ['Claim Limit']: Number(promo_claim_limit.trim()),
     ['Total Claim Count']: 0,
