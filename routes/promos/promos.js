@@ -41,7 +41,7 @@ let getPromos = async ({ query, params }, res) => {
   }
 
 	let messages = [
-    { text: `Here's are some promotions I found` }, 
+    { text: `Here are some promotions I found near ${zip_code}` }, 
     createGallery(randomPromotions)
   ];
 
