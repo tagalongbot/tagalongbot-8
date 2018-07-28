@@ -29,16 +29,12 @@ let toImagesGallery = ({ id: promo_id, fields: promo }) => ({ id: custom_image_i
   let image_url = custom_image['Image URL'];
   let new_promo_image_id = promo_id;
 
-  let select_image_url = createURL(
-    `${BASEURL}/admin/promos/update/image/select`,
-  );
-
-  let btn1 = createBtn(
+  let select_image_btn = createBtn(
     `Use This Image|show_block|[JSON] Select Image (Update Promo)`,
     { custom_image_id }
   );
 
-  let buttons = [btn1];
+  let buttons = [select_image_btn];
 
   return { title, subtitle, image_url, buttons };
 }
