@@ -98,15 +98,12 @@ let selectUpdateImage = async ({ query }, res) => {
 }
 
 let updatePromoInfo = async ({ query }, res) => {
-  let {
-    updating_promo_id,
-    updating_practice_promos_base_id,
+  let { 
+    promo_id, 
+    practice_promos_base_id, 
     update_promo_field_name, 
     update_promo_field_value 
   } = query;
-
-  let promo_id = updating_promo_id;
-  let practice_promos_base_id = updating_practice_promos_base_id;
 
   let promo = await getPracticePromo(
     { practice_promos_base_id, promo_id }
