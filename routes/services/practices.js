@@ -40,7 +40,7 @@ let getServicePractices = async ({ query, params }, res) => {
   let last_gallery_element = createLastGalleryElement();
 
   let messages = [
-    { text: `Here are some providers I found in ${zip_code} for ${service_name}` },
+    { text: `Here are some practices I found in ${zip_code} for ${service_name}` },
     createGallery([...randomPractices, last_gallery_element], 'square')
   ];
 
