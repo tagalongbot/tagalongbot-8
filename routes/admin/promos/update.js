@@ -91,8 +91,8 @@ let selectUpdateImage = async ({ query }, res) => {
 
   let image_url = image_promo.fields['Image URL'];
 
-  let set_attributes = { update_promo_field_value: image_url }
-  let redirect_to_blocks = ['Update Promo (JSON)'];
+  let set_attributes = { update_promo_field_value: image_url };
+  let redirect_to_blocks = ['[JSON] Update Promo'];
 
   res.send({ set_attributes, redirect_to_blocks });
 }
@@ -112,12 +112,12 @@ let updatePromoInfo = async ({ query }, res) => {
     { practice_promos_base_id, promo_id }
   );
 
-  let updatedPromo = await updatePromo(
+  let updated_promo = await updatePromo(
     { practice_promos_base_id, promo, update_promo_field_name, update_promo_field_value }
   );
 
   let updateMsg = createUpdateMsg(
-    { practice_promos_base_id, promo, updatedPromo, update_promo_field_name, update_promo_field_value }
+    { promo, updated_promo, update_promo_field_name, update_promo_field_value, practice_promos_base_id }
   );
 
   let messages = [updateMsg];

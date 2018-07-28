@@ -59,16 +59,17 @@ let updatePromo = async (data) => {
 
 let createUpdateMsg = (data) => {
   let {
-    promo_id,
-    practice_promos_base_id,
     promo,
-    updatedPromo,
+    updated_promo,
     update_promo_field_name,
-    update_promo_field_value
+    update_promo_field_value,
+    practice_promos_base_id
   } = data;
 
+  let promo_id = promo.id;
+
   let old_promo_name = promo.fields['Promotion Name'];
-  let new_toggle_btn_name = updatedPromo.fields['Active?'] ? 'Deactivate' : 'Activate';
+  let new_toggle_btn_name = updated_promo.fields['Active?'] ? 'Deactivate' : 'Activate';
 
   let text = (update_promo_field_name === 'Image URL') ?
     `Image Updated Successfully for ${old_promo_name}` :
