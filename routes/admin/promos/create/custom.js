@@ -44,7 +44,7 @@ let sendCustomImages = async ({ query }, res) => {
   );
 
   let messages = [
-    { text: `Please choose an image below from ${category_name} to use for your new custom promo` }, 
+    { text: `Please choose an image below to use for your new custom promotion` }, 
     ...createMultiGallery(galleryData)
   ];
 
