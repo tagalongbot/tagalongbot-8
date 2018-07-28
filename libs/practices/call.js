@@ -24,7 +24,7 @@ let createCustomerMsg = ({ practice, user, promo }) => {
   );
 
   let msg = createButtonMessage(
-    `Hey ${user_name} you'll receive a call right now connecting you to ${practice_name} practice`,
+    `Hey ${user_name} you'll receive a call right now connecting you to ${practice_name}`,
     call_practice_btn,
     main_menu_btn,
   );
