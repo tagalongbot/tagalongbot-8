@@ -12,18 +12,6 @@ let { toCategoriesGallery, toImagesGallery, updatePromo, createUpdateMsg } = req
 let express = require('express');
 let router = express.Router();
 
-let getUpdateField = async ({ query }, res) => {
-  let { promo_id, practice_promos_base_id } = query;
-
-  let updating_promo_id = promo_id;
-  let updating_practice_promos_base_id = practice_promos_base_id;
-
-  let set_attributes = { updating_promo_id, updating_practice_promos_base_id };
-  let redirect_to_blocks = ['Update Promo'];
-
-  res.send({ set_attributes, redirect_to_blocks });
-}
-
 let updateExpirationDate = async ({ query }, res) => {
   let { update_promo_field_value } = query;
 
@@ -99,10 +87,10 @@ let selectUpdateImage = async ({ query }, res) => {
 
 let updatePromoInfo = async ({ query }, res) => {
   let {
-    promo_id, 
-    practice_promos_base_id, 
-    update_promo_field_name, 
-    update_promo_field_value 
+    promo_id,
+    practice_promos_base_id,
+    update_promo_field_name,
+    update_promo_field_value
   } = query;
 
   let promo = await getPracticePromo(
@@ -121,11 +109,6 @@ let updatePromoInfo = async ({ query }, res) => {
 
   res.send({ messages });
 }
-
-router.get(
-  '/',
-  handleRoute(getUpdateField, '[Error] Admin')
-);
 
 router.get(
   '/expiration_date',

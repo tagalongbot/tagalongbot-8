@@ -3,9 +3,12 @@ let { sendErrorMsg } = require('../libs/telegram.js');
 let { logToFile } = require('../libs/helpers.js');
 
 let errorHandler = (block_name, res) => async (error) => {
-  console.log(error);
-  logToFile(`${block_name}`, 'errors.txt');
-  await sendErrorMsg(block_name);
+  // console.log(error);
+
+  let errorMsg = `${block_name}: ${JSON.stringify(error)}`;
+  logToFile(errorMsg, 'errors.txt');
+
+  await sendErrorMsg(errorMsg);
 
   let redirect_to_blocks = [block_name];
   res.send({ redirect_to_blocks });
