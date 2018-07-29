@@ -98,7 +98,7 @@ let selectUpdateImage = async ({ query }, res) => {
 }
 
 let updatePromoInfo = async ({ query }, res) => {
-  let { 
+  let {
     promo_id, 
     practice_promos_base_id, 
     update_promo_field_name, 
@@ -106,7 +106,7 @@ let updatePromoInfo = async ({ query }, res) => {
   } = query;
 
   let promo = await getPracticePromo(
-    { practice_promos_base_id, promo_id }
+    { promo_id, practice_promos_base_id }
   );
 
   let updated_promo = await updatePromo(

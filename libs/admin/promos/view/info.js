@@ -17,7 +17,7 @@ let createPromoMsg = ({ promo: { id: promo_id, fields: promo }, practice_promos_
   ].join('\n\n');
 
   let update_promo_btn = createBtn(
-    `Update Promo|show_block|[JSON] Update Promo`,
+    `Update Promo|show_block|Update Promo`,
     { promo_id, practice_promos_base_id }
   );
 
