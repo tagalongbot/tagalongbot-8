@@ -73,6 +73,7 @@ let answerCustomer = async ({ query, params }, res) => {
   let voice_response = new VoiceResponse();
 
   voice_response.say(
+    { voice: 'alice', language: 'en-US' },
     `Hello ${user_first_name} thank you for claiming a promotion with ${practice_name}. One moment while I get you connected. Thank You For Using Bevl Beauty.`
   );
 
@@ -109,6 +110,7 @@ let answerPractice = async ({ query, params }, res) => {
   let voice_response = new VoiceResponse();
 
   voice_response.say(
+    { voice: 'alice', language: 'en-US' },
     `Hello ${practice_name} you have a new lead ${user_name} that claimed the promotion ${promo_name}. Again ${user_name} who claimed ${promo_name}. Thank You For Using Bevl Beauty.`,
   );
 

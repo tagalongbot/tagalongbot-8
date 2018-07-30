@@ -11,6 +11,7 @@ let createNewUser = async (data) => {
 
   let new_user_data = {
     ['messenger user id']: messenger_user_id,
+    ['User Type']: 'CONSUMER',
     ['First Name']: first_name,
     ['Last Name']: last_name,
     ['Gender']: gender.toLowerCase(),
