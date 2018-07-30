@@ -16,7 +16,7 @@ let getAllPractices = async (filterQuery = {}) => {
 }
 
 let getPracticeByUserID = async (messenger_user_id) => {
-  let filterByFormula = `{Provider Messenger ID} = '${messenger_user_id}'`;
+  let filterByFormula = `{Main Provider Messenger ID} = '${messenger_user_id}'`;
   let [user] = await getPractices({ filterByFormula,  });
   return user;
 }

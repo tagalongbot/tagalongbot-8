@@ -39,7 +39,7 @@ let getAdminAccess = async ({ query }, res) => {
   );
   
   let update_data = {
-    ['Provider Messenger ID']: messenger_user_id
+    ['Main Provider Messenger ID']: messenger_user_id
   }
 
   let updated_practice = await updatePractice(update_data, practice);
