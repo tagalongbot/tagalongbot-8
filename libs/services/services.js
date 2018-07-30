@@ -48,12 +48,12 @@ let createSurgicalCategoryElement = () => {
 }
 
 let createLastGalleryElement = ({ service_type, index }) => {
-  let title = 'More Options';
+  let title = 'Click Below To View More Services';
   let image_url = LOAD_MORE_SERVICES_IMAGE_URL;
   let new_index = Number(index + 8);
 
   let load_more_services_btn = createBtn(
-    `Load More Services|show_block|[JSON] Get More Services`,
+    `View More Services|show_block|[JSON] Get More Services`,
     { service_type, index: new_index }
   );
 
