@@ -3,7 +3,7 @@ let { convertLongTextToArray, getNumbersOnly } = require('../../libs/helpers.js'
 
 let { getUserByMessengerID, createUser, updateUser } = require('../../libs/data/users.js');
 let { updatePracticePromo } = require('../../libs/data/practice/promos.js');
-let { createPracticeLead } = require('../../libs/data/practice/leads.js');
+let { createPracticeLead, getUniqueLead } = require('../../libs/data/practice/leads.js');
 
 let createNewUser = async (data) => {
   let { state, city, zip_code, user_data, new_claimed_promo_data } = data;
@@ -77,7 +77,7 @@ let createLead = async (data) => {
   let user_phone_number = user.fields['Phone Number'];
 
   let promo_id = promo.id;
-  let promo_name = promo.fields['Promotion Name'];
+  let promotion_name = promo.fields['Promotion Name'];
 
   let lead_data = {
     ['Call Initiated']: 'NO',
@@ -85,15 +85,21 @@ let createLead = async (data) => {
     ['Last Name']: user_last_name,
     ['Gender']: user_gender,
     ['Phone Number']: user_phone_number,
-    ['Claimed Promotion Name']: promo_name,
+    ['Claimed Promotion Name']: promotion_name,
     ['Claimed Promotion URL']: `${practice_promos_base_url}/${promo_id}`
   }
+  
+  let lead = await getUniqueLead(
+    { practice_leads_base_id, user_phone_number, promotion_name }
+  );
 
-  let updated_lead_record = await createPracticeLead(
+  if (lead) return lead;
+
+  let new_lead_record = await createPracticeLead(
     { practice_leads_base_id, lead_data }
   );
 
-  return updated_lead_record;
+  return new_lead_record;
 }
 
 let createClaimedMsg = (data) => {
