@@ -47,9 +47,9 @@ let claimPromotion = async ({ query }, res) => {
   let {
     practice_id,
     promo_id,
-    zip_code,
     state,
     city,
+    zip_code,
     ...user_data
   } = query;
 
@@ -85,7 +85,7 @@ let claimPromotion = async ({ query }, res) => {
   );
 
   let new_lead = await createLead(
-    { practice, promo, user }
+    { practice, promo, user, state, city, zip_code }
   );
 
   let messages = createClaimedMsg(

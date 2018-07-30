@@ -66,7 +66,7 @@ let createOrUpdateUser = async (data) => {
 }
 
 let createLead = async (data) => {
-  let { practice, promo, user } = data;
+  let { practice, promo, user, state, city, zip_code } = data;
 
   let practice_name = practice.fields['Practice Name'];
   let practice_leads_base_id = practice.fields['Practice Leads Base ID'];
@@ -85,6 +85,9 @@ let createLead = async (data) => {
     ['First Name']: user_first_name,
     ['Last Name']: user_last_name,
     ['Gender']: user_gender,
+    ['State']: state,
+    ['City']: city,
+    ['Zip Code']: Number(zip_code),
     ['Phone Number']: user_phone_number,
     ['Claimed Promotion Name']: promotion_name,
     ['Claimed Promotion URL']: `${practice_promos_base_url}/${promo_id}`
