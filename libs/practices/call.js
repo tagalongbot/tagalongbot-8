@@ -62,6 +62,8 @@ let updateLeadRecord = async (data) => {
     { practice_leads_base_id, user_phone_number, promotion_name }
   );
 
+  if (!lead) throw { message: 'Lead Deleted' };
+
   let lead_data = {
     ['Call Initiated']: 'YES',
     ['Call Date / Time']: new Date()
