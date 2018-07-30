@@ -1,4 +1,4 @@
-let { LOAD_MORE_PRACTICE_PROMOS_IMAGE_URL } = process.env;
+let { VIEW_MORE_PRACTICE_PROMOS_IMAGE_URL } = process.env;
 
 let { localizeDate } = require('../../libs/helpers.js');
 let { createBtn } = require('../../libs/bots.js');
@@ -36,12 +36,12 @@ let toGalleryElement = (data) => ({ id: promo_id, fields: promo }) => {
 }
 
 let createLastGalleryElement = ({ practice_id, index }) => {
-  let title = 'More Options';
-  let image_url = LOAD_MORE_PRACTICE_PROMOS_IMAGE_URL;
+  let title = 'Click Below To View More Promos';
+  let image_url = VIEW_MORE_PRACTICE_PROMOS_IMAGE_URL;
   let new_index = Number(index + 8);
 
   let load_more_services_btn = createBtn(
-    `Load More Promos|show_block|[JSON] Get More Practice Promos`,
+    `View More Promos|show_block|[JSON] Get More Practice Promos`,
     { practice_id, index: new_index }
   );
 

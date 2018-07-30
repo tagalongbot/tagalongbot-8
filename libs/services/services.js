@@ -1,4 +1,4 @@
-let { SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL, LOAD_MORE_SERVICES_IMAGE_URL } = process.env;
+let { SERVICES_BASE_ID, SURGICAL_SERVICES_IMAGE_URL, VIEW_MORE_SERVICES_IMAGE_URL } = process.env;
 
 let { createBtn } = require('../../libs/bots.js');
 
@@ -49,7 +49,7 @@ let createSurgicalCategoryElement = () => {
 
 let createLastGalleryElement = ({ service_type, index }) => {
   let title = 'Click Below To View More Services';
-  let image_url = LOAD_MORE_SERVICES_IMAGE_URL;
+  let image_url = VIEW_MORE_SERVICES_IMAGE_URL;
   let new_index = Number(index + 8);
 
   let load_more_services_btn = createBtn(
@@ -61,11 +61,7 @@ let createLastGalleryElement = ({ service_type, index }) => {
     `Main Menu|show_block|Main Menu`
   );
 
-  let about_bb_btn = createBtn(
-    `About Bevl Beauty|show_block|AboutBB`
-  );
-
-  let buttons = [load_more_services_btn, main_menu_btn, about_bb_btn];
+  let buttons = [load_more_services_btn, main_menu_btn];
 
   return { title, image_url, buttons };
 }
