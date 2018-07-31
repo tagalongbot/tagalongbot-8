@@ -112,15 +112,9 @@ let createClaimedMsg = (data) => {
 
   let practice_id = practice.id;
   let practice_name = practice.fields['Practice Name'];
-  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let promo_id = updated_promo.id;
   let promotion_name = updated_promo.fields['Promotion Name'];
-
-  let view_promo_practice_btn = createBtn(
-    `View Promo Practice|show_block|[JSON] View Promo Practice`,
-    { practice_id, practice_promos_base_id, promo_id }
-  );
 
   let call_practice_btn = createBtn(
     `Yes|show_block|[JSON] Call Practice`,
@@ -132,16 +126,8 @@ let createClaimedMsg = (data) => {
     { practice_id, promo_id }
   );
 
-  let main_menu_btn = createBtn(
-    `Main Menu|show_block|Main Menu`,
-  );
+  let msg1 = { text: `Congrats ${first_name} your promotion "${promotion_name}" has been claimed!` };
 
-  let msg1 = createButtonMessage(
-    `Congrats ${first_name} your promotion "${promotion_name}" has been claimed!`,
-    view_promo_practice_btn,
-    main_menu_btn,
-  );
-  
   let msg2 = createQuickReplyMessage(
     `Would you like to call ${practice_name} now?`,
     call_practice_btn,
@@ -156,6 +142,12 @@ let createNoCallMsg = (data) => {
 
   let practice_id = practice.id;
   let practice_name = practice.fields['Practice Name'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
+
+  let view_promo_practice_btn = createBtn(
+    `View Promo Practice|show_block|[JSON] View Promo Practice`,
+    { practice_id, practice_promos_base_id, promo_id }
+  );
 
   let call_practice_btn = createBtn(
     `Call Practice|show_block|[JSON] Call Practice`,
@@ -169,6 +161,7 @@ let createNoCallMsg = (data) => {
   let msg = createButtonMessage(
     `Hey ${first_name} whenever you're ready to call ${practice_name} just click the button below`,
     call_practice_btn,
+    view_promo_practice_btn,
     main_menu_btn,
   );
 

@@ -5,9 +5,10 @@ let { createCall } = require('../../libs/twilio.js');
 let { getUniqueLead, updatePracticeLead } = require('../../libs/data/practice/leads.js');
 let { createBtn, createButtonMessage } = require('../../libs/bots.js');
 
-let createCustomerMsg = ({ practice, user, promo }) => {
+let createCustomerMsg = ({ practice, promo, user }) => {
   let practice_id = practice.id;
   let practice_name = practice.fields['Practice Name'];
+  let practice_promos_base_id = practice.fields['Practice Promos Base ID'];
 
   let promo_id = promo.id;
 
@@ -19,6 +20,11 @@ let createCustomerMsg = ({ practice, user, promo }) => {
     { practice_id, promo_id }
   );
 
+  let view_promo_practice_btn = createBtn(
+    `View Promo Practice|show_block|[JSON] View Promo Practice`,
+    { practice_id, practice_promos_base_id, promo_id }
+  );
+
   let main_menu_btn = createBtn(
     `Main Menu|show_block|Main Menu`
   );
@@ -26,6 +32,7 @@ let createCustomerMsg = ({ practice, user, promo }) => {
   let msg = createButtonMessage(
     `Hey ${user_name} you'll receive a call right now connecting you to ${practice_name}`,
     call_practice_btn,
+    view_promo_practice_btn,
     main_menu_btn,
   );
 
