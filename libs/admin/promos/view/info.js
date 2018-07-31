@@ -26,15 +26,15 @@ let createPromoMsg = ({ promo: { id: promo_id, fields: promo }, practice_promos_
     { promo_id, practice_promos_base_id }
   );
 
-  let view_active_promos_btn = createBtn(
-    `View All Promotions|show_block|[JSON] View All Promotions`
+  let admin_menu_btn = createBtn(
+    `Admin Menu|show_block|[JSON] Admin Menu`
   );
 
   let msg = createButtonMessage(
     text,
     toggle_promo_btn,
     update_promo_btn,
-    view_active_promos_btn
+    admin_menu_btn
   );
 
   return msg;

@@ -19,17 +19,7 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
     { service_id }
   );
 
-  let find_practices_btn = createBtn(
-    `Find Practices|show_block|[ROUTER] Search Practice Services`,
-    { service_id }
-  );
-
-  let find_promos_btn = createBtn(
-    `Find Promos|show_block|[ROUTER] Search Promos Services`,
-    { service_id }
-  );
-
-  let buttons = [view_service_details_btn, find_practices_btn, find_promos_btn];
+  let buttons = [view_service_details_btn];
 
   return { title, subtitle, image_url, buttons};
 }
