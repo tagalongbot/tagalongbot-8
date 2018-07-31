@@ -15,7 +15,7 @@ router.get(
 );
 
 router.get(
-  '/description/:show_practices',
+  '/description',
   handleRoute(getServiceDescription, '[Error] User')
 );
 

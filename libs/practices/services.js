@@ -8,11 +8,16 @@ let toGalleryElement = (data) => ({ id: service_id, fields: service }) => {
   let image_url = service['Image URL'];
 
   let read_description_btn = createBtn(
-    `View Service Details|show_block|[JSON] Get Service Description`,
+    `View Service Details|show_block|[JSON] Get Practice Service Description`,
     { service_id, practice_id }
   );
 
-  let buttons = [read_description_btn];
+  let view_practice_promos_btn = createBtn(
+    `View Promos|show_block|[JSON] Get Service Practice Promos`,
+    { service_id, practice_id }
+  );
+
+  let buttons = [read_description_btn, view_practice_promos_btn];
 
   return { title, subtitle, image_url, buttons };
 }
