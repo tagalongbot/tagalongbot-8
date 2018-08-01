@@ -9,8 +9,10 @@ let getPracticeServiceDescription = async ({ query }, res) => {
     { service_id }
   );
 
-  let msg = createViewPracticePromosMsg({ service, service_id, practice_id });
-  
+  let msg = createViewPracticePromosMsg(
+    { service, service_id, practice_id }
+  );
+
   let messages = [msg];
 
   res.send({ messages });

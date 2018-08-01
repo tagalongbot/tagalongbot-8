@@ -23,7 +23,8 @@ router.get(
 );
 
 router.get(
-  '/services/description'
+  '/services/description',
+  getPracticeServiceDescription
 );
 
 router.get(
