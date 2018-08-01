@@ -15,7 +15,7 @@ let toGalleryElement = ({ id: service_id, fields: service }) => {
   let image_url = service['Image URL'];
 
   let view_service_details_btn = createBtn(
-    `View Service Details|show_block|[JSON] Get Service Description (Show Find Practices Btn)`,
+    `View Service Details|show_block|[JSON] Get Service Description`,
     { service_id }
   );
 
