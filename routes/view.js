@@ -1,9 +1,9 @@
 let { BASEURL } = process.env;
 
-let { localizeDate, formatPhoneNumber } = require('../../../libs/helpers.js');
+let { localizeDate, formatPhoneNumber } = require('../libs/helpers.js');
 
 let riot = require('riot');
-let leads_list_tag = require('../../../tags/leads/leads-list.tag');
+let SOME_TAG = require('../tags/SOME_TAG.tag');
 
 let { getPracticeByUserID } = require('../../../libs/data/practices.js');
 let { getPracticeLeads } = require('../../../libs/data/practice/leads.js');
