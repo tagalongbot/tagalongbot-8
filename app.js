@@ -10,6 +10,7 @@ let updateQueryParameter = require('./middlewares/updateQueryParameter.js');
 let AIRoute = require('./routes/ai.js');
 let AITraining = require('./routes/ai-training.js');
 
+let router = require('./routes/router.js');
 let adminRouter = require('./routes/admin.js');
 
 let getFile = require('./routes/files.js');
@@ -27,6 +28,8 @@ app.use(updateQueryParameter);
 app.get('/ai', AIRoute);
 app.post('/ai-training', AITraining);
 
+// Routers
+app.use('/router', router);
 app.use('/admin', adminRouter);
 
 // Get Files
