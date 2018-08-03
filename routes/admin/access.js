@@ -2,7 +2,7 @@ let handleRoute = require('../../middlewares/handleRoute.js');
 
 let { formatPhoneNumber } = require('../../libs/helpers.js');
 
-let { getAllPractices, updatePractice } = require('../../libs/data/practices.js');
+let { getAllData, updateData } = require('../../libs/data/something.js');
 
 let { handleVerifyPhoneNumberRoute, handleVerifyVerificationCode } = require('../../libs/twilio-routes.js');
 
@@ -34,7 +34,7 @@ let getAdminAccess = async ({ query }, res) => {
 
   let filterByFormula = `{Main Provider Phone Number} = '${formatPhoneNumber(user_phone_number)}'`;
 
-  let [practice] = await getAllPractices(
+  let [practice] = await getAllData(
     { filterByFormula }
   );
   
@@ -42,7 +42,7 @@ let getAdminAccess = async ({ query }, res) => {
     ['Main Provider Messenger ID']: messenger_user_id
   }
 
-  let updated_practice = await updatePractice(update_data, practice);
+  let updated_practice = await updateData(update_data, practice);
 
   let redirect_to_blocks = ['Admin Access Granted'];
 

@@ -3,7 +3,7 @@ let { BASEURL } = process.env;
 let { localizeDate, formatPhoneNumber } = require('../libs/helpers.js');
 
 let riot = require('riot');
-let SOME_TAG = require('../tags/SOME_TAG.tag');
+let leads_list_tag = require('../tags/leads/leads_list.tag');
 
 let { getPracticeByUserID } = require('../../../libs/data/practices.js');
 let { getPracticeLeads } = require('../../../libs/data/practice/leads.js');
@@ -81,30 +81,16 @@ let getLeadsList = async ({ query, params }, res) => {
     toLeadData({ practice_promos_base_id })
   );
 
-  let called_leads_html = riot.render(
+  let data_html = riot.render(
     leads_list_tag,
-    { leads: called_leads_data }
+    { leads }
   );
 
-  // Leads That Did Not Call
-  let non_called_leads = found_leads.filter(
-    (lead) => lead.fields['Call Initiated'] === 'NO'
-  );
-
-  let non_called_leads_data = non_called_leads.map(
-    toLeadData({ practice_promos_base_id })
-  );
-
-  let non_called_leads_html = riot.render(
-    leads_list_tag,
-    { leads: non_called_leads_data }
-  );
-
-  let view_html = `<h5>Leads Who Called</h5>${called_leads_html}<br><h5>Lead Who Did Not Call</h5>${non_called_leads_html}`;
+  let view_html = ``;
 
   res.render(
-    'leads-list', 
-    { view_html, practice_name }
+    'leads-list',
+    { view_html }
   );
 }
 

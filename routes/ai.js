@@ -8,7 +8,7 @@ let { randomize } = require('../libs/helpers.js');
 let API_AI = require('apiai');
 let API_AI_APP = API_AI(API_AI_KEY);
 
-let intents = ['findPractice', 'findPromos', 'defineProduct'];
+let intents = ['findData'];
 
 let INTENTS = intents.reduce(
 	(intents, intent) => {

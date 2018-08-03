@@ -1,9 +1,9 @@
-let { getPracticeByUserID } = require('../../libs/data/practices.js');
+let { getDataByUserID } = require('../../libs/data/something.js');
 
 let getAdminMenu = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
-  let practice = await getPracticeByUserID(messenger_user_id);
+  let practice = await getDataByUserID(messenger_user_id);
 
   let block_name = (practice && practice.fields['Active?']) ? 'Admin Menu' : 'Non Admin';
 

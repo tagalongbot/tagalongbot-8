@@ -12,7 +12,7 @@ let getAdminMenu = require('../routes/admin/menu.js');
 let getAdminAccess = require('../routes/admin/access.js');
 
 // Leads
-let getLeadsList = require('../routes/admin/leads/view.js');
+let getLeadsList = require('../routes/view.js');
 
 router.use(
   '/helpers',

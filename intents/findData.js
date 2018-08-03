@@ -1,14 +1,13 @@
 let { BASEURL } = process.env;
 
 let { createURL } = require('../libs/helpers.js');
-let { getServiceByName } = require('../libs/data/services.js');
 
-let findPractice = async ({ res, parameters, user }) => {
+let findData = async ({ res, parameters, user }) => {
   let { first_name, last_name, gender, messenger_user_id } = user;
   let { state, city, zip_code, location, brand_name, procedure } = parameters;
 
   if (!zip_code && (state || city)) {
-    let redirect_to_blocks = ['Zip Code Only Message', '[ROUTER] Search Practices'];
+    let redirect_to_blocks = ['Zip Code Only Message', '[ROUTER] Search Data'];
     res.send({ redirect_to_blocks });
     return;
   }
@@ -53,4 +52,4 @@ let findPractice = async ({ res, parameters, user }) => {
   }
 }
 
-module.exports = findPractice;
+module.exports = findData;
