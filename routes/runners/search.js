@@ -62,6 +62,7 @@ let searchRunners = async ({ query }, res) => {
   } = query;
 
   let runner_searching = await getRunnerByMessengerID(messenger_user_id);
+  console.log('runner_searching', runner_searching);
 
   if (!runner_searching) {
     runner_searching = await createNewRunner(
@@ -82,7 +83,7 @@ let searchRunners = async ({ query }, res) => {
 
   let matched_runners = runners.filter(
     runner =>
-      console.log(runner != runner_searching) && runner != runner_searching &&
+      runner.id != runner_searching.id &&
       runner.fields['Gender'].toLowerCase() === search_gender.toLowerCase()
   );
 
