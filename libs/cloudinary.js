@@ -1,0 +1,36 @@
+let { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
+
+let utils = require('utils');
+let { promisify } = utils;
+
+let cloudinary = require('cloudinary');
+
+let uploadImage = promisify(
+  cloudinary.v2.uploader.upload.bind(cloudinary.v2.uploader)
+);
+
+cloudinary.config({
+  cloud_name: 'the3dwin',
+  api_key: CLOUDINARY_API_KEY,
+  api_secret: CLOUDINARY_API_SECRET,
+});
+
+let uploadFaceImage = async (data) => {
+  let { image_url } = data;
+
+  let eager = { width: 150, height: 100, crop: 'thumb', gravity: 'face' };
+  let tags = [''];
+
+  let new_image = await uploadImage(
+    image_url,
+    { eager, tags }
+  );
+
+  console.log('new_image', new_image);
+
+  return new_image;
+}
+
+module.exports = {
+  uploadFaceImage,
+}
