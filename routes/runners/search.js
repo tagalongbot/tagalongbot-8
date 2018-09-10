@@ -57,10 +57,15 @@ let searchRunners = async ({ query }, res) => {
     );
   }
 
-  let filterByFormula = `AND({Active?}, {Gender} = '${search_gender.toLowerCase()}')`;
+  let mile_radius = {
+    ['5 Miles']: 5,
+    ['10 Miles']: 10,
+    ['15 Miles']: 15,
+    ['20 Miles']: 20,
+  }[search_miles];
 
   let runners = await searchRunners(
-    { zip_code, mile_radius: search_miles }
+    { zip_code, mile_radius }
   );
 
   let matched_runners = runners.filter(
