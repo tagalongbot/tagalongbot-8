@@ -1,6 +1,6 @@
 let { sendErrorMsg } = require('../libs/telegram.js');
 
-let { logToFile } = require('../libs/helpers.js');
+let { logToFile } = require('../libs/helpers/errors.js');
 
 let errorHandler = (block_name, res) => async (error) => {
   console.log(error);

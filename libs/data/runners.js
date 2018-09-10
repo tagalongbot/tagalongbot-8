@@ -8,8 +8,8 @@ let getData = getAllDataFromTable(dataTable);
 let findData = findTableData(dataTable);
 let updateDataFromTable = updateTableData(dataTable);
 
-let getAllRunners = async (filterQuery = {}) => {
-  let runners = await getData(filterQuery);
+let getAllRunners = async ({ filterByFormula = '', view = 'Main View' }) => {
+  let runners = await getData({ filterByFormula, view });
   return runners;
 }
 
@@ -29,9 +29,16 @@ let updateData = async (update_data, runner) => {
   return updated_runner;
 }
 
+let getRunnersByZipCode = async ({ zip_code }) => {
+  let filterByFormula = `{Zip Code} = '${zip_code}'`;
+  let runners = await getAllRunners({ filterByFormula });
+  return runners;
+}
+
 module.exports = {
   getAllRunners,
   getRunnerByMessengerID,
   getRunnerByID,
   updateData,
+  getRunnersByZipCode,
 }
