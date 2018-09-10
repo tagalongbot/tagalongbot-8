@@ -12,20 +12,22 @@ let sendRequest = async ({ params, query }, res) => {
   let { messenger_user_id, runner_messenger_user_id} = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
-  let requested_runner = await getRunnerByMessengerID(runner_messenger_user_id);
 
-  
-  let user_attributes = {};
+  let user_id = runner_messenger_user_id;
+  let block_name = 'New Request';
+
+  let user_attributes = {
+    ['runner_name']: `${runner.fields['First Name']} ${runner.fields['Last Name']}`,
+    ['runner_zip_code']: runner.fields['Zip Code'],
+  }
 
   let sent_broadcast = await sendBroadcast(
     { user_id, block_name, user_attributes }
   );
 
-  let set_attributes = {  }
+  let redirect_to_blocks = ['Request Sent'];
 
-  let redirect_to_blocks = [];
-
-  res.send({ messages });
+  res.send({ redirect_to_blocks });
 }
 
 let acceptRequest = async ({ query }, res) => {
