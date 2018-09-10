@@ -6,7 +6,8 @@ let createNewRunner = async (data) => {
   let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_pic_url } = data;
 
   let new_runner_data = {
-    ['messenger_user_id']: messenger_user_id,
+    ['messenger user id']: messenger_user_id,
+    ['Active?']: true,
     ['First Name']: first_name,
     ['Last Name']: last_name,
     ['Gender']: gender,
