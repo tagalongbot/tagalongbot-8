@@ -1,10 +1,11 @@
 let { RUNNERS_BASE_ID } = process.env;
 
-let { getTable, getAllDataFromTable, findTableData, updateTableData } = require('../../libs/data.js');
+let { getTable, getAllDataFromTable, findTableData, updateTableData, createTableData } = require('../../libs/data.js');
 
 let getDataTable = getTable('Runners');
 let dataTable = getDataTable(RUNNERS_BASE_ID);
 let getData = getAllDataFromTable(dataTable);
+let createData = createTableData(dataTable);
 let findData = findTableData(dataTable);
 let updateDataFromTable = updateTableData(dataTable);
 
@@ -24,7 +25,12 @@ let getRunnerByID = async (runner_id) => {
   return runner;
 }
 
-let updateData = async (update_data, runner) => {
+let createRunner = async (new_runner_data) => {
+  let new_runner = await createData(new_runner_data);
+  return new_runner;
+}
+
+let updateRunner = async (update_data, runner) => {
   let updated_runner = updateDataFromTable(update_data, runner);
   return updated_runner;
 }
@@ -39,6 +45,7 @@ module.exports = {
   getAllRunners,
   getRunnerByMessengerID,
   getRunnerByID,
-  updateData,
+  createRunner,
+  updateRunner,
   getRunnersByZipCode,
 }
