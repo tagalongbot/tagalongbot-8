@@ -32,7 +32,7 @@ let getFaceFromImage = (data) => {
   
   let face_transformation = 'c_crop,g_face,w_600,x_271,y_388';
   let face_url = image_url.split('/upload/').join(
-    `/upload/${face_transformation}`
+    `/upload/${face_transformation}/`
   );
 
   return face_url;
