@@ -1,11 +1,9 @@
-let { getRunnerByMessengerID, searchNearbyRunners, createRunner } = require('../../libs/data/runners.js');
+let { getRunnerByMessengerID, createRunner } = require('../../libs/data/runners.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
-let { createBtn, createGallery } = require('../../libs/bots.js');
-
 let createNewRunner = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, messenger_link, zip_code, profile_image } = query;
+  let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_image } = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
@@ -14,6 +12,7 @@ let createNewRunner = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
+
   let new_profile_image_url = await uploadCloudinaryImage(
     { image_url: profile_image }
   );
@@ -37,7 +36,7 @@ let createNewRunner = async ({ query }, res) => {
 
   let redirect_to_blocks = ['[NEW PROFILE] Created'];
 
-  res.send({ messages });
+  res.send({ redirect_to_blocks });
 }
 
 module.exports = createNewRunner;
