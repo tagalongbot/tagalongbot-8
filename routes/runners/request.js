@@ -40,9 +40,7 @@ let acceptRequest = async ({ query }, res) => {
   let block_name = '[Notification] Request Accepted';
 
   let user_attributes = {
-    ['runner_name']: `${runner.fields['First Name']} ${runner.fields['Last Name']}`,
-    ['runner_zip_code']: runner.fields['Zip Code'],
-    ['runner_messenger_user_id']: runner.fields['messenger user id'],
+    ['runner_messenger_link']: runner.fields['Messenger Link'],
   }
 
   let sent_broadcast = await sendBroadcast(
