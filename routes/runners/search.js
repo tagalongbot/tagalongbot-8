@@ -23,7 +23,7 @@ let createNewRunner = async (data) => {
     ['Gender']: gender,
     ['Zip Code']: Number(zip_code),
     ['Messenger Link']: messenger_link,
-    ['Profile Image URL']: profile_image,
+    ['Profile Image URL']: face_profile_image_url,
   }
 
   let new_runner = await createRunner(new_runner_data);
@@ -93,10 +93,8 @@ let searchRunners = async ({ query }, res) => {
     toGalleryData(runner)
   );
 
-  let gallery = createGallery(
-    gallery_data
-  );
-  
+  let gallery = createGallery(gallery_data, 'square');
+
   let messages = [gallery];
 
   res.send({ messages });
