@@ -3,7 +3,7 @@ let { getRunnerByMessengerID, getAllRunners, createRunner } = require('../../lib
 let { createBtn, createGallery } = require('../../libs/bots.js');
 
 let createNewRunner = async (data) => {
-  let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link } = data;
+  let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_pic_url } = data;
 
   let new_runner_data = {
     ['messenger_user_id']: messenger_user_id,
@@ -11,7 +11,8 @@ let createNewRunner = async (data) => {
     ['Last Name']: last_name,
     ['Gender']: gender,
     ['Zip Code']: zip_code,
-    ['Messenger Link']: messenger_link
+    ['Messenger Link']: messenger_link,
+    ['Profile Image URL']: profile_pic_url,
   }
 
   let new_runner = await createRunner(new_runner_data);
@@ -45,13 +46,14 @@ let searchRunners = async ({ query }, res) => {
     search_gender,
     search_miles,
     zip_code,
+    profile_pic_url
   } = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
   if (!runner) {
     runner = await createNewRunner(
-      { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link }
+      { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_pic_url }
     );
   }
 

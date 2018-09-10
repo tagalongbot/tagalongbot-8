@@ -3,8 +3,6 @@ let router = express.Router();
 
 let { getRunnerByMessengerID, updateRunner } = require('../../libs/data/runners.js');
 
-let { createBtn, createGallery } = require('../../libs/bots.js');
-
 let { sendBroadcast } = require('../../libs/chatfuel.js');
 
 let sendRequest = async ({ params, query }, res) => {
@@ -27,7 +25,7 @@ let sendRequest = async ({ params, query }, res) => {
     { user_id, block_name, user_attributes }
   );
 
-  let redirect_to_blocks = ['[Notification] Request Sent'];
+  let redirect_to_blocks = ['Request Sent'];
 
   res.send({ redirect_to_blocks });
 }
@@ -41,13 +39,14 @@ let acceptRequest = async ({ query }, res) => {
 
   let user_attributes = {
     ['runner_messenger_link']: runner.fields['Messenger Link'],
+    ['runner_messenger_user_id']: runner.fields['messenger user id'],
   }
 
   let sent_broadcast = await sendBroadcast(
     { user_id, block_name, user_attributes }
   );
 
-  let redirect_to_blocks = ['[Notification] Request Sent'];
+  let redirect_to_blocks = ['[Notification] Request Accepted'];
 
   res.send({ redirect_to_blocks });
 }
