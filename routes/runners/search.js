@@ -1,9 +1,9 @@
-let { getRunnerByMessengerID, getAllRunners, createRunner } = require('../../libs/data/runners.js');
+let { getRunnerByMessengerID, searchNearbyRunners, createRunner } = require('../../libs/data/runners.js');
 
 let { createBtn, createGallery } = require('../../libs/bots.js');
 
 let createNewRunner = async (data) => {
-  let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_pic_url } = data;
+  let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_image } = data;
 
   let new_runner_data = {
     ['messenger user id']: messenger_user_id,
@@ -13,7 +13,7 @@ let createNewRunner = async (data) => {
     ['Gender']: gender,
     ['Zip Code']: Number(zip_code),
     ['Messenger Link']: messenger_link,
-    ['Profile Image URL']: profile_pic_url,
+    ['Profile Image URL']: profile_image,
   }
 
   let new_runner = await createRunner(new_runner_data);
@@ -47,18 +47,15 @@ let searchRunners = async ({ query }, res) => {
     search_gender,
     search_miles,
     zip_code,
-    profile_pic_url
+    profile_image,
   } = query;
-  console.log('query', query);
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
   if (!runner) {
     runner = await createNewRunner(
-      { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_pic_url }
+      { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_image }
     );
-
-    console.log('runner', runner);
   }
 
   let mile_radius = {
@@ -68,13 +65,9 @@ let searchRunners = async ({ query }, res) => {
     ['20 Miles']: 20,
   }[search_miles];
 
-  console.log('mile_radius', mile_radius);
-
-  let runners = await searchRunners(
+  let runners = await searchNearbyRunners(
     { zip_code, mile_radius }
   );
-
-  console.log('runners', runners);
 
   let matched_runners = runners.filter(
     runner => runner.fields['Gender'].toLowerCase() === search_gender.toLowerCase()
@@ -86,14 +79,14 @@ let searchRunners = async ({ query }, res) => {
     return;
   }
 
-  let gallery_data = runners.map(
+  let gallery_data = matched_runners.map(
     toGalleryData(runner)
   );
 
   let gallery = createGallery(
     gallery_data
   );
-
+  
   let messages = [gallery];
 
   res.send({ messages });

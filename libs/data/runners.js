@@ -43,7 +43,7 @@ let getRunnersByZipCode = async ({ zip_code }) => {
   return runners;
 }
 
-let searchRunners = async ({ zip_code, mile_radius }) => {
+let searchNearbyRunners = async ({ zip_code, mile_radius }) => {
   let findRunnersByZipCode = runner =>
     Number(runner.fields['Zip Code']) === Number(zip_code.trim());
 
@@ -95,5 +95,5 @@ module.exports = {
   createRunner,
   updateRunner,
   getRunnersByZipCode,
-  searchRunners,
+  searchNearbyRunners,
 }
