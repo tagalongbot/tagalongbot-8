@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 
-let { getRunnerByMessengerID, getRunnersByZipCode, createRunner } = require('../../libs/data/runners.js');
+let { getRunnerByMessengerID, updateRunner } = require('../../libs/data/runners.js');
 
 let { createBtn, createGallery } = require('../../libs/bots.js');
 
@@ -12,6 +12,8 @@ let sendRequest = async ({ params, query }, res) => {
   let runner = await getRunnerByMessengerID(messenger_user_id);
   let requested_runner = await getRunnerByMessengerID(runner_messenger_user_id);
 
+  let 
+  
   let set_attributes = {  }
 
   let redirect_to_blocks = [];
