@@ -1,9 +1,15 @@
 let { getRunnerByMessengerID, searchNearbyRunners, createRunner } = require('../../libs/data/runners.js');
 
+let { uploadFaceImage } = require('../../libs/cloudinary.js');
+
 let { createBtn, createGallery } = require('../../libs/bots.js');
 
 let createNewRunner = async (data) => {
   let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_image } = data;
+
+  let face_profile_image = await uploadFaceImage(
+    { image_url: profile_image }
+  );
 
   let new_runner_data = {
     ['messenger user id']: messenger_user_id,

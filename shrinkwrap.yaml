@@ -3,6 +3,7 @@ dependencies:
   authy-client: 1.1.1
   body-parser: 1.18.3
   bottleneck: 2.9.0
+  cloudinary: 1.11.0
   expeditious: 1.0.1
   expeditious-engine-redis: 0.1.1
   express: 4.16.3
@@ -515,6 +516,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-4FG+RSG9DL7uEwRUZXZn3SS34DiDPfzP0VOiEwtUWlE+AR2EIg+hSyvrIgUUfhdgR/UkAeW2QHgeP+hWrXs7jQ==
+  /cloudinary/1.11.0:
+    dependencies:
+      lodash: 4.17.10
+      q: 1.5.1
+    dev: false
+    engines:
+      node: '>=0.6'
+    resolution:
+      integrity: sha512-U5j9aWaYrSteboC7KcFZhvWy734d60CrrEUHVMpCtKhEWxpxXyVSe4Ag1BnRaVVq0YOvlJpXe6Qt6hAcb+h1lg==
   /co/4.6.0:
     dev: false
     engines:
@@ -2268,6 +2278,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-wNWmOycYgArY4esPpSachN1BhF4=
+  /q/1.5.1:
+    dev: false
+    engines:
+      node: '>=0.6.0'
+      teleport: '>=0.2.0'
+    resolution:
+      integrity: sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
   /q/2.0.3:
     dependencies:
       asap: 2.0.6
@@ -3272,6 +3289,7 @@ specifiers:
   authy-client: ^1.1.1
   body-parser: ^1.18.3
   bottleneck: ^2.9.0
+  cloudinary: ^1.11.0
   expeditious: ^1.0.1
   expeditious-engine-redis: ^0.1.1
   express: ^4.16.3
