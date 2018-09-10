@@ -6,6 +6,7 @@ let cache = require('../middlewares/cache.js');
 
 let createRunner = require('../routes/runners/create.js');
 let searchRunners = require('../routes/runners/search.js');
+let requestRunners = require('../routes/runners/request.js');
 
 router.get(
   '/create',
@@ -17,6 +18,12 @@ router.get(
   '/search',
   // cache.withTtl('1 day'),
   handleRoute(searchRunners, '[Error] User')
+);
+
+router.get(
+  '/request',
+  // cache.withTtl('1 day'),
+  handleRoute(requestRunners, '[Error] User')
 );
 
 module.exports = router;

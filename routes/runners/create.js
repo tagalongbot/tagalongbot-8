@@ -8,7 +8,7 @@ let createNewRunner = async ({ query }, res) => {
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
   if (runner) {
-    let redirect_to_blocks = ['User Already Created'];
+    let redirect_to_blocks = ['Profile Already Created'];
     res.send({ redirect_to_blocks });
     return;
   }
