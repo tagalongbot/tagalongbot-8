@@ -1,4 +1,4 @@
-let { BOT_ID } = process.env;
+let { BOT_ID, CHATFUEL_TOKEN } = process.env;
 
 let fetch = require('node-fetch');
 
@@ -7,7 +7,7 @@ let { createURL } = require('../libs/helpers/strings.js');
 let sendBroadcast = async (data) => {
   let { user_id, block_name: chatfuel_block_name, user_attributes } = data;
 
-  let chatfuel_token = ``;
+  let chatfuel_token = CHATFUEL_TOKEN;
 
   let url = createURL(
     `https://api.chatfuel.com/bots/<BOT_ID>/users/<USER_ID>/send`,
