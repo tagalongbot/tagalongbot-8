@@ -95,4 +95,5 @@ module.exports = {
   createRunner,
   updateRunner,
   getRunnersByZipCode,
+  searchRunners,
 }

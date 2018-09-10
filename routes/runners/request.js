@@ -13,17 +13,16 @@ let sendRequest = async ({ params, query }, res) => {
   let requested_runner = await getRunnerByMessengerID(runner_messenger_user_id);
 
   let 
-  
+
   let set_attributes = {  }
 
   let redirect_to_blocks = [];
-  
 
   res.send({ messages });
 }
 
 let acceptRequest = async ({ query }, res) => {
-  
+
 }
 
 router.get(

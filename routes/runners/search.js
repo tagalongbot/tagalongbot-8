@@ -57,21 +57,19 @@ let searchRunners = async ({ query }, res) => {
 
   let filterByFormula = `AND({Active?}, {Gender} = '${search_gender.toLowerCase()}')`;
 
-  let runners = await getAllRunners(
-    { filterByFormula }
+  let runners = await searchRunners(
+    { zip_code, mile_radius: search_miles }
   );
 
-  if (!runners[0]) {
+  let matched_runners = runners.filter(
+    runner => runner.fields['Gender'].toLowerCase() === search_gender.toLowerCase()
+  );
+
+  if (!matched_runners[0]) {
     let redirect_to_blocks = ['No Running Partners Found'];
     res.send({ redirect_to_blocks });
     return;
   }
-
-  let zip_codes = zipcodes.
-
-  let matched_runners = runners.filter(
-    runner => 
-  );
 
   let gallery_data = runners.map(
     toGalleryData(runner)
