@@ -14,7 +14,7 @@ let sendRequest = async ({ params, query }, res) => {
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
   let user_id = runner_messenger_user_id;
-  let block_name = 'New Request';
+  let block_name = '[Notification] New Request';
 
   let user_attributes = {
     ['runner_name']: `${runner.fields['First Name']} ${runner.fields['Last Name']}`,
