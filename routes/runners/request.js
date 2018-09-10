@@ -25,7 +25,7 @@ let sendRequest = async ({ params, query }, res) => {
     { user_id, block_name, user_attributes }
   );
 
-  let redirect_to_blocks = ['Request Sent'];
+  let redirect_to_blocks = ['[JSON] Get Runner Request Gallery', 'Request Sent'];
 
   res.send({ redirect_to_blocks });
 }
@@ -51,6 +51,12 @@ let acceptRequest = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
+let getRequestRunner = async ({ query }, res) => {
+  let {  } = query;
+
+  let redirect_to_blocks = ['[JSON] Get Runner Request Gallery'];
+}
+
 router.get(
   '/',
   sendRequest,
@@ -59,6 +65,11 @@ router.get(
 router.get(
   '/accept',
   acceptRequest,
+);
+
+router.get(
+  '/runner',
+  getRequestRunner
 );
 
 module.exports = router;
