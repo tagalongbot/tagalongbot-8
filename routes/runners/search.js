@@ -57,6 +57,8 @@ let searchRunners = async ({ query }, res) => {
     runner = await createNewRunner(
       { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_pic_url }
     );
+
+    console.log('runner', runner);
   }
 
   let mile_radius = {
@@ -66,9 +68,13 @@ let searchRunners = async ({ query }, res) => {
     ['20 Miles']: 20,
   }[search_miles];
 
+  console.log('mile_radius', mile_radius);
+
   let runners = await searchRunners(
     { zip_code, mile_radius }
   );
+
+  console.log('runners', runners);
 
   let matched_runners = runners.filter(
     runner => runner.fields['Gender'].toLowerCase() === search_gender.toLowerCase()
