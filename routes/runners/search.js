@@ -19,18 +19,19 @@ let createNewRunner = async (data) => {
 }
 
 let toGalleryData = (search_runner) => (runner) => {
+  let runner_messenger_user_id = runner.fields['messenger_user_id'];
+
   let title = `${runner.fields['First Name']} ${runner.fields['Last Name']}`;
   let image_url = `${runner.fields['Profile Image URL']}`;
-  
+
   let send_request_btn = createBtn(
-    ``,
-    {  }
+    `Send Request|show_block|[JSON] Send Partner Request`,
+    { runner_messenger_user_id }
   );
-  
+
   let buttons = [send_request_btn];
 
-  return { title, image_url, buttons }l
-  
+  return { title, image_url, buttons };
 }
 
 let searchRunners = async ({ params, query }, res) => {

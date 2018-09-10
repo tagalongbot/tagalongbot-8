@@ -36,7 +36,7 @@ let updateRunner = async (update_data, runner) => {
 }
 
 let getRunnersByZipCode = async ({ zip_code }) => {
-  let filterByFormula = `{Zip Code} = '${zip_code}'`;
+  let filterByFormula = `AND({Active?}, {Zip Code} = '${zip_code}')`;
   let runners = await getAllRunners({ filterByFormula });
   return runners;
 }
