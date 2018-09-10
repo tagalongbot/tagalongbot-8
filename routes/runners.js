@@ -7,7 +7,7 @@ let cache = require('../middlewares/cache.js');
 let searchRunners = require('../routes/runners/search.js');
 
 router.get(
-  '/search/:zip_code',
+  '/search',
   // cache.withTtl('1 day'),
   handleRoute(searchRunners, '[Error] User')
 );

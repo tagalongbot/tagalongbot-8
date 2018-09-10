@@ -11,7 +11,7 @@ let createNewRunner = async (data) => {
     ['First Name']: first_name,
     ['Last Name']: last_name,
     ['Gender']: gender,
-    ['Zip Code']: zip_code,
+    ['Zip Code']: Number(zip_code),
     ['Messenger Link']: messenger_link,
     ['Profile Image URL']: profile_pic_url,
   }
@@ -49,6 +49,7 @@ let searchRunners = async ({ query }, res) => {
     zip_code,
     profile_pic_url
   } = query;
+  console.log('query', query);
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
