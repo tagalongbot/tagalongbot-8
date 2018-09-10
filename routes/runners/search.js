@@ -3,7 +3,7 @@ let { getRunnerByMessengerID, getRunnersByZipCode, createRunner } = require('../
 let { createBtn, createGallery } = require('../../libs/bots.js');
 
 let createNewRunner = async (data) => {
-  let { messenger_user_id, first_name, last_name, gender, zip_code } = data;
+  let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link } = data;
 
   let new_runner_data = {
     ['messenger_user_id']: messenger_user_id,
@@ -11,6 +11,7 @@ let createNewRunner = async (data) => {
     ['Last Name']: last_name,
     ['Gender']: gender,
     ['Zip Code']: zip_code,
+    ['Messenger Link']: messenger_link
   }
 
   let new_runner = await createRunner(new_runner_data);
@@ -36,19 +37,33 @@ let toGalleryData = (search_runner) => (runner) => {
 
 let searchRunners = async ({ params, query }, res) => {
   let { zip_code } = params;
-  let { messenger_user_id, first_name, last_name, gender } = query;
+  let { 
+    messenger_user_id,
+    first_name,
+    last_name,
+    gender,
+    messenger_link,
+    search_gender,
+    search_miles,
+  } = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
   if (!runner) {
     runner = await createNewRunner(
-      { messenger_user_id, first_name, last_name, gender, zip_code }
+      { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link }
     );
   }
 
   let runners = await getRunnersByZipCode(
     { zip_code }
   );
+
+  if (!runners[0]) {
+    let redirect_to_blocks = ['No Running Partners Found'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
 
   let gallery_data = runners.map(
     toGalleryData(runner)
