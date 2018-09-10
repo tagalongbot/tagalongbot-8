@@ -1,4 +1,4 @@
-let { getRunnerByMessengerID, getRunnersByZipCode, createRunner } = require('../../libs/data/runners.js');
+let { getRunnerByMessengerID, getAllRunners, createRunner } = require('../../libs/data/runners.js');
 
 let { createBtn, createGallery } = require('../../libs/bots.js');
 
@@ -55,8 +55,10 @@ let searchRunners = async ({ query }, res) => {
     );
   }
 
-  let runners = await getRunnersByZipCode(
-    { zip_code }
+  let filterByFormula = `AND({Active?}, {Gender} = '${search_gender.toLowerCase()}')`;
+
+  let runners = await getAllRunners(
+    { filterByFormula }
   );
 
   if (!runners[0]) {
@@ -64,6 +66,12 @@ let searchRunners = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
+
+  let zip_codes = zipcodes.
+
+  let matched_runners = runners.filter(
+    runner => 
+  );
 
   let gallery_data = runners.map(
     toGalleryData(runner)
