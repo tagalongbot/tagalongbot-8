@@ -10,7 +10,7 @@ let updateQueryParameter = require('./middlewares/updateQueryParameter.js');
 let AIRoute = require('./routes/ai.js');
 let AITraining = require('./routes/ai-training.js');
 
-let router = require('./routes/router.js');
+let runnersRoute = require('./routes/runners.js');
 let adminRouter = require('./routes/admin.js');
 
 let getFile = require('./routes/files.js');
@@ -24,16 +24,10 @@ app.use(bodyParser.json());
 
 app.use(updateQueryParameter);
 
-// AI Training
-app.get('/ai', AIRoute);
-app.post('/ai-training', AITraining);
-
 // Routers
-app.use('/router', router);
-app.use('/admin', adminRouter);
-
-// Get Files
-app.get('/files', getFile);
-app.post('/files', getFile);
+app.use(
+  '/runners',
+  runnersRoute
+);
 
 app.listen(3000, () => console.log('Running on PORT 3000'));

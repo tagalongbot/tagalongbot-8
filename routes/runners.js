@@ -4,12 +4,12 @@ let router = express.Router();
 let handleRoute = require('../middlewares/handleRoute.js');
 let cache = require('../middlewares/cache.js');
 
-let routerHandler = require('../routes/router_handler.js');
+let searchRunners = require('../routes/runners/search.js');
 
 router.get(
-  '/services',
+  '/search/:zip_code',
   // cache.withTtl('1 day'),
-  handleRoute(routerHandler, '[Error] User')
+  handleRoute(searchRunners, '[Error] User')
 );
 
 module.exports = router;

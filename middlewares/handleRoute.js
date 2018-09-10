@@ -3,7 +3,7 @@ let { sendErrorMsg } = require('../libs/telegram.js');
 let { logToFile } = require('../libs/helpers.js');
 
 let errorHandler = (block_name, res) => async (error) => {
-  // console.log(error);
+  console.log(error);
 
   let errorMsg = `${block_name}: ${JSON.stringify(error)}`;
   logToFile(errorMsg, 'errors.txt');
