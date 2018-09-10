@@ -20,10 +20,10 @@ router.get(
   handleRoute(searchRunners, '[Error] User')
 );
 
-router.get(
+router.use(
   '/request',
   // cache.withTtl('1 day'),
-  handleRoute(requestRunners, '[Error] User')
+  requestRunners
 );
 
 module.exports = router;

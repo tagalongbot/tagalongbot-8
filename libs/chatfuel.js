@@ -6,11 +6,12 @@ let { createURL } = require('../libs/helpers/strings.js');
 
 let sendBroadcast = async (data) => {
   let { user_id, block_name: chatfuel_block_name, user_attributes } = data;
+  console.log('data', data);
 
   let chatfuel_token = CHATFUEL_TOKEN;
 
   let url = createURL(
-    `https://api.chatfuel.com/bots/<BOT_ID>/users/<USER_ID>/send`,
+    `https://api.chatfuel.com/bots/${BOT_ID}/users/${user_id}/send`,
     { chatfuel_token, chatfuel_block_name, ...user_attributes }
   );
 
@@ -22,6 +23,7 @@ let sendBroadcast = async (data) => {
   }
 
   let response = await fetch(url, options).then(res => res.json());
+  console.log('response', response);
 
   return response;
 }
