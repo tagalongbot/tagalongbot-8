@@ -35,9 +35,8 @@ let toGalleryData = (search_runner) => (runner) => {
   return { title, image_url, buttons };
 }
 
-let searchRunners = async ({ params, query }, res) => {
-  let { zip_code } = params;
-  let { 
+let searchRunners = async ({ query }, res) => {
+  let {
     messenger_user_id,
     first_name,
     last_name,
@@ -45,6 +44,7 @@ let searchRunners = async ({ params, query }, res) => {
     messenger_link,
     search_gender,
     search_miles,
+    zip_code,
   } = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
