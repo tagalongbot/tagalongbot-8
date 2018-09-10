@@ -1,0 +1,43 @@
+let { getRunnerByMessengerID, searchNearbyRunners, createRunner } = require('../../libs/data/runners.js');
+
+let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
+
+let { createBtn, createGallery } = require('../../libs/bots.js');
+
+let createNewRunner = async ({ query }, res) => {
+  let { messenger_user_id, first_name, last_name, gender, messenger_link, zip_code, profile_image } = query;
+
+  let runner = await getRunnerByMessengerID(messenger_user_id);
+
+  if (runner) {
+    let redirect_to_blocks = ['User Already Created'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+  let new_profile_image_url = await uploadCloudinaryImage(
+    { image_url: profile_image }
+  );
+
+  let face_profile_image_url = await getFaceFromImage(
+    { image_url: new_profile_image_url }
+  );
+
+  let new_runner_data = {
+    ['messenger user id']: messenger_user_id,
+    ['Active?']: true,
+    ['First Name']: first_name,
+    ['Last Name']: last_name,
+    ['Gender']: gender,
+    ['Zip Code']: Number(zip_code),
+    ['Messenger Link']: messenger_link,
+    ['Profile Image URL']: face_profile_image_url,
+  }
+
+  let new_runner = await createRunner(new_runner_data);
+
+  let redirect_to_blocks = ['[NEW PROFILE] Created'];
+
+  res.send({ messages });
+}
+
+module.exports = createNewRunner;

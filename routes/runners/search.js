@@ -62,13 +62,6 @@ let searchRunners = async ({ query }, res) => {
   } = query;
 
   let runner_searching = await getRunnerByMessengerID(messenger_user_id);
-  console.log('runner_searching', runner_searching);
-
-  if (!runner_searching) {
-    runner_searching = await createNewRunner(
-      { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_image }
-    );
-  }
 
   let mile_radius = {
     ['5 Miles']: 5,
