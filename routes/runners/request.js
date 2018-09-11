@@ -5,23 +5,19 @@ let { getRunnerByMessengerID, updateRunner } = require('../../libs/data/runners.
 
 let { sendBroadcast } = require('../../libs/chatfuel.js');
 
-let { createGallery } = require('../libs/bots.js');
+let { createGallery } = require('../../libs/bots.js');
 
-let { createRequestedRunnerCard } = require('../libs/runners/request.js');
+let { createRequestedRunnerCard } = require('../../libs/runners/request.js');
 
-let sendRequest = async ({ params, query }, res) => {
-  let { zip_code } = params;
+let sendRequest = async ({ query }, res) => {
   let { messenger_user_id, runner_messenger_user_id } = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
   let user_id = runner_messenger_user_id;
-  let block_name = '[Notification] New Request';
+  let block_name = '[JSON] Get Runner Request Gallery';
 
   let user_attributes = {
-    ['runner_name']: `${runner.fields['First Name']} ${runner.fields['Last Name']}`,
-    ['runner_zip_code']: runner.fields['Zip Code'],
-    ['runner_messenger_link']: runner.fields['Messenger Link'],
     ['runner_messenger_user_id']: runner.fields['messenger user id'],
   }
 
@@ -29,7 +25,7 @@ let sendRequest = async ({ params, query }, res) => {
     { user_id, block_name, user_attributes }
   );
 
-  let redirect_to_blocks = ['[JSON] Get Runner Request Gallery', 'Request Sent'];
+  let redirect_to_blocks = ['Request Sent'];
 
   res.send({ redirect_to_blocks });
 }
@@ -56,17 +52,19 @@ let acceptRequest = async ({ query }, res) => {
 }
 
 let sendRequestedRunner = async ({ query }, res) => {
-  let { messenger_user_id, runner_messenger_user_id } = query;
+  let { messenger_user_id, first_name, runner_messenger_user_id } = query;
 
   let requested_runner = await getRunnerByMessengerID(runner_messenger_user_id);
-  
+
   let requested_runner_card = createRequestedRunnerCard(
     { requested_runner }
   );
 
   let gallery = createGallery([requested_runner_card]);
 
-  let messages = [gallery];
+  let textMsg = { text: `Hey ${first_name} you have a new running partner request` }
+  let messages = [textMsg, gallery];
+
   res.send({ messages });
 }
 
@@ -82,7 +80,7 @@ router.get(
 
 router.get(
   '/runner',
-  getRequestRunner
+  sendRequestedRunner
 );
 
 module.exports = router;

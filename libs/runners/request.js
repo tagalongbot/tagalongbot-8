@@ -6,6 +6,7 @@ let createRequestedRunnerCard = async (data) => {
   let runner = runner.fields;
 
   let runner_messenger_user_id = runner['messenger user id'];
+  let runner_messenger_link = runner['Messenger Link'];
 
   let title = `${runner['First Name']} ${runner['Last Name']}`;
   let subtitle = `${runner['Gender']} | ${runner['Zip Code']}`;
@@ -13,7 +14,7 @@ let createRequestedRunnerCard = async (data) => {
 
   let accept_request_btn = createBtn(
     `Accept Request|show_block|[JSON] Accept Partner Request`,
-    { runner_messenger_user_id }
+    { runner_messenger_user_id, runner_messenger_link }
   );
 
   let buttons = [accept_request_btn];
