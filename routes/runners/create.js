@@ -4,6 +4,7 @@ let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary
 
 let createNewRunner = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_image } = query;
+  console.log('query', query);
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
 

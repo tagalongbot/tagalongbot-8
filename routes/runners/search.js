@@ -10,6 +10,12 @@ let searchRunners = async ({ query }, res) => {
   let { messenger_user_id, search_gender, search_miles, zip_code } = query;
 
   let runner_searching = await getRunnerByMessengerID(messenger_user_id);
+  
+  if (!runner_searching) {
+    let redirect_to_blocks = ['Profile Not Created'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
 
   let mile_radius = {
     ['5 Miles']: 5,
