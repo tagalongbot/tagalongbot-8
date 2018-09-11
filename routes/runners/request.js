@@ -5,6 +5,10 @@ let { getRunnerByMessengerID, updateRunner } = require('../../libs/data/runners.
 
 let { sendBroadcast } = require('../../libs/chatfuel.js');
 
+let { createGallery } = require('../libs/bots.js');
+
+let { createRequestedRunnerCard } = require('../libs/runners/request.js');
+
 let sendRequest = async ({ params, query }, res) => {
   let { zip_code } = params;
   let { messenger_user_id, runner_messenger_user_id } = query;
@@ -51,10 +55,19 @@ let acceptRequest = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-let getRequestRunner = async ({ query }, res) => {
-  let {  } = query;
+let sendRequestedRunner = async ({ query }, res) => {
+  let { messenger_user_id, runner_messenger_user_id } = query;
 
-  let redirect_to_blocks = ['[JSON] Get Runner Request Gallery'];
+  let requested_runner = await getRunnerByMessengerID(runner_messenger_user_id);
+  
+  let requested_runner_card = createRequestedRunnerCard(
+    { requested_runner }
+  );
+
+  let gallery = createGallery([requested_runner_card]);
+
+  let messages = [gallery];
+  res.send({ messages });
 }
 
 router.get(
