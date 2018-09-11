@@ -2,64 +2,12 @@ let { getRunnerByMessengerID, searchNearbyRunners, createRunner } = require('../
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
-let { createBtn, createGallery } = require('../../libs/bots.js');
+let { createGallery } = require('../../libs/bots.js');
 
-let createNewRunner = async (data) => {
-  let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_image } = data;
-
-  let new_profile_image_url = await uploadCloudinaryImage(
-    { image_url: profile_image }
-  );
-
-  let face_profile_image_url = await getFaceFromImage(
-    { image_url: new_profile_image_url }
-  );
-
-  let new_runner_data = {
-    ['messenger user id']: messenger_user_id,
-    ['Active?']: true,
-    ['First Name']: first_name,
-    ['Last Name']: last_name,
-    ['Gender']: gender,
-    ['Zip Code']: Number(zip_code),
-    ['Messenger Link']: messenger_link,
-    ['Profile Image URL']: face_profile_image_url,
-  }
-
-  let new_runner = await createRunner(new_runner_data);
-
-  return new_runner;
-}
-
-let toGalleryData = (search_runner) => (runner) => {
-  let runner_messenger_user_id = runner.fields['messenger_user_id'];
-
-  let title = `${runner.fields['First Name']} ${runner.fields['Last Name']}`;
-  let subtitle = runner.fields['Gender'];
-  let image_url = `${runner.fields['Profile Image URL']}`;
-
-  let send_request_btn = createBtn(
-    `Send Request|show_block|[JSON] Send Partner Request`,
-    { runner_messenger_user_id }
-  );
-
-  let buttons = [send_request_btn];
-
-  return { title, image_url, buttons };
-}
+let { createRunnersCards } = require('../../libs/runners/search.js');
 
 let searchRunners = async ({ query }, res) => {
-  let {
-    messenger_user_id,
-    first_name,
-    last_name,
-    gender,
-    messenger_link,
-    search_gender,
-    search_miles,
-    zip_code,
-    profile_image,
-  } = query;
+  let { messenger_user_id, search_gender, search_miles, zip_code } = query;
 
   let runner_searching = await getRunnerByMessengerID(messenger_user_id);
 
@@ -87,7 +35,7 @@ let searchRunners = async ({ query }, res) => {
   }
 
   let gallery_data = matched_runners.map(
-    toGalleryData(runner_searching)
+    createRunnersCards(runner_searching)
   );
 
   let gallery = createGallery(gallery_data, 'square');

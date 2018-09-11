@@ -1,4 +1,4 @@
-let { createBtn } = require('../libs/bots.js');
+let { createBtn } = require('../../libs/bots.js');
 
 let createRequestedRunnerCard = async (data) => {
   let { requested_runner } = data;
