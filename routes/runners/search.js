@@ -35,7 +35,7 @@ let searchRunners = async ({ query }, res) => {
   }
 
   let gallery_data = matched_runners.map(
-    createRunnersCards(runner_searching)
+    createRunnersCards
   );
 
   let gallery = createGallery(gallery_data, 'square');

@@ -22,7 +22,7 @@ let sendRequest = async ({ query }, res) => {
   }
 
   let sent_broadcast = await sendBroadcast(
-    { user_id, block_name, user_attributes }
+    { user_id, block_name, message_tag: 'PAIRING_UPDATE', user_attributes }
   );
 
   let redirect_to_blocks = ['Request Sent'];
@@ -39,7 +39,6 @@ let acceptRequest = async ({ query }, res) => {
 
   let user_attributes = {
     ['runner_messenger_link']: runner.fields['Messenger Link'],
-    ['runner_messenger_user_id']: runner.fields['messenger user id'],
   }
 
   let sent_broadcast = await sendBroadcast(
@@ -60,9 +59,9 @@ let sendRequestedRunner = async ({ query }, res) => {
     { requested_runner }
   );
 
-  let gallery = createGallery([requested_runner_card]);
+  let gallery = createGallery([requested_runner_card], 'square');
 
-  let textMsg = { text: `Hey ${first_name} you have a new running partner request` }
+  let textMsg = { text: `Hey ${first_name} you have a new running partner request` };
   let messages = [textMsg, gallery];
 
   res.send({ messages });

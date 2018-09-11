@@ -1,9 +1,9 @@
 let { createBtn } = require('../../libs/bots.js');
 
-let createRequestedRunnerCard = async (data) => {
+let createRequestedRunnerCard = (data) => {
   let { requested_runner } = data;
 
-  let runner = runner.fields;
+  let runner = requested_runner.fields;
 
   let runner_messenger_user_id = runner['messenger user id'];
   let runner_messenger_link = runner['Messenger Link'];

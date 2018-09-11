@@ -1,7 +1,7 @@
 let { createBtn } = require('../../libs/bots.js');
 
-let createRunnersCards = (search_runner) => (runner) => {
-  let runner_messenger_user_id = runner.fields['messenger_user_id'];
+let createRunnersCards = (runner) => {
+  let runner_messenger_user_id = runner.fields['messenger user id'];
 
   let title = `${runner.fields['First Name']} ${runner.fields['Last Name']}`;
   let subtitle = runner.fields['Gender'];
