@@ -46,7 +46,9 @@ let searchRunners = async ({ query }, res) => {
 
   let gallery = createGallery(gallery_data, 'square');
 
-  let messages = [gallery];
+  let textMsg = { text: `Here are some runners near ${zip_code} in a ${search_miles} radius` };
+
+  let messages = [textMsg, gallery];
 
   res.send({ messages });
 }
