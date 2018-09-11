@@ -12,13 +12,11 @@ let { createRequestedRunnerCard } = require('../../libs/runners/request.js');
 let sendRequest = async ({ query }, res) => {
   let { messenger_user_id, runner_messenger_user_id } = query;
 
-  let runner = await getRunnerByMessengerID(messenger_user_id);
-
   let user_id = runner_messenger_user_id;
   let block_name = '[JSON] Get Runner Request Gallery';
 
   let user_attributes = {
-    ['runner_messenger_user_id']: runner.fields['messenger user id'],
+    ['runner_messenger_user_id']: messenger_user_id,
   }
 
   let sent_broadcast = await sendBroadcast(
@@ -34,6 +32,7 @@ let acceptRequest = async ({ query }, res) => {
   let { messenger_user_id, runner_messenger_user_id } = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
+
   let user_id = runner_messenger_user_id;
   let block_name = '[Notification] Request Accepted';
 
@@ -42,10 +41,10 @@ let acceptRequest = async ({ query }, res) => {
   }
 
   let sent_broadcast = await sendBroadcast(
-    { user_id, block_name, user_attributes }
+    { user_id, block_name, message_tag: 'PAIRING_UPDATE', user_attributes }
   );
 
-  let redirect_to_blocks = ['[Notification] Request Accepted'];
+  let redirect_to_blocks = ['Accept Request'];
 
   res.send({ redirect_to_blocks });
 }

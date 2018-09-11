@@ -19,7 +19,7 @@ let createRequestedRunnerCard = (data) => {
 
   let buttons = [accept_request_btn];
 
-  return { title, subtitle, buttons };
+  return { title, subtitle, image_url, buttons };
 }
 
 module.exports = {
