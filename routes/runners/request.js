@@ -2,12 +2,13 @@ let express = require('express');
 let router = express.Router();
 
 let { getRunnerByMessengerID, updateRunner } = require('../../libs/data/runners.js');
+let { createMatch } = require('../../libs/data/matches.js');
 
-let { sendBroadcast } = require('../../libs/chatfuel.js');
+let { createRequestedRunnerCard } = require('../../libs/runners/request.js');
 
 let { createGallery } = require('../../libs/bots.js');
 
-let { createRequestedRunnerCard } = require('../../libs/runners/request.js');
+let { sendBroadcast } = require('../../libs/chatfuel.js');
 
 let sendRequest = async ({ query }, res) => {
   let { messenger_user_id, runner_messenger_user_id } = query;
@@ -32,6 +33,14 @@ let acceptRequest = async ({ query }, res) => {
   let { messenger_user_id, runner_messenger_user_id } = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
+  let accepted_runner = await getRunnerByMessengerID(runner_messenger_user_id);
+
+  let new_match_data = {
+    ['Runner 1 - Name']: `${runner.fields['First Name']} ${runner.fields['Last Name']}`,
+    ['Runner 2 - Name']: `${accepted_runner.fields['First Name']} ${accepted_runner.fields['Last Name']}`,
+  }
+
+  let new_match = await createMatch(new_match_data);
 
   let user_id = runner_messenger_user_id;
   let block_name = '[Notification] Request Accepted';
