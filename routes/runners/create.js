@@ -34,7 +34,7 @@ let createNewRunner = async ({ query }, res) => {
 
   let new_runner = await createRunner(new_runner_data);
 
-  let redirect_to_blocks = ['[NEW PROFILE] Created'];
+  let redirect_to_blocks = ['New Profile Created'];
 
   res.send({ redirect_to_blocks });
 }
