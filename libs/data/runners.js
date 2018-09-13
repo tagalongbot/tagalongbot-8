@@ -43,7 +43,7 @@ let getRunnersByZipCode = async ({ zip_code }) => {
   return runners;
 }
 
-let searchNearbyRunners = async ({ zip_code, mile_radius }) => {
+let searchNearbyRunners = async ({ zip_code }) => {
   let findRunnersByZipCode = runner =>
     Number(runner.fields['Zip Code']) === Number(zip_code.trim());
 
@@ -56,7 +56,7 @@ let searchNearbyRunners = async ({ zip_code, mile_radius }) => {
 
   let nearby_zip_codes = zipcodes.radius(
     zip_code,
-    Number(mile_radius)
+    Number(10)
   );
 
   do {
