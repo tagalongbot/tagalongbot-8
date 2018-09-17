@@ -28,8 +28,8 @@ let createNewRunner = async ({ query }, res) => {
     ['Last Name']: last_name,
     ['Gender']: gender,
     ['Zip Code']: zip_code,
-    ['Latitude']: latitude,
-    ['Longitude']: longitude,
+    ['Latitude']: Number(latitude),
+    ['Longitude']: Number(longitude),
     ['Messenger Link']: messenger_link,
     ['Profile Image URL']: face_profile_image_url,
   }
