@@ -21,7 +21,8 @@
     "body-parser": "^1.18.3",
     "telebot": "^1.2.6",
     "zipcodes": "^7.0.0",
-    "cloudinary": "^1.11.0"
+    "cloudinary": "^1.11.0",
+    "turf": "^3.0.14"
   },
   "engines": {
     "node": "10.x"

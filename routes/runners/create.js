@@ -3,7 +3,7 @@ let { getRunnerByMessengerID, createRunner } = require('../../libs/data/runners.
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
 let createNewRunner = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, zip_code, messenger_link, profile_image } = query;
+  let { messenger_user_id, first_name, last_name, gender, zip_code, latitude, longitude, messenger_link, profile_image } = query;
 
   let runner = await getRunnerByMessengerID(messenger_user_id);
 
@@ -28,6 +28,8 @@ let createNewRunner = async ({ query }, res) => {
     ['Last Name']: last_name,
     ['Gender']: gender,
     ['Zip Code']: zip_code,
+    ['Latitude']: latitude,
+    ['Longitude']: longitude,
     ['Messenger Link']: messenger_link,
     ['Profile Image URL']: face_profile_image_url,
   }
