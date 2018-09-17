@@ -1,6 +1,8 @@
 let { RUNNERS_BASE_ID } = process.env;
 
 let turf = require('turf');
+let turf_circle = require('@turf/circle').default;
+console.log('turf_circle',turf_circle);
 let zipcodes = require('zipcodes');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData, createTableData } = require('../../libs/data.js');
@@ -51,7 +53,7 @@ let searchNearbyRunners = async ({ latitude, longitude }) => {
   let center = [latitude, longitude];
   let radius = 10;
   let options = { steps: 10, units: 'miles' };
-  let circle = turf.circle(center, radius, options);
+  let circle = turf_circle(center, radius, options);
 
   let runners = all_runners.filter(runner => {
     let runner_latitude = runner.fields['Latitude'];
