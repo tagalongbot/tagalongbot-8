@@ -46,12 +46,11 @@ let getRunnersByZipCode = async ({ zip_code }) => {
   return runners;
 }
 
-let searchNearbyRunners = async ({ latitude, longitude }) => {
+let searchNearbyRunnersByCoordinates = async ({ latitude, longitude }) => {
   let filterByFormula = `{Active?}`;
   let all_runners = await getAllRunners({ filterByFormula });
 
   let center = [Number(latitude), Number(longitude)];
-  console.log('center', center);
   let radius = 10;
   let options = { units: 'miles' };
   let circle = turf_circle(center, radius, options);
