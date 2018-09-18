@@ -52,7 +52,7 @@ let searchNearbyRunners = async ({ latitude, longitude }) => {
 
   let center = [latitude, longitude];
   let radius = 10;
-  let options = { steps: 10, units: 'miles' };
+  let options = { units: 'miles' };
   let circle = turf_circle(center, radius, options);
 
   let runners = all_runners.filter(runner => {
