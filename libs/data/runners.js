@@ -50,7 +50,8 @@ let searchNearbyRunners = async ({ latitude, longitude }) => {
   let filterByFormula = `{Active?}`;
   let all_runners = await getAllRunners({ filterByFormula });
 
-  let center = [latitude, longitude];
+  let center = [Number(latitude), Number(longitude)];
+  console.log('center', center);
   let radius = 10;
   let options = { units: 'miles' };
   let circle = turf_circle(center, radius, options);
@@ -61,7 +62,8 @@ let searchNearbyRunners = async ({ latitude, longitude }) => {
 
     let runner_location_point = turf.point([runner_latitude, runner_longitude]);
 
-    return turf_boolean_within(runner_location_point, circle);
+    let isWithinCircle = turf_boolean_within(runner_location_point, circle);
+    return isWithinCircle;
   });
 
   return runners;
