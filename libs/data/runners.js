@@ -40,12 +40,6 @@ let updateRunner = async (update_data, runner) => {
   return updated_runner;
 }
 
-let getRunnersByZipCode = async ({ zip_code }) => {
-  let filterByFormula = `AND({Active?}, {Zip Code} = '${zip_code}')`;
-  let runners = await getAllRunners({ filterByFormula });
-  return runners;
-}
-
 let searchNearbyRunnersByCoordinates = async ({ latitude, longitude }) => {
   let filterByFormula = `{Active?}`;
   let all_runners = await getAllRunners({ filterByFormula });
@@ -68,12 +62,57 @@ let searchNearbyRunnersByCoordinates = async ({ latitude, longitude }) => {
   return runners;
 }
 
+let searchNearbyRunnersByZipCode = async ({ zip_code }) => {
+  let findRunnersByZipCode = runner =>
+    runner.fields['Zip Code'] === zip_code.trim();
+
+  let filterByFormula = `{Active?}`;
+  let all_runners = await getAllRunners({ filterByFormula });
+
+  let runners = [];
+  let zip_codes_index = 0;
+  let used_zip_codes = [];
+
+  let nearby_zip_codes = zipcodes.radius(
+    zip_code,
+    Number(10)
+  );
+
+  do {
+    runners = all_runners.filter(findRunnersByZipCode);
+
+    used_zip_codes.push(zip_code);
+
+    if (!runners[0]) {
+      zip_code = nearby_zip_codes[zip_codes_index];
+      if (!zip_code) break;
+      zip_codes_index = zip_codes_index + 1;
+    }
+  } while(!runners[0]);
+
+  while (runners.length < 3) {
+    if (zip_codes_index === 0) zip_codes_index = zip_codes_index + 1;
+
+    zip_code = nearby_zip_codes[zip_codes_index];
+    used_zip_codes.push(zip_code);
+
+    if (!zip_code || used_zip_codes.includes(zip_code)) break;
+
+    let more_practices = all_runners.filter(findRunnersByZipCode);
+    zip_codes_index = zip_codes_index + 1;
+
+    runners = [...runners, ...more_practices];
+  }
+
+  return runners;
+}
+
 module.exports = {
   getAllRunners,
   getRunnerByMessengerID,
   getRunnerByID,
   createRunner,
   updateRunner,
-  getRunnersByZipCode,
-  searchNearbyRunners,
+  searchNearbyRunnersByCoordinates,
+  searchNearbyRunnersByZipCode,
 }

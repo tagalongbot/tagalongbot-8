@@ -1,6 +1,6 @@
 let { shuffleArray } = require('../../libs/helpers/arrays.js');
 
-let { getRunnerByMessengerID, searchNearbyRunners, createRunner } = require('../../libs/data/runners.js');
+let { getRunnerByMessengerID, searchNearbyRunnersByZipCode, createRunner } = require('../../libs/data/runners.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
@@ -19,8 +19,8 @@ let searchRunners = async ({ query }, res) => {
     return;
   }
 
-  let runners = await searchNearbyRunners(
-    { latitude, longitude }
+  let runners = await searchNearbyRunnersByZipCode(
+    { zip_code }
   );
 
   let matched_runners = runners.filter(
