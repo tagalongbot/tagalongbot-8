@@ -2,7 +2,7 @@ let { RUNNERS_BASE_ID } = process.env;
 
 let turf = require('turf');
 let turf_circle = require('@turf/circle').default;
-console.log('turf_circle',turf_circle);
+let turf_boolean_within = require('@turf/boolean_within').default;
 let zipcodes = require('zipcodes');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData, createTableData } = require('../../libs/data.js');
@@ -61,7 +61,7 @@ let searchNearbyRunners = async ({ latitude, longitude }) => {
 
     let runner_location_point = turf.point([runner_latitude, runner_longitude]);
 
-    return turf.booleanWithin(runner_location_point, circle);
+    return turf_boolean_within(runner_location_point, circle);
   });
 
   return runners;
