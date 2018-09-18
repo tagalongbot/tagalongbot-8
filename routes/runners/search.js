@@ -9,7 +9,7 @@ let { createGallery } = require('../../libs/bots.js');
 let { createRunnersCards } = require('../../libs/runners/search.js');
 
 let searchRunners = async ({ query }, res) => {
-  let { messenger_user_id, search_gender, latitude, longitude } = query;
+  let { messenger_user_id, search_gender, zip_code } = query;
 
   let runner_searching = await getRunnerByMessengerID(messenger_user_id);
 
@@ -20,7 +20,7 @@ let searchRunners = async ({ query }, res) => {
   }
 
   let runners = await searchNearbyRunners(
-    { latitude, longitude }
+    { zip_code }
   );
 
   let matched_runners = runners.filter(

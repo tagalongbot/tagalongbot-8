@@ -45,23 +45,47 @@ let getRunnersByZipCode = async ({ zip_code }) => {
   return runners;
 }
 
-let searchNearbyRunners = async ({ latitude, longitude }) => {
+let searchNearbyRunners = async ({ zip_code }) => {
+  let findRunnersByZipCode = runner =>
+    Number(runner.fields['Zip Code']) === Number(zip_code.trim());
+
   let filterByFormula = `{Active?}`;
   let all_runners = await getAllRunners({ filterByFormula });
 
-  let center = [latitude, longitude];
-  let radius = 10;
-  let options = { steps: 10, units: 'miles', properties: {foo: 'bar'} };
-  let circle = turf_circle(center, radius, options);
+  let runners = [];
+  let zip_codes_index = 0;
+  let used_zip_codes = [];
 
-  let runners = all_runners.filter(runner => {
-    let runner_latitude = runner.fields['Latitude'];
-    let runner_longitude = runner.fields['Longitude'];
+  let nearby_zip_codes = zipcodes.radius(
+    zip_code,
+    Number(10)
+  );
 
-    let runner_location_point = turf.point([runner_latitude, runner_longitude]);
+  do {
+    runners = all_runners.filter(findRunnersByZipCode);
 
-    return turf.booleanWithin(runner_location_point, circle);
-  });
+    used_zip_codes.push(zip_code);
+
+    if (!runners[0]) {
+      zip_code = nearby_zip_codes[zip_codes_index];
+      if (!zip_code) break;
+      zip_codes_index = zip_codes_index + 1;
+    }
+  } while(!runners[0]);
+
+  while (runners.length < 3) {
+    if (zip_codes_index === 0) zip_codes_index = zip_codes_index + 1;
+
+    zip_code = nearby_zip_codes[zip_codes_index];
+    used_zip_codes.push(zip_code);
+
+    if (!zip_code || used_zip_codes.includes(zip_code)) break;
+
+    let more_practices = all_runners.filter(findRunnersByZipCode);
+    zip_codes_index = zip_codes_index + 1;
+
+    runners = [...runners, ...more_practices];
+  }
 
   return runners;
 }
