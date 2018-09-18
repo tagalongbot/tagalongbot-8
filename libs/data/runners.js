@@ -2,7 +2,7 @@ let { RUNNERS_BASE_ID } = process.env;
 
 let turf = require('turf');
 let turf_circle = require('@turf/circle').default;
-let turf_boolean_within = require('@turf/boolean_within').default;
+let turf_boolean_within = require('@turf/boolean-within').default;
 let zipcodes = require('zipcodes');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData, createTableData } = require('../../libs/data.js');
