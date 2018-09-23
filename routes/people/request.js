@@ -1,10 +1,10 @@
 let express = require('express');
 let router = express.Router();
 
-let { getPersonByMessengerID, updateRunner } = require('../../libs/data/runners.js');
+let { getPersonByMessengerID, updateRunner } = require('../../libs/data/people.js');
 let { createMatch } = require('../../libs/data/matches.js');
 
-let { createRequestedPartnerCard } = require('../../libs/runners/request.js');
+let { createRequestedPartnerCard } = require('../../libs/people/request.js');
 
 let { createGallery } = require('../../libs/bots.js');
 
@@ -87,7 +87,7 @@ router.get(
 );
 
 router.get(
-  '/runner',
+  '/partner',
   sendRequestedPartner
 );
 

@@ -6,7 +6,7 @@ let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary
 
 let { createGallery } = require('../../libs/bots.js');
 
-let { createPeopleCards } = require('../../libs/runners/search.js');
+let { createPeopleCards } = require('../../libs/people/search.js');
 
 let searchPeople = async ({ query }, res) => {
   let { messenger_user_id, search_gender, search_activity, zip_code, latitude, longitude } = query;

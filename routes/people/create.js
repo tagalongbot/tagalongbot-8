@@ -1,9 +1,16 @@
-let { getPersonByMessengerID, createPerson } = require('../../libs/data/runners.js');
+let { getPersonByMessengerID, createPerson } = require('../../libs/data/people.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
 let createNewPerson = async ({ query }, res) => {
-  let { messenger_user_id, first_name, last_name, gender, zip_code, latitude, longitude, messenger_link, profile_image } = query;
+  let { 
+    messenger_user_id,
+    first_name,
+    last_name,
+    gender,
+    zip_code,
+    latitude,
+    longitude, messenger_link, profile_image } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
