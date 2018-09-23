@@ -35,10 +35,12 @@ let createNewPerson = async ({ query }, res) => {
   );
   
   let activities = [
-    is_runner ? 'Running' : null,
+    is_runner.toLowerCase() === 'Yes' ? 'Running' : null,
     is_cyclist ? 'Cycling' : null,
     is_gymnist ? 'Gym' : null,
-  ];
+  ].filter(Boolean);
+
+  console.log('activities', activities);
 
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
