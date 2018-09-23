@@ -33,11 +33,11 @@ let createNewPerson = async ({ query }, res) => {
   let face_profile_image_url = await getFaceFromImage(
     { image_url: new_profile_image_url }
   );
-  
+
   let activities = [
-    is_runner.toLowerCase() === 'Yes' ? 'Running' : null,
-    is_cyclist.toLowerCase() === 'Yes' ? 'Cycling' : null,
-    is_gymnist.toLowerCase() === 'Yes' ? 'Gym' : null,
+    is_runner.toUpperCase() === 'YES' ? 'Running' : null,
+    is_cyclist.toUpperCase() === 'YES' ? 'Cycling' : null,
+    is_gymnist.toUpperCase() === 'YES' ? 'Gym' : null,
   ].filter(Boolean);
 
   let new_person_data = {
