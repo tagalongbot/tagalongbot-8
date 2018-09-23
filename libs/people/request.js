@@ -1,20 +1,20 @@
 let { createBtn } = require('../../libs/bots.js');
 
 let createRequestedPartnerCard = (data) => {
-  let { requested_runner } = data;
+  let { requested_partner } = data;
 
-  let runner = requested_runner.fields;
+  let person = requested_partner.fields;
 
-  let runner_messenger_user_id = runner['messenger user id'];
-  let runner_messenger_link = runner['Messenger Link'];
+  let person_messenger_user_id = person['messenger user id'];
+  let person_messenger_link = person['Messenger Link'];
 
-  let title = `${runner['First Name']} ${runner['Last Name']}`;
-  let subtitle = `${runner['Gender']} | ${runner['Zip Code']}`;
-  let image_url = runner['Profile Image URL'];
+  let title = `${person['First Name']} ${person['Last Name']}`;
+  let subtitle = `${person['Gender']} | ${person['Zip Code']}`;
+  let image_url = person['Profile Image URL'];
 
   let accept_request_btn = createBtn(
     `Accept Request|show_block|[JSON] Accept Partner Request`,
-    { runner_messenger_user_id, runner_messenger_link }
+    { person_messenger_user_id, person_messenger_link }
   );
 
   let buttons = [accept_request_btn];

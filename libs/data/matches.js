@@ -4,7 +4,7 @@ let zipcodes = require('zipcodes');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData, createTableData } = require('../../libs/data.js');
 
-let getDataTable = getTable('Matcheds');
+let getDataTable = getTable('Matches');
 let dataTable = getDataTable(BASE_ID);
 let getData = getAllDataFromTable(dataTable);
 let createData = createTableData(dataTable);
