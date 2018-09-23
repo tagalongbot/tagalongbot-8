@@ -10,7 +10,13 @@ let createNewPerson = async ({ query }, res) => {
     gender,
     zip_code,
     latitude,
-    longitude, messenger_link, profile_image } = query;
+    longitude,
+    messenger_link,
+    profile_image,
+    is_runner,
+    is_cyclist,
+    is_gymnist
+  } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
@@ -27,6 +33,12 @@ let createNewPerson = async ({ query }, res) => {
   let face_profile_image_url = await getFaceFromImage(
     { image_url: new_profile_image_url }
   );
+  
+  let activities = [
+    is_runner ? 'Running' : null,
+    is_cyclist ? 'Cycling' : null,
+    is_gymnist ? 'Gym' : null,
+  ];
 
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
@@ -34,6 +46,7 @@ let createNewPerson = async ({ query }, res) => {
     ['First Name']: first_name,
     ['Last Name']: last_name,
     ['Gender']: gender,
+    ['Activities']: activities,
     ['Zip Code']: zip_code,
     ['Latitude']: Number(latitude),
     ['Longitude']: Number(longitude),
