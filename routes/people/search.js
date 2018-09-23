@@ -1,6 +1,6 @@
 let { shuffleArray } = require('../../libs/helpers/arrays.js');
 
-let { getRunnerByMessengerID, searchNearbyPeopleByZipCode, createPerson } = require('../../libs/data/people.js');
+let { getPersonByMessengerID, searchNearbyPeopleByZipCode, createPerson } = require('../../libs/data/people.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
@@ -11,7 +11,7 @@ let { createPeopleCards } = require('../../libs/people/search.js');
 let searchPeople = async ({ query }, res) => {
   let { messenger_user_id, search_gender, search_activity, zip_code, latitude, longitude } = query;
 
-  let person_searching = await getRunnerByMessengerID(messenger_user_id);
+  let person_searching = await getPersonByMessengerID(messenger_user_id);
 
   if (!person_searching) {
     let redirect_to_blocks = ['Profile Not Created'];
