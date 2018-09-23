@@ -1,13 +1,13 @@
-let { getRunnerByMessengerID, createRunner } = require('../../libs/data/runners.js');
+let { getPersonByMessengerID, createPerson } = require('../../libs/data/runners.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
 let createNewRunner = async ({ query }, res) => {
   let { messenger_user_id, first_name, last_name, gender, zip_code, latitude, longitude, messenger_link, profile_image } = query;
 
-  let runner = await getRunnerByMessengerID(messenger_user_id);
+  let person = await getPersonByMessengerID(messenger_user_id);
 
-  if (runner) {
+  if (person) {
     let redirect_to_blocks = ['Profile Already Created'];
     res.send({ redirect_to_blocks });
     return;
@@ -21,7 +21,7 @@ let createNewRunner = async ({ query }, res) => {
     { image_url: new_profile_image_url }
   );
 
-  let new_runner_data = {
+  let new_person_data = {
     ['messenger user id']: messenger_user_id,
     ['Active?']: true,
     ['First Name']: first_name,
@@ -34,7 +34,7 @@ let createNewRunner = async ({ query }, res) => {
     ['Profile Image URL']: face_profile_image_url,
   }
 
-  let new_runner = await createRunner(new_runner_data);
+  let new_person = await createPerson(new_person_data);
 
   let redirect_to_blocks = ['New Profile Created'];
 

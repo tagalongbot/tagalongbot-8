@@ -1,4 +1,4 @@
-let { RUNNERS_BASE_ID } = process.env;
+let { BASE_ID } = process.env;
 
 let turf = require('turf');
 let turf_circle = require('@turf/circle').default;
@@ -7,42 +7,42 @@ let zipcodes = require('zipcodes');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData, createTableData } = require('../../libs/data.js');
 
-let getDataTable = getTable('Runners');
-let dataTable = getDataTable(RUNNERS_BASE_ID);
+let getDataTable = getTable('People');
+let dataTable = getDataTable(BASE_ID);
 let getData = getAllDataFromTable(dataTable);
 let createData = createTableData(dataTable);
 let findData = findTableData(dataTable);
 let updateDataFromTable = updateTableData(dataTable);
 
-let getAllRunners = async ({ filterByFormula = '', view = 'Main View' } = {}) => {
-  let runners = await getData({ filterByFormula, view });
-  return runners;
+let getPeople = async ({ filterByFormula = '', view = 'Main View' } = {}) => {
+  let people = await getData({ filterByFormula, view });
+  return people;
 }
 
-let getRunnerByMessengerID = async (messenger_user_id) => {
+let getPersonByMessengerID = async (messenger_user_id) => {
   let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
-  let [runner] = await getData({ filterByFormula,  });
+  let [person] = await getData({ filterByFormula,  });
+  return person;
+}
+
+let getPersonByID = async (person_id) => {
+  let runner = await findData(person_id);
   return runner;
 }
 
-let getRunnerByID = async (runner_id) => {
-  let runner = await findData(runner_id);
-  return runner;
+let createPerson = async (new_person_data) => {
+  let new_person = await createData(new_person_data);
+  return new_person;
 }
 
-let createRunner = async (new_runner_data) => {
-  let new_runner = await createData(new_runner_data);
-  return new_runner;
+let updatePerson = async (update_data, person) => {
+  let updated_person = updateDataFromTable(update_data, person);
+  return updated_person;
 }
 
-let updateRunner = async (update_data, runner) => {
-  let updated_runner = updateDataFromTable(update_data, runner);
-  return updated_runner;
-}
-
-let searchNearbyRunnersByCoordinates = async ({ latitude, longitude }) => {
+let searchNearbyPeopleByCoordinates = async ({ latitude, longitude }) => {
   let filterByFormula = `{Active?}`;
-  let all_runners = await getAllRunners({ filterByFormula });
+  let all_runners = await getPeople({ filterByFormula });
 
   let center = [Number(latitude), Number(longitude)];
   let radius = 10;
@@ -62,12 +62,12 @@ let searchNearbyRunnersByCoordinates = async ({ latitude, longitude }) => {
   return runners;
 }
 
-let searchNearbyRunnersByZipCode = async ({ zip_code }) => {
+let searchNearbyPeopleByZipCode = async ({ zip_code }) => {
   let findRunnersByZipCode = runner =>
     runner.fields['Zip Code'] === zip_code.trim();
 
   let filterByFormula = `{Active?}`;
-  let all_runners = await getAllRunners({ filterByFormula });
+  let all_runners = await getPeople({ filterByFormula });
 
   let runners = [];
   let zip_codes_index = 0;
@@ -108,11 +108,11 @@ let searchNearbyRunnersByZipCode = async ({ zip_code }) => {
 }
 
 module.exports = {
-  getAllRunners,
-  getRunnerByMessengerID,
-  getRunnerByID,
-  createRunner,
-  updateRunner,
-  searchNearbyRunnersByCoordinates,
-  searchNearbyRunnersByZipCode,
+  getPeople,
+  getPersonByMessengerID,
+  getPersonByID,
+  createPerson,
+  updatePerson,
+  searchNearbyPeopleByCoordinates,
+  searchNearbyPeopleByZipCode,
 }

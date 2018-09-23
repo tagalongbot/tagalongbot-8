@@ -1,11 +1,11 @@
-let { RUNNERS_BASE_ID } = process.env;
+let { BASE_ID } = process.env;
 
 let zipcodes = require('zipcodes');
 
 let { getTable, getAllDataFromTable, findTableData, updateTableData, createTableData } = require('../../libs/data.js');
 
-let getDataTable = getTable('Matched Runners');
-let dataTable = getDataTable(RUNNERS_BASE_ID);
+let getDataTable = getTable('Matcheds');
+let dataTable = getDataTable(BASE_ID);
 let getData = getAllDataFromTable(dataTable);
 let createData = createTableData(dataTable);
 let findData = findTableData(dataTable);
@@ -26,14 +26,14 @@ let createMatch = async (new_match_data) => {
   return new_match;
 }
 
-let updateRunner = async (update_data, runner) => {
-  let updated_runner = updateDataFromTable(update_data, runner);
-  return updated_runner;
+let updateMatch = async (update_data, match) => {
+  let updated_match = updateDataFromTable(update_data, match);
+  return updated_match;
 }
 
 module.exports = {
   getAllMatches,
   getMatchByID,
   createMatch,
-  updateRunner,
+  updateMatch,
 }
