@@ -1,6 +1,6 @@
 let { createBtn } = require('../../libs/bots.js');
 
-let createRunnersCards = (runner) => {
+let createPeopleCards = (runner) => {
   let runner_messenger_user_id = runner.fields['messenger user id'];
 
   let title = `${runner.fields['First Name']} ${runner.fields['Last Name']}`;
@@ -18,5 +18,5 @@ let createRunnersCards = (runner) => {
 }
 
 module.exports = {
-  createRunnersCards,
+  createPeopleCards,
 }

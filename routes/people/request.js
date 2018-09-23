@@ -4,20 +4,21 @@ let router = express.Router();
 let { getPersonByMessengerID, updateRunner } = require('../../libs/data/runners.js');
 let { createMatch } = require('../../libs/data/matches.js');
 
-let { createRequestedRunnerCard } = require('../../libs/runners/request.js');
+let { createRequestedPartnerCard } = require('../../libs/runners/request.js');
 
 let { createGallery } = require('../../libs/bots.js');
 
 let { sendBroadcast } = require('../../libs/chatfuel.js');
 
 let sendRequest = async ({ query }, res) => {
-  let { messenger_user_id, person_messenger_user_id } = query;
+  let { messenger_user_id, person_messenger_user_id, requested_activity } = query;
 
   let user_id = person_messenger_user_id;
   let block_name = '[JSON] Get Runner Request Gallery';
 
   let user_attributes = {
     ['person_messenger_user_id']: messenger_user_id,
+    ['requested_activity']: requested_activity,
   }
 
   let sent_broadcast = await sendBroadcast(
@@ -36,8 +37,8 @@ let acceptRequest = async ({ query }, res) => {
   let accepted_person = await getPersonByMessengerID(person_messenger_user_id);
 
   let new_match_data = {
-    ['Runner 1 - Name']: `${person.fields['First Name']} ${person.fields['Last Name']}`,
-    ['Runner 2 - Name']: `${accepted_person.fields['First Name']} ${accepted_person.fields['Last Name']}`,
+    ['Person 1 - Name']: `${person.fields['First Name']} ${person.fields['Last Name']}`,
+    ['Person 2 - Name']: `${accepted_person.fields['First Name']} ${accepted_person.fields['Last Name']}`,
   }
 
   let new_match = await createMatch(new_match_data);
@@ -58,18 +59,18 @@ let acceptRequest = async ({ query }, res) => {
   res.send({ redirect_to_blocks });
 }
 
-let sendRequestedRunner = async ({ query }, res) => {
-  let { messenger_user_id, first_name, person_messenger_user_id } = query;
+let sendRequestedPartner = async ({ query }, res) => {
+  let { messenger_user_id, first_name, person_messenger_user_id, requested_activity } = query;
 
-  let requested_person = await getPersonByMessengerID(person_messenger_user_id);
+  let requested_partner = await getPersonByMessengerID(person_messenger_user_id);
 
-  let requested_person_card = createRequestedRunnerCard(
-    { requested_person }
+  let requested_partner_card = createRequestedPartnerCard(
+    { requested_partner }
   );
 
-  let gallery = createGallery([requested_person_card], 'square');
+  let gallery = createGallery([requested_partner_card], 'square');
 
-  let textMsg = { text: `Hey ${first_name} you have a new running partner request` };
+  let textMsg = { text: `Hey ${first_name} you have a new ${requested_activity.toLowerCase()} partner request` };
   let messages = [textMsg, gallery];
 
   res.send({ messages });
@@ -87,7 +88,7 @@ router.get(
 
 router.get(
   '/runner',
-  sendRequestedRunner
+  sendRequestedPartner
 );
 
 module.exports = router;

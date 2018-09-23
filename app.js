@@ -6,7 +6,7 @@ let bodyParser = require('body-parser');
 let updateQueryParameter = require('./middlewares/updateQueryParameter.js');
 
 // Routers
-let runnersRoute = require('./routes/runners.js');
+let peopleRoute = require('./routes/people.js');
 
 app.use(
   express.static(__dirname + '/public')
@@ -20,8 +20,8 @@ app.use(updateQueryParameter);
 
 // Routers
 app.use(
-  '/runners',
-  runnersRoute
+  '/people',
+  peopleRoute
 );
 
 app.listen(3000, () => console.log('Running on PORT 3000'));

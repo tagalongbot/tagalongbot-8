@@ -4,26 +4,26 @@ let router = express.Router();
 let handleRoute = require('../middlewares/handleRoute.js');
 let cache = require('../middlewares/cache.js');
 
-let createRunner = require('../routes/runners/create.js');
-let searchRunners = require('../routes/runners/search.js');
-let requestRunners = require('../routes/runners/request.js');
+let createPerson = require('../routes/people/create.js');
+let searchPeople = require('../routes/people/search.js');
+let requestPerson = require('../routes/people/request.js');
 
 router.get(
   '/create',
   // cache.withTtl('1 day'),
-  handleRoute(createRunner, '[Error] User')
+  handleRoute(createPerson, '[Error] User')
 );
 
 router.get(
   '/search',
   // cache.withTtl('1 day'),
-  handleRoute(searchRunners, '[Error] User')
+  handleRoute(searchPeople, '[Error] User')
 );
 
 router.use(
   '/request',
   // cache.withTtl('1 day'),
-  requestRunners
+  requestPerson
 );
 
 module.exports = router;

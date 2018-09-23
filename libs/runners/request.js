@@ -1,6 +1,6 @@
 let { createBtn } = require('../../libs/bots.js');
 
-let createRequestedRunnerCard = (data) => {
+let createRequestedPartnerCard = (data) => {
   let { requested_runner } = data;
 
   let runner = requested_runner.fields;
@@ -23,5 +23,5 @@ let createRequestedRunnerCard = (data) => {
 }
 
 module.exports = {
-  createRequestedRunnerCard,
+  createRequestedPartnerCard,
 }

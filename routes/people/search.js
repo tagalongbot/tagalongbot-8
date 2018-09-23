@@ -1,52 +1,52 @@
 let { shuffleArray } = require('../../libs/helpers/arrays.js');
 
-let { getRunnerByMessengerID, searchNearbyRunnersByZipCode, createRunner } = require('../../libs/data/runners.js');
+let { getRunnerByMessengerID, searchNearbyPeopleByZipCode, createPerson } = require('../../libs/data/people.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
 let { createGallery } = require('../../libs/bots.js');
 
-let { createRunnersCards } = require('../../libs/runners/search.js');
+let { createPeopleCards } = require('../../libs/runners/search.js');
 
-let searchRunners = async ({ query }, res) => {
+let searchPeople = async ({ query }, res) => {
   let { messenger_user_id, search_gender, search_activity, zip_code, latitude, longitude } = query;
 
-  let runner_searching = await getRunnerByMessengerID(messenger_user_id);
+  let person_searching = await getRunnerByMessengerID(messenger_user_id);
 
-  if (!runner_searching) {
+  if (!person_searching) {
     let redirect_to_blocks = ['Profile Not Created'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let runners = await searchNearbyRunnersByZipCode(
+  let people = await searchNearbyPeopleByZipCode(
     { zip_code }
   );
 
-  let matched_runners = runners.filter(
+  let matched_people = people.filter(
     runner =>
-      runner.id != runner_searching.id &&
+      runner.id != person_searching.id &&
       runner.fields['Gender'].toLowerCase() === search_gender.toLowerCase() &&
       runner.fields['Activities'].includes(search_activity)
   );
 
-  if (!matched_runners[0]) {
-    let redirect_to_blocks = ['No Running Partners Found'];
+  if (!matched_people[0]) {
+    let redirect_to_blocks = ['No Partners Found'];
     res.send({ redirect_to_blocks });
     return;
   }
 
-  let gallery_data = shuffleArray(matched_runners)
+  let gallery_data = shuffleArray(matched_people)
     .slice(0, 10)
-    .map(createRunnersCards);
+    .map(createPeopleCards);
 
   let gallery = createGallery(gallery_data, 'square');
 
-  let textMsg = { text: `Here are some runners near ${zip_code} in a 10 mile radius` };
+  let textMsg = { text: `Here are some people near ${zip_code} in a 10 mile radius` };
 
   let messages = [textMsg, gallery];
 
   res.send({ messages });
 }
 
-module.exports = searchRunners;
+module.exports = searchPeople;
