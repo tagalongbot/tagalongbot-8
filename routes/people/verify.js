@@ -1,16 +1,4 @@
-let express = require('express');
-let router = express.Router();
-
 let { getPersonByPhoneNumber, updatePerson } = require('../../libs/data/people.js');
-
-let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
-
-let canUserVerify = async ({ query }, res) => {
-  let {} = query;
-
-  let redirect_to_blocks = [];
-  res.send({ redirect_to_blocks });
-}
 
 let verifyPerson = async ({ query }, res) => {
   let { phone_number } = query;
@@ -38,4 +26,4 @@ let verifyPerson = async ({ query }, res) => {
   res.send({ set_attributes, redirect_to_blocks });
 }
 
-module.exports = router;
+module.exports = verifyPerson;
