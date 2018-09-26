@@ -15,7 +15,8 @@ let createNewPerson = async ({ query }, res) => {
     profile_image,
     is_runner,
     is_cyclist,
-    is_gymnist
+    is_gymnist,
+    phone_number
   } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
@@ -47,6 +48,7 @@ let createNewPerson = async ({ query }, res) => {
     ['Last Name']: last_name,
     ['Gender']: gender,
     ['Activities']: activities,
+    ['Phone Number']: phone_number,
     ['Zip Code']: zip_code,
     ['Latitude']: Number(latitude),
     ['Longitude']: Number(longitude),
