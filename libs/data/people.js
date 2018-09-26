@@ -30,6 +30,12 @@ let getPersonByID = async (person_id) => {
   return runner;
 }
 
+let getPersonByPhoneNumber = async (phone_number) => {
+  let filterByFormula = `{Phone Number} = '${phone_number}'`;
+  let [person] = await getData({ filterByFormula });
+  return person;
+}
+
 let createPerson = async (new_person_data) => {
   let new_person = await createData(new_person_data);
   return new_person;
@@ -111,6 +117,7 @@ module.exports = {
   getPeople,
   getPersonByMessengerID,
   getPersonByID,
+  getPersonByPhoneNumber,
   createPerson,
   updatePerson,
   searchNearbyPeopleByCoordinates,
