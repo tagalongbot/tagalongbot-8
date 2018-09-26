@@ -8,10 +8,13 @@ let createRequestedPartnerCard = (data) => {
   let person_messenger_user_id = person['messenger user id'];
   let person_messenger_link = person['Messenger Link'];
 
-  let isPersonVerified = person.fields['Verified?'] ? 
-  
+  let isPersonVerified = person.fields['Verified?'];
+
   let title = `${person['First Name']} ${person['Last Name']}`;
-  let subtitle = `Verified User ✅ | ${person['Gender']} | ${person['Zip Code']}`;
+  let subtitle = `${person['Gender']} | ${person['Zip Code']}`;
+
+  if (isPersonVerified) subtitle = `Verified User ✅ | ${subtitle} `;
+
   let image_url = person['Profile Image URL'];
 
   let accept_request_btn = createBtn(
