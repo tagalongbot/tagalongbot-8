@@ -1,5 +1,7 @@
 let { getPersonByPhoneNumber, updatePerson } = require('../../libs/data/people.js');
 
+let { sendBroadcast } = require('../../libs/chatfuel.js');
+
 let verifyPerson = async ({ query }, res) => {
   let { phone_number } = query;
 
@@ -24,6 +26,15 @@ let verifyPerson = async ({ query }, res) => {
   let set_attributes = { verified_person_name };
 
   res.send({ set_attributes, redirect_to_blocks });
+
+  // Notify User
+  let user_id = '';
+  let block_name = '';
+  let message_tag = 'ACCOUNT_UPDATE';
+
+  let sent_broadcast = await sendBroadcast(
+    { user_id, block_name, message_tag }
+  );
 }
 
 module.exports = verifyPerson;
