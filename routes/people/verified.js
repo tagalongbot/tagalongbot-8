@@ -2,7 +2,6 @@ let { getPersonByMessengerID } = require('../../libs/data/people.js');
 
 let canUserVerify = async ({ query }, res) => {
   let { messenger_user_id } = query;
-  console.log('query', query)
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
