@@ -17,8 +17,6 @@ let verifyPerson = async ({ query }, res) => {
 
   let updated_person = await updatePerson(update_data, person);
 
-  console.log('updated_person', updated_person);
-
   let redirect_to_blocks = ['[Verify] User Verified'];
 
   let verified_person_name = `${updated_person.fields['First Name']} ${updated_person.fields['Last Name']}`;
