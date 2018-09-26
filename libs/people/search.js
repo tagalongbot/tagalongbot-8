@@ -4,7 +4,7 @@ let createPeopleCards = (person) => {
   let person_messenger_user_id = person.fields['messenger user id'];
 
   let title = `${person.fields['First Name']} ${person.fields['Last Name']}`;
-  let subtitle = person.fields['Gender'];
+  let subtitle = `Verified User ✅ | ${person.fields['Gender']} | ${person.fields['Zip Code']}`;
   let image_url = `${person.fields['Profile Image URL']}`;
 
   let send_request_btn = createBtn(
@@ -14,7 +14,7 @@ let createPeopleCards = (person) => {
 
   let buttons = [send_request_btn];
 
-  return { title, image_url, buttons };
+  return { title, subtitle, image_url, buttons };
 }
 
 module.exports = {
