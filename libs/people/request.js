@@ -8,7 +8,7 @@ let createRequestedPartnerCard = (data) => {
   let person_messenger_user_id = person['messenger user id'];
   let person_messenger_link = person['Messenger Link'];
 
-  let isPersonVerified = person.fields['Verified?'];
+  let isPersonVerified = person['Verified?'];
 
   let title = `${person['First Name']} ${person['Last Name']}`;
   let subtitle = `${person['Gender']} | ${person['Zip Code']}`;

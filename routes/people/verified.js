@@ -11,7 +11,7 @@ let canUserVerify = async ({ query }, res) => {
     return;
   }
 
-  let redirect_to_blocks = ['Verify User'];
+  let redirect_to_blocks = ['[ROUTER] Verify User'];
   res.send({ redirect_to_blocks });
 }
 
