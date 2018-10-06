@@ -1,8 +1,8 @@
-let { getPersonByMessengerID, createPerson } = require('../../libs/data/people.js');
+let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
-let createNewPerson = async ({ query }, res) => {
+let createProfile = async ({ query }, res) => {
   let { 
     messenger_user_id,
     first_name,
@@ -21,7 +21,7 @@ let createNewPerson = async ({ query }, res) => {
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
-  if (person) {
+  if (person && person.fields.length > 1) {
     let redirect_to_blocks = ['Profile Already Created'];
     res.send({ redirect_to_blocks });
     return;
@@ -42,7 +42,6 @@ let createNewPerson = async ({ query }, res) => {
   ].filter(Boolean);
 
   let new_person_data = {
-    ['messenger user id']: messenger_user_id,
     ['Active?']: true,
     ['First Name']: first_name,
     ['Last Name']: last_name,
@@ -56,11 +55,11 @@ let createNewPerson = async ({ query }, res) => {
     ['Profile Image URL']: face_profile_image_url,
   }
 
-  let new_person = await createPerson(new_person_data);
+  let new_person = await updatePerson(new_person_data, person);
 
   let redirect_to_blocks = ['New Profile Created'];
 
   res.send({ redirect_to_blocks });
 }
 
-module.exports = createNewPerson;
+module.exports = createProfile;
