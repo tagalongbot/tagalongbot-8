@@ -42,6 +42,7 @@ let createProfile = async ({ query }, res) => {
   ].filter(Boolean);
 
   let new_person_data = {
+    ['messenger user id']: messenger_user_id,
     ['Active?']: true,
     ['First Name']: first_name,
     ['Last Name']: last_name,
