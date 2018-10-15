@@ -24,9 +24,9 @@ let searchPeople = async ({ query }, res) => {
   );
 
   let matched_people = people.filter(
-    runner =>
-      runner.id != person_searching.id &&
-      runner.fields['Activities'].includes(search_activity)
+    person =>
+      person.id != person_searching.id &&
+      person.fields['Activities'] && person.fields['Activities'].includes(search_activity)
   );
 
   if (!matched_people[0]) {
