@@ -809,7 +809,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ZhSQ7SQokWpsiIPYg05WRvTkpKg=
-      tarball: 'http://registry.npmjs.org/deprecate/-/deprecate-1.0.0.tgz'
   /destroy/1.0.4:
     dev: false
     resolution:
@@ -1759,7 +1758,6 @@ packages:
       node: '>= 4'
     resolution:
       integrity: sha1-0gXSzIOTCB2eSErjYoIRBpXtwjA=
-      tarball: 'http://registry.npmjs.org/jsts/-/jsts-1.1.2.tgz'
   /jwa/1.1.6:
     dependencies:
       buffer-equal-constant-time: 1.0.1
@@ -2478,7 +2476,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==
-      tarball: 'http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz'
   /readdirp/2.1.0:
     dependencies:
       graceful-fs: 4.1.11
@@ -2762,7 +2759,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-I18GBqP0qJoJC1K1osYjreqA8VAKovxuI3I81RSk0Dmr4TgloI0tAULjZaox8OsJ+n7XRrhH6i0G2By/pj1LCA==
-      tarball: 'http://registry.npmjs.org/rollup/-/rollup-0.57.1.tgz'
   /rootpath/0.1.2:
     dev: false
     resolution:
