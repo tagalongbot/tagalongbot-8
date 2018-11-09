@@ -3,7 +3,7 @@ let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.j
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
 let createProfile = async ({ query }, res) => {
-  let { 
+  let {
     messenger_user_id,
     first_name,
     last_name,
