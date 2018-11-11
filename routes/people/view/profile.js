@@ -14,7 +14,7 @@ let viewProfile = async ({ query }, res) => {
     ['first_name']: person.fields['First Name'],
     ['last_name']: person.fields['Last Name'],
     ['gender']: person.fields['Gender'],
-    ['activities']: person.fields['Activities'],
+    ['activities']: person.fields['Activities'].join('|'),
     ['profile_image_url']: person.fields['Profile Image URL']
   }
 

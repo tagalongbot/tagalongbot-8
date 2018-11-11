@@ -8,10 +8,8 @@
           <span class="card-title">{ opts.person.first_name } { opts.person.last_name }</span>
         </div>
         <div class="card-content">
-          <p></p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
+          <span>Gender: { opts.person.gender }</span>
+          <span>Activities: { opts.person.activities }</span>
         </div>
       </div>
     </div>

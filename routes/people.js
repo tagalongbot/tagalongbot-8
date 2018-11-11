@@ -12,6 +12,7 @@ let searchPeople = require('../routes/people/search.js');
 let requestPerson = require('../routes/people/request.js');
 let checkIfPersonIsVerified = require('../routes/people/verified.js');
 let verifyPerson = require('../routes/people/verify.js');
+let viewProfileWebview = require('../routes/people/view/profile.js');
 
 router.get(
   '/save',
@@ -57,6 +58,11 @@ router.get(
 router.get(
   '/verify',
   verifyPerson
+);
+
+router.get(
+  '/view/profile',
+  viewProfileWebview
 );
 
 module.exports = router;

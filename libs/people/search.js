@@ -25,14 +25,14 @@ let createPeopleCards = (person) => {
   );
 
   let next_profile_btn = createBtn(
-    `Next|show_block|[JSON] Search Partner`,
+    `Next|show_block|[JSON] Search Partners`,
   );
 
   let view_profile_btn = createBtn(
     `View Profile|web_url|${view_profile_url}`
   );
 
-  let buttons = [send_request_btn];
+  let buttons = [send_request_btn, next_profile_btn, view_profile_btn];
 
   return { title, subtitle, image_url, buttons };
 }
