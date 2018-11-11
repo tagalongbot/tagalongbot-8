@@ -2,7 +2,7 @@ let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/peopl
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../../libs/cloudinary.js');
 
-let { createImage, createBtn, createQuickReplyMessage } = require();
+let { createImage, createBtn, createQuickReplyMessage } = require('../../../libs/bots.js');
 
 let getImage = async ({ query }, res) => {
   let { profile_pic_url } = query;
@@ -21,14 +21,21 @@ let getImage = async ({ query }, res) => {
 
   let image_msg = createImage(face_profile_image_url);
 
-  let quick_reply_1 = createBtn();
-
-  let quick_replies = createQuickReplyMessage(
-    `Is this a good image to use for your profile?`,
-    
+  let quick_reply_1 = createBtn(
+    `Yes|show_block|[JSON] Create Profile`,
   );
 
-  let messages = [];
+  let quick_reply_2 = createBtn(
+    `No|show_block|[New Profile] Upload Image`,
+  );
+
+  let quick_replies = createQuickReplyMessage(
+    `Is this a good face image to use for your profile?`,
+    quick_reply_1,
+    quick_reply_2,
+  );
+
+  let messages = [image_msg, quick_replies];
 
   res.send({ set_attributes, messages });
 }
