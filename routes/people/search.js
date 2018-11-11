@@ -9,7 +9,7 @@ let { createGallery } = require('../../libs/bots.js');
 let { createPeopleCards } = require('../../libs/people/search.js');
 
 let searchPeople = async ({ query }, res) => {
-  let { messenger_user_id, search_activity, zip_code, latitude, longitude } = query;
+  let { messenger_user_id, search_activity, search_gender, zip_code, latitude, longitude } = query;
 
   let person_searching = await getPersonByMessengerID(messenger_user_id);
 
@@ -26,6 +26,7 @@ let searchPeople = async ({ query }, res) => {
   let matched_people = people.filter(
     person =>
       person.id != person_searching.id &&
+      (person.fields['Match By Gender'] === search_gender.toLowerCase() || person.fields['Match By Gender'] === 'both') &&
       person.fields['Activities'] && person.fields['Activities'].includes(search_activity)
   );
 
@@ -41,9 +42,9 @@ let searchPeople = async ({ query }, res) => {
 
   let gallery = createGallery(gallery_data, 'square');
 
-  let textMsg = { text: `Here are some people near ${zip_code} in a 10 mile radius` };
+  let txt_msg = { text: `Here are some people near ${zip_code} in a 10 mile radius` };
 
-  let messages = [textMsg, gallery];
+  let messages = [txt_msg, gallery];
 
   res.send({ messages });
 }

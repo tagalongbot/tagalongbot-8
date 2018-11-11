@@ -16,7 +16,8 @@ let createProfile = async ({ query }, res) => {
     is_runner,
     is_cyclist,
     is_gymnist,
-    phone_number
+    phone_number,
+    gender_match
   } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
@@ -26,14 +27,6 @@ let createProfile = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
-
-  let new_profile_image_url = await uploadCloudinaryImage(
-    { image_url: profile_image }
-  );
-
-  let face_profile_image_url = await getFaceFromImage(
-    { image_url: new_profile_image_url }
-  );
 
   let activities = [
     is_runner.toUpperCase() === 'YES' ? 'Running' : null,
@@ -46,14 +39,15 @@ let createProfile = async ({ query }, res) => {
     ['Active?']: true,
     ['First Name']: first_name,
     ['Last Name']: last_name,
-    ['Gender']: gender,
+    ['Gender']: gender.toLowerCase(),
+    ['Match By Gender']: gender_match.toLowerCase(),
     ['Activities']: activities,
     ['Phone Number']: phone_number,
     ['Zip Code']: zip_code,
     ['Latitude']: Number(latitude),
     ['Longitude']: Number(longitude),
     ['Messenger Link']: messenger_link,
-    ['Profile Image URL']: face_profile_image_url,
+    ['Profile Image URL']: profile_image,
   }
 
   let new_person = await updatePerson(new_person_data, person);
