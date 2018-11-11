@@ -1,3 +1,3 @@
-<data-list>
+<user-profile>
   <!-- Use Materialize CSS -->
-</data-list>
+</user-profile>

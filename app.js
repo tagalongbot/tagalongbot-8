@@ -2,6 +2,10 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 
+// Load Marko
+require('marko/node-require');
+let markoExpress = require('marko/express');
+
 // Middlewares
 let updateQueryParameter = require('./middlewares/updateQueryParameter.js');
 

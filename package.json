@@ -24,7 +24,8 @@
     "cloudinary": "^1.11.0",
     "turf": "^3.0.14",
     "@turf/circle": "^6.0.1",
-    "@turf/boolean-within": "^6.0.0"
+    "@turf/boolean-within": "^6.0.0",
+    "marko": "^4.13.8"
   },
   "engines": {
     "node": "10.x"
