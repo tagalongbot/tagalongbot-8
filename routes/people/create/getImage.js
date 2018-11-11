@@ -20,8 +20,6 @@ let getImage = async ({ query }, res) => {
   let face_image = createFaceImage(
     { image_url: profile_pic_url, width: 200, height: 200 }
   );
-  
-  console.log('face_image', face_image);
 
   let redirect_to_blocks = ['New Profile Created'];
 

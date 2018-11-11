@@ -30,7 +30,7 @@ let uploadCloudinaryImage = async (data) => {
 let getFaceFromImage = (data) => {
   let { image_url } = data;
 
-  let face_transformation = 'c_crop,g_face,w_400';
+  let face_transformation = 'c_crop,g_face,w_500';
   let face_url = image_url.split('/upload/').join(
     `/upload/${face_transformation}/`
   );
@@ -38,19 +38,7 @@ let getFaceFromImage = (data) => {
   return face_url;
 }
 
-let createFaceImage = (data) => {
-  let { image_url, width, height } = data;
-
-  let image = cloudinary.image(
-    image_url,
-    { type: 'fetch', width, height, crop: 'thumb', gravity: 'face', radius: 20 }
-  );
-
-  return image;
-}
-
 module.exports = {
   uploadCloudinaryImage,
   getFaceFromImage,
-  createFaceImage,
 }
