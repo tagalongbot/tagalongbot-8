@@ -9,6 +9,7 @@
         </div>
         <div class="card-content">
           <span>Gender: { opts.person.gender }</span>
+          <br>
           <span>Activities: { opts.person.activities }</span>
         </div>
       </div>

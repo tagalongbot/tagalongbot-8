@@ -5,6 +5,8 @@ let view_template = require('../../../views/user-profile.marko');
 
 let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 
+let { capitalizeString } = require('../../../libs/helpers/strings.js');
+
 let viewProfile = async ({ query }, res) => {
   let { person_messenger_user_id } = query;
 
@@ -13,8 +15,8 @@ let viewProfile = async ({ query }, res) => {
   let person_data = {
     ['first_name']: person.fields['First Name'],
     ['last_name']: person.fields['Last Name'],
-    ['gender']: person.fields['Gender'],
-    ['activities']: person.fields['Activities'].join('|'),
+    ['gender']: capitalizeString(person.fields['Gender']),
+    ['activities']: person.fields['Activities'].join(' | '),
     ['profile_image_url']: person.fields['Profile Image URL']
   }
 
