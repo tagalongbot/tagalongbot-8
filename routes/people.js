@@ -7,6 +7,7 @@ let cache = require('../middlewares/cache.js');
 let savePerson = require('../routes/people/save.js');
 let hasCreatedProfile = require('../routes/people/created.js');
 let createPerson = require('../routes/people/create.js');
+let getProfileImage = require('../routes/people/create/getImage.js');
 let searchPeople = require('../routes/people/search.js');
 let requestPerson = require('../routes/people/request.js');
 let checkIfPersonIsVerified = require('../routes/people/verified.js');
@@ -28,6 +29,12 @@ router.get(
   '/create',
   // cache.withTtl('1 day'),
   handleRoute(createPerson, '[Error] User')
+);
+
+router.get(
+  '/create/getImage',
+  // cache.withTtl('1 day'),
+  handleRoute(getProfileImage, '[Error] User')
 );
 
 router.get(

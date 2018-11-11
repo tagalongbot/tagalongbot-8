@@ -38,6 +38,8 @@ let getFaceFromImage = (data) => {
   return face_url;
 }
 
+let cr
+
 module.exports = {
   uploadCloudinaryImage,
   getFaceFromImage,
