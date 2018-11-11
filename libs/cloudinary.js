@@ -38,9 +38,19 @@ let getFaceFromImage = (data) => {
   return face_url;
 }
 
-let cr
+let createFaceImage = (data) => {
+  let { image_url, width, height } = data;
+
+  let image = cloudinary.image(
+    image_url,
+    { type: 'fetch', width, height, crop: 'thumb', gravity: 'face', radius: 20 }
+  );
+
+  return image;
+}
 
 module.exports = {
   uploadCloudinaryImage,
   getFaceFromImage,
+  createFaceImage,
 }
