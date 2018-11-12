@@ -50,8 +50,6 @@ let createProfile = async ({ query }, res) => {
     ['Profile Image URL']: profile_image,
   }
 
-  console.log('new_person_data', new_person_data);
-
   let new_person = await updatePerson(new_person_data, person);
 
   let redirect_to_blocks = ['New Profile Created'];
