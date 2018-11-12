@@ -30,7 +30,7 @@ let uploadCloudinaryImage = async (data) => {
 let getFaceFromImage = (data) => {
   let { image_url } = data;
 
-  let face_transformation = 'c_crop,g_face,w_500';
+  let face_transformation = 'c_thumb,g_face,w_500';
   let face_url = image_url.split('/upload/').join(
     `/upload/${face_transformation}/`
   );
