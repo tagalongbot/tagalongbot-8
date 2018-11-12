@@ -21,11 +21,11 @@ function render(input, out, __component, component, state) {
   component_globals_tag({}, out);
 
   out.w(marko_str(input.view_html) +
-    "<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n    </script>");
+    "<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n    </script><script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script><script>\n      (adsbygoogle = window.adsbygoogle || []).push({\n        google_ad_client: \"ca-pub-7388179374152766\",\n        enable_page_level_ads: true\n      });\n    </script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "9");
+  await_reorderer_tag({}, out, __component, "11");
 
   out.w("</body></html>");
 }
