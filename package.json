@@ -25,7 +25,8 @@
     "turf": "^3.0.14",
     "@turf/circle": "^6.0.1",
     "@turf/boolean-within": "^6.0.0",
-    "marko": "^4.13.8"
+    "marko": "^4.13.8",
+    "dotenv": "^6.1.0"
   },
   "engines": {
     "node": "10.x"

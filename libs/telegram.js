@@ -15,7 +15,7 @@ bot.on('/start', (msg) => {
   );
 });
 
-bot.start();
+// bot.start();
 
 // Exposed Functions
 let sendErrorMsg = async (error_msg) => {
