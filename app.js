@@ -29,4 +29,4 @@ app.use(
   peopleRoute
 );
 
-app.listen(3000, () => console.log('Running on PORT 3000'));
+app.listen(process.env.PORT, () => console.log('Running on PORT' + process.env.PORT));
