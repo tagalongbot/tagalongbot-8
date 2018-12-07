@@ -55,7 +55,7 @@ let searchNearbyPeopleByCoordinates = async ({ latitude, longitude }) => {
   let options = { units: 'miles' };
   let circle = turf_circle(center, radius, options);
 
-  let people = all_people.filter(runner => {
+  let people = all_people.filter(person => {
     let person_latitude = person.fields['Latitude'];
     let person_longitude = person.fields['Longitude'];
 
@@ -115,7 +115,8 @@ let searchNearbyPeopleByZipCode = async ({ zip_code }) => {
 
 let searchNearbyPeopleByCity = async ({ city }) => {
   let filterByFormula = `{City} = '${city}'`;
-  let people = await 
+  let people = await getPeople({ filterByFormula });
+  return people;
 }
 
 module.exports = {
@@ -127,4 +128,5 @@ module.exports = {
   updatePerson,
   searchNearbyPeopleByCoordinates,
   searchNearbyPeopleByZipCode,
+  searchNearbyPeopleByCity,
 }

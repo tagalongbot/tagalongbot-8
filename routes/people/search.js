@@ -1,6 +1,6 @@
 let { shuffleArray } = require('../../libs/helpers/arrays.js');
 
-let { getPersonByMessengerID, searchNearbyPeopleByZipCode, createPerson } = require('../../libs/data/people.js');
+let { getPersonByMessengerID, searchNearbyPeopleByZipCode, searchNearbyPeopleByCity, createPerson } = require('../../libs/data/people.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
@@ -9,7 +9,7 @@ let { createGallery } = require('../../libs/bots.js');
 let { createPeopleCards } = require('../../libs/people/search.js');
 
 let searchPeople = async ({ query }, res) => {
-  let { messenger_user_id, search_activity, search_gender, zip_code, latitude, longitude } = query;
+  let { messenger_user_id, search_activity, search_gender, zip_code, city, latitude, longitude } = query;
 
   let person_searching = await getPersonByMessengerID(messenger_user_id);
 
@@ -19,8 +19,8 @@ let searchPeople = async ({ query }, res) => {
     return;
   }
 
-  let people = await searchNearbyPeopleByZipCode(
-    { zip_code }
+  let people = await searchNearbyPeopleByCity(
+    { city }
   );
 
   let matched_people = people.filter(
@@ -37,14 +37,12 @@ let searchPeople = async ({ query }, res) => {
   }
 
   let gallery_data = shuffleArray(matched_people)
-    .slice(0, 10)
+    .slice(0, 1)
     .map(createPeopleCards);
 
   let gallery = createGallery(gallery_data, 'square');
 
-  let txt_msg = { text: `Here are some people near ${zip_code} in a 10 mile radius` };
-
-  let messages = [txt_msg, gallery];
+  let messages = [gallery];
 
   res.send({ messages });
 }
