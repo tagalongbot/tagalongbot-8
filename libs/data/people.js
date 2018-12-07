@@ -48,34 +48,34 @@ let updatePerson = async (update_data, person) => {
 
 let searchNearbyPeopleByCoordinates = async ({ latitude, longitude }) => {
   let filterByFormula = `{Active?}`;
-  let all_runners = await getPeople({ filterByFormula });
+  let all_people = await getPeople({ filterByFormula });
 
   let center = [Number(latitude), Number(longitude)];
   let radius = 10;
   let options = { units: 'miles' };
   let circle = turf_circle(center, radius, options);
 
-  let runners = all_runners.filter(runner => {
-    let runner_latitude = runner.fields['Latitude'];
-    let runner_longitude = runner.fields['Longitude'];
+  let people = all_people.filter(runner => {
+    let person_latitude = person.fields['Latitude'];
+    let person_longitude = person.fields['Longitude'];
 
-    let runner_location_point = turf.point([runner_latitude, runner_longitude]);
+    let person_location_point = turf.point([person_latitude, person_longitude]);
 
-    let isWithinCircle = turf_boolean_within(runner_location_point, circle);
-    return isWithinCircle;
+    let is_within_circle = turf_boolean_within(person_location_point, circle);
+    return is_within_circle;
   });
 
-  return runners;
+  return people;
 }
 
 let searchNearbyPeopleByZipCode = async ({ zip_code }) => {
-  let findRunnersByZipCode = runner =>
-    runner.fields['Zip Code'] === zip_code.trim();
+  let findPeopleByZipCode = person =>
+    person.fields['Zip Code'] === zip_code.trim();
 
   let filterByFormula = `{Active?}`;
-  let all_runners = await getPeople({ filterByFormula });
+  let all_people = await getPeople({ filterByFormula });
 
-  let runners = [];
+  let people = [];
   let zip_codes_index = 0;
   let used_zip_codes = [];
 
@@ -85,18 +85,18 @@ let searchNearbyPeopleByZipCode = async ({ zip_code }) => {
   );
 
   do {
-    runners = all_runners.filter(findRunnersByZipCode);
+    people = all_people.filter(findPeopleByZipCode);
 
     used_zip_codes.push(zip_code);
 
-    if (!runners[0]) {
+    if (!people[0]) {
       zip_code = nearby_zip_codes[zip_codes_index];
       if (!zip_code) break;
       zip_codes_index = zip_codes_index + 1;
     }
-  } while(!runners[0]);
+  } while(!people[0]);
 
-  while (runners.length < 3) {
+  while (people.length < 3) {
     if (zip_codes_index === 0) zip_codes_index = zip_codes_index + 1;
 
     zip_code = nearby_zip_codes[zip_codes_index];
@@ -104,13 +104,18 @@ let searchNearbyPeopleByZipCode = async ({ zip_code }) => {
 
     if (!zip_code || used_zip_codes.includes(zip_code)) break;
 
-    let more_practices = all_runners.filter(findRunnersByZipCode);
+    let more_people = all_people.filter(findPeopleByZipCode);
     zip_codes_index = zip_codes_index + 1;
 
-    runners = [...runners, ...more_practices];
+    people = [...people, ...more_people];
   }
 
-  return runners;
+  return people;
+}
+
+let searchNearbyPeopleByCity = async ({ city }) => {
+  let filterByFormula = `{City} = '${city}'`;
+  let people = await 
 }
 
 module.exports = {
