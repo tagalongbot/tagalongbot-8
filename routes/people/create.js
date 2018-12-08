@@ -2,6 +2,8 @@ let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.j
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
+let { capitalizeString } = require('../../libs/helpers/strings.js');
+
 let createProfile = async ({ query }, res) => {
   let {
     messenger_user_id,
@@ -9,15 +11,12 @@ let createProfile = async ({ query }, res) => {
     last_name,
     gender,
     zip_code,
+    city,
+    state,
     latitude,
     longitude,
     messenger_link,
     profile_image,
-    is_runner,
-    is_cyclist,
-    is_gymnist,
-    phone_number,
-    gender_match
   } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
@@ -28,11 +27,11 @@ let createProfile = async ({ query }, res) => {
     return;
   }
 
-  let activities = [
-    is_runner.toUpperCase() === 'YES' ? 'Running' : null,
-    is_cyclist.toUpperCase() === 'YES' ? 'Cycling' : null,
-    is_gymnist.toUpperCase() === 'YES' ? 'Gym' : null,
-  ].filter(Boolean);
+  // let activities = [
+  //   is_runner.toUpperCase() === 'YES' ? 'Running' : null,
+  //   is_cyclist.toUpperCase() === 'YES' ? 'Cycling' : null,
+  //   is_gymnist.toUpperCase() === 'YES' ? 'Gym' : null,
+  // ].filter(Boolean);
 
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
@@ -40,10 +39,10 @@ let createProfile = async ({ query }, res) => {
     ['First Name']: first_name,
     ['Last Name']: last_name,
     ['Gender']: gender.toLowerCase(),
-    ['Match By Gender']: gender_match.toLowerCase(),
-    ['Activities']: activities,
-    ['Phone Number']: phone_number,
+    ['Match By Gender']: 'both',
     ['Zip Code']: zip_code,
+    ['City']: capitalizeString(city),
+    ['State']: capitalizeString(state),
     ['Latitude']: Number(latitude),
     ['Longitude']: Number(longitude),
     ['Messenger Link']: messenger_link,
