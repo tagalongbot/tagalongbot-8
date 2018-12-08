@@ -14,8 +14,8 @@ let updatePreferences = async ({ query }, res) => {
   }
 
   let update_data = {
-    ['Verified?']: true,
-    ['Verified By']: `${person_verifying.fields['First Name']} ${person_verifying.fields['Last Name']}`
+    ['Gender Preference']: gender_preference.toLowerCase(),
+    ['Age Preference']: age_preference,
   }
 
   let updated_person = await updatePerson(update_data, person);
