@@ -26,7 +26,7 @@ let searchPeople = async ({ query }, res) => {
   let matched_people = people.filter(
     person =>
       person.id != person_searching.id &&
-      (person.fields['Match By Gender'] === search_gender.toLowerCase() || person.fields['Match By Gender'] === 'both') &&
+      (person.fields['Gender Preference'] === search_gender.toLowerCase() || person.fields['Gender Preference'] === 'both') &&
       person.fields['Activities'] && person.fields['Activities'].includes(search_activity)
   );
 
