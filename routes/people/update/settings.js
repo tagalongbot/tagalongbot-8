@@ -1,6 +1,6 @@
 let { getPersonByMessengerID, getPersonByPhoneNumber, updatePerson } = require('../../../libs/data/people.js');
 
-let updatePreferences = async ({ query }, res) => {
+let updateSettings = async ({ query }, res) => {
   let { messenger_user_id, gender_preference, age_preference } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
@@ -16,9 +16,9 @@ let updatePreferences = async ({ query }, res) => {
     ['Age Preference']: age_preference,
   }
 
-  let redirect_to_blocks = ['[PREFERENCES] Complete'];
+  let redirect_to_blocks = ['[SETTINGS] Complete'];
 
   let updated_person = await updatePerson(update_data, person);
 }
 
-module.exports = updatePreferences;
+module.exports = updateSettings;

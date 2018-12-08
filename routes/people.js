@@ -14,6 +14,9 @@ let checkIfPersonIsVerified = require('../routes/people/verified.js');
 let verifyPerson = require('../routes/people/verify.js');
 let viewProfileWebview = require('../routes/people/view/profile.js');
 
+//Update
+let updatePreferences = require('../routes/people/update/preferences.js');
+
 router.get(
   '/save',
   // cache.withTtl('1 day'),
@@ -63,6 +66,11 @@ router.get(
 router.get(
   '/view/profile',
   viewProfileWebview
+);
+
+router.get(
+  '/update/preferences',
+  updatePreferences
 );
 
 module.exports = router;
