@@ -16,6 +16,7 @@ let viewProfileWebview = require('../routes/people/view/profile.js');
 
 //Update
 let updatePreferences = require('../routes/people/update/preferences.js');
+let updateSettings = require('../routes/people/update/settings.js');
 
 router.get(
   '/save',
@@ -71,6 +72,11 @@ router.get(
 router.get(
   '/update/preferences',
   updatePreferences
+);
+
+router.get(
+  '/update/settings',
+  updateSettings
 );
 
 module.exports = router;
