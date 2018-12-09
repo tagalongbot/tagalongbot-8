@@ -1,7 +1,7 @@
 let riot = require('riot');
 
-let user_profile_tag = require('../../../tags/user-profile.tag');
-let view_template = require('../../../views/user-profile.marko');
+let check_boxes_tag = require('../../../tags/check-boxes.tag');
+let view_template = require('../../../views/check-boxes.marko');
 
 let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 
@@ -12,6 +12,9 @@ let viewProfileInterests = async ({ query }, res) => {
 
   let person = await getPersonByMessengerID(person_messenger_user_id);
 
+  let title = 'Interests';
+  let options = ['Running', 'Cycling', 'Gym', 'Religion', 'Travel', 'Anime/Manga', 'Food', 'Internet', 'Painting/Doodling', 'Volunteering', 'Science/Tech', 'Writing', 'Dance', 'Gym', 'Korean Culture', 'Photography', 'Sports', ''];
+  
   let person_data = {
     ['first_name']: person.fields['First Name'],
     ['last_name']: person.fields['Last Name'],
@@ -21,7 +24,7 @@ let viewProfileInterests = async ({ query }, res) => {
   }
 
   let view_html = riot.render(
-    user_profile_tag,
+    check_boxes_tag,
     { person: person_data }
   );
 

@@ -7,7 +7,7 @@ let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 
 let { capitalizeString } = require('../../../libs/helpers/strings.js');
 
-let viewProfileInterests = async ({ query }, res) => {
+let viewProfileProfessions = async ({ query }, res) => {
   let { person_messenger_user_id } = query;
 
   let person = await getPersonByMessengerID(person_messenger_user_id);
@@ -31,4 +31,4 @@ let viewProfileInterests = async ({ query }, res) => {
   );
 }
 
-module.exports = viewProfileInterests;
+module.exports = viewProfileProfessions;
