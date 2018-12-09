@@ -14,9 +14,10 @@ let checkIfPersonIsVerified = require('../routes/people/verified.js');
 let verifyPerson = require('../routes/people/verify.js');
 let viewProfileWebview = require('../routes/people/view/profile.js');
 
-//Update
+// Update
 let updatePreferences = require('../routes/people/update/preferences.js');
 let updateSettings = require('../routes/people/update/settings.js');
+let updatePhoneNumber = require('../routes/people/update/phone_number.js');
 
 router.get(
   '/save',
@@ -77,6 +78,11 @@ router.get(
 router.get(
   '/update/settings',
   updateSettings
+);
+
+router.get(
+  '/update/phone_number',
+  updatePhoneNumber
 );
 
 module.exports = router;

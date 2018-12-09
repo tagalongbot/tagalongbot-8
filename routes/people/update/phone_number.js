@@ -1,7 +1,7 @@
 let { getPersonByMessengerID, getPersonByPhoneNumber, updatePerson } = require('../../../libs/data/people.js');
 
-let updatePreferences = async ({ query }, res) => {
-  let { messenger_user_id, gender_preference, age_preference, city } = query;
+let updatePhoneNumber = async ({ query }, res) => {
+  let { messenger_user_id, phone_number } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
@@ -12,9 +12,7 @@ let updatePreferences = async ({ query }, res) => {
   }
 
   let update_data = {
-    ['Gender Preference']: gender_preference.toLowerCase(),
-    ['Age Preference']: age_preference,
-    ['City']: city,
+    ['Phone Number']: phone_number,
   }
 
   let redirect_to_blocks = ['[PREFERENCES] Complete'];
@@ -22,4 +20,4 @@ let updatePreferences = async ({ query }, res) => {
   let updated_person = await updatePerson(update_data, person);
 }
 
-module.exports = updatePreferences;
+module.exports = updatePhoneNumber;
