@@ -7,7 +7,8 @@ let deleteProfile = async ({ query }, res) => {
 
   let destroyed_person = await destroyPerson(person.id);
 
-  res.sendStatus(200);
+  let redirect_to_blocks = ['Profile Deleted'];
+  res.sendStatus({ redirect_to_blocks });
 }
 
 module.exports = deleteProfile;
