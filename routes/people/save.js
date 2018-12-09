@@ -1,7 +1,5 @@
 let { getPersonByMessengerID, createPerson } = require('../../libs/data/people.js');
 
-let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
-
 let savePerson = async ({ query }, res) => {
   let { messenger_user_id } = query;
 

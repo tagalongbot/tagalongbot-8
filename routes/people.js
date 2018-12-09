@@ -19,6 +19,9 @@ let updatePreferences = require('../routes/people/update/preferences.js');
 let updateSettings = require('../routes/people/update/settings.js');
 let updatePhoneNumber = require('../routes/people/update/phone_number.js');
 
+// Danger Zone
+let deleteProfile = require('../routes/people/delete.js');
+
 router.get(
   '/save',
   // cache.withTtl('1 day'),
@@ -83,6 +86,11 @@ router.get(
 router.get(
   '/update/phone_number',
   updatePhoneNumber
+);
+
+router.get(
+  '/delete',
+  deleteProfile
 );
 
 module.exports = router;

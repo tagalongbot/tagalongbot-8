@@ -5,14 +5,15 @@ let turf_circle = require('@turf/circle').default;
 let turf_boolean_within = require('@turf/boolean-within').default;
 let zipcodes = require('zipcodes');
 
-let { getTable, getAllDataFromTable, findTableData, updateTableData, createTableData } = require('../../libs/data.js');
+let { getTable, getAllDataFromTable, createTableData, findTableData, updateTableData, destroyTableData } = require('../../libs/data.js');
 
 let getDataTable = getTable('People');
-let dataTable = getDataTable(BASE_ID);
-let getData = getAllDataFromTable(dataTable);
-let createData = createTableData(dataTable);
-let findData = findTableData(dataTable);
-let updateDataFromTable = updateTableData(dataTable);
+let data_table = getDataTable(BASE_ID);
+let getData = getAllDataFromTable(data_table);
+let createData = createTableData(data_table);
+let findData = findTableData(data_table);
+let updateDataFromTable = updateTableData(data_table);
+let destroyData = destroyTableData(data_table);
 
 let getPeople = async ({ filterByFormula = '', view = 'Main View' } = {}) => {
   let people = await getData({ filterByFormula, view });
@@ -44,6 +45,11 @@ let createPerson = async (new_person_data) => {
 let updatePerson = async (update_data, person) => {
   let updated_person = updateDataFromTable(update_data, person);
   return updated_person;
+}
+
+let destroyPerson = async (person_id) => {
+  let destroyed_person = destroyData(person_id);
+  return destroyed_person;
 }
 
 let searchNearbyPeopleByCoordinates = async ({ latitude, longitude }) => {
@@ -126,6 +132,7 @@ module.exports = {
   getPersonByPhoneNumber,
   createPerson,
   updatePerson,
+  destroyPerson,
   searchNearbyPeopleByCoordinates,
   searchNearbyPeopleByZipCode,
   searchNearbyPeopleByCity,
