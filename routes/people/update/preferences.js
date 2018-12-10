@@ -1,4 +1,4 @@
-let { getPersonByMessengerID, getPersonByPhoneNumber, updatePerson } = require('../../../libs/data/people.js');
+let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/people.js');
 
 let updatePreferences = async ({ query }, res) => {
   let { messenger_user_id, gender_preference, age_preference, city } = query;
