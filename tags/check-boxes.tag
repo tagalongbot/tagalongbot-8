@@ -8,7 +8,7 @@
       <span>{ label }</span>
     </label>
   </p>
-  <button ref="submit_btn" class="btn waves-effect waves-light" type="submit" name="action">Submit
+  <button class="btn waves-effect waves-light" type="submit" onclick="">Submit
     <i class="material-icons right">send</i>
   </button>
 
