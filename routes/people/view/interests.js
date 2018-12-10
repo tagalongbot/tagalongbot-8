@@ -25,7 +25,7 @@ let viewProfileInterests = async ({ query }, res) => {
 
   res.marko(
     view_template,
-    { view_html }
+    { view_html, options: JSON.stringify(options) }
   );
 }
 
