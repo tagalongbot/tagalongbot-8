@@ -11,10 +11,12 @@
   <button ref="submit_btn" class="btn waves-effect waves-light" type="submit" name="action">Submit
     <i class="material-icons right">send</i>
   </button>
-  
+
   <script>
     let self = this;
-    
-    self.on
+
+    self.refs.submit_btn.onclick = function(evt) {
+      console.log('evt', evt);
+    }
   </script>
 </check-boxes>
