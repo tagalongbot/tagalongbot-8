@@ -10,6 +10,7 @@ let viewProfileInterests = async ({ query }, res) => {
   console.log('query', query);
 
   let person = await getPersonByMessengerID(messenger_user_id);
+  console.log('person', person.fields);
   let person_interests = person.fields['Interests'];
 
   let title = 'Interests';

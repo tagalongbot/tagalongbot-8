@@ -22,7 +22,7 @@ let getPeople = async ({ filterByFormula = '', view = 'Main View' } = {}) => {
 
 let getPersonByMessengerID = async (messenger_user_id) => {
   let filterByFormula = `{messenger user id} = '${messenger_user_id}'`;
-  let [person] = await getData({ filterByFormula,  });
+  let [person] = await getData({ filterByFormula });
   return person;
 }
 
