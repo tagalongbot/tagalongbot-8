@@ -18,7 +18,7 @@
 
     let onFormSubmit = function(evt) {
       evt.preventDefault();
-      
+      console.log(self.options);
     }
 
     self.on('mount', function(eventName) {
