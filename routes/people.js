@@ -12,7 +12,11 @@ let searchPeople = require('../routes/people/search.js');
 let requestPerson = require('../routes/people/request.js');
 let checkIfPersonIsVerified = require('../routes/people/verified.js');
 let verifyPerson = require('../routes/people/verify.js');
+
+// Views
 let viewProfileWebview = require('../routes/people/view/profile.js');
+let viewProfileInterests = require('../routes/people/view/interests.js');
+let viewProfileProfessions = require('../routes/people/view/professions.js');
 
 // Update
 let updatePreferences = require('../routes/people/update/preferences.js');
@@ -71,6 +75,16 @@ router.get(
 router.get(
   '/view/profile',
   viewProfileWebview
+);
+
+router.get(
+  '/view/interests',
+  viewProfileInterests
+);
+
+router.get(
+  '/view/professions',
+  viewProfileProfessions
 );
 
 router.get(
