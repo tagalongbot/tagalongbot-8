@@ -8,7 +8,7 @@
       <span>{ label }</span>
     </label>
   </p>
-  <button ref="thebutton" class="btn waves-effect waves-light" type="submit" onclick="">Submit
+  <button ref="thebutton" class="btn waves-effect waves-light" type="submit" name="action">Submit
     <i class="material-icons right">send</i>
   </button>
 
@@ -18,10 +18,11 @@
 
     let onFormSubmit = function(evt) {
       evt.preventDefault();
-      console.log(self.options);
+      console.log('options', self.options);
     }
 
     self.on('mount', function(eventName) {
+      console.log('mounted');
       self.refs.thebutton.onclick = onFormSubmit;
     });
   </script>

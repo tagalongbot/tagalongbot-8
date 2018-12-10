@@ -20,13 +20,12 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<script type=\"text/javascript\" src=\"/tags/check-boxes.js\"></script>" +
-    marko_str(input.view_html) +
-    "<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n    </script>");
+  out.w(marko_str(input.view_html) +
+    "<script src=\"https://cdn.jsdelivr.net/npm/riot@3.11/riot.min.js\"></script><script type=\"text/javascript\" src=\"/tags/check-boxes.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n    </script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "10");
+  await_reorderer_tag({}, out, __component, "11");
 
   out.w("</body></html>");
 }
