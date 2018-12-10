@@ -7,6 +7,7 @@ let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 
 let viewProfileInterests = async ({ query }, res) => {
   let { messenger_user_id } = query;
+  console.log('query', query);
 
   let person = await getPersonByMessengerID(messenger_user_id);
   let person_interests = person.fields['Interests'];
