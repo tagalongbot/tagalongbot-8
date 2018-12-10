@@ -8,15 +8,21 @@
       <span>{ label }</span>
     </label>
   </p>
-  <button class="btn waves-effect waves-light" type="submit" onclick="">Submit
+  <button ref="thebutton" class="btn waves-effect waves-light" type="submit" onclick="">Submit
     <i class="material-icons right">send</i>
   </button>
 
   <script>
     let self = this;
+    self.options = opts.options;
 
-    self.refs.submit_btn.onclick = function(evt) {
-      console.log('evt', evt);
+    let onFormSubmit = function(evt) {
+      evt.preventDefault();
+      
     }
+
+    self.on('mount', function(eventName) {
+      self.refs.thebutton.onclick = onFormSubmit;
+    });
   </script>
 </check-boxes>
