@@ -8,4 +8,13 @@
       <span>{ label }</span>
     </label>
   </p>
+  <button ref="submit_btn" class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+  </button>
+  
+  <script>
+    let self = this;
+    
+    self.on
+  </script>
 </check-boxes>
