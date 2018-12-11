@@ -20,12 +20,12 @@ let viewProfileProfessions = async ({ query }, res) => {
 
   let view_html = riot.render(
     check_boxes_tag,
-    { title, options }
+    { title, messenger_user_id, options: JSON.stringify(options) }
   );
 
   res.marko(
     view_template,
-    { view_html, title, options }
+    { view_html, title, messenger_user_id, options: JSON.stringify(options) }
   );
 }
 
