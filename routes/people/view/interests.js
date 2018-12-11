@@ -20,7 +20,7 @@ let viewProfileInterests = async ({ query }, res) => {
 
   let view_html = riot.render(
     check_boxes_tag,
-    { title, messenger_user_id, options: JSON.stringify(options) }
+    { title, messenger_user_id, options }
   );
 
   res.marko(
