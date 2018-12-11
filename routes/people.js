@@ -22,6 +22,8 @@ let viewProfileProfessions = require('../routes/people/view/professions.js');
 let updatePreferences = require('../routes/people/update/preferences.js');
 let updateSettings = require('../routes/people/update/settings.js');
 let updatePhoneNumber = require('../routes/people/update/phone_number.js');
+let updateInterests = require('../routes/people/update/interests.js');
+let updateProfessions = require('../routes/people/update/professions.js');
 
 // Danger Zone
 let deleteProfile = require('../routes/people/delete.js');
@@ -100,6 +102,16 @@ router.get(
 router.get(
   '/update/phone_number',
   updatePhoneNumber
+);
+
+router.get(
+  '/update/interests',
+  updateInterests
+);
+
+router.get(
+  '/update/professions',
+  updateProfessions
 );
 
 router.get(

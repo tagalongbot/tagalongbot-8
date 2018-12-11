@@ -27,6 +27,13 @@
 
     let onFormSubmit = function(evt) {
       evt.preventDefault();
+      let url = `https://the3dwin-tag-along.glitch.me/people/update/` + opts.title.toLowerCase();
+
+      let body = {
+        data: self.options.filter(opt => opt.checked).map(opt => opt.label)
+      }
+
+      fetch(url, body).then(res => res.json()).then(res => console.log('res', res));
       console.log('options', self.options);
     }
 

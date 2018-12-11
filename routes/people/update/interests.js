@@ -1,12 +1,12 @@
 let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/people.js');
 
 let updateInterests = async ({ body }, res) => {
-  let { messenger_user_id, interests } = body;
+  let { messenger_user_id, data } = body;
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
   let update_data = {
-    ['Interests']: interests,
+    ['Interests']: data,
   }
 
   let redirect_to_blocks = ['[PREFERENCES] Updated Interests'];

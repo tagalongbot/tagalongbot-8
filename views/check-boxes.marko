@@ -17,13 +17,14 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     <script>
       M.AutoInit();
-      
-      let title = ${input.title};
+
+      let title = "${input.title}";
       let options = ${input.options};
+      let messenger_user_id = "${messenger_user_id}";
 
       riot.mount(
         '*',
-        { title, options }
+        { title, messenger_user_id, options }
       );
     </script>
   </body>
