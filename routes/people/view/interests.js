@@ -7,6 +7,7 @@ let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 
 let viewProfileInterests = async ({ query }, res) => {
   let { messenger_user_id } = query;
+
   let person = await getPersonByMessengerID(messenger_user_id);
   let person_interests = person.fields['Interests'];
 
@@ -24,7 +25,7 @@ let viewProfileInterests = async ({ query }, res) => {
 
   res.marko(
     view_template,
-    { view_html, title, messenger_user_id, options: JSON.stringify(options) }
+    { view_html, title, options: JSON.stringify(options) }
   );
 }
 

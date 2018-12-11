@@ -27,7 +27,20 @@
 
     let onFormSubmit = function(evt) {
       evt.preventDefault();
-      
+      let url = `https://the3dwin-tag-along.glitch.me/people/update/` + opts.title.toLowerCase();
+
+      let body = {
+        messenger_user_id: opts.messenger_user_id,
+        data: self.options.filter(opt => opt.checked).map(opt => opt.label)
+      }
+
+      let headers = {
+        'Content-Type': 'application/json',
+      }
+
+      let options = { headers, body };
+
+      fetch(url, options).then(res => res.json()).then(res => console.log('res', res));
     }
 
     self.on('mount', function(eventName) {
