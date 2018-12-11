@@ -25,7 +25,7 @@ let viewProfileProfessions = async ({ query }, res) => {
 
   res.marko(
     view_template,
-    { view_html, title, options }
+    { view_html, title, messenger_user_id, options: JSON.stringify(options) }
   );
 }
 

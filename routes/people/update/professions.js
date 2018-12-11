@@ -12,6 +12,8 @@ let updateProfessions = async ({ body }, res) => {
   let redirect_to_blocks = ['[PREFERENCES] Updated Professions'];
 
   let updated_person = await updatePerson(update_data, person);
+
+  res.send({ msg: 'ok' });
 }
 
 module.exports = updateProfessions;
