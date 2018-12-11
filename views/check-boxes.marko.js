@@ -23,9 +23,11 @@ function render(input, out, __component, component, state) {
   component_globals_tag({}, out);
 
   out.w(marko_str(input.view_html) +
-    "<script src=\"https://cdn.jsdelivr.net/npm/riot@3.11/riot.min.js\"></script><script type=\"text/javascript\" src=\"/tags/check-boxes.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n      \n      let options = " +
+    "<script src=\"https://cdn.jsdelivr.net/npm/riot@3.11/riot.min.js\"></script><script type=\"text/javascript\" src=\"/tags/check-boxes.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n      \n      let title = " +
+    marko_escapeScript(input.title) +
+    ";\n      let options = " +
     marko_escapeScript(input.options) +
-    ";\n\n      riot.mount(\n        '*',\n        { options }\n      );\n    </script>");
+    ";\n\n      riot.mount(\n        '*',\n        { title, options }\n      );\n    </script>");
 
   init_components_tag({}, out);
 

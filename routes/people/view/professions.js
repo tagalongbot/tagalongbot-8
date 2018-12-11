@@ -25,7 +25,7 @@ let viewProfileProfessions = async ({ query }, res) => {
 
   res.marko(
     view_template,
-    { view_html }
+    { view_html, title, options }
   );
 }
 

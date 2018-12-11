@@ -18,11 +18,12 @@
     <script>
       M.AutoInit();
       
+      let title = ${input.title};
       let options = ${input.options};
 
       riot.mount(
         '*',
-        { options }
+        { title, options }
       );
     </script>
   </body>
