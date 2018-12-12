@@ -10,6 +10,7 @@ riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class=
     let onFormSubmit = function(evt) {
       evt.preventDefault();
       let url = `https://the3dwin-tag-along.glitch.me/people/update/` + opts.title.toLowerCase();
+      let method = 'POST';
 
       let body = {
         messenger_user_id: opts.messenger_user_id,
@@ -20,7 +21,7 @@ riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class=
         'Content-Type': 'application/json',
       }
 
-      let options = { headers, body };
+      let options = { method, headers, body };
 
       fetch(url, options).then(res => res.json()).then(res => console.log('res', res));
     }
