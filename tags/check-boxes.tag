@@ -41,7 +41,10 @@
 
       let options = { method, headers, body };
 
-      fetch(url, options).then(res => res.json()).then(res => console.log('res', res));
+      fetch(url, options).then((res) => {
+        console.log('res', res);
+        console.log('res', res.json());
+      }).then(res => console.log('res', res));
     }
 
     self.on('mount', function(eventName) {
