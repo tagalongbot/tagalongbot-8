@@ -12,7 +12,7 @@ let viewProfileInterests = async ({ query }, res) => {
   let person_interests = person.fields['Interests'];
 
   let title = 'Interests';
-  let options = ['Running', 'Cycling', 'Gym', 'Religion', 'Travel', 'Anime/Manga', 'Food', 'Internet', 'Painting/Doodling', 'Volunteering', 'Science/Tech', 'Writing', 'Dance', 'Korean Culture', 'Photography', 'Sports', 'Yoga/Meditation', 'American TV Series', 'Fashion', 'Hollywood Movies', 'Music', 'Books', 'Gaming', 'Karaoke', 'Pets']
+  let options = ['American TV Series', 'Anime/Manga', 'Books', 'Cycling', 'Dance', 'Fashion', 'Food', 'Gaming', 'Gym', 'Hollywood Movies', 'Internet', 'Karaoke', 'Korean Culture', 'Music', 'Painting/Doodling', 'Pets', 'Photography', 'Religion', 'Running', 'Science/Tech', 'Sports', 'Travel', 'Volunteering', 'Writing', 'Yoga/Meditation']
     .map(option => {
       let checked = person_interests.includes(option);
       return { label: option, checked };
