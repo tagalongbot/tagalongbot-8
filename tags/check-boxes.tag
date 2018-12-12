@@ -40,6 +40,7 @@
       }
 
       let options = { method, headers, body };
+      console.log('options', options);
 
       fetch(url, options).then((res) => {
         console.log('res', res);

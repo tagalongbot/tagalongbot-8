@@ -22,8 +22,12 @@ riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class=
       }
 
       let options = { method, headers, body };
+      console.log('options', options);
 
-      fetch(url, options).then(res => res.json()).then(res => console.log('res', res));
+      fetch(url, options).then((res) => {
+        console.log('res', res);
+        console.log('res', res.json());
+      }).then(res => console.log('res', res));
     }
 
     self.on('mount', function(eventName) {

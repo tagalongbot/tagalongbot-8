@@ -2,7 +2,7 @@ let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/peopl
 
 let updateProfessions = async ({ body }, res) => {
   let { messenger_user_id, data } = body;
-  console.log('body');
+  console.log('body', body);
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
