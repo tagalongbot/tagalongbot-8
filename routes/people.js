@@ -104,12 +104,12 @@ router.get(
   updatePhoneNumber
 );
 
-router.get(
+router.post(
   '/update/interests',
   updateInterests
 );
 
-router.get(
+router.post(
   '/update/professions',
   updateProfessions
 );

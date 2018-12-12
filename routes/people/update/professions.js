@@ -10,11 +10,13 @@ let updateProfessions = async ({ body }, res) => {
     ['Professions']: data,
   }
 
-  let redirect_to_blocks = ['[PREFERENCES] Updated Professions'];
-
   let updated_person = await updatePerson(update_data, person);
 
-  res.send({ msg: 'ok' })
+  if (!updated_person) {
+    res.send({ msg: 'NOT UPDATED' });
+  }
+
+  res.send({ msg: 'UPDATED' });
 }
 
 module.exports = updateProfessions;
