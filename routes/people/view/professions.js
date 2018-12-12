@@ -12,7 +12,7 @@ let viewProfileProfessions = async ({ query }, res) => {
   let person_interests = person.fields['Professions'];
 
   let title = 'Professions';
-  let options = ['Accountant', 'Actor', 'Actuary', 'Architect', 'Artist', 'Aviator', 'Broker', 'Butcher', 'Chef', 'Consultant', 'Dental Hygienist', 'Dentist', 'Designer', 'Dietitian', 'Electrician', 'Engineer', 'Firefighter', 'Hairdresser', 'Health Professional', 'Journalist', 'Judge', 'Labourer', 'Lawyer', 'Librarian', 'Machinist', 'Mechanic', 'Medical Laboratory Scientist', 'Midwife', 'Musician', 'Operator']
+  let options = ['Accountant', 'Actor', 'Actuary', 'Architect', 'Artist', 'Aviator', 'Broker', 'Butcher', 'Chef', 'Consultant', 'Dental Hygienist', 'Dentist', 'Designer', 'Dietitian', 'Electrician', 'Engineer', 'Firefighter', 'Hairdresser', 'Health Professional', 'Journalist', 'Judge', 'Labourer', 'Lawyer', 'Librarian', 'Machinist', 'Mechanic', 'Medical Laboratory Scientist', 'Midwife', 'Musician', 'Operator', 'Paramedic', 'Pharmacist', 'Physician', 'Physiotherapist', 'Plumber', 'Police Officer', 'Psychologist', 'Radiographer', 'Scientist', 'Secretary', 'Software Developer', 'Statistician', 'Student', 'Surgeon', 'Surveyor', 'Teacher', 'Technician', 'Technologist', 'Tradesman', 'Veterinarian', 'Waiting staff']
     .map(option => {
       let checked = person_interests.includes(option);
       return { label: option, checked };
