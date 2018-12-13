@@ -23,7 +23,16 @@ riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class=
 
       let options = { method, headers, body: JSON.stringify(body) };
 
-      fetch(url, options).then(res => res.json()).then(res => console.log('res', res));
+      fetch(url, options).then(res => res.json()).then(res => {
+        if(res.msg === 'UPDATED') {
+          M.toast({html: `Your ${opts.title} Were Updated. You Can Now Close This WebView`});
+          MessengerExtensions.requestCloseBrowser(function success() {
+
+          }, function error(err) {
+
+          });
+        }
+      });
     }
 
     self.on('mount', function(eventName) {
