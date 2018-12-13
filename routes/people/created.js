@@ -11,7 +11,7 @@ let hasCreatedProfile = async ({ query }, res) => {
     return;
   }
 
-  let redirect_to_blocks = ['[ROUTER] Search Partner'];
+  let redirect_to_blocks = ['[ROUTER] Browse Profiles'];
   res.send({ redirect_to_blocks });
 }
 

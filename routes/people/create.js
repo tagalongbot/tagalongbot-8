@@ -27,12 +27,6 @@ let createProfile = async ({ query }, res) => {
     return;
   }
 
-  // let activities = [
-  //   is_runner.toUpperCase() === 'YES' ? 'Running' : null,
-  //   is_cyclist.toUpperCase() === 'YES' ? 'Cycling' : null,
-  //   is_gymnist.toUpperCase() === 'YES' ? 'Gym' : null,
-  // ].filter(Boolean);
-
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
     ['Active?']: true,

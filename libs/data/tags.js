@@ -21,6 +21,12 @@ let getTagByID = async (tag_id) => {
   return tag;
 }
 
+let getTagByProfileMessengerID = async (messenger_user_id) => {
+  let filterByFormula = `{Profile Messenger User ID} = 'messenger_user_id'`;
+  let tags = await getAllTags({ filterByFormula });
+  return tags;
+}
+
 let createTag = async (new_tag_data) => {
   let new_tag = await createData(new_tag_data);
   return new_tag;
@@ -34,6 +40,7 @@ let updateTag = async (update_data, tag) => {
 module.exports = {
   getAllTags,
   getTagByID,
+  getTagByProfileMessengerID,
   createTag,
   updateTag,
 }
