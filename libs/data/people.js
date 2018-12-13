@@ -1,4 +1,4 @@
-let { BASE_ID } = process.env;
+let { PEOPLE_BASE_ID } = process.env;
 
 let turf = require('turf');
 let turf_circle = require('@turf/circle').default;
@@ -8,7 +8,7 @@ let zipcodes = require('zipcodes');
 let { getTable, getAllDataFromTable, createTableData, findTableData, updateTableData, destroyTableData } = require('../../libs/data.js');
 
 let getDataTable = getTable('People');
-let data_table = getDataTable(BASE_ID);
+let data_table = getDataTable(PEOPLE_BASE_ID);
 let getData = getAllDataFromTable(data_table);
 let createData = createTableData(data_table);
 let findData = findTableData(data_table);
