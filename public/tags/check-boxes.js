@@ -12,22 +12,18 @@ riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class=
       let url = `https://the3dwin-tag-along.glitch.me/people/update/` + opts.title.toLowerCase();
       let method = 'POST';
 
+      let headers = {
+        'Content-Type': 'application/json',
+      }
+
       let body = {
         messenger_user_id: opts.messenger_user_id,
         data: self.options.filter(opt => opt.checked).map(opt => opt.label)
       }
 
-      let headers = {
-        'Content-Type': 'application/json',
-      }
+      let options = { method, headers, body: JSON.stringify(body) };
 
-      let options = { method, headers, body };
-      console.log('options', options);
-
-      fetch(url, options).then((res) => {
-        console.log('res', res);
-        console.log('res', res.json());
-      }).then(res => console.log('res', res));
+      fetch(url, options).then(res => res.json()).then(res => console.log('res', res));
     }
 
     self.on('mount', function(eventName) {
