@@ -4,7 +4,7 @@ let { createBtn } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers/strings.js');
 
 let createPeopleCards = (person) => {
-  let person_messenger_user_id = person.fields['messenger user id'];
+  let tagged_person_messenger_id = person.fields['messenger user id'];
 
   let is_person_verified = person.fields['Verified?'];
 
@@ -16,7 +16,7 @@ let createPeopleCards = (person) => {
 
   let send_tag_btn = createBtn(
     `Tag!|show_block|[JSON] Send Tag`,
-    { person_messenger_user_id }
+    { tagged_person_messenger_id }
   );
 
   let next_profile_btn = createBtn(
@@ -25,7 +25,7 @@ let createPeopleCards = (person) => {
 
   let view_profile_url = createURL(
     `${BASEURL}/people/view/profile`,
-    { person_messenger_user_id }
+    { tagged_person_messenger_id }
   );
 
   let view_profile_btn = createBtn(

@@ -8,9 +8,9 @@ let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 let { capitalizeString } = require('../../../libs/helpers/strings.js');
 
 let viewProfile = async ({ query }, res) => {
-  let { person_messenger_user_id } = query;
+  let { tagged_person_messenger_id } = query;
 
-  let person = await getPersonByMessengerID(person_messenger_user_id);
+  let person = await getPersonByMessengerID(tagged_person_messenger_id);
 
   let person_data = {
     ['first_name']: person.fields['First Name'],
