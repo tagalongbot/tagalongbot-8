@@ -14,25 +14,25 @@ let createPeopleCards = (person) => {
 
   let image_url = `${person.fields['Profile Image URL']}`;
 
-  let view_profile_url = createURL(
-    `${BASEURL}/people/view/profile`,
-    { person_messenger_user_id }
-  );
-
-  let send_request_btn = createBtn(
-    `Tag!|show_block|[JSON] Send Partner Request`,
+  let send_tag_btn = createBtn(
+    `Tag!|show_block|[JSON] Send Tag`,
     { person_messenger_user_id }
   );
 
   let next_profile_btn = createBtn(
-    `Next|show_block|[JSON] Search Partners`,
+    `Next|show_block|[JSON] Browse Profiles`,
+  );
+
+  let view_profile_url = createURL(
+    `${BASEURL}/people/view/profile`,
+    { person_messenger_user_id }
   );
 
   let view_profile_btn = createBtn(
     `View Profile|web_url|${view_profile_url}`
   );
 
-  let buttons = [send_request_btn, next_profile_btn, view_profile_btn];
+  let buttons = [send_tag_btn, next_profile_btn, view_profile_btn];
 
   return { title, subtitle, image_url, buttons };
 }

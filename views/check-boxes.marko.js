@@ -23,7 +23,7 @@ function render(input, out, __component, component, state) {
   component_globals_tag({}, out);
 
   out.w(marko_str(input.view_html) +
-    "<script src=\"https://cdn.jsdelivr.net/npm/riot@3.11/riot.min.js\"></script><script type=\"text/javascript\" src=\"/tags/check-boxes.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n\n      let title = \"" +
+    "<script src=\"https://cdn.jsdelivr.net/npm/riot@3.11/riot.min.js\"></script><script type=\"text/javascript\" src=\"/tags/check-boxes.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      // Messenger Extension\n      (function(d, s, id){\n        var js, fjs = d.getElementsByTagName(s)[0];\n        if (d.getElementById(id)) {return;}\n        js = d.createElement(s); js.id = id;\n        js.src = \"//connect.facebook.net/en_US/messenger.Extensions.js\";\n        fjs.parentNode.insertBefore(js, fjs);\n      }(document, 'script', 'Messenger'));\n    </script><script>\n      M.AutoInit();\n\n      let title = \"" +
     marko_escapeScript(input.title) +
     "\";\n      let messenger_user_id = \"" +
     marko_escapeScript(input.messenger_user_id) +
@@ -33,7 +33,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "11");
+  await_reorderer_tag({}, out, __component, "12");
 
   out.w("</body></html>");
 }

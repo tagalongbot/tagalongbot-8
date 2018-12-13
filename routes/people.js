@@ -9,7 +9,7 @@ let hasCreatedProfile = require('../routes/people/created.js');
 let createPerson = require('../routes/people/create.js');
 let getProfileImage = require('../routes/people/create/getImage.js');
 let searchPeople = require('../routes/people/search.js');
-let requestPerson = require('../routes/people/request.js');
+let tagPerson = require('../routes/people/tag.js');
 let checkIfPersonIsVerified = require('../routes/people/verified.js');
 let verifyPerson = require('../routes/people/verify.js');
 
@@ -59,9 +59,9 @@ router.get(
 );
 
 router.use(
-  '/request',
+  '/tag',
   // cache.withTtl('1 day'),
-  requestPerson
+  tagPerson
 );
 
 router.get(
