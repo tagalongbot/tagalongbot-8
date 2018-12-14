@@ -4,7 +4,7 @@ let { getTagByProfileMessengerID } = require('../../../libs/tags.js');
 let { toTagsGallery } = require('../../../libs/view/tags.js');
 
 let viewTags = async ({ query }, res) => {
-  let { messenger_user_id } = query;
+  let { messenger_user_id, index } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
   let tags = await getTagByProfileMessengerID(messenger_user_id);
