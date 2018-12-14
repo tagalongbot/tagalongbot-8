@@ -4,11 +4,13 @@ let { getTagByProfileMessengerID } = require('../../../libs/tags.js');
 let { toTagsGallery } = require('../../../libs/view/tags.js');
 
 let viewTags = async ({ query }, res) => {
-  let { messenger_user_id, new_index } = query;
+  let { messenger_user_id } = query;
+  let index = Number(query['index']) || 0;
+  let new_index = index + 8;
 
   let person = await getPersonByMessengerID(messenger_user_id);
   let tags = await getTagByProfileMessengerID(messenger_user_id);
-  
+
   if (tags.length === 0) {
     let redirect_to_blocks = ['No Tags'];
     res.send({ redirect_to_blocks });
