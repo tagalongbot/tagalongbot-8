@@ -5,18 +5,18 @@ let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 let { getTagByProfileMessengerID } = require('../../../libs/tags.js');
 let { toTagsGallery } = require('../../../libs/view/tags.js');
 
-let createLastGalleryElement = () => {
+let createLastGalleryElement = ({ index }) => {
   let title = 'More Options';
-  let subtitle = '';
   let image_url = LOAD_MORE_IMAGE_URL;
 
   let load_more_btn = createBtn(
-    `Load More|show_block|`
+    `Load More|show_block|[JSON] View Tags Gallery`,
+    { index }
   );
 
   let buttons = [load_more_btn];
 
-  return { title, subtitle, image_url, buttons };
+  return { title, image_url, buttons };
 }
 
 let viewTags = async ({ query }, res) => {
@@ -34,7 +34,7 @@ let viewTags = async ({ query }, res) => {
   }
 
   let gallery_data = await Promise.all(tags.slice(index, new_index).map(toTagsGallery));
-  let last_gallery_element = createLastGalleryElement();
+  let last_gallery_element = createLastGalleryElement({ index });
   gallery_data.push(last_gallery_element);
 
   let gallery = createGallery(gallery_data);
