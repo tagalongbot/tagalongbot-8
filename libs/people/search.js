@@ -8,7 +8,7 @@ let createPeopleCards = (person) => {
 
   let is_person_verified = person.fields['Verified?'];
 
-  let title = `${person.fields['First Name']} ${person.fields['Age']}`;
+  let title = `${person.fields['First Name']} | Age: ${person.fields['Age']}`;
   let subtitle = `${person.fields['City']} | ${person.fields['Country']}`;
   if (is_person_verified) subtitle = `Verified User ✅ | ${subtitle} `;
 
