@@ -16,7 +16,6 @@ let createImageGalleryElement = (image_url, index) => {
 
 let viewProfileImages = async ({ query }, res) => {
   let { messenger_user_id } = query;
-  console.log('query', query);
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
@@ -26,10 +25,10 @@ let viewProfileImages = async ({ query }, res) => {
     return;
   }
 
-  let person_image_fields = Object.keys(person.fields);
-  console.log('person_image_fields', person_image_fields);
+  let person_image_fields = Object.keys(person.fields).filter(field => field.startsWith('Profile Image URL')).map(field => person.fields[field]);
 
   let gallery_data = person_image_fields.map(createImageGalleryElement);
+  console.log('gallery_data', gallery_data);
 
   let gallery = createGallery(gallery_data, 'square');
 

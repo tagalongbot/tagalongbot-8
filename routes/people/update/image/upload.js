@@ -4,7 +4,7 @@ let uploadProfileImage = async ({ query }, res) => {
   let { messenger_user_id, new_profile_image } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
-  let person_image_fields = Object.keys(person.fields).filter(field => person.fields[field].startsWith('Profile Image URL'));
+  let person_image_fields = Object.keys(person.fields).filter(field => field.startsWith('Profile Image URL')).map(field => person.fields[field]);
 
   let next_image_index = person_image_fields.length + 1;
   let update_data = {

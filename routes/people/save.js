@@ -3,6 +3,13 @@ let { getPersonByMessengerID, createPerson } = require('../../libs/data/people.j
 let savePerson = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
+  let person = await getPersonByMessengerID(messenger_user_id);
+
+  if (person) {
+    res.sendStatus(200);
+    return;
+  }
+
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
   }
