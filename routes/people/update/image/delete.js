@@ -1,4 +1,4 @@
-let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/people.js');
+let { getPersonByMessengerID, updatePerson } = require('../../../../libs/data/people.js');
 
 let deleteProfileImage = async ({ query }, res) => {
   let { messenger_user_id, image_num } = query;

@@ -23,7 +23,9 @@ let updateSettings = require('../routes/people/update/settings.js');
 let updatePhoneNumber = require('../routes/people/update/phone_number.js');
 let updateInterests = require('../routes/people/update/interests.js');
 let updateProfessions = require('../routes/people/update/professions.js');
-let updateProfileImage = require('../routes/people/update/professions.js');
+let updateProfile = require('../routes/people/update/profile.js');
+let uploadProfileImage = require('../routes/people/update/image/upload.js');
+let deleteProfileImage = require('../routes/people/update/image/delete.js');
 
 // Danger Zone
 let deleteProfile = require('../routes/people/delete.js');
@@ -107,6 +109,21 @@ router.post(
 router.post(
   '/update/professions',
   updateProfessions
+);
+
+router.get(
+  '/update/profile',
+  updateProfile
+);
+
+router.get(
+  '/update/image/upload',
+  uploadProfileImage
+);
+
+router.get(
+  '/update/image/delete',
+  deleteProfileImage
 );
 
 router.get(
