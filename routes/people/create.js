@@ -40,7 +40,7 @@ let createProfile = async ({ query }, res) => {
     ['Latitude']: Number(latitude),
     ['Longitude']: Number(longitude),
     ['Messenger Link']: messenger_link,
-    ['Profile Image URL']: profile_image,
+    ['Profile Image URL 1']: profile_image,
   }
 
   let new_person = await updatePerson(new_person_data, person);
