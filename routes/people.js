@@ -10,13 +10,12 @@ let createPerson = require('../routes/people/create.js');
 let getProfileImage = require('../routes/people/create/getImage.js');
 let searchPeople = require('../routes/people/search.js');
 let tagPerson = require('../routes/people/tag.js');
-let checkIfPersonIsVerified = require('../routes/people/verified.js');
-let verifyPerson = require('../routes/people/verify.js');
 
 // Views
 let viewProfileWebview = require('../routes/people/view/profile.js');
 let viewProfileInterests = require('../routes/people/view/interests.js');
 let viewProfileProfessions = require('../routes/people/view/professions.js');
+let viewProfilePhotos = require('../routes/people/view/photos.js');
 
 // Update
 let updatePreferences = require('../routes/people/update/preferences.js');
@@ -24,6 +23,7 @@ let updateSettings = require('../routes/people/update/settings.js');
 let updatePhoneNumber = require('../routes/people/update/phone_number.js');
 let updateInterests = require('../routes/people/update/interests.js');
 let updateProfessions = require('../routes/people/update/professions.js');
+let updateProfileImage = require('../routes/people/update/professions.js');
 
 // Danger Zone
 let deleteProfile = require('../routes/people/delete.js');
@@ -65,16 +65,6 @@ router.use(
 );
 
 router.get(
-  '/verified',
-  checkIfPersonIsVerified
-);
-
-router.get(
-  '/verify',
-  verifyPerson
-);
-
-router.get(
   '/view/profile',
   viewProfileWebview
 );
@@ -87,6 +77,11 @@ router.get(
 router.get(
   '/view/professions',
   viewProfileProfessions
+);
+
+router.get(
+  '/view/photos',
+  viewProfilePhotos
 );
 
 router.get(

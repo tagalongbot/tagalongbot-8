@@ -16,6 +16,7 @@ let createImageGalleryElement = (image_url, index) => {
 
 let viewProfileImages = async ({ query }, res) => {
   let { messenger_user_id } = query;
+  console.log('query', query);
 
   let person = await getPersonByMessengerID(messenger_user_id);
 

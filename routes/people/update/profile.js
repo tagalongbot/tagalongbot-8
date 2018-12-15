@@ -6,16 +6,22 @@ let updateProfile = async ({ query }, res) => {
   let person = await getPersonByMessengerID(messenger_user_id);
 
   if (!person) {
-    let redirect_to_blocks = ['[Verify] Person Not Found'];
+    let redirect_to_blocks = ['Profile Not Created'];
     res.send({ redirect_to_blocks });
     return;
   }
 
   let update_data = {
-    ['Is Profile Hidden']: is_profile_hidden.toUpperCase(),
+    ['Messenger Link']: messenger_link,
+    ['Latitude']: latitude,
+    ['Longitude']: longitude,
+    ['Zip Code']: zip_code,
+    ['City']: city,
+    ['State']: state,
+    ['Country']: country,
   }
 
-  let redirect_to_blocks = ['[SETTINGS] Complete'];
+  let redirect_to_blocks = ['Profile Updated'];
 
   let updated_person = await updatePerson(update_data, person);
 }
