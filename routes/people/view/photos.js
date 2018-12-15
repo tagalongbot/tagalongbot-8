@@ -18,6 +18,13 @@ let viewProfileImages = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
+
+  if (!person) {
+    let redirect_to_blocks = ['Profile Not Created'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
   let person_image_fields = person.fields.filter(field => field.startsWith('Profile Image URL'));
 
   let gallery_data = person_image_fields.map(createImageGalleryElement);
