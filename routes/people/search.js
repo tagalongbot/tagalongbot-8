@@ -2,8 +2,6 @@ let { shuffleArray } = require('../../libs/helpers/arrays.js');
 
 let { getPersonByMessengerID, searchNearbyPeopleByZipCode, searchNearbyPeopleByCity, createPerson } = require('../../libs/data/people.js');
 
-let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
-
 let { createGallery } = require('../../libs/bots.js');
 
 let { createPeopleCards } = require('../../libs/people/search.js');

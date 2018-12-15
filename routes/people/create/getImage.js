@@ -1,5 +1,3 @@
-let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/people.js');
-
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../../libs/cloudinary.js');
 
 let { createImage, createBtn, createQuickReplyMessage } = require('../../../libs/bots.js');

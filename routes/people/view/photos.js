@@ -28,11 +28,10 @@ let viewProfileImages = async ({ query }, res) => {
   let person_image_fields = Object.keys(person.fields).filter(field => field.startsWith('Profile Image URL')).map(field => person.fields[field]);
 
   let gallery_data = person_image_fields.map(createImageGalleryElement);
-  console.log('gallery_data', gallery_data);
 
   let gallery = createGallery(gallery_data, 'square');
 
-  let txt_msg = `Here are your profile images:`;
+  let txt_msg = { text: `Here are your profile images:` };
 
   let txt_quick_replies = createQuickReplyMessage(
     `Would you like to add a new image?`,

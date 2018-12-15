@@ -12,6 +12,8 @@ let deleteProfileImage = async ({ query }, res) => {
   let redirect_to_blocks = ['Profile Image Deleted'];
 
   let updated_person = await updatePerson(update_data, person);
+
+  res.send({ redirect_to_blocks });
 }
 
 module.exports = deleteProfileImage;
