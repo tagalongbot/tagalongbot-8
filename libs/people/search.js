@@ -12,7 +12,7 @@ let createPeopleCards = (person) => {
   let subtitle = `${person.fields['City']} | ${person.fields['Country']}`;
   if (is_person_verified) subtitle = `Verified User ✅ | ${subtitle} `;
 
-  let image_url = `${person.fields['Profile Image URL']}`;
+  let image_url = `${person.fields['Profile Image URL 1']}`;
 
   let send_tag_btn = createBtn(
     `Tag!|show_block|[JSON] Send Tag`,

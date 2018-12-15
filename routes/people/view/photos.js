@@ -2,14 +2,16 @@ let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 let { createBtn, createQuickReplyMessage, createGallery } = require('../../../libs/bots.js');
 
 let createImageGalleryElement = (image_url, index) => {
-  let title = '';
+  let title = `Image ${index+1}`;
 
   let remove_btn = createBtn(
-    'REMOVE',
-    {  }
+    'REMOVE|show_block|[JSON] Remove Image',
+    { image_num: index+1 }
   );
 
-  let buttons = [];
+  let buttons = [remove_btn];
+
+  return { title, image_url, buttons }
 }
 
 let viewProfileImages = async ({ query }, res) => {
@@ -20,12 +22,14 @@ let viewProfileImages = async ({ query }, res) => {
 
   let gallery_data = person_image_fields.map(createImageGalleryElement);
 
-  let gallery = createGallery(gallery_data);
+  let gallery = createGallery(gallery_data, 'square');
 
   let txt_msg = `Here are your profile images:`;
 
   let txt_quick_replies = createQuickReplyMessage(
-    `Would you like to add a new image?`
+    `Would you like to add a new image?`,
+    createBtn('Yes|show_block|Upload Profile Image'),
+    createBtn('No|show_block|Help'),
   );
 
   let messages = [txt_msg, gallery];
