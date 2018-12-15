@@ -26,7 +26,7 @@ let viewProfileImages = async ({ query }, res) => {
     return;
   }
 
-  let person_image_fields = Object.keys(person.fields).filter(field => person.fields[field].startsWith('Profile Image URL'));
+  let person_image_fields = Object.keys(person.fields);
   console.log('person_image_fields', person_image_fields);
 
   let gallery_data = person_image_fields.map(createImageGalleryElement);
