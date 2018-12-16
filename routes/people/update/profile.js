@@ -21,9 +21,10 @@ let updateProfile = async ({ query }, res) => {
     ['Country']: country,
   }
 
-  let redirect_to_blocks = ['Profile Updated'];
-
   let updated_person = await updatePerson(update_data, person);
+
+  let redirect_to_blocks = ['Profile Updated'];
+  res.send({ redirect_to_blocks });
 }
 
 module.exports = updateProfile;

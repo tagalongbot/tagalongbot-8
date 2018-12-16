@@ -2,12 +2,11 @@ let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/peopl
 
 let updatePreferences = async ({ query }, res) => {
   let { messenger_user_id, gender_preference, age_preference, city } = query;
-  console.log('query', query);
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
   if (!person) {
-    let redirect_to_blocks = ['[Verify] Person Not Found'];
+    let redirect_to_blocks = ['Profile Not Created'];
     res.send({ redirect_to_blocks });
     return;
   }
@@ -27,9 +26,8 @@ let updatePreferences = async ({ query }, res) => {
   }
 
   let updated_person = await updatePerson(update_data, person);
-  
-  let redirect_to_blocks = ['[PREFERENCES] Complete'];
 
+  let redirect_to_blocks = ['[PREFERENCES] Complete'];
   res.send({ redirect_to_blocks });
 }
 

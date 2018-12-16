@@ -15,9 +15,10 @@ let updateSettings = async ({ query }, res) => {
     ['Is Profile Hidden']: is_profile_hidden.toUpperCase(),
   }
 
-  let redirect_to_blocks = ['[SETTINGS] Complete'];
-
   let updated_person = await updatePerson(update_data, person);
+
+  let redirect_to_blocks = ['[SETTINGS] Complete'];
+  res.send({ redirect_to_blocks });
 }
 
 module.exports = updateSettings;
