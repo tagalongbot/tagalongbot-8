@@ -7,7 +7,7 @@ let { createGallery } = require('../../libs/bots.js');
 let { createPeopleCards } = require('../../libs/people/search.js');
 
 let searchPeople = async ({ query }, res) => {
-  let { messenger_user_id, search_activity, search_gender, zip_code, city, latitude, longitude } = query;
+  let { messenger_user_id } = query;
 
   let person_searching = await getPersonByMessengerID(messenger_user_id);
 
@@ -17,6 +17,10 @@ let searchPeople = async ({ query }, res) => {
     return;
   }
 
+  let gender_preference = person_searching.fields['Gender Preference'];
+  let age_preference = person_searching.fields['Age Preference'];
+  let city = person_searching.fields['City'];
+
   let people = await searchNearbyPeopleByCity(
     { city }
   );
@@ -24,8 +28,8 @@ let searchPeople = async ({ query }, res) => {
   let matched_people = people.filter(
     person =>
       person.id != person_searching.id &&
-      (person.fields['Gender Preference'] === search_gender.toLowerCase() || person.fields['Gender Preference'] === 'both') &&
-      person.fields['Activities'] && person.fields['Activities'].includes(search_activity)
+      (person.fields['Gender'] === gender_preference || gender_preference === 'both') &&
+      person.fields['Age'] && person.fields['Activities'].includes(search_activity)
   );
 
   if (!matched_people[0]) {
