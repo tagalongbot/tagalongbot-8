@@ -29,7 +29,7 @@ let searchPeople = async ({ query }, res) => {
     person =>
       person.id != person_searching.id &&
       (person.fields['Gender'] === gender_preference || gender_preference === 'both') &&
-      person.fields['Age'] && person.fields['Activities'].includes(search_activity)
+      age_preference.toUpperCase() === 'ANY' || person.fields['Age'] >= Number(age_preference.slice(0,2))
   );
 
   if (!matched_people[0]) {
