@@ -2,7 +2,7 @@ let { getPersonByMessengerID, destroyPerson } = require('../../libs/data/people.
 
 let deleteProfile = async ({ query }, res) => {
   let { messenger_user_id } = query;
-  
+
   let person = await getPersonByMessengerID(messenger_user_id);
 
   let destroyed_person = await destroyPerson(person.id);
