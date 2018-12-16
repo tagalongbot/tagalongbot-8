@@ -33,7 +33,7 @@ let searchPeople = async ({ query }, res) => {
   );
 
   if (!matched_people[0]) {
-    let redirect_to_blocks = ['No Partners Found'];
+    let redirect_to_blocks = ['No Profiles Found'];
     res.send({ redirect_to_blocks });
     return;
   }
