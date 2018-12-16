@@ -21,6 +21,24 @@ let searchPeople = async ({ query }, res) => {
   let age_preference = person_searching.fields['Age Preference'];
   let city = person_searching.fields['City'];
 
+  if (!gender_preference) {
+    let redirect_to_blocks = ['Gender Preference Missing'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  if (!age_preference) {
+    let redirect_to_blocks = ['Age Preference Missing'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  if (!city) {
+    let redirect_to_blocks = ['City Preference Missing'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
   let people = await searchNearbyPeopleByCity(
     { city }
   );
