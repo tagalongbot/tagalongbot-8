@@ -12,15 +12,25 @@ let updatePreferences = async ({ query }, res) => {
     return;
   }
 
-  let update_data = {
-    ['Gender Preference']: gender_preference.toLowerCase(),
-    ['Age Preference']: age_preference,
-    ['City']: city,
+  let update_data = {}
+
+  if (gender_preference) {
+    update_data['Gender Preference'] = gender_preference.toLowerCase();
   }
 
-  let redirect_to_blocks = ['[PREFERENCES] Complete'];
+  if (age_preference) {
+    update_data['Age Preference'] = age_preference;
+  }
+
+  if (city) {
+    update_data['City'] = city;
+  }
 
   let updated_person = await updatePerson(update_data, person);
+  
+  let redirect_to_blocks = ['[PREFERENCES] Complete'];
+
+  res.send({ redirect_to_blocks });
 }
 
 module.exports = updatePreferences;
