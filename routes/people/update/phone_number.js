@@ -6,7 +6,7 @@ let updatePhoneNumber = async ({ query }, res) => {
   let person = await getPersonByMessengerID(messenger_user_id);
 
   if (!person) {
-    let redirect_to_blocks = ['[Verify] Person Not Found'];
+    let redirect_to_blocks = ['User Verified'];
     res.send({ redirect_to_blocks });
     return;
   }
@@ -15,7 +15,7 @@ let updatePhoneNumber = async ({ query }, res) => {
     ['Phone Number']: phone_number,
   }
 
-  let redirect_to_blocks = ['[PREFERENCES] Complete'];
+  let redirect_to_blocks = ['User Verified'];
 
   let updated_person = await updatePerson(update_data, person);
 }
