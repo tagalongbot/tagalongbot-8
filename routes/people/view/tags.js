@@ -21,7 +21,7 @@ let createLastGalleryElement = ({ index }) => {
 
 let viewTags = async ({ query }, res) => {
   let { messenger_user_id } = query;
-  let index = Number(query['index']) || 0;
+  let index = Number(query.index) || 0;
   let new_index = index + 8;
 
   let person = await getPersonByMessengerID(messenger_user_id);
@@ -32,6 +32,12 @@ let viewTags = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
+
+  let today = new Date();
+
+  let tags_today = tags.filter(tag => {
+    let 
+  });
 
   let gallery_data = await Promise.all(tags.slice(index, new_index).map(toTagsGallery));
   let last_gallery_element = createLastGalleryElement({ index });

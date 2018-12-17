@@ -9,12 +9,13 @@ let tagProfile = async ({ query }, res) => {
 
   let person = await getPersonByMessengerID(messenger_user_id);
   let tagged_person = await getPersonByMessengerID(tagged_person_messenger_id);
+  let tagged_person_name = person.fields['First Name'] + person.fields['Last Name'];
 
   let new_tag_data = {
     ['Profile Messenger User ID']: person.fields['messenger user id'],
     ['Profile Name']: person.fields['First Name'] + person.fields['Last Name'],
     ['Tagged Profile Messenger ID']: tagged_person.fields['messenger user id'],
-    ['Tagged Profile Name']: tagged_person.fields['First Name'] + tagged_person.fields['Last Name'],
+    ['Tagged Profile Name']: tagged_person_name,
   }
 
   let new_tag = createTag(new_tag_data);
@@ -26,7 +27,8 @@ let tagProfile = async ({ query }, res) => {
   }
 
   let redirect_to_blocks = ['Tag Sent'];
-  res.send({ redirect_to_blocks });
+  let set_attributes = { tagged_person_name };
+  res.send({ redirect_to_blocks, set_attributes });
 }
 
 router.get(
