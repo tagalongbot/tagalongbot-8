@@ -9,7 +9,10 @@ let tagProfile = async ({ query }, res) => {
 
   let existing_tags = await getTagsByProfileMessengerID(messenger_user_id);
   let existing_tag = existing_tags
-    .find(tag => tag.fields['Tagged Profile Messenger ID'] === tagged_person_messenger_id);
+    .find(
+      tag => tag.fields['Profile Messenger User ID'] === messenger_user_id &&
+      tag.fields['Tagged Profile Messenger ID'] === tagged_person_messenger_id
+    );
 
   if (existing_tag) {
     let redirect_to_blocks = ['Tag Already Sent'];
@@ -25,7 +28,7 @@ let tagProfile = async ({ query }, res) => {
 
   let new_tag_data = {
     ['Profile Messenger User ID']: person.fields['messenger user id'],
-    ['Profile Name']: person.fields['First Name'] + person.fields['Last Name'],
+    ['Profile Name']: `${person.fields['First Name']} ${person.fields['Last Name']}`,
     ['Tagged Profile Messenger ID']: tagged_person.fields['messenger user id'],
     ['Tagged Profile Name']: tagged_person_name,
   }
