@@ -1,5 +1,7 @@
+let utils = require('utils');
 let where = require('node-where');
-let 
+
+let getLocation = utils.promisify(where.is.bind(where));
 
 let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
 
