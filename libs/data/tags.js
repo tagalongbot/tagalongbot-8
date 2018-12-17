@@ -27,6 +27,12 @@ let getTagsByProfileMessengerID = async (messenger_user_id) => {
   return tags;
 }
 
+let getTagsForProfileMessengerID = async (messenger_user_id) => {
+  let filterByFormula = `{Tagged Profile Messenger ID} = 'messenger_user_id'`;
+  let tags = await getAllTags({ filterByFormula });
+  return tags;
+}
+
 let createTag = async (new_tag_data) => {
   let new_tag = await createData(new_tag_data);
   return new_tag;
@@ -41,6 +47,7 @@ module.exports = {
   getAllTags,
   getTagByID,
   getTagsByProfileMessengerID,
+  getTagsForProfileMessengerID,
   createTag,
   updateTag,
 }
