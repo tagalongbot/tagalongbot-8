@@ -3,7 +3,7 @@ let placename = require('placename');
 
 let getLocation = util.promisify(placename.bind(placename));
 
-let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
+let { getPersonByMessengerID, createPerson } = require('../../libs/data/people.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
 
@@ -29,7 +29,7 @@ let createProfile = async ({ query }, res) => {
     return;
   }
 
-  let [{ name: city }] = await getLocation(profile_city);
+  let [{ name: city, country }] = await getLocation(profile_city);
 
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
@@ -39,12 +39,13 @@ let createProfile = async ({ query }, res) => {
     ['Gender']: gender.toLowerCase(),
     ['Age']: Number(profile_age),
     ['City']: capitalizeString(city),
+    ['Country']: country,
     ['Messenger Link']: messenger_link,
     ['Profile Image URL 1']: profile_image,
     ['Is Profile Hidden']: 'NO',
   }
 
-  let new_person = await updatePerson(new_person_data, person);
+  let new_person = await createPerson(new_person_data);
 
   let redirect_to_blocks = ['New Profile Created'];
 

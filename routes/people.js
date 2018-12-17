@@ -4,7 +4,6 @@ let router = express.Router();
 let handleRoute = require('../middlewares/handleRoute.js');
 let cache = require('../middlewares/cache.js');
 
-let savePerson = require('../routes/people/save.js');
 let hasCreatedProfile = require('../routes/people/created.js');
 let createPerson = require('../routes/people/create.js');
 let getProfileImage = require('../routes/people/create/getImage.js');
@@ -29,12 +28,6 @@ let deleteProfileImage = require('../routes/people/update/image/delete.js');
 
 // Danger Zone
 let deleteProfile = require('../routes/people/delete.js');
-
-router.get(
-  '/save',
-  // cache.withTtl('1 day'),
-  handleRoute(savePerson, '[Error] User')
-);
 
 router.get(
   '/created',
