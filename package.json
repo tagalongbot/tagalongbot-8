@@ -27,7 +27,8 @@
     "@turf/boolean-within": "^6.0.1",
     "marko": "^4.14.5",
     "dotenv": "^6.2.0",
-    "node-where": "^1.1.0"
+    "node-where": "^1.1.0",
+    "placename": "^1.1.0"
   },
   "engines": {
     "node": "10.x"

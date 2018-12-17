@@ -1,5 +1,6 @@
 let util = require('util');
 let where = require('node-where');
+let placename = require('placename');
 
 let getLocation = util.promisify(where.is.bind(where));
 
@@ -28,6 +29,13 @@ let createProfile = async ({ query }, res) => {
     res.send({ redirect_to_blocks });
     return;
   }
+
+  let profile_city = null;
+
+  where.is(city, function(err, result) {
+    profile_city = result.get('city');
+    console.log('profile_city', profile_city);
+  });
 
   let result = await getLocation(city);
   console.log('result', result);
