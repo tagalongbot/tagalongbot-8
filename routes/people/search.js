@@ -46,6 +46,7 @@ let searchPeople = async ({ query }, res) => {
   let matched_people = people.filter(
     person =>
       person.id != person_searching.id &&
+      (!person.fields['Is Profile Hidden'] || person.fields['Is Profile Hidden'] === 'NO') || 
       (person.fields['Gender'] === gender_preference || gender_preference === 'both') &&
       age_preference.toUpperCase() === 'ANY' || person.fields['Age'] >= Number(age_preference.slice(0,2))
   );
