@@ -1,7 +1,7 @@
-let utils = require('utils');
+let util = require('util');
 let where = require('node-where');
 
-let getLocation = utils.promisify(where.is.bind(where));
+let getLocation = util.promisify(where.is.bind(where));
 
 let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
 
@@ -24,8 +24,6 @@ let createProfile = async ({ query }, res) => {
     messenger_link,
     profile_image,
   } = query;
-  
-  
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
@@ -35,6 +33,10 @@ let createProfile = async ({ query }, res) => {
     return;
   }
 
+  let result = await getLocation(city);
+  console.log('result', result);
+  console.log('result city', result.get('city'));
+
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
     ['Active?']: true,
@@ -43,7 +45,7 @@ let createProfile = async ({ query }, res) => {
     ['Gender']: gender.toLowerCase(),
     ['Age']: Number(profile_age),
     ['Zip Code']: zip_code,
-    ['City']: capitalizeString(city),
+    ['City']: capitalizeString(result.get('city')),
     ['State']: capitalizeString(state),
     ['Latitude']: Number(latitude),
     ['Longitude']: Number(longitude),
