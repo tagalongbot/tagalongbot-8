@@ -2,7 +2,7 @@ let util = require('util');
 let where = require('node-where');
 let placename = require('placename');
 
-let getLocation = util.promisify(where.is.bind(where));
+let getLocation = util.promisify(placename.bind(placename));
 
 let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
 
@@ -30,13 +30,9 @@ let createProfile = async ({ query }, res) => {
     return;
   }
 
-  where.is(profile_city, function(err, result) {
-    console.log('city', result.get('city'));
-  });
-  
-  placename(profile_city, function (err, rows) {
-    console.log('rows', rows);
-  });
+  let [{ name: city }] = await getLocation(profile_city);
+
+  console.log('city', city);
 
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
