@@ -17,7 +17,7 @@ let createProfile = async ({ query }, res) => {
     last_name,
     gender,
     profile_age,
-    city,
+    profile_city,
     messenger_link,
     profile_image,
   } = query;
@@ -30,16 +30,13 @@ let createProfile = async ({ query }, res) => {
     return;
   }
 
-  let profile_city = null;
-
-  where.is(city, function(err, result) {
-    profile_city = result.get('city');
-    console.log('profile_city', profile_city);
+  where.is(profile_city, function(err, result) {
+    console.log('city', result.get('city'));
   });
-
-  let result = await getLocation(city);
-  console.log('result', result);
-  console.log('result city', result.get('city'));
+  
+  placename(profile_city, function (err, rows) {
+    console.log('rows', rows);
+  });
 
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
@@ -48,7 +45,7 @@ let createProfile = async ({ query }, res) => {
     ['Last Name']: last_name,
     ['Gender']: gender.toLowerCase(),
     ['Age']: Number(profile_age),
-    ['City']: capitalizeString(result.get('city')),
+    // ['City']: capitalizeString(result.get('city')),
     ['Messenger Link']: messenger_link,
     ['Profile Image URL 1']: profile_image,
     ['Is Profile Hidden']: 'NO',
