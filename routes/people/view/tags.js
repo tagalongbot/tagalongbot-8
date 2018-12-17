@@ -36,7 +36,8 @@ let viewTags = async ({ query }, res) => {
   let today = new Date();
 
   let tags_today = tags.filter(tag => {
-    let 
+    let tag_date = new Date(tag.fields['Tag Date / Time']);
+    return today.getDay() === tag_date.getDay();
   });
 
   let gallery_data = await Promise.all(tags.slice(index, new_index).map(toTagsGallery));
@@ -45,7 +46,7 @@ let viewTags = async ({ query }, res) => {
 
   let gallery = createGallery(gallery_data);
 
-  let txtMsg = `Here's a list of the people who've tagged you`;
+  let txtMsg = `You've been tagged by ${tags_today.length} Today`;
   let messages = [gallery];
   res.send({ messages });
 }
