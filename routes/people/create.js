@@ -1,3 +1,6 @@
+let where = require('node-where');
+let 
+
 let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
 
 let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary.js');
@@ -19,6 +22,8 @@ let createProfile = async ({ query }, res) => {
     messenger_link,
     profile_image,
   } = query;
+  
+  
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
