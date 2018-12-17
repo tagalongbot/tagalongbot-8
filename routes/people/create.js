@@ -42,6 +42,7 @@ let createProfile = async ({ query }, res) => {
     ['Longitude']: Number(longitude),
     ['Messenger Link']: messenger_link,
     ['Profile Image URL 1']: profile_image,
+    ['Is Profile Hidden']: 'NO',
   }
 
   let new_person = await updatePerson(new_person_data, person);
