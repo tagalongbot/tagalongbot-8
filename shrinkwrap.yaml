@@ -14,7 +14,6 @@ dependencies:
   express-redis-cache: 1.1.3
   marko: 4.14.7
   node-fetch: 2.3.0
-  node-where: 1.1.0
   placename: 1.1.0
   request: 2.88.0
   riot: 3.13.2
@@ -2542,14 +2541,6 @@ packages:
       node: 4.x || >=6.0.0
     resolution:
       integrity: sha512-MOd8pV3fxENbryESLgVIeaGKrdl+uaYhCSSVkjeOb/31/njTpcis5aWfdqgNlHIrKOLRbMnfPINPOML2CIFeXA==
-  /node-where/1.1.0:
-    dependencies:
-      lodash: 4.17.11
-      request: 2.88.0
-      validator: 7.2.0
-    dev: false
-    resolution:
-      integrity: sha1-dV09vEH0Qdqdqp5wNfCWqEw8170=
   /noop-logger/0.1.1:
     dev: false
     resolution:
@@ -4438,12 +4429,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-P02K5QZz9/vVU5q9ZqEzjYefXvQ=
-  /validator/7.2.0:
-    dev: false
-    engines:
-      node: '>= 0.10'
-    resolution:
-      integrity: sha512-c8NGTUYeBEcUIGeMppmNVKHE7wwfm3mYbNZxV+c5mlv9fDHI7Ad3p07qfNrn/CvpdkK2k61fOLRO2sTEhgQXmg==
   /validator/9.4.1:
     dev: false
     engines:
@@ -4616,7 +4601,6 @@ specifiers:
   express-redis-cache: ^1.1.3
   marko: ^4.14.5
   node-fetch: ^2.3.0
-  node-where: ^1.1.0
   placename: ^1.1.0
   request: ^2.88.0
   riot: ^3.13.2

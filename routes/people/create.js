@@ -1,5 +1,4 @@
 let util = require('util');
-let where = require('node-where');
 let placename = require('placename');
 
 let getLocation = util.promisify(placename.bind(placename));
@@ -32,8 +31,6 @@ let createProfile = async ({ query }, res) => {
 
   let [{ name: city }] = await getLocation(profile_city);
 
-  console.log('city', city);
-
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
     ['Active?']: true,
@@ -41,7 +38,7 @@ let createProfile = async ({ query }, res) => {
     ['Last Name']: last_name,
     ['Gender']: gender.toLowerCase(),
     ['Age']: Number(profile_age),
-    // ['City']: capitalizeString(result.get('city')),
+    ['City']: capitalizeString(city),
     ['Messenger Link']: messenger_link,
     ['Profile Image URL 1']: profile_image,
     ['Is Profile Hidden']: 'NO',
