@@ -10,7 +10,7 @@
         <div class="card-content">
           <span>Gender: { opts.person.gender }</span>
           <br>
-          <span>Activities: { opts.person.activities }</span>
+          <span>Activities: { opts.person.interests }</span>
         </div>
       </div>
     </div>

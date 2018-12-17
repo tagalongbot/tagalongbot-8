@@ -2,7 +2,7 @@ let { LOAD_MORE_IMAGE_URL } = process.env;
 
 let { createBtn, createGallery } = require('../../../libs/bots.js');
 let { getPersonByMessengerID } = require('../../../libs/data/people.js');
-let { getTagByProfileMessengerID } = require('../../../libs/tags.js');
+let { getTagsByProfileMessengerID } = require('../../../libs/data/tags.js');
 let { toTagsGallery } = require('../../../libs/view/tags.js');
 
 let createLastGalleryElement = ({ index }) => {
@@ -20,12 +20,20 @@ let createLastGalleryElement = ({ index }) => {
 }
 
 let viewTags = async ({ query }, res) => {
+  console.log('query', query);
   let { messenger_user_id } = query;
   let index = Number(query.index) || 0;
   let new_index = index + 8;
 
   let person = await getPersonByMessengerID(messenger_user_id);
-  let tags = await getTagByProfileMessengerID(messenger_user_id);
+
+  if (!person) {
+    let redirect_to_blocks = ['Profile Not Created'];
+    res.send({ redirect_to_blocks });
+    return;
+  }
+
+  let tags = await getTagsByProfileMessengerID(messenger_user_id);
 
   if (tags.length === 0) {
     let redirect_to_blocks = ['No Tags'];
@@ -37,9 +45,7 @@ let viewTags = async ({ query }, res) => {
 
   let tags_today = tags.filter(tag => {
     let tag_date = new Date(tag.fields['Tag Date / Time']);
-    return today.getMonth() === tag_date.getMonth() &&
-      today.getDay() === tag_date.getDay() &&
-      today.getDay() === tag_date.getDay();
+    return today.toLocaleDateString() === tag_date.toLocaleDateString();
   });
 
   let gallery_data = await Promise.all(tags.slice(index, new_index).map(toTagsGallery));

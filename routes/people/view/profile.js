@@ -16,7 +16,8 @@ let viewProfile = async ({ query }, res) => {
     ['first_name']: person.fields['First Name'],
     ['last_name']: person.fields['Last Name'],
     ['gender']: capitalizeString(person.fields['Gender']),
-    ['activities']: person.fields['Activities'].join(' | '),
+    ['interests']: person.fields['Interests'].join(' | '),
+    ['professions']: person.fields['Professions'].join(' | '),
     ['profile_image_url']: person.fields['Profile Image URL']
   }
 
