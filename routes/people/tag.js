@@ -7,12 +7,6 @@ let { getTagsByProfileMessengerID, createTag } = require('../../libs/data/tags.j
 let tagProfile = async ({ query }, res) => {
   let { messenger_user_id, tagged_person_messenger_id } = query;
 
-  if (messenger_user_id === tagged_person_messenger_id) {
-    let redirect_to_blocks = ['Person Tagged Self'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
   let existing_tags = await getTagsByProfileMessengerID(messenger_user_id);
   let existing_tag = existing_tags
     .find(tag => tag.fields['Tagged Profile Messenger ID'] === tagged_person_messenger_id);
