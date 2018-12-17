@@ -2,14 +2,25 @@ let express = require('express');
 let router = express.Router();
 
 let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
-let { createTag } = require('../../libs/data/tags.js');
+let { getTagsByProfileMessengerID, createTag } = require('../../libs/data/tags.js');
 
 let tagProfile = async ({ query }, res) => {
   let { messenger_user_id, tagged_person_messenger_id } = query;
 
+  let existing_tags = await getTagsByProfileMessengerID(messenger_user_id);
+  let existing_tag = existing_tags.find(tag => tag.fields['Tagged Profile Messenger ID'] === tagged_person_messenger_id);
+
+  if (existing_tag) {
+    let redirect_to_blocks = ['Tag Already Sent'];
+    let tagged_person_name = existing_tag.fields['Tagged Profile Name'];
+    let set_attributes = { tagged_person_name };
+    res.send({ redirect_to_blocks, set_attributes });
+    return;
+  }
+
   let person = await getPersonByMessengerID(messenger_user_id);
   let tagged_person = await getPersonByMessengerID(tagged_person_messenger_id);
-  let tagged_person_name = person.fields['First Name'] + person.fields['Last Name'];
+  let tagged_person_name = `${person.fields['First Name']} ${person.fields['Last Name']}`;
 
   let new_tag_data = {
     ['Profile Messenger User ID']: person.fields['messenger user id'],
