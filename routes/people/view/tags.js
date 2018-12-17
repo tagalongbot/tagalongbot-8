@@ -37,7 +37,9 @@ let viewTags = async ({ query }, res) => {
 
   let tags_today = tags.filter(tag => {
     let tag_date = new Date(tag.fields['Tag Date / Time']);
-    return today.getDay() === tag_date.getDay();
+    return today.getMonth() === tag_date.getMonth() &&
+      today.getDay() === tag_date.getDay() &&
+      today.getDay() === tag_date.getDay();
   });
 
   let gallery_data = await Promise.all(tags.slice(index, new_index).map(toTagsGallery));
