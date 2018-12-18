@@ -3,15 +3,16 @@ let router = express.Router();
 
 let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
 let { getTagsByProfileMessengerID, createTag } = require('../../libs/data/tags.js');
+let { sendBroadcast } = require('../../libs/chatfuel.js');
 
 let tagProfile = async ({ query }, res) => {
   let { messenger_user_id, tagged_person_messenger_id } = query;
 
   let profile_tags = await getTagsByProfileMessengerID(messenger_user_id);
-  let existing = profile_tags
-    .filter(tag => tag.fields['Tagged Profile Messenger ID'] === tagged_person_messenger_id);
+  let existing_tag = profile_tags
+    .find(tag => tag.fields['Tagged Profile Messenger ID'] === tagged_person_messenger_id);
 
-  if (existing_tags.length > 0) {
+  if (profile_tags.length > 0) {
     let redirect_to_blocks = ['Tag Already Sent'];
     let tagged_person_name = existing_tag.fields['Tagged Profile Name'];
     let set_attributes = { tagged_person_name };
@@ -41,6 +42,16 @@ let tagProfile = async ({ query }, res) => {
   let redirect_to_blocks = ['Tag Sent'];
   let set_attributes = { tagged_person_name };
   res.send({ redirect_to_blocks, set_attributes });
+
+  // Broadcast
+  let user_id = tagged_person_messenger_id;
+  let block_name = 'New Tag Broadcast';
+  let message_tag = 'PAIRING_UPDATE';
+  let user_attributes = { tagged_person_name };
+
+  let match_broadcast = await sendBroadcast(
+    { user_id, block_name, message_tag, user_attributes }
+  );
 }
 
 router.get(
