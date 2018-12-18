@@ -2,7 +2,7 @@ let { LOAD_MORE_IMAGE_URL } = process.env;
 
 let { createBtn, createGallery } = require('../../../libs/bots.js');
 let { getPersonByMessengerID } = require('../../../libs/data/people.js');
-let { getTagsForProfileMessengerID } = require('../../../libs/data/tags.js');
+let { getAllTags } = require('../../../libs/data/tags.js');
 let { toTagsGallery } = require('../../../libs/view/tags.js');
 
 let createLastGalleryElement = ({ index }) => {
@@ -20,7 +20,6 @@ let createLastGalleryElement = ({ index }) => {
 }
 
 let viewTags = async ({ query }, res) => {
-  console.log('query', query);
   let { messenger_user_id } = query;
   let index = Number(query.index) || 0;
   let new_index = index + 8;
@@ -33,7 +32,8 @@ let viewTags = async ({ query }, res) => {
     return;
   }
 
-  let tags = await getTagsForProfileMessengerID(messenger_user_id);
+  let tags = await getAllTags();
+  console.log('tags', tags);
 
   if (tags.length === 0) {
     let redirect_to_blocks = ['No Tags'];
