@@ -48,8 +48,11 @@ let viewTags = async ({ query }, res) => {
   });
 
   let gallery_data = await Promise.all(tags.slice(index, new_index).map(toTagsGallery));
-  let last_gallery_element = createLastGalleryElement({ index });
-  gallery_data.push(last_gallery_element);
+
+  if (tags.length > 9) {
+    let last_gallery_element = createLastGalleryElement({ index });
+    gallery_data.push(last_gallery_element);
+  }
 
   let gallery = createGallery(gallery_data);
 
