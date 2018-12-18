@@ -21,12 +21,13 @@ let tagProfile = async ({ query }, res) => {
   }
 
   let person = await getPersonByMessengerID(messenger_user_id);
+  let person_name = `${person.fields['First Name']} ${person.fields['Last Name']}`;
   let tagged_person = await getPersonByMessengerID(tagged_person_messenger_id);
   let tagged_person_name = `${tagged_person.fields['First Name']} ${tagged_person.fields['Last Name']}`;
 
   let new_tag_data = {
     ['Profile Messenger User ID']: person.fields['messenger user id'],
-    ['Profile Name']: `${person.fields['First Name']} ${person.fields['Last Name']}`,
+    ['Profile Name']: person_name,
     ['Tagged Profile Messenger ID']: tagged_person.fields['messenger user id'],
     ['Tagged Profile Name']: tagged_person_name,
   }
@@ -47,7 +48,7 @@ let tagProfile = async ({ query }, res) => {
   let user_id = tagged_person_messenger_id;
   let block_name = 'New Tag Broadcast';
   let message_tag = 'PAIRING_UPDATE';
-  let user_attributes = { tagged_person_name };
+  let user_attributes = { tagged_person_name: person_name };
 
   let match_broadcast = await sendBroadcast(
     { user_id, block_name, message_tag, user_attributes }
