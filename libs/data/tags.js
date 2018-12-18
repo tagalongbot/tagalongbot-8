@@ -22,13 +22,13 @@ let getTagByID = async (tag_id) => {
 }
 
 let getTagsByProfileMessengerID = async (messenger_user_id) => {
-  let filterByFormula = `{Profile Messenger User ID} = 'messenger_user_id'`;
+  let filterByFormula = `{Profile Messenger User ID} = '${messenger_user_id}'`;
   let tags = await getAllTags({ filterByFormula });
   return tags;
 }
 
 let getTagsForProfileMessengerID = async (messenger_user_id) => {
-  let filterByFormula = `{Tagged Profile Messenger ID} = 'messenger_user_id'`;
+  let filterByFormula = `{Tagged Profile Messenger ID} = '${messenger_user_id}'`;
   let tags = await getAllTags({ filterByFormula });
   return tags;
 }

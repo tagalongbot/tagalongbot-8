@@ -14,7 +14,9 @@ let toTagsGallery = async (tag) => {
   let subtitle = `${person.fields['Gender']} | ${person.fields['City']} | ${person.fields['Country']}`;
   if (is_person_verified) subtitle = `Verified User ✅ | ${subtitle}`;
 
-  let image_url = person.fields['Profile Image URL'];
+  let image_url = Object.keys(person.fields)
+    .filter(field => field.startsWith('Profile Image URL'))
+    .map(field => person.fields[field])[0];
 
   let view_profile_url = createURL(
     `${BASEURL}/people/view/profile`,

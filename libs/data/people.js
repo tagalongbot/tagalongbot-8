@@ -27,8 +27,8 @@ let getPersonByMessengerID = async (messenger_user_id) => {
 }
 
 let getPersonByID = async (person_id) => {
-  let runner = await findData(person_id);
-  return runner;
+  let person = await findData(person_id);
+  return person;
 }
 
 let getPersonByPhoneNumber = async (phone_number) => {
