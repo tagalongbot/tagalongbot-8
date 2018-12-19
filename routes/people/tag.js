@@ -12,7 +12,7 @@ let tagProfile = async ({ query }, res) => {
   let existing_tag = profile_tags
     .find(tag => tag.fields['Tagged Profile Messenger ID'] === tagged_person_messenger_id);
 
-  if (profile_tags.length > 0) {
+  if (existing_tag) {
     let redirect_to_blocks = ['Tag Already Sent'];
     let tagged_person_name = existing_tag.fields['Tagged Profile Name'];
     let set_attributes = { tagged_person_name };
