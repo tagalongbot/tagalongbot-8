@@ -2,8 +2,12 @@ let express = require('express');
 let router = express.Router();
 
 let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
-let { getTagsByProfileMessengerID, createTag } = require('../../libs/data/tags.js');
+let { getTagsByProfileMessengerID, getTagsForProfileMessengerID, createTag } = require('../../libs/data/tags.js');
 let { sendBroadcast } = require('../../libs/chatfuel.js');
+
+let notifyMatch = async ({ query }, res) => {
+  
+}
 
 let tagProfile = async ({ query }, res) => {
   let { messenger_user_id, tagged_person_messenger_id } = query;
@@ -45,14 +49,21 @@ let tagProfile = async ({ query }, res) => {
   res.send({ redirect_to_blocks, set_attributes });
 
   // Broadcast
-  let user_id = tagged_person_messenger_id;
-  let block_name = '[JSON] Get Tag Broadcast';
-  let message_tag = 'PAIRING_UPDATE';
-  let user_attributes = { tag_id: new_tag.id };
-
-  let match_broadcast = await sendBroadcast(
-    { user_id, block_name, message_tag, user_attributes }
+  let profile_tagged_by = await getTagsForProfileMessengerID(messenger_user_id);
+  let matched_tag = profile_tagged_by.find(
+    tag => tag.fields['Profile Messenger User ID'] === tagged_person_messenger_id
   );
+
+  if (matched_tag) {
+    let user_id = tagged_person_messenger_id;
+    let block_name = '[JSON] Get Tag Broadcast';
+    let message_tag = 'PAIRING_UPDATE';
+    let user_attributes = { tag_id: new_tag.id };
+
+    let match_broadcast = await sendBroadcast(
+      { user_id, block_name, message_tag, user_attributes }
+    );
+  }
 }
 
 router.get(
