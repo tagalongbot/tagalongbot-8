@@ -20,11 +20,11 @@ let toTagsGallery = async (tag) => {
 
   let view_profile_url = createURL(
     `${BASEURL}/people/view/profile`,
-    { person_messenger_user_id }
+    { tagged_person_messenger_id: person_messenger_user_id }
   );
 
   let view_profile_btn = createBtn(
-    `View Profile|web_url|${view_profile_url}`
+    `View Profile|web_url|${view_profile_url}`,
   );
 
   let buttons = [view_profile_btn];
