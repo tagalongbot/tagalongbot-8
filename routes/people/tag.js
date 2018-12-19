@@ -5,8 +5,14 @@ let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.j
 let { getTagsByProfileMessengerID, getTagsForProfileMessengerID, createTag } = require('../../libs/data/tags.js');
 let { sendBroadcast } = require('../../libs/chatfuel.js');
 
-let notifyMatch = async ({ query }, res) => {
-  
+let notifyMatch = async ({ user_id, tag }) => {
+  let block_name = '[JSON] Get Tag Broadcast';
+  let message_tag = 'PAIRING_UPDATE';
+  let user_attributes = { tag_id: tag.id };
+
+  let match_broadcast = await sendBroadcast(
+    { user_id, block_name, message_tag, user_attributes }
+  );
 }
 
 let tagProfile = async ({ query }, res) => {
@@ -55,14 +61,8 @@ let tagProfile = async ({ query }, res) => {
   );
 
   if (matched_tag) {
-    let user_id = tagged_person_messenger_id;
-    let block_name = '[JSON] Get Tag Broadcast';
-    let message_tag = 'PAIRING_UPDATE';
-    let user_attributes = { tag_id: new_tag.id };
-
-    let match_broadcast = await sendBroadcast(
-      { user_id, block_name, message_tag, user_attributes }
-    );
+    await notifyMatch(({ user_id: tagged_person_messenger_id, tag: new_tag }));
+    await notifyMatch(({ user_id: messenger_user_id, tag: matched_tag }));
   }
 }
 
