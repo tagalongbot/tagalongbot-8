@@ -49,7 +49,6 @@ let tagProfile = async ({ query }, res) => {
   let block_name = '[JSON] Get Tag Broadcast';
   let message_tag = 'PAIRING_UPDATE';
   let user_attributes = { tag_id: new_tag.id };
-  console.log('user_attributes', user_attributes);
 
   let match_broadcast = await sendBroadcast(
     { user_id, block_name, message_tag, user_attributes }
