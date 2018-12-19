@@ -16,6 +16,7 @@ let viewProfileInterests = require('../routes/people/view/interests.js');
 let viewProfileProfessions = require('../routes/people/view/professions.js');
 let viewProfilePhotos = require('../routes/people/view/photos.js');
 let viewProfileTags = require('../routes/people/view/tags.js');
+let viewProfileTag = require('../routes/people/view/tag.js');
 
 // Update
 let updatePreferences = require('../routes/people/update/preferences.js');
@@ -83,6 +84,11 @@ router.get(
 router.get(
   '/view/tags',
   viewProfileTags
+);
+
+router.get(
+  '/view/tag',
+  viewProfileTag
 );
 
 router.get(

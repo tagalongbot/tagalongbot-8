@@ -6,6 +6,7 @@ let { toTagsGallery } = require('../../../libs/view/tags.js');
 
 let viewTag = async ({ query }, res) => {
   let { tag_id } = query;
+  console.log('query', query);
 
   let tag = await getTagByID(tag_id);
   let tagged_person_name = tag.fields['Profile Name'];
