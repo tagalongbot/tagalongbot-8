@@ -32,7 +32,7 @@ let tagProfile = async ({ query }, res) => {
     ['Tagged Profile Name']: tagged_person_name,
   }
 
-  let new_tag = createTag(new_tag_data);
+  let new_tag = await createTag(new_tag_data);
 
   if (!new_tag) {
     let redirect_to_blocks = ['[Error] User'];
@@ -49,6 +49,7 @@ let tagProfile = async ({ query }, res) => {
   let block_name = '[JSON] Get Tag Broadcast';
   let message_tag = 'PAIRING_UPDATE';
   let user_attributes = { tag_id: new_tag.id };
+  console.log('user_attributes', user_attributes);
 
   let match_broadcast = await sendBroadcast(
     { user_id, block_name, message_tag, user_attributes }
