@@ -23,7 +23,7 @@ let createProfile = async ({ query }, res) => {
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
-  if (person && person.fields.length > 1) {
+  if (person) {
     let redirect_to_blocks = ['Profile Already Created'];
     res.send({ redirect_to_blocks });
     return;
