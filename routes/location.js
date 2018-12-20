@@ -3,6 +3,11 @@ let router = express.Router();
 
 let handleRoute = require('../middlewares/handleRoute.js');
 
+let getLocation = async ({ query }) => {
+  let { city } = query;
+  
+}
+
 router.get(
   '/created',
   // cache.withTtl('1 day'),

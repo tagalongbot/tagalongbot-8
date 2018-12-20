@@ -6,7 +6,6 @@ let errorHandler = (block_name, res) => async (error) => {
   console.log(error);
 
   let errorMsg = `${block_name}: ${JSON.stringify(error)}`;
-  logToFile(errorMsg, 'errors.txt');
 
   await sendErrorMsg(errorMsg);
 
