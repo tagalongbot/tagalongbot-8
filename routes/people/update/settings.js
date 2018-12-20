@@ -12,7 +12,7 @@ let updateSettings = async ({ query }, res) => {
   }
 
   let update_data = {
-    ['Is Profile Hidden']: is_profile_hidden.toUpperCase(),
+    ['Is Profile Hidden']: is_profile_hidden.toUpperCase() === 'HIDE' ? 'YES' : 'NO',
   }
 
   let updated_person = await updatePerson(update_data, person);
