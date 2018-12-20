@@ -6,13 +6,21 @@ let handleRoute = require('../middlewares/handleRoute.js');
 let { createBtn, createButtonMessage } = require('../libs/bots.js');
 
 let getLocation = async ({ query }) => {
-  let { city } = query;
+  let { city, state } = query;
 
   if (city) {
-    let btn = createBtn();
+    let yes_btn = createBtn(
+      `Yes|show_block|[JSON] Confirm Location`,
+    );
+
+    let no_btn = createBtn(
+      `Yes|show_block|[JSON] Confirm Location`,
+    );
 
     let msg = createButtonMessage(
-      ``,
+      `So your city is ${city}, ${state}.`,
+      yes_btn,
+      no_btn,
     );
   }
 }
