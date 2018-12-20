@@ -14,7 +14,7 @@ let getLocation = async ({ query }) => {
     );
 
     let no_btn = createBtn(
-      `Yes|show_block|[JSON] Confirm Location`,
+      `No|show_block|Get City`,
     );
 
     let msg = createButtonMessage(
