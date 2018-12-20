@@ -1,11 +1,15 @@
 let express = require('express');
 let router = express.Router();
 
+let util = require('util');
+let placename = require('placename');
+let getLocation = util.promisify(placename.bind(placename));
+
 let handleRoute = require('../middlewares/handleRoute.js');
 
 let { createBtn, createButtonMessage } = require('../libs/bots.js');
 
-let getLocation = async ({ query }) => {
+let getLocationRoute = async ({ query }) => {
   let { city, state } = query;
 
   if (city) {
@@ -25,9 +29,24 @@ let getLocation = async ({ query }) => {
   }
 }
 
+let getCity = async ({ query }, res) => {
+  let { profile_city } = query;
+
+  let [{ name: city, country }] = await getLocation(profile_city);
+  
+  let set_attributes = { profile_city: city }
+
+  res.send({ set_attributes });
+}
+
 router.get(
   '/',
-  getLocation
+  getLocationRoute
+);
+
+router.get(
+  '/city',
+  getCity
 );
 
 module.exports = router;

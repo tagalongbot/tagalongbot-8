@@ -17,6 +17,7 @@ let createProfile = async ({ query }, res) => {
     gender,
     profile_age,
     profile_city,
+    profile_country,
     messenger_link,
     profile_image,
   } = query;
@@ -29,8 +30,6 @@ let createProfile = async ({ query }, res) => {
     return;
   }
 
-  let [{ name: city, country }] = await getLocation(profile_city);
-
   let new_person_data = {
     ['messenger user id']: messenger_user_id,
     ['Active?']: true,
@@ -38,8 +37,8 @@ let createProfile = async ({ query }, res) => {
     ['Last Name']: last_name,
     ['Gender']: gender.toLowerCase(),
     ['Age']: Number(profile_age),
-    ['City']: capitalizeString(city),
-    ['Country']: country,
+    ['City']: capitalizeString(profile_city),
+    ['Country']: profile_country,
     ['Messenger Link']: messenger_link,
     ['Profile Image URL 1']: profile_image,
     ['Is Profile Hidden']: 'NO',
