@@ -9,7 +9,7 @@ let handleRoute = require('../middlewares/handleRoute.js');
 
 let { createBtn, createButtonMessage } = require('../libs/bots.js');
 
-let getLocationRoute = async ({ query }) => {
+let getLocationRoute = async ({ query }, res) => {
   let { city, state } = query;
 
   if (city) {
@@ -27,6 +27,9 @@ let getLocationRoute = async ({ query }) => {
       yes_btn,
       no_btn,
     );
+
+    let messages = [msg];
+    res.send({ messages });
   }
 }
 
