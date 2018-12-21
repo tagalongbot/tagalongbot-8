@@ -14,7 +14,8 @@ let getLocationRoute = async ({ query }) => {
 
   if (city) {
     let yes_btn = createBtn(
-      `Yes|show_block|[JSON] Confirm Location`,
+      `Yes|show_block|Location Confirmed`,
+      { profile_city: city }
     );
 
     let no_btn = createBtn(
