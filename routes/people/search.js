@@ -7,7 +7,7 @@ let { createGallery } = require('../../libs/bots.js');
 let { createPeopleCards } = require('../../libs/people/search.js');
 
 let searchPeople = async ({ query }, res) => {
-  let { messenger_user_id } = query;
+  let { messenger_user_id, index } = query;
 
   let person_searching = await getPersonByMessengerID(messenger_user_id);
 

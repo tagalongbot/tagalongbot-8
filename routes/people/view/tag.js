@@ -35,9 +35,8 @@ let viewTag = async ({ query }, res) => {
 
   let person = await getPersonByMessengerID(tagged_person_messenger_user_id);
 
-  let gallery_data = [tag].map(toMatchGallery);
+  let gallery_data = [person].map(toMatchGallery);
 
-  delete gallery_data[0].image_url;
   let gallery = createGallery(gallery_data, 'square');
 
   let txtMsg = { text: `Hey you've been matched with ${tagged_person_name}` };
