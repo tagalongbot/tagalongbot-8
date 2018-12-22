@@ -12,6 +12,7 @@ let viewTag = async ({ query }, res) => {
 
   let gallery_data = await Promise.all([tag].map(toTagsGallery));
 
+  delete gallery_data[0].image_url;
   let gallery = createGallery(gallery_data, 'square');
 
   let txtMsg = { text: `Hey you've been matched with ${tagged_person_name}` };
