@@ -33,7 +33,7 @@ let viewProfile = async ({ query }, res) => {
 
   res.marko(
     view_template,
-    { view_html }
+    { view_html, person: person_data }
   );
 }
 
