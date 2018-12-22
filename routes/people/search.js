@@ -1,5 +1,3 @@
-let { shuffleArray } = require('../../libs/helpers/arrays.js');
-
 let { getPersonByMessengerID, searchNearbyPeopleByZipCode, searchNearbyPeopleByCity, createPerson } = require('../../libs/data/people.js');
 
 let { createGallery } = require('../../libs/bots.js');
@@ -7,7 +5,8 @@ let { createGallery } = require('../../libs/bots.js');
 let { createPeopleCards } = require('../../libs/people/search.js');
 
 let searchPeople = async ({ query }, res) => {
-  let { messenger_user_id, index } = query;
+  let { messenger_user_id } = query;
+  let index = Number(query.index) || 0;
 
   let person_searching = await getPersonByMessengerID(messenger_user_id);
 
@@ -56,8 +55,8 @@ let searchPeople = async ({ query }, res) => {
     return;
   }
 
-  let gallery_data = shuffleArray(matched_people)
-    .slice(0, 1)
+  let gallery_data = matched_people
+    .slice(index, 1)
     .map(createPeopleCards);
 
   let gallery = createGallery(gallery_data, 'square');
