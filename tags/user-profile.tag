@@ -9,8 +9,6 @@
         </div>
         <div class="card-content">
           <span>Gender: { opts.person.gender }</span>
-          <br>
-          <span>Activities: { opts.person.interests }</span>
         </div>
       </div>
     </div>
@@ -19,28 +17,22 @@
   <table>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Item Name</th>
-        <th>Item Price</th>
+        <th>Interests</th>
+        <th>Professions</th>
       </tr>
     </thead>
 
     <tbody>
       <tr>
-        <td>Alvin</td>
-        <td>Eclair</td>
-        <td>$0.87</td>
+        <td each="{ opts.person.interests }">{interest}</td>
       </tr>
       <tr>
-        <td>Alan</td>
-        <td>Jellybean</td>
-        <td>$3.76</td>
-      </tr>
-      <tr>
-        <td>Jonathan</td>
-        <td>Lollipop</td>
-        <td>$7.00</td>
+        <td each="{ opts.person.professions }">{profession}</td>
       </tr>
     </tbody>
   </table>
+
+  <div class="carousel carousel-slider">
+    <a each="{ opts.person.images }" class="carousel-item"><img src="{url}"></a>
+  </div>
 </user-profile>

@@ -25,9 +25,9 @@ let viewProfileImages = async ({ query }, res) => {
     return;
   }
 
-  let person_image_fields = Object.keys(person.fields).filter(field => field.startsWith('Profile Image URL')).map(field => person.fields[field]);
+  let person_images = Object.keys(person.fields).filter(field => field.startsWith('Profile Image URL')).map(field => person.fields[field]);
 
-  let gallery_data = person_image_fields.map(createImageGalleryElement);
+  let gallery_data = person_images.map(createImageGalleryElement);
 
   let gallery = createGallery(gallery_data, 'square');
 
@@ -41,7 +41,7 @@ let viewProfileImages = async ({ query }, res) => {
 
   let messages = [txt_msg, gallery];
 
-  if (person_image_fields.length < 6) {
+  if (person_images.length < 6) {
     messages.push(txt_quick_replies);
   }
 
