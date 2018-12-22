@@ -32,7 +32,14 @@
     </tbody>
   </table>
 
-  <div class="carousel carousel-slider">
-    <a each="{ opts.person.images }" class="carousel-item"><img src="{url}"></a>
+  <div class="carousel">
+    <a each="{ opts.person.photos }" class="carousel-item"><img src="{url}"></a>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.carousel');
+      var instances = M.Carousel.init(elems, options);
+    });
+  </script>
 </user-profile>
