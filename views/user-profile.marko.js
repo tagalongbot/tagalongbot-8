@@ -23,13 +23,9 @@ function render(input, out, __component, component, state) {
   component_globals_tag({}, out);
 
   out.w(marko_str(input.view_html) +
-    "<script type=\"text/javascript\" src=\"/tags/user-profile.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n\n      let title = \"" +
-    marko_escapeScript(input.title) +
-    "\";\n      let messenger_user_id = \"" +
-    marko_escapeScript(input.messenger_user_id) +
-    "\";\n      let options = " +
-    marko_escapeScript(input.options) +
-    ";\n\n      riot.mount(\n        '*',\n        { title, messenger_user_id, options }\n      );\n    </script>");
+    "<script type=\"text/javascript\" src=\"/tags/user-profile.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n\n      let person = \"" +
+    marko_escapeScript(input.person) +
+    "\";\n\n      riot.mount(\n        '*',\n        { person }\n      );\n    </script>");
 
   init_components_tag({}, out);
 
