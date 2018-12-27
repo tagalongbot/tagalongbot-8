@@ -1,6 +1,6 @@
 <user-profile>
   <a href="https://www.revenuehits.com/lps/pubref/?ref=@RH@FFjyl_PNOibpA7a-qPeTM8rnUCom4TZr" target="_blank"><img src="https://revenuehits.com/publishers/media/img/v6/180x60_v6.jpg" border="0"></a>
-  <script data-cfasync='false' type='text/javascript' src='https://www.revenuehits.com/p331152.clksite.com/adServe/banners?tid=331152_645035_3'></script>
+  <script data-cfasync='false' type='text/javascript' src="https://www.revenuehits.com/p331152.clksite.com/adServe/banners?tid=331152_645035_3"></script>
 
   <!-- Use Materialize CSS -->
   <div class="row">
