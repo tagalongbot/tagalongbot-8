@@ -25,7 +25,7 @@ function render(input, out, __component, component, state) {
   out.w(marko_str(input.view_html) +
     "<script type=\"text/javascript\" src=\"/tags/user-profile.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n\n      let person = \"" +
     marko_escapeScript(input.person) +
-    "\";\n\n      riot.mount(\n        '*',\n        { person }\n      );\n    </script>");
+    "\";\n\n      riot.mount(\n        '*',\n        { person }\n      );\n\n      document.addEventListener('DOMContentLoaded', function() {\n        var elems = document.querySelectorAll('.carousel');\n        var instances = M.Carousel.init(elems, options);\n      });\n    </script>");
 
   init_components_tag({}, out);
 
