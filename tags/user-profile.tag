@@ -1,4 +1,6 @@
 <user-profile>
+  <a href="https://www.revenuehits.com/lps/pubref/?ref=@RH@FFjyl_PNOibpA7a-qPeTM8rnUCom4TZr" target="_blank"><img src="https://revenuehits.com/publishers/media/img/v6/180x60_v6.jpg" border="0"></a>
+
   <!-- Use Materialize CSS -->
   <div class="row">
     <div class="col s12 m7">
@@ -35,7 +37,5 @@
   <div class="carousel">
     <a each="{ opts.person.photos }" class="carousel-item"><img src="{url}"></a>
   </div>
-
-  <a href="https://www.revenuehits.com/lps/pubref/?ref=@RH@FFjyl_PNOibpA7a-qPeTM8rnUCom4TZr" target="_blank"><img src="https://revenuehits.com/publishers/media/img/v6/180x60_v6.jpg" border="0"></a>
 
 </user-profile>
