@@ -18,18 +18,19 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<html><head><title></title><link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no\"><script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script><script>\n      (adsbygoogle = window.adsbygoogle || []).push({\n        google_ad_client: \"ca-pub-7388179374152766\",\n        enable_page_level_ads: true\n      });\n    </script><script data-cfasync=\"false\" type=\"text/javascript\" src=\"//p331152.clksite.com/adServe/banners?tid=331152_645035_3\"></script></head><body>");
+  out.w("<html><head><title></title><link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no\"><script data-cfasync=\"false\" type=\"text/javascript\" src=\"//p331152.clksite.com/adServe/banners?tid=331152_645035_3\"></script></head><body>");
 
   component_globals_tag({}, out);
 
-  out.w(marko_str(input.view_html) +
-    "<script type=\"text/javascript\" src=\"/tags/user-profile.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n\n      let person = \"" +
+  out.w("<a href=\"https://www.revenuehits.com/lps/pubref/?ref=@RH@FFjyl_PNOibpA7a-qPeTM8rnUCom4TZr\" target=\"_blank\"><img src=\"https://revenuehits.com/publishers/media/img/v6/180x60_v6.jpg\" border=\"0\"></a>" +
+    marko_str(input.view_html) +
+    "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/riot/3.13.2/riot.min.js\"></script><script type=\"text/javascript\" src=\"/tags/user-profile.js\"></script><script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n\n      let person = \"" +
     marko_escapeScript(input.person) +
-    "\";\n\n      riot.mount(\n        '*',\n        { person }\n      );\n\n      document.addEventListener('DOMContentLoaded', function() {\n        var elems = document.querySelectorAll('.carousel');\n        var instances = M.Carousel.init(elems, options);\n      });\n    </script>");
+    "\";\n\n      riot.mount(\n        '*',\n        { person }\n      );\n\n      document.addEventListener('DOMContentLoaded', function() {\n        var elems = document.querySelectorAll('.carousel');\n        var instances = M.Carousel.init(elems);\n      });\n    </script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "13");
+  await_reorderer_tag({}, out, __component, "14");
 
   out.w("</body></html>");
 }
