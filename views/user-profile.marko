@@ -17,16 +17,14 @@
     $!{input.view_html}
 
     <script>
+      M.AutoInit();
+
       let person = "${input.person}";
 
       riot.mount(
         '*',
         { person }
       );
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      M.AutoInit();
 
       document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.carousel');
@@ -36,5 +34,6 @@
         var collapsibles = M.Collapsible.init(elems);
       });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
 </html>
