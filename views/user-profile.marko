@@ -14,8 +14,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.13.2/riot.min.js"></script>
     <script type="text/javascript" src="/tags/user-profile.js"></script>
     $!{input.view_html}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <script>
+      M.AutoInit();
+
       let person = "${input.person}";
 
       riot.mount(
@@ -23,17 +26,16 @@
         { person }
       );
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.carousel');
-        var carousels = M.Carousel.init(elems);
+      setTimeout(function() {
+        document.addEventListener('DOMContentLoaded', function() {
+          var elems = document.querySelectorAll('.carousel');
+          var carousels = M.Carousel.init(elems);
 
-        var elems = document.querySelectorAll('.collapsible');
-        var collapsibles = M.Collapsible.init(elems);
-      });
+          var elems = document.querySelectorAll('.collapsible');
+          var collapsibles = M.Collapsible.init(elems);
+        });
+      }, 3000);
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      M.AutoInit();
-    </script>
-    <script data-cfasync='false' type='text/javascript' src='//p331152.clksite.com/adServe/banners?tid=331152_645035_4&type=footer&size=37'></script>  </body>
+    <script data-cfasync='false' type='text/javascript' src='//p331152.clksite.com/adServe/banners?tid=331152_645035_4&type=footer&size=37'></script>
+  </body>
 </html>
