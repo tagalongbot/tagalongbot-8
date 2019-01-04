@@ -24,6 +24,14 @@
         '*',
         { person }
       );
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.carousel');
+        var carousels = M.Carousel.init(elems);
+
+        var elems = document.querySelectorAll('.collapsible');
+        var collapsibles = M.Collapsible.init(elems);
+      });
     </script>
   <script data-cfasync='false' type='text/javascript' src='//p331152.clksite.com/adServe/banners?tid=331152_645035_5&type=shadowbox&size=17'></script>
   </body>

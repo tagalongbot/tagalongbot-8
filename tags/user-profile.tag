@@ -39,11 +39,4 @@
     </li>
   </ul>
 
-  <script>
-    var elems = document.querySelectorAll('.carousel');
-    var carousels = M.Carousel.init(elems);
-
-    var elems = document.querySelectorAll('.collapsible');
-    var collapsibles = M.Collapsible.init(elems);
-  </script>
 </user-profile>

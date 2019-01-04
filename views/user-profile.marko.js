@@ -26,7 +26,7 @@ function render(input, out, __component, component, state) {
     marko_str(input.view_html) +
     "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n\n      let person = \"" +
     marko_escapeScript(input.person) +
-    "\";\n\n      riot.mount(\n        '*',\n        { person }\n      );\n    </script><script data-cfasync=\"false\" type=\"text/javascript\" src=\"//p331152.clksite.com/adServe/banners?tid=331152_645035_5&amp;type=shadowbox&amp;size=17\"></script>");
+    "\";\n\n      riot.mount(\n        '*',\n        { person }\n      );\n\n      document.addEventListener('DOMContentLoaded', function() {\n        var elems = document.querySelectorAll('.carousel');\n        var carousels = M.Carousel.init(elems);\n\n        var elems = document.querySelectorAll('.collapsible');\n        var collapsibles = M.Collapsible.init(elems);\n      });\n    </script><script data-cfasync=\"false\" type=\"text/javascript\" src=\"//p331152.clksite.com/adServe/banners?tid=331152_645035_5&amp;type=shadowbox&amp;size=17\"></script>");
 
   init_components_tag({}, out);
 
