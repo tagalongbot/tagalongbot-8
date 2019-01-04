@@ -25,7 +25,7 @@
       <div class="collapsible-header"><i class="material-icons">list</i>Interests</div>
       <div class="collapsible-body">
         <ul>
-          <li each="{ opts.person.interests }">{interest}</li>
+          <li each="{ interest in opts.person.interests }">{interest.interest}</li>
         </ul>
       </div>
     </li>
@@ -33,7 +33,7 @@
       <div class="collapsible-header"><i class="material-icons">list</i>Professions</div>
       <div class="collapsible-body">
         <ul>
-          <li each="{ opts.person.professions }">{profession}</li>
+          <li each="{ profession in opts.person.professions }">{profession.profession}</li>
         </ul>
       </div>
     </li>
