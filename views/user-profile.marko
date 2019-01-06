@@ -20,12 +20,12 @@
 
       let person = "${input.person}";
 
-      riot.mount(
-        '*',
-        { person }
-      );
-
       document.addEventListener('DOMContentLoaded', function() {
+        riot.mount(
+          '*',
+          { person }
+        );
+
         var elems = document.querySelectorAll('.carousel');
         var carousels = M.Carousel.init(elems);
 
