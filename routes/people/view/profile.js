@@ -26,8 +26,6 @@ let viewProfile = async ({ query }, res) => {
     ['photos']: profile_images.map(url => ({ url }))
   }
 
-  console.log('person_data', person_data);
-
   let view_html = riot.render(
     user_profile_tag,
     { person: person_data }
