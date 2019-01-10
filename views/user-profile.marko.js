@@ -23,13 +23,13 @@ function render(input, out, __component, component, state) {
   component_globals_tag({}, out);
 
   out.w(marko_str(input.view_html) +
-    "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/riot/3.13.2/riot.min.js\"></script><script type=\"text/javascript\" src=\"/tags/user-profile.js\"></script><script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script><script>\n      M.AutoInit();\n\n      let person = \"" +
+    "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/riot/3.13.2/riot.min.js\"></script><script type=\"text/javascript\" src=\"/tags/user-profile.js\"></script><script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script><script>\n      M.AutoInit();\n\n      let person = \"" +
     marko_escapeScript(input.person) +
-    "\";\n      console.log('person', person);\n\n      document.addEventListener('DOMContentLoaded', function() {\n        riot.mount(\n          '*',\n          { person }\n        );\n\n        var elems = document.querySelectorAll('.carousel');\n        var carousels = M.Carousel.init(elems);\n\n        var elems2 = document.querySelectorAll('.collapsible');\n        var collapsibles = M.Collapsible.init(elems2);\n      });\n    </script><script data-cfasync=\"false\" type=\"text/javascript\" src=\"//p331152.clksite.com/adServe/banners?tid=331152_645035_5&amp;type=shadowbox&amp;size=17\"></script>");
+    "\";\n      \n      $(document).ready(function(){\n        $('.carousel').carousel();\n        $('.collapsible').collapsible();\n      });\n\n    </script><script data-cfasync=\"false\" type=\"text/javascript\" src=\"//p331152.clksite.com/adServe/banners?tid=331152_645035_5&amp;type=shadowbox&amp;size=17\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "12");
+  await_reorderer_tag({}, out, __component, "13");
 
   out.w("</body></html>");
 }
