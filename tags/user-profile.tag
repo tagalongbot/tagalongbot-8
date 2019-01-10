@@ -14,7 +14,7 @@
   </div>
 
   <div class="container">
-    <h3>Photos</h3>
+    <h4>Photos</h4>
     <div class="carousel">
       <a each="{ opts.person.photos }" class="carousel-item"><img src="{url}"></a>
     </div>
