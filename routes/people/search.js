@@ -41,6 +41,8 @@ let searchPeople = async ({ query }, res) => {
   let people = await searchNearbyPeopleByCity(
     { city }
   );
+  
+  console.log('people', people);
 
   let matched_people = people.filter(person => {
     if (person.id === person_searching.id) return false;
@@ -48,6 +50,8 @@ let searchPeople = async ({ query }, res) => {
     (person.fields['Gender'] === gender_preference || gender_preference === 'both') &&
     age_preference.toUpperCase() === 'ANY' || person.fields['Age'] >= Number(age_preference.slice(0,2))
   });
+
+  console.log('matched_people', matched_people);
 
   if (!matched_people[0]) {
     let redirect_to_blocks = ['No Profiles Found'];
