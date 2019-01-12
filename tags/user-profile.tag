@@ -9,7 +9,7 @@
         <div class="card-content">
           <span>Gender: { opts.person.gender }</span>
         </div>
-        <a class="waves-effect waves-light btn-large" href="{ opts.person.messenger_link }">Message Me</a>
+        <a class="waves-effect waves-light btn-large center-align" href="{ opts.person.messenger_link }">Message Me</a>
       </div>
     </div>
   </div>
