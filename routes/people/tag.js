@@ -61,6 +61,7 @@ let tagProfile = async ({ query }, res) => {
   );
 
   if (matched_tag) {
+    console.log('here');
     await notifyMatch(({ user_id: tagged_person_messenger_id, tag: new_tag }));
     await notifyMatch(({ user_id: messenger_user_id, tag: matched_tag }));
   }
