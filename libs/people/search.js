@@ -4,7 +4,6 @@ let { createBtn } = require('../../libs/bots.js');
 let { createURL } = require('../../libs/helpers/strings.js');
 
 let createPeopleCards = (index) => (person) => {
-  console.log('index', index);
   let tagged_person_messenger_id = person.fields['messenger user id'];
 
   let is_person_verified = person.fields['Verified?'];

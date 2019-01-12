@@ -56,9 +56,8 @@ let searchPeople = async ({ query }, res) => {
   }
 
   let gallery_data = matched_people
-    .slice(index, 1)
+    .splice(index, 1)
     .map(createPeopleCards(index+1));
-  console.log('gallery_data', gallery_data);
 
   let gallery = createGallery(gallery_data, 'square');
 
