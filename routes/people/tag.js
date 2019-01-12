@@ -13,6 +13,8 @@ let notifyMatch = async ({ user_id, tag }) => {
   let match_broadcast = await sendBroadcast(
     { user_id, block_name, message_tag, user_attributes }
   );
+
+  console.log('match_broadcast', match_broadcast);
 }
 
 let tagProfile = async ({ query }, res) => {
