@@ -19,7 +19,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<script data-cfasync=\"false\" type=\"text/javascript\" src=\"//p331152.clksite.com/adServe/banners?tid=331152_645035_6&amp;tagid=9\"></script><h1>Tag Along Bot</h1><video></video>");
+  out.w("<script data-cfasync=\"false\" type=\"text/javascript\" src=\"//p331152.clksite.com/adServe/banners?tid=331152_645035_6&amp;tagid=9\"></script><h1>Tag Along Bot</h1><iframe src=\"https://drive.google.com/file/d/1ichFAV92kCIHvaiYd9fUWAsHAYGIXBAq/preview\" width=\"640\" height=\"480\"></iframe>");
 
   init_components_tag({}, out);
 
