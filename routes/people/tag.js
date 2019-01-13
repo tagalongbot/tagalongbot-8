@@ -1,8 +1,3 @@
-let express = require('express');
-let router = express.Router();
-
-let handleRoute = require('../../middlewares/handleRoute.js');
-
 let { getPersonByMessengerID, updatePerson } = require('../../libs/data/people.js');
 let { getTagsByProfileMessengerID, getTagsForProfileMessengerID, createTag } = require('../../libs/data/tags.js');
 let { sendBroadcast } = require('../../libs/chatfuel.js');
@@ -69,9 +64,4 @@ let tagProfile = async ({ query }, res) => {
   }
 }
 
-router.get(
-  '/',
-  tagProfile
-);
-
-module.exports = router;
+module.exports = tagProfile;
