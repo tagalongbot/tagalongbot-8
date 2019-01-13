@@ -71,7 +71,7 @@ let tagProfile = async ({ query }, res) => {
 
 router.get(
   '/',
-  handleRoute(tagProfile, '[Error] User')
+  tagProfile
 );
 
 module.exports = router;
