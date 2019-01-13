@@ -19,6 +19,7 @@ let notifyMatch = async ({ user_id, tag }) => {
 
 let tagProfile = async ({ query }, res) => {
   let { messenger_user_id, tagged_person_messenger_id } = query;
+  console.log('query', query);
 
   let profile_tags = await getTagsByProfileMessengerID(messenger_user_id);
   let existing_tag = profile_tags
