@@ -1,4 +1,4 @@
-let { BASEURL, LOAD_MORE_IMAGE_URL } = process.env;
+let { BASEURL, TAG_YOUR_IT_IMAGE_URL } = process.env;
 
 let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 let { createURL } = require('../../../libs/helpers/strings.js');
@@ -11,6 +11,8 @@ let toMatchGallery = (person) => {
   let title = `${person.fields['First Name']} | Age: ${person.fields['Age']}`;
   let subtitle = `${person.fields['Gender']} | ${person.fields['City']} | ${person.fields['Country']}`;
   if (is_person_verified) subtitle = `Verified User ✅ | ${subtitle}`;
+  
+  let image_url = TAG_YOUR_IT_IMAGE_URL;
 
   let view_profile_url = createURL(
     `${BASEURL}/people/view/profile`,
@@ -27,7 +29,7 @@ let toMatchGallery = (person) => {
 
   let buttons = [view_profile_btn, message_btn];
 
-  return { title, subtitle, buttons };
+  return { title, subtitle, image_url, buttons };
 }
 
 let viewTag = async ({ query }, res) => {
