@@ -44,7 +44,7 @@ let createProfile = async ({ query }, res) => {
     ['Age']: Number(profile_age),
     ['City']: capitalizeString(profile_city),
     ['Country']: profile_country.toUpperCase(),
-    ['Messenger Link']: formatMessengerLink(messenger_link,
+    ['Messenger Link']: formatMessengerLink(messenger_link),
     ['Profile Image URL 1']: profile_image,
     ['Is Profile Hidden']: 'NO',
   }
