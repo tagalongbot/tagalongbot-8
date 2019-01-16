@@ -47,6 +47,7 @@ let createProfile = async ({ query }, res) => {
     ['Messenger Link']: formatMessengerLink(messenger_link),
     ['Profile Image URL 1']: profile_image,
     ['Is Profile Hidden']: 'NO',
+    ['Age Preference']: 'Any',
   }
 
   let new_person = await createPerson(new_person_data);

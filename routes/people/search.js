@@ -26,12 +26,6 @@ let searchPeople = async ({ query }, res) => {
     return;
   }
 
-  if (!age_preference) {
-    let redirect_to_blocks = ['Age Preference Missing'];
-    res.send({ redirect_to_blocks });
-    return;
-  }
-
   if (!city) {
     let redirect_to_blocks = ['City Preference Missing'];
     res.send({ redirect_to_blocks });
