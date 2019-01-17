@@ -24,11 +24,12 @@
       if (create_profile) {
         MessengerExtensions.requestCloseBrowser(function success() {
           // webview closed
+          let redirect_to_create_profile = fetch('');
         }, function error(err) {
           // an error occurred
         });
       } else {
-        
+        alert("Okay when you're ready to create your profile just close this webview and click Create Profile");
       }
     }
   </script>
