@@ -23,7 +23,9 @@ let viewProfile = async ({ query }, res) => {
     ['interests']: person.fields['Interests'] ? person.fields['Interests'].map(interest => ({ interest })) : [],
     ['professions']: person.fields['Professions'] ? person.fields['Professions'].map(profession => ({ profession })) : [],
     ['profile_image_url']: profile_images[0],
-    ['photos']: profile_images.map(url => ({ url }))
+    ['photos']: profile_images.map(url => ({ url })),
+    ['city']: person.fields['City'],
+    ['age']: person.fields['Age'],
   }
 
   let view_html = riot.render(
