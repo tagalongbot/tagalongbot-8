@@ -13,7 +13,6 @@ let tagPerson = require('../routes/people/tag.js');
 // Views
 let viewProfileWebview = require('../routes/people/view/profile.js');
 let viewProfileInterestsProfessions = require('../routes/people/view/interests_professions.js');
-let viewProfileProfessions = require('../routes/people/view/professions.js');
 let viewProfilePhotos = require('../routes/people/view/photos.js');
 let viewProfileTags = require('../routes/people/view/tags.js');
 let viewProfileTag = require('../routes/people/view/tag.js');
