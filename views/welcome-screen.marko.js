@@ -10,7 +10,9 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     component_globals_tag = marko_loadTag(require("marko/src/components/taglib/component-globals-tag")),
     init_components_tag = marko_loadTag(require("marko/src/components/taglib/init-components-tag")),
-    await_reorderer_tag = marko_loadTag(require("marko/src/taglibs/async/await-reorderer-tag"));
+    await_reorderer_tag = marko_loadTag(require("marko/src/taglibs/async/await-reorderer-tag")),
+    marko_escapeXml = marko_helpers.x,
+    marko_escapeScript = marko_helpers.xs;
 
 function render(input, out, __component, component, state) {
   var data = input;
@@ -25,7 +27,11 @@ function render(input, out, __component, component, state) {
 
   await_reorderer_tag({}, out, __component, "7");
 
-  out.w("</body><script>\n    let vid = document.getElemementById('vid');\n\n    vid.onended = function(evt) {\n      let create_profile = confirm('Ready to create a profile?');\n\n      if (create_profile) {\n        MessengerExtensions.requestCloseBrowser(function success() {\n          // webview closed\n          let redirect_to_create_profile = fetch('');\n        }, function error(err) {\n          // an error occurred\n        });\n      } else {\n        alert(\"Okay when you're ready to create your profile just close this webview and click Create Profile\");\n      }\n    }\n  </script></html>");
+  out.w("</body><script>\n    let BASEURL = \"" +
+    marko_escapeScript(input.BASEURL) +
+    "\";\n    let user_id = \"" +
+    marko_escapeScript(input.user_id) +
+    "\";\n\n    let vid = document.getElemementById('vid');\n\n    vid.onended = function(evt) {\n      let create_profile = confirm('Ready to create a profile?');\n\n      if (create_profile) {\n        MessengerExtensions.requestCloseBrowser(function success() {\n          // webview closed\n          let redirect_to_create_profile = fetch(BASEURL + '/close/welcome-webview.js');\n        }, function error(err) {\n          // an error occurred\n        });\n      } else {\n        alert(\"Okay when you're ready to create your profile just close this webview and click Create Profile\");\n      }\n    }\n  </script></html>");
 }
 
 marko_template._ = marko_renderer(render, {

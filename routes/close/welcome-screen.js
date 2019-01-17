@@ -1,10 +1,9 @@
 let { sendBroadcast } = require('../../libs/chatfuel.js');
 
 let sendToCreateProfileBlock = async ({ query }, res) => {
-  let {  } = query;
+  let { user_id } = query;
 
-  let user_id = ``;
-  let block_name = '';
+  let block_name = '[ROUTER] Create Profile';
   let message_tag = '';
   let user_attributes = {
     

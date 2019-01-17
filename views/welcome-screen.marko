@@ -16,6 +16,9 @@
   </body>
 
   <script>
+    let BASEURL = "${input.BASEURL}";
+    let user_id = "${input.user_id}";
+
     let vid = document.getElemementById('vid');
 
     vid.onended = function(evt) {
@@ -24,7 +27,7 @@
       if (create_profile) {
         MessengerExtensions.requestCloseBrowser(function success() {
           // webview closed
-          let redirect_to_create_profile = fetch('');
+          let redirect_to_create_profile = fetch(BASEURL + '/close/welcome-webview.js');
         }, function error(err) {
           // an error occurred
         });

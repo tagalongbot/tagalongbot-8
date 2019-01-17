@@ -14,6 +14,7 @@ let updateQueryParameter = require('./middlewares/updateQueryParameter.js');
 let peopleRoute = require('./routes/people.js');
 let sendHomePage = require('./routes/home-page.js');
 let sendWelcomeScreen = require('./routes/view/welcome-screen.js');
+let closeWelcomeScreen = require('./routes/close/welcome-screen.js');
 
 app.use(
   express.static(__dirname + '/public')
