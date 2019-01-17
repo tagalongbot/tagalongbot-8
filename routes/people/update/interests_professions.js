@@ -1,6 +1,6 @@
 let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/people.js');
 
-let updateInterests = async ({ body }, res) => {
+let updateInterestsProfessions = async ({ body }, res) => {
   let { messenger_user_id, data } = body;
 
   let person = await getPersonByMessengerID(messenger_user_id);
@@ -14,4 +14,4 @@ let updateInterests = async ({ body }, res) => {
   res.send({ msg: 'ok' });
 }
 
-module.exports = updateInterests;
+module.exports = updateInterestsProfessions;

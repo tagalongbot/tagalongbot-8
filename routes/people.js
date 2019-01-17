@@ -12,7 +12,7 @@ let tagPerson = require('../routes/people/tag.js');
 
 // Views
 let viewProfileWebview = require('../routes/people/view/profile.js');
-let viewProfileInterests = require('../routes/people/view/interests.js');
+let viewProfileInterestsProfessions = require('../routes/people/view/interests_professions.js');
 let viewProfileProfessions = require('../routes/people/view/professions.js');
 let viewProfilePhotos = require('../routes/people/view/photos.js');
 let viewProfileTags = require('../routes/people/view/tags.js');
@@ -22,8 +22,7 @@ let viewProfileTag = require('../routes/people/view/tag.js');
 let updatePreferences = require('../routes/people/update/preferences.js');
 let updateSettings = require('../routes/people/update/settings.js');
 let updatePhoneNumber = require('../routes/people/update/phone_number.js');
-let updateInterests = require('../routes/people/update/interests.js');
-let updateProfessions = require('../routes/people/update/professions.js');
+let updateInterestsProfessions = require('../routes/people/update/interests_professions.js');
 let updateProfile = require('../routes/people/update/profile.js');
 let uploadProfileImage = require('../routes/people/update/image/upload.js');
 let deleteProfileImage = require('../routes/people/update/image/delete.js');
@@ -67,13 +66,8 @@ router.get(
 );
 
 router.get(
-  '/view/interests',
-  viewProfileInterests
-);
-
-router.get(
-  '/view/professions',
-  viewProfileProfessions
+  '/view/interests_professions',
+  viewProfileInterestsProfessions
 );
 
 router.get(
@@ -107,13 +101,8 @@ router.get(
 );
 
 router.post(
-  '/update/interests',
-  updateInterests
-);
-
-router.post(
-  '/update/professions',
-  updateProfessions
+  '/update/interests_professions',
+  updateInterestsProfessions
 );
 
 router.get(
