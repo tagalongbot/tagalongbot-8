@@ -2,8 +2,9 @@
   <!-- Use Materialize CSS -->
   <h3 class="center-align">{ opts.title }</h3>
   <div class="container">
-    <div each="{ opts.options }">
-      <p each="{ opts.options }">
+    <div each="{ option in opts.options }">
+      <h5>{ option.title }</h5>
+      <p each="{ option.check_boxes }">
         <label>
           <input if="{ checked == false }" type="checkbox" class="filled-in" onclick="{ parent.toggle }" />
           <input if="{ checked == true }" type="checkbox" class="filled-in" checked="checked" onclick="{ parent.toggle }" />
@@ -38,7 +39,7 @@
 
       let body = {
         messenger_user_id: opts.messenger_user_id,
-        data: self.options.filter(opt => opt.checked).map(opt => opt.label)
+        data: self.options.map().filter(opt => opt.checked).map(opt => opt.label)
       }
 
       let options = { method, headers, body: JSON.stringify(body) };
