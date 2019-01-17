@@ -10,7 +10,19 @@
 
   <script>
     let vid = document.getElemementById('vid');
-    
-    vid.on
+
+    vid.onended = function(evt) {
+      let create_profile = confirm('Ready to create a profile?');
+
+      if (create_profile) {
+        MessengerExtensions.requestCloseBrowser(function success() {
+          // webview closed
+        }, function error(err) {
+          // an error occurred
+        });
+      } else {
+        
+      }
+    }
   </script>
 </html>
