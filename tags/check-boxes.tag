@@ -39,7 +39,9 @@
 
       let body = {
         messenger_user_id: opts.messenger_user_id,
-        data: self.options.map().filter(opt => opt.checked).map(opt => opt.label)
+        data: self.options.map(opt => 
+          opt.check_boxes.filter(check_box => check_box.checked)
+        )
       }
 
       let options = { method, headers, body: JSON.stringify(body) };

@@ -3,10 +3,13 @@ let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/peopl
 let updateInterestsProfessions = async ({ body }, res) => {
   let { messenger_user_id, data } = body;
 
+  let { interests, professions }  = body;
+
   let person = await getPersonByMessengerID(messenger_user_id);
 
   let update_data = {
-    ['Interests']: data,
+    ['Interests']: interests,
+    ['Professions']: professions,
   }
 
   let updated_person = await updatePerson(update_data, person);
