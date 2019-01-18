@@ -1,4 +1,4 @@
-riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class="container"> <p each="{opts.options}"> <label> <input if="{checked == false}" type="checkbox" class="filled-in" onclick="{parent.toggle}"> <input if="{checked == true}" type="checkbox" class="filled-in" checked="checked" onclick="{parent.toggle}"> <span>{label}</span> </label> </p> <div class="container"> <button ref="thebutton" class="btn waves-effect waves-light right" type="submit" name="action">Update <i class="material-icons right">done</i> </button> </div> </div>', '', '', function(opts) {
+riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class="container"> <div each="{option in opts.options}"> <h5>{option.title}</h5> <p each="{option.check_boxes}"> <label> <input if="{checked == false}" type="checkbox" class="filled-in" onclick="{parent.toggle}"> <input if="{checked == true}" type="checkbox" class="filled-in" checked="checked" onclick="{parent.toggle}"> <span>{label}</span> </label> </p> </div> </div> <div class="container"> <button ref="thebutton" class="btn waves-effect waves-light right" type="submit" name="action">Update <i class="material-icons right">done</i> </button> </div>', '', '', function(opts) {
     let self = this;
     self.options = opts.options;
 
@@ -18,7 +18,9 @@ riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class=
 
       let body = {
         messenger_user_id: opts.messenger_user_id,
-        data: self.options.filter(opt => opt.checked).map(opt => opt.label)
+        data: self.options.map(opt =>
+          opt.check_boxes.filter(check_box => check_box.checked)
+        )
       }
 
       let options = { method, headers, body: JSON.stringify(body) };
