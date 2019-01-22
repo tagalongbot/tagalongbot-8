@@ -31,7 +31,6 @@
     let onFormSubmit = function(evt) {
       evt.preventDefault();
       let url = `${opts.BASEURL}/people/update/interests_professions`;
-      console.log('url', url);
       let method = 'POST';
 
       let headers = {
@@ -51,12 +50,7 @@
 
       fetch(url, options).then(res => res.json()).then(res => {
         if(res.msg === 'UPDATED') {
-          M.toast({html: `Your ${opts.title} Were Updated. You Can Now Close This WebView`});
-          MessengerExtensions.requestCloseBrowser(function success() {
-            // webview closed
-          }, function error(err) {
-            // an error occurred
-          });
+          M.toast({html: `Your Interests & Professions Were Updated. You Can Now Close This WebView`});
         }
       });
     }
