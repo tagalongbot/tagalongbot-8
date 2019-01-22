@@ -30,7 +30,7 @@
 
     let onFormSubmit = function(evt) {
       evt.preventDefault();
-      let url = `https://the3dwin-tag-along.glitch.me/people/update/` + opts.title.toLowerCase();
+      let url = `${BASEURL}/people/update/interests_professions`;
       let method = 'POST';
 
       let headers = {
@@ -40,7 +40,7 @@
       let data = self.options.map(opt => 
         opt.check_boxes.filter(check_box => check_box.checked)
       );
-      
+
       console.log('data', data);
 
       let body = {

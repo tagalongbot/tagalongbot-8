@@ -1,3 +1,5 @@
+let { BASEURL } = process.env;
+
 let riot = require('riot');
 
 let check_boxes_tag = require('../../../tags/check-boxes.tag');
@@ -43,12 +45,12 @@ let viewProfileInterestsProfessions = async ({ query }, res) => {
 
   let view_html = riot.render(
     check_boxes_tag,
-    { messenger_user_id, options: JSON.stringify(options) }
+    { BASEURL, messenger_user_id, options: JSON.stringify(options) }
   );
 
   res.marko(
     view_template,
-    { view_html, messenger_user_id, options: JSON.stringify(options) }
+    { view_html, BASEURL, messenger_user_id, options: JSON.stringify(options) }
   );
 }
 
