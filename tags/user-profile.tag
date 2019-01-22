@@ -9,8 +9,11 @@
         <div class="card-content">
           <span>Go back and press Tag! to chat with { opts.person.first_name }</span>
           <span>Gender: { opts.person.gender }</span>
+          <br>
           <span>City: { opts.person.city }</span>
+          <br>
           <span>Age: { opts.person.age }</span>
+          <br>
         </div>
       </div>
     </div>

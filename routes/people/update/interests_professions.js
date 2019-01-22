@@ -14,7 +14,7 @@ let updateInterestsProfessions = async ({ body }, res) => {
 
   let updated_person = await updatePerson(update_data, person);
 
-  res.send({ msg: 'ok' });
+  res.send({ msg: 'UPDATED' });
 }
 
 module.exports = updateInterestsProfessions;
