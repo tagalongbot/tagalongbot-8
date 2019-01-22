@@ -37,11 +37,15 @@
         'Content-Type': 'application/json',
       }
 
+      let data = self.options.map(opt => 
+        opt.check_boxes.filter(check_box => check_box.checked)
+      );
+      
+      console.log('data', data);
+
       let body = {
         messenger_user_id: opts.messenger_user_id,
-        data: self.options.map(opt => 
-          opt.check_boxes.filter(check_box => check_box.checked)
-        )
+        data
       }
 
       let options = { method, headers, body: JSON.stringify(body) };

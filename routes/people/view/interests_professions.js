@@ -6,7 +6,7 @@ let view_template = require('../../../views/check-boxes.marko');
 let { getPersonByMessengerID } = require('../../../libs/data/people.js');
 
 let getInterests = function (person) {
-  let person_interests = person.fields['Interests'];
+  let person_interests = person.fields['Interests'] || [];
 
   let title = 'Interests';
   let check_boxes = ['American TV Series', 'Anime/Manga', 'Books', 'Cycling', 'Dance', 'Fashion', 'Food', 'Gaming', 'Gym', 'Hollywood Movies', 'Internet', 'Karaoke', 'Korean Culture', 'Music', 'Painting/Doodling', 'Pets', 'Photography', 'Religion', 'Running', 'Science/Tech', 'Sports', 'Travel', 'Volunteering', 'Writing', 'Yoga/Meditation']
@@ -19,7 +19,7 @@ let getInterests = function (person) {
 }
 
 let getProfessions = function (person) {
-  let person_professions = person.fields['Professions'];
+  let person_professions = person.fields['Professions'] || [];
   let title = 'Professions';
 
   let check_boxes = ['Accountant', 'Actor', 'Actuary', 'Architect', 'Artist', 'Aviator', 'Broker', 'Butcher', 'Chef', 'Consultant', 'Dental Hygienist', 'Dentist', 'Designer', 'Dietitian', 'Electrician', 'Engineer', 'Firefighter', 'Hairdresser', 'Health Professional', 'Journalist', 'Judge', 'Labourer', 'Lawyer', 'Librarian', 'Machinist', 'Mechanic', 'Medical Laboratory Scientist', 'Midwife', 'Musician', 'Operator', 'Paramedic', 'Pharmacist', 'Physician', 'Physiotherapist', 'Plumber', 'Police Officer', 'Psychologist', 'Radiographer', 'Scientist', 'Secretary', 'Software Developer', 'Statistician', 'Student', 'Surgeon', 'Surveyor', 'Teacher', 'Technician', 'Technologist', 'Tradesman', 'Veterinarian', 'Waiting staff']
@@ -28,17 +28,17 @@ let getProfessions = function (person) {
       return { label: option, checked };
     });
 
-  return check_boxes;
+  return { title, check_boxes };
 }
 
 let viewProfileInterestsProfessions = async ({ query }, res) => {
   let { messenger_user_id } = query;
 
   let person = await getPersonByMessengerID(messenger_user_id);
-  
+
   let interests = getInterests(person);
   let professions = getProfessions(person);
-  
+
   let options = [interests, professions];
 
   let view_html = riot.render(
