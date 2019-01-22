@@ -7,13 +7,14 @@
           <span class="card-title">{ opts.person.first_name } { opts.person.last_name }</span>
         </div>
         <div class="card-content">
+          <br>
+          <span><b>Gender:</b> { opts.person.gender }</span>
+          <br>
+          <span><b>City:</b> { opts.person.city }</span>
+          <br>
+          <span><b>Age:</b> { opts.person.age }</span>
+          <br>
           <span>Go back and press Tag! to chat with { opts.person.first_name }</span>
-          <span>Gender: { opts.person.gender }</span>
-          <br>
-          <span>City: { opts.person.city }</span>
-          <br>
-          <span>Age: { opts.person.age }</span>
-          <br>
         </div>
       </div>
     </div>
