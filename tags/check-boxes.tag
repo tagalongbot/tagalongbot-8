@@ -31,6 +31,7 @@
     let onFormSubmit = function(evt) {
       evt.preventDefault();
       let url = `${opts.BASEURL}/people/update/interests_professions`;
+      console.log('url', url);
       let method = 'POST';
 
       let headers = {

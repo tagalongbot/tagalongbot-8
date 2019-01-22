@@ -10,6 +10,7 @@ riot.tag2('check-boxes', '<h3 class="center-align">{opts.title}</h3> <div class=
     let onFormSubmit = function(evt) {
       evt.preventDefault();
       let url = `${opts.BASEURL}/people/update/interests_professions`;
+      console.log('url', url);
       let method = 'POST';
 
       let headers = {

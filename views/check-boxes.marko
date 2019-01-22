@@ -28,12 +28,13 @@
     <script>
       M.AutoInit();
 
+      let BASEURL = "${input.BASEURL}";
       let messenger_user_id = "${input.messenger_user_id}";
       let options = ${input.options};
 
       riot.mount(
         '*',
-        { messenger_user_id, options }
+        { BASEURL, messenger_user_id, options }
       );
     </script>
   </body>
