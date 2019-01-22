@@ -30,7 +30,7 @@
 
     let onFormSubmit = function(evt) {
       evt.preventDefault();
-      let url = `${BASEURL}/people/update/interests_professions`;
+      let url = `${opts.BASEURL}/people/update/interests_professions`;
       let method = 'POST';
 
       let headers = {
@@ -40,8 +40,6 @@
       let data = self.options.map(opt => 
         opt.check_boxes.filter(check_box => check_box.checked)
       );
-
-      console.log('data', data);
 
       let body = {
         messenger_user_id: opts.messenger_user_id,

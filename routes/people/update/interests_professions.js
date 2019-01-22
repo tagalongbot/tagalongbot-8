@@ -2,15 +2,14 @@ let { getPersonByMessengerID, updatePerson } = require('../../../libs/data/peopl
 
 let updateInterestsProfessions = async ({ body }, res) => {
   let { messenger_user_id, data } = body;
-  console.log('body');
 
-  let { interests, professions }  = body;
+  let [interests, professions]  = data;
 
   let person = await getPersonByMessengerID(messenger_user_id);
 
   let update_data = {
-    ['Interests']: interests,
-    ['Professions']: professions,
+    ['Interests']: interests.map(interest => interest.label),
+    ['Professions']: professions.map(profession => profession.label),
   }
 
   let updated_person = await updatePerson(update_data, person);
